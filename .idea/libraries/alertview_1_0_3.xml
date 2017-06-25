@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="alertview-1.0.3">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/1f275831c82d8c2a88a68388a4f9f074276e4e4d/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/1f275831c82d8c2a88a68388a4f9f074276e4e4d/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.bigkoo/alertview/1.0.3/8029441be5daf96b50e0709729d8229a31276c79/alertview-1.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,118 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.driverhelper.ui.fragment.MarkFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="机动车驾驶员计时培训规范流程" />
+
+        <LinearLayout
+            android:id="@+id/root"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/black_around_white_blackground"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="教练车认证" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/black_around_white_blackground"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="教练员认证" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/black_around_white_blackground"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="学员签到" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/black_around_white_blackground"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="计时培训" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/black_around_white_blackground"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="生成培训记录" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/black_around_white_blackground"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="一人一车\n先陪后付" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="系统设置" />
+
+            <Button
+                android:id="@+id/exit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="退    出" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

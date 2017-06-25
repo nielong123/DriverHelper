@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\common\build\intermediates\bundles\default\libs\alipaySdk-20160516.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3dc967df12a04b5e1fd7641a5661d159b747297f">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\transforms\dex\debug\folders\1000\8\alipaySdk-20160516_d47ee9174d8b339b03fcddd14c9f610a6675f32b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3460771f1b681b9ba9096bd999c8a2f572056e00">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_8b7357312c7faaa0b4c1721f6889bd9e6edbd49a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\common\build\intermediates\bundles\default\libs\commons-codec-1.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="552cd54385c88e92eeb4bbb619a94a5c883d72ab">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\transforms\dex\debug\folders\1000\8\commons-codec-1.6_996fc05a1699bab081d31bfc1764f91aa29816dc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\app\libs\sun.misc.BASE64Decoder.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="acd93e3727886196f9b8434279ff445ba8611186">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\transforms\dex\debug\folders\1000\2\sun.misc.BASE64Decoder_f2b345c99d1c604682bf193f4e3e15251e40eef1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\common\build\intermediates\bundles\default\libs\libammsdk.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e2a9c788016ea496c76407f409d8d1cf69f43cb3">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\transforms\dex\debug\folders\1000\8\libammsdk_50bf1020c58592622ca3a3c4c1e739856a792bb4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_8f46b4f207a9446dc0bfdc3431fb9b8997693013\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\common\build\intermediates\bundles\default\libs\Parse-1.9.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5f2c0036faf12e202efe0ebab3ca7a6ea228f706">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\transforms\dex\debug\folders\1000\8\Parse-1.9.4_c4b84b74b7c278a3dc6d8ba4d6fdd835bc143590\classes.dex" />
+    </item>
+
+</items>

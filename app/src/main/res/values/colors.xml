@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bottomViewColor">#979797</color>
+    <color name="lightGreen">#22cc74</color>
+    <color name="deepGreen">#22cc74</color>
+    <color name="grayView">#9b9b9b</color>
+    <color name="divider_line_c">#979797</color>
+    <color name="lightgray">#f3f3f3</color>
+    <color name="deepGray">#dfdfdf</color>
+
+
+    <color name="normal_text_c">#333333</color>
+    <color name="color_d6d7dc">#d6d7dc</color>
+    <color name="orange_text_c">#f55d29</color>
+    <color name="color_5e5d62">#5e5d62</color>
+    <color name="color_a2a2a2">#a2a2a2</color>
+    <color name="color_f3f3f3">#f3f3f3</color>
+    <color name="color_588ee8">#588ee8</color>
+    <color name="color_b2b2b2">#b2b2b2</color>
+    <color name="color_dfdfdf">#dfdfdf</color>
+
+
+    <color name="common_bg">@color/white</color>
+</resources>
