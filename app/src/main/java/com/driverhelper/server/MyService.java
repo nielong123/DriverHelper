@@ -22,7 +22,7 @@ public class MyService extends Service {
         if (tcpHelper == null) {
             tcpHelper = new TcpHelper();
         }
-        return tcpHelper;
+        return tcpHelper ;
     }
 
     @Override
