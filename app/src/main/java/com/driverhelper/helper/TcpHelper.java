@@ -141,9 +141,9 @@ public class TcpHelper {
                     client.readDataToLength(CharsetUtil.stringToData("Server accepted", CharsetUtil.UTF_8).length);
                 }
 //                if(){
-//                byte[] newDatas = new byte[]{(byte) 0x7E, (byte) 0x80, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x3D, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x58, (byte) 0x68, (byte) 0x82, (byte) 0x59, (byte) 0x93, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x2A, (byte) 0x00, (byte) 0x6F, (byte) 0x48, (byte) 0x5A, (byte) 0x4C, (byte) 0x59, (byte) 0x54, (byte) 0x43, (byte) 0x37, (byte) 0x30, (byte) 0x33, (byte) 0x44, (byte) 0x4D, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x48, (byte) 0x31, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x37, (byte) 0x32, (byte) 0x33, (byte) 0x35, (byte) 0x37, (byte) 0x39, (byte) 0x34, (byte) 0x31, (byte) 0x30, (byte) 0x35, (byte) 0x39, (byte) 0x36, (byte) 0x39, (byte) 0x37, (byte) 0x38, (byte) 0x31, (byte) 0x37, (byte) 0x01, (byte) 0xB6, (byte) 0xF5, (byte) 0x41, (byte) 0x33, (byte) 0x38, (byte) 0x39, (byte) 0x32, (byte) 0xD1, (byte) 0xA7, (byte) 0xA2, (byte) 0x7E};
-//                sendData(newDatas);
-                sendData(BodyHelper.makeRegist());
+                byte[] newDatas = new byte[]{(byte) 0x7E, (byte) 0x80, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x3D, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x58, (byte) 0x68, (byte) 0x82, (byte) 0x59, (byte) 0x93, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x2A, (byte) 0x00, (byte) 0x6F, (byte) 0x48, (byte) 0x5A, (byte) 0x4C, (byte) 0x59, (byte) 0x54, (byte) 0x43, (byte) 0x37, (byte) 0x30, (byte) 0x33, (byte) 0x44, (byte) 0x4D, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x48, (byte) 0x31, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x37, (byte) 0x32, (byte) 0x33, (byte) 0x35, (byte) 0x37, (byte) 0x39, (byte) 0x34, (byte) 0x31, (byte) 0x30, (byte) 0x35, (byte) 0x39, (byte) 0x36, (byte) 0x39, (byte) 0x37, (byte) 0x38, (byte) 0x31, (byte) 0x37, (byte) 0x01, (byte) 0xB6, (byte) 0xF5, (byte) 0x41, (byte) 0x33, (byte) 0x38, (byte) 0x39, (byte) 0x32, (byte) 0xD1, (byte) 0xA7, (byte) 0xA2, (byte) 0x7E};
+                sendData(newDatas);
+//                sendData(BodyHelper.makeRegist());
 //                }
 
             }
@@ -176,38 +176,8 @@ public class TcpHelper {
 
             @Override
             public void onResponse(final SocketClient client, @NonNull SocketResponsePacket responsePacket) {
-//                Logger.d("onResponse", "SocketClient: onResponse: " + responsePacket.hashCode() + " 【" + responsePacket.getMessage() + "】 " + " isHeartBeat: " + responsePacket.isHeartBeat() + " " + Arrays.toString(responsePacket.getData()));
-                if (responsePacket.isHeartBeat()) {
-                    return;
-                }
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        try {
-                            Thread.sleep(3 * 1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        client.sendString("client on " + System.currentTimeMillis());
-
-                        try {
-                            Thread.sleep(3 * 1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        client.disconnect();
-
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        super.onPostExecute(aVoid);
-
-                    }
-                }.execute();
+                byte[] data = responsePacket.getData(); // 获取接收的byte数组，不为null
+                ByteUtil.printRecvHexString(data);
             }
         });
     }

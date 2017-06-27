@@ -269,16 +269,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Intent intent = new Intent();
-        intent.setClass(this, MyService.class);
-        stopService(intent);
+//        Intent intent = new Intent();
+//        intent.setClass(this, MyService.class);
+//        stopService(intent);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = new Intent();
-        intent.setClass(this, MyService.class);
-        startService(intent);
+//        Intent intent = new Intent();
+//        intent.setClass(this, MyService.class);
+//        startService(intent);
     }
 }
