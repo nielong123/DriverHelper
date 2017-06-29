@@ -1,5 +1,8 @@
 package com.driverhelper.utils;
 
+import android.util.Log;
+
+import com.driverhelper.beans.MessageBean;
 import com.driverhelper.config.TcpBody;
 
 import java.nio.charset.Charset;
@@ -271,6 +274,33 @@ public class ByteUtil {
         return result;
     }
 
+    public static String binString2DexString(String binString) {
+        return Integer.parseInt(binString, 2) + "";
+    }
+
+    public static byte[] TimeToBytes(long paramLong) {
+        Object[] arrayOfObject = new Object[1];
+        arrayOfObject[0] = Long.valueOf(paramLong);
+        if (String.format("%d", arrayOfObject).length() >= 13) {
+            byte[] arrayOfByte2 = new byte[8];
+            arrayOfByte2[0] = ((byte) (int) (paramLong >> 56));
+            arrayOfByte2[1] = ((byte) (int) (paramLong >> 48));
+            arrayOfByte2[2] = ((byte) (int) (paramLong >> 40));
+            arrayOfByte2[3] = ((byte) (int) (paramLong >> 32));
+            arrayOfByte2[4] = ((byte) (int) (paramLong >> 24));
+            arrayOfByte2[5] = ((byte) (int) (paramLong >> 16));
+            arrayOfByte2[6] = ((byte) (int) (paramLong >> 8));
+            arrayOfByte2[7] = ((byte) (int) (paramLong >> 0));
+            return arrayOfByte2;
+        }
+        byte[] arrayOfByte1 = new byte[4];
+        arrayOfByte1[0] = ((byte) (int) (paramLong >> 24));
+        arrayOfByte1[1] = ((byte) (int) (paramLong >> 16));
+        arrayOfByte1[2] = ((byte) (int) (paramLong >> 8));
+        arrayOfByte1[3] = ((byte) (int) (paramLong >> 0));
+        return arrayOfByte1;
+    }
+
     /**
      * 二进制字符串转十进制
      *
@@ -322,16 +352,14 @@ public class ByteUtil {
     /****
      * 亦或运算
      *
-     * @param datas
+     * @param data
      * @return
      */
-    private static byte[] getXor(byte[] datas) {
+    private static byte[] getXor(byte[] data) {
 
-        byte[] newDatas = new byte[datas.length - 1];
-        System.arraycopy(datas, 1, newDatas, 0, datas.length - 1);
-        byte[] temp = new byte[]{newDatas[0]};
-        for (int i = 1; i < newDatas.length; i++) {
-            temp[0] ^= newDatas[i];
+        byte[] temp = new byte[]{data[0]};
+        for (int i = 1; i < data.length; i++) {
+            temp[0] ^= data[i];
         }
         byte[] res = new byte[1];
         res[0] = temp[0];
@@ -339,8 +367,11 @@ public class ByteUtil {
     }
 
     public static byte[] addXor(byte[] data) {
-
-        byte[] res = add(data, getXor(data));
+        byte[] xorValue = new byte[data.length - 1];
+        System.arraycopy(data, 1, xorValue, 0, data.length - 1);
+        Log.d(TAG, "addXor: xorValue");
+        printHexString(xorValue);
+        byte[] res = add(data, getXor(xorValue));
         return res;
     }
 
@@ -391,5 +422,73 @@ public class ByteUtil {
         }
         // printHexString(result);
         return result;
+    }
+
+    /****
+     * 将服务端传来的数据还原
+     * @param data
+     * @return
+     */
+    public static byte[] rebackData(byte[] data) {
+        List<Byte> dataList = new ArrayList<>();
+        for (int i = 0; i < data.length; i++) {
+            if (i < data.length - 1) {
+                if (data[i] == (byte) 0x7d && data[i + 1] == (byte) 0x02) {
+                    dataList.add((byte) 0x7e);
+                } else if (data[i] == (byte) 0x7d && data[i + 1] == (byte) 0x01) {
+                    dataList.add((byte) 0x7d);
+                } else {
+                    dataList.add(data[i]);
+                }
+            } else {
+                dataList.add(data[i]);
+            }
+        }
+
+        byte[] result = new byte[dataList.size()];
+        for (int i = 0; i < dataList.size(); i++) {
+            result[i] = dataList.get(i);
+        }
+        return result;
+    }
+
+    /****
+     * 检查XOR是否正确
+     * @param data
+     * @return
+     */
+    public static boolean checkXOR(byte[] data) {
+
+        byte[] data0 = new byte[data.length - 1];
+        System.arraycopy(data, 0, data0, 0, data.length - 1);
+        byte xor = getXor(data0)[0];
+        if (xor == data[data.length - 1]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /****
+     * 处理消息头的信息
+     * @param data
+     * @return
+     */
+    public static MessageBean handlerInfo(byte[] data) {
+        MessageBean messageBean = new MessageBean();
+        byte[] data0 = new byte[2];         //消息id
+        System.arraycopy(data, 1, data0, 0, 2);
+        messageBean.headBean.messageId = ByteUtil.bcd2Str(data0);
+        byte[] data1 = new byte[2];         //消息体属性
+        System.arraycopy(data, 3, data1, 0, 2);
+        messageBean.headBean.messageAttribute = ByteUtil.bcd2Str(data1);
+        messageBean.headBean.benAttribute = autoAddZeroByLength(hexStringToBinary(messageBean.headBean.messageAttribute), 10);      //由消息体得到二进制的消息体
+        messageBean.headBean.bodyLength = Integer.valueOf(binString2DexString(messageBean.headBean.benAttribute.substring(7, messageBean.headBean.benAttribute.length())));
+        messageBean.headBean.isPart = Integer.valueOf(messageBean.headBean.benAttribute.substring(2, 3));
+
+        messageBean.bodyBean = new byte[messageBean.headBean.bodyLength];
+        System.arraycopy(data, data.length - messageBean.headBean.bodyLength - 1, messageBean.bodyBean, 0, messageBean.headBean.bodyLength);
+        Log.d(TAG, "handlerInfo: ");
+        return messageBean;
     }
 }

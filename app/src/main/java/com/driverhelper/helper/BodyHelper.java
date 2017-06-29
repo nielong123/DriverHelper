@@ -1,12 +1,14 @@
 package com.driverhelper.helper;
 
 
-import android.util.Log;
+import android.widget.Toast;
 
+import com.driverhelper.beans.MessageBean;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.config.TcpBody;
 import com.driverhelper.other.jiaminew.TestSignAndVerify;
 import com.driverhelper.utils.ByteUtil;
+import com.jaydenxiao.common.commonutils.ToastUitl;
 
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
@@ -263,21 +265,24 @@ public class BodyHelper {
     static String TAG = "ReceiveInfo";
 
     public static void handleReceiveInfo(byte[] data) {
-        byte messageId[] = new byte[2];
-        messageId[0] = data[1];
-        messageId[1] = data[2];
-        String strMessageId = ByteUtil.getString(messageId);
-        Log.d(TAG, "handleReceiveInfo: ");
-        ByteUtil.printRecvHexString(data);
-        switch (strMessageId) {
-            case "8100":
-                //80 81 00 00 03 00 00 00 00 00 10 00 31 23 50 2A 03 14 02 6F
-                //        80 81 00 00 03 00 00 00 00 00 10 00 31 23 64 2A 03 34 02 7B
-                //     80 81 00 00 03 00 00 00 00 00 10 00 31 23 65 2A 03 35 02 7B
+        if (ByteUtil.checkXOR(data)) {
+            MessageBean messageBean = ByteUtil.handlerInfo(data);
+            switch (messageBean.headBean.messageId) {
+                case "8100":
+                    if (messageBean.headBean.bodyLength == 3) {
+//                        switch ()
+                    }
+                    ToastUitl.show("", Toast.LENGTH_SHORT);
+                    //80 81 00 00 03 00 00 00 00 00 10 00 31 00 09 2A 00 04 03 07
+                    //80 81 00 00 03 00 00 00 00 00 10 00 31 23 50 2A 03 14 02 6F
+                    //        80 81 00 00 03 00 00 00 00 00 10 00 31 23 64 2A 03 34 02 7B
+                    //     80 81 00 00 03 00 00 00 00 00 10 00 31 23 65 2A 03 35 02 7B
 
-                break;
-            case "":
-                break;
+                    break;
+                case "":
+                    break;
+            }
         }
+
     }
 }
