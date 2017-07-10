@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_default_KEMU_items">
+        <item>科目二</item>
+        <item>科目三</item>
+    </string-array>
+    <string-array name="pref_default_KEMU_values">
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="pref_default_PERDRITYPE_items">
+        <item>A1</item>
+        <item>A2</item>
+        <item>A3</item>
+        <item>B1</item>
+        <item>B2</item>
+        <item>C1</item>
+        <item>C2</item>
+        <item>C3</item>
+        <item>C4</item>
+        <item>C5</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>M</item>
+        <item>N</item>
+        <item>P</item>
+    </string-array>
+    <string-array name="pref_default_PERDRITYPE_values">
+        <item>A1</item>
+        <item>A2</item>
+        <item>A3</item>
+        <item>B1</item>
+        <item>B2</item>
+        <item>C1</item>
+        <item>C2</item>
+        <item>C3</item>
+        <item>C4</item>
+        <item>C5</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>M</item>
+        <item>N</item>
+        <item>P</item>
+    </string-array>
+    <string-array name="pref_param0020_items">
+        <item>0：定时汇报</item>
+        <item>1：定距汇报</item>
+        <item>2：定时和定距汇报</item>
+    </string-array>
+    <string-array name="pref_param0020_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="pref_param0021_items">
+        <item>0：根据ACC状态</item>
+        <item>1：根据登录状态和ACC状态，先判断登录状态，若登录再根据ACC状态</item>
+    </string-array>
+    <string-array name="pref_param0021_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="pref_param0045_items">
+        <item>0：自动接听</item>
+        <item>1：ACC ON时自动接听，OFF时手动接听</item>
+    </string-array>
+    <string-array name="pref_param0045_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+</resources>

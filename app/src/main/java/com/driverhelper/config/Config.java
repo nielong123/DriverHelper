@@ -46,6 +46,8 @@ public class Config {
         public final static String DEVICE_CODE = "DEVICE_CODE";         //硬件设备号
         public final static String VEHICLE_COLOR = "VEHICLE_COLOR";         //车辆颜色
         public final static String WATER_CODE = "WATER_CODE";       //流水号
+        public final static String EXAM_TYPE = "EXAM_TYPE";       //考试类型
+
     }
 
     public static List<String> colors = new ArrayList<String>(Arrays.asList("蓝色", "黄色", "黑色", "白色", "绿色"));

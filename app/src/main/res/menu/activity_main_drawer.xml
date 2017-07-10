@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:icon="@drawable/ic_menu_manage" android:id="@+id/nav_def_setting" android:title="@string/pref_header_param" />
+        <item android:icon="@drawable/ic_menu_send" android:enabled="false" android:id="@+id/nav_OBDII_setting" android:title="@string/pref_header_OBDII" />
+    </group>
+    <item android:title="设备登录命令">
+        <menu>
+            <item android:id="@+id/nav_DEVlogin" android:title="0x0102 终端鉴权" />
+            <item android:id="@+id/nav_aLive" android:title="0x0002 客户端心跳" />
+            <item android:id="@+id/nav_ZhuCe" android:title="0x0100 终端注册" />
+            <item android:id="@+id/nav_ZhuXiao" android:title="0x0003 终端注销" />
+        </menu>
+    </item>
+</menu>
