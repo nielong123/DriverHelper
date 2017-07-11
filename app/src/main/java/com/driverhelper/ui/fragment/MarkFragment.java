@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.driverhelper.R;
 import com.driverhelper.config.Config;
-import com.driverhelper.ui.activity.SettingActivity;
+import com.driverhelper.ui.activity.SettingsActivity;
 import com.jaydenxiao.common.base.BaseFragment;
 import com.jaydenxiao.common.baserx.RxBus;
 
@@ -98,7 +98,7 @@ public class MarkFragment extends BaseFragment implements View.OnClickListener {
                 RxBus.getInstance().post(Config.Config_RxBus.RX_COACH_SIGN, "");
                 break;
             case R.id.setting:
-                getMyActivity().startActivity(new Intent(getMyActivity(), SettingActivity.class));
+                getMyActivity().startActivity(new Intent(getMyActivity(), SettingsActivity.class));
                 break;
             case R.id.exit:
                 getMyActivity().finish();

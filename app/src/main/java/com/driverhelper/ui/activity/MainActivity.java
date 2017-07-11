@@ -1,6 +1,6 @@
 package com.driverhelper.ui.activity;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -17,15 +17,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.driverhelper.R;
-import com.driverhelper.config.Config;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.jaydenxiao.common.base.BaseActivity;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, TextToSpeech.OnInitListener,
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
+        TextToSpeech.OnInitListener,
         Toolbar.OnMenuItemClickListener {
 
     @Bind(R.id.toolbar)
@@ -168,6 +167,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int i = item.getItemId();
+        switch (i) {
+            case R.id.nav_def_setting:
+                Intent localIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivityForResult(localIntent, 1);
+                break;
+        }
         return false;
     }
 

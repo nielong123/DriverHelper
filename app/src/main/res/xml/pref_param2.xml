@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue=""
+        android:inputType="textUri"
+        android:key="param0010"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="false"
+        android:title="0x0010 主服务器APN，无线通信拨号访问点。若网络制式为CDMA，则该处为PPP拨号号码" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="20"
+        android:inputType="textCapWords"
+        android:key="param0011"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0011 主服务器无线通信拨号用户名" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="20"
+        android:inputType="textCapWords"
+        android:key="param0012"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0012 主服务器无线通信拨号密码" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="139.196.9.234"
+        android:inputType="textUri"
+        android:key="param0013"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0013 主服务器地址，IP或域名" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue=""
+        android:inputType="textUri"
+        android:key="param0014"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="false"
+        android:title="0x0014 备份服务器APN，无线通信拨号访问点" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="20"
+        android:inputType="textCapWords"
+        android:key="param0015"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0015 备份服务器无线通信拨号用户名" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="20"
+        android:inputType="textCapWords"
+        android:key="param0016"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0016 备份服务器无线通信拨号密码" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue=""
+        android:inputType="textUri"
+        android:key="param0017"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="false"
+        android:title="0x0017 备份服务器地址，IP或域名" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="10"
+        android:inputType="number"
+        android:key="param0018"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0018 服务器TCP端口" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="10"
+        android:inputType="number"
+        android:key="param0019"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0019 服务器UDP端口" />
+</PreferenceScreen>

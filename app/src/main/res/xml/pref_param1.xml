@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="120"
+        android:inputType="number"
+        android:key="param0001"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0001 客户端心跳发送间隔，单位为秒(s)" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="10"
+        android:inputType="number"
+        android:key="param0002"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0002 TCP消息应答超时时间，单位为秒(s)" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="1"
+        android:inputType="number"
+        android:key="param0003"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0003 TCP消息重传次数" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="10"
+        android:inputType="number"
+        android:key="param0004"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0004 UDP消息应答超时时间，单位为秒(s)" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="1"
+        android:inputType="number"
+        android:key="param0005"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0005 UDP消息重传次数" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="100"
+        android:inputType="number"
+        android:key="param0006"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0006 SMS消息应答超时时间，单位为秒(s)" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="1"
+        android:inputType="number"
+        android:key="param0007"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0007 SMS消息重传次数" />
+</PreferenceScreen>

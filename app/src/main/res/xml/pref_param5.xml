@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="param0050"
+        android:summaryOff=""
+        android:summaryOn="报警被屏蔽"
+        android:title="0c0050 报警屏蔽字, 与位置信息汇报消息中的报警标识相对应" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="param0051"
+        android:summaryOff=""
+        android:summaryOn="报警时发送文本SMS"
+        android:title="0x0051 报警发送文本SMS开关，与位置信息汇报消息中的报警标识相对应" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="param0052"
+        android:summaryOff=""
+        android:summaryOn="报警时摄像头拍摄"
+        android:title="0x0052 报警拍摄开关，与位置信息汇报消息中的报警标识相对应" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="param0053"
+        android:summaryOff="报警时牌的照片实时长传"
+        android:summaryOn="报警时牌的照片进行存储"
+        android:title="0x0053 报警拍摄存储标识，与位置信息汇报消息中的报警标识相对应" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="param0054"
+        android:summaryOff=""
+        android:summaryOn="报警为关键报警"
+        android:title="0x0054 关键标识，与位置信息汇报消息中的报警标识相对应" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="60"
+        android:inputType="number"
+        android:key="param0055"
+        android:maxLength="3"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0055 最高速度，单位为公里每小时(km/h)" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="20"
+        android:inputType="number"
+        android:key="param0056"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0056 超速持续时间，单位为秒(s)" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="3600"
+        android:inputType="number"
+        android:key="param0057"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0057 连续驾驶时间门限，单位为秒(s)" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="36000"
+        android:inputType="number"
+        android:key="param0058"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0058 连续驾驶时间门限，单位为秒(s)" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="300"
+        android:inputType="number"
+        android:key="param0059"
+        android:maxLength="3"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0059 最小休息时间，单位为秒(s)" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="600"
+        android:inputType="number"
+        android:key="param005a"
+        android:maxLength="4"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x005a 最长停车时间，单位为秒(s)" />
+</PreferenceScreen>

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
  */
 
 public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
+
     private AppCompatDelegate mDelegate;
 
     private AppCompatDelegate getDelegate() {
@@ -25,10 +26,12 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
         return this.mDelegate;
     }
 
+    @Override
     public void addContentView(View paramView, ViewGroup.LayoutParams paramLayoutParams) {
         getDelegate().addContentView(paramView, paramLayoutParams);
     }
 
+    @Override
     public MenuInflater getMenuInflater() {
         return getDelegate().getMenuInflater();
     }
@@ -37,54 +40,65 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
         return getDelegate().getSupportActionBar();
     }
 
+    @Override
     public void invalidateOptionsMenu() {
         getDelegate().invalidateOptionsMenu();
     }
 
+    @Override
     public void onConfigurationChanged(Configuration paramConfiguration) {
         super.onConfigurationChanged(paramConfiguration);
         getDelegate().onConfigurationChanged(paramConfiguration);
     }
 
+    @Override
     protected void onCreate(Bundle paramBundle) {
         getDelegate().installViewFactory();
         getDelegate().onCreate(paramBundle);
         super.onCreate(paramBundle);
     }
 
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         getDelegate().onDestroy();
     }
 
+    @Override
     protected void onPostCreate(Bundle paramBundle) {
         super.onPostCreate(paramBundle);
         getDelegate().onPostCreate(paramBundle);
     }
 
+    @Override
     protected void onPostResume() {
         super.onPostResume();
         getDelegate().onPostResume();
     }
 
+    @Override
     protected void onStop() {
         super.onStop();
         getDelegate().onStop();
     }
 
+    @Override
     protected void onTitleChanged(CharSequence paramCharSequence, int paramInt) {
         super.onTitleChanged(paramCharSequence, paramInt);
         getDelegate().setTitle(paramCharSequence);
     }
 
+    @Override
     public void setContentView(@LayoutRes int paramInt) {
         getDelegate().setContentView(paramInt);
     }
 
+    @Override
     public void setContentView(View paramView) {
         getDelegate().setContentView(paramView);
     }
 
+    @Override
     public void setContentView(View paramView, ViewGroup.LayoutParams paramLayoutParams) {
         getDelegate().setContentView(paramView, paramLayoutParams);
     }

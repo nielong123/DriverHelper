@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="com.driverhelper.ui.activity.SettingActivity">
+    tools:context="com.driverhelper.ui.activity.SettingsActivity">
 
 
     <TextView

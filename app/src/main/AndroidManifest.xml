@@ -42,7 +42,7 @@
         </activity>
         <activity android:name=".ui.activity.MainActivity" />
 
-        <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.SettingsActivity" />
 
         <activity
             android:name=".ui.activity.Main2Activity"

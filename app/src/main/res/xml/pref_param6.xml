@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="3"
+        android:inputType="number"
+        android:key="param0070"
+        android:maxLength="1"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0070 图像/视频质量，1-10,1最好" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="128"
+        android:inputType="number"
+        android:key="param0071"
+        android:maxLength="3"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0071 亮度，0-255" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="64"
+        android:inputType="number"
+        android:key="param0072"
+        android:maxLength="3"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0072 对比度，0-127" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="64"
+        android:inputType="number"
+        android:key="param0073"
+        android:maxLength="3"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0073 饱和度，0-127" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="128"
+        android:inputType="number"
+        android:key="param0074"
+        android:maxLength="3"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0074 色度，0-255" />
+</PreferenceScreen>
