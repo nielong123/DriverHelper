@@ -18,8 +18,12 @@ import android.widget.TextView;
 
 import com.driverhelper.R;
 import com.driverhelper.helper.WriteSettingHelper;
+import com.driverhelper.other.ReceiverOBDII;
 import com.jaydenxiao.common.base.BaseActivity;
 import com.jaydenxiao.common.commonutils.VersionUtil;
+
+import java.util.Date;
+import java.util.Timer;
 
 import butterknife.Bind;
 
@@ -29,8 +33,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.switch1)
-    Switch switch1;
+    @Bind(R.id.networksw)
+    Switch networksw;
     @Bind(R.id.surfaceView)
     SurfaceView surfaceView;
     @Bind(R.id.layout)
@@ -88,6 +92,46 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     private TextToSpeech ttsClient;
+    public ReceiverOBDII OBDReceiver = null;
+
+    static Timer AliveTm;
+    static Timer CHKTm;
+    static Timer ChkTHREAD;
+    static Timer GPSCHKTm;
+    static Timer GPSSendTime;
+    static Timer NOSENDtask;
+    static Timer StartTm;
+
+    static int OpenCamNum;
+    static int StartChkcount;
+    public int MSGdataPOS;
+    int OSver = 4;
+    int OSverMid = 0;
+    int OSverSub = 0;
+
+    long GPStime;
+    long NetChkTime;
+    long NotSpeek;
+
+    String CamPic;
+    String SpdStr;
+    String GPSStr;
+
+    boolean CamStatOK = false;
+    boolean NoSIMcard = false;
+    boolean NoSendReding = false;
+    boolean QRmode = false;
+    boolean SendNewMSGChk = false;
+
+    Date CurrDate = new Date();
+
+    private static final int REQUEST_PERM = 1000;
+    private static final int REQUEST_QR = 49374;
+    private static final int REQUEST_SETTING = 1;
+    private static final int RESULT_FAIL = 1;
+    private static final int RESULT_OK = 0;
+    private static final String TAGcam = "CameraRtn";
+    private static final String TAGdev = "DeviceCHK";
 
     @Override
     public int getLayoutId() {
@@ -170,7 +214,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (i) {
             case R.id.nav_def_setting:
                 Intent localIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivityForResult(localIntent, 1);
+                startActivityForResult(localIntent, REQUEST_SETTING);
                 break;
         }
         return false;
