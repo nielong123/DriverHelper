@@ -21,6 +21,8 @@ public class Config {
         public final static String RX_COACH_SIGN_OUT_OK = "RX_COACH_SIGN_OUT_OK";
         public final static String RX_STUDENT_SIGN_OUT = "RX_STUDENT_SIGN_OUT";    //签退
         public final static String RX_PHOTOGRAPH = "RX_PHOTOGRAPH";         //照相
+
+        public final static String RX_CHANGE_TEXTINFO = "RX_CHANGE_TEXTINFO";       //刷新界面
     }
 
     public static class RxBusIndex {
@@ -47,7 +49,12 @@ public class Config {
         public final static String VEHICLE_COLOR = "VEHICLE_COLOR";         //车辆颜色
         public final static String WATER_CODE = "WATER_CODE";       //流水号
         public final static String EXAM_TYPE = "EXAM_TYPE";       //考试类型
+    }
 
+
+    public enum TextInfoType{
+        ChangeGPSINFO,
+        ClearGPSINFO;
     }
 
     public static List<String> colors = new ArrayList<String>(Arrays.asList("蓝色", "黄色", "黑色", "白色", "绿色"));

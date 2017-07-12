@@ -17,6 +17,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    signingConfigs {
+        releaseConfig {
+            storeFile file("E:\\key\\traffic.keystore")
+            storePassword "exsun2015"
+            keyAlias "traffic"
+            keyPassword "exsun2015"
+        }
+        debugConfig {
+
+        }
+        debug {
+            storeFile file("E:\\key\\traffic.keystore")
+            storePassword "exsun2015"
+            keyAlias "traffic"
+            keyPassword "exsun2015"
+        }
+    }
 }
 
 dependencies {
@@ -39,4 +57,5 @@ dependencies {
     compile 'com.github.vilyever:AndroidLogger:1.0.9'
     compile 'com.github.vilyever:AndroidJsonModel:1.2.0'
     testCompile 'junit:junit:4.12'
+    compile files('libs/AMap_Location_V3.4.1_20170629.jar')
 }

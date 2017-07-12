@@ -1,6 +1,7 @@
 package com.driverhelper.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -9,23 +10,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.driverhelper.R;
+import com.driverhelper.app.MyApplication;
+import com.driverhelper.config.Config;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.ReceiverOBDII;
 import com.jaydenxiao.common.base.BaseActivity;
+import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 
 import java.util.Date;
 import java.util.Timer;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener,
@@ -59,18 +70,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     TextView NoSendText;
     @Bind(R.id.LLmingdan)
     LinearLayout LLmingdan;
-    @Bind(R.id.textView1)
-    TextView textView1;
-    @Bind(R.id.textView3)
-    TextView textView3;
-    @Bind(R.id.textView2)
-    TextView textView2;
-    @Bind(R.id.textView4)
-    TextView textView4;
+    @Bind(R.id.lat)
+    TextView lat;
+    @Bind(R.id.direction)
+    TextView direction;
+    @Bind(R.id.lon)
+    TextView lon;
+    @Bind(R.id.speed)
+    TextView speed;
     @Bind(R.id.textViewStat)
     TextView textViewStat;
     @Bind(R.id.textViewThisTime)
-    TextView textViewThisTime;
+    TextClock textViewThisTime;
     @Bind(R.id.textViewStartTime)
     TextView textViewStartTime;
     @Bind(R.id.LLgps)
@@ -89,8 +100,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     NavigationView navView;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-
-
     private TextToSpeech ttsClient;
     public ReceiverOBDII OBDReceiver = null;
 
@@ -109,7 +118,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     int OSverMid = 0;
     int OSverSub = 0;
 
-    long GPStime;
     long NetChkTime;
     long NotSpeek;
 
@@ -122,6 +130,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     boolean NoSendReding = false;
     boolean QRmode = false;
     boolean SendNewMSGChk = false;
+    boolean gpsState;
 
     Date CurrDate = new Date();
 
@@ -146,6 +155,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void initView() {
         initToolBar();
+        networksw.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 
 
@@ -181,14 +191,36 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initEvent() {
-//        mRxManager.on(Config.Config_RxBus.RX_COACH_SIGN, new Action1<String>() {
-//
-//            @Override
-//            public void call(String id) {
-//                switchFragment(COACH_SIGN);
-//                ToastUitl.show("教练员签到", Toast.LENGTH_SHORT);
-//            }
-//        });
+        mRxManager.on(Config.Config_RxBus.RX_CHANGE_TEXTINFO, new Action1<Config.TextInfoType>() {
+            @Override
+            public void call(Config.TextInfoType textInfoType) {
+                setTextInfo(textInfoType);
+            }
+        });
+    }
+
+
+    private void setTextInfo(Config.TextInfoType type) {
+        switch (type) {
+            case ChangeGPSINFO:
+                if (!gpsState) {
+                    ttsClient.speak("gps定位成功", 1, null);
+                    gpsState = true;
+                }
+                direction.setText("方向:" + MyApplication.getInstance().direction + "度");
+                speed.setText("速度:" + MyApplication.getInstance().speedGPS + "km/h");
+                lat.setText("纬度:" + MyApplication.getInstance().lat);
+                lon.setText("经度:" + MyApplication.getInstance().lon);
+                break;
+            case ClearGPSINFO:
+                gpsState = false;
+                ttsClient.speak("gps定位失败", 1, null);
+                direction.setText(" ");
+                speed.setText("");
+                lat.setText("");
+                lon.setText("");
+                break;
+        }
     }
 
 
@@ -213,8 +245,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int i = item.getItemId();
         switch (i) {
             case R.id.nav_def_setting:
-                Intent localIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivityForResult(localIntent, REQUEST_SETTING);
+                startActivityForResult(SettingsActivity.class, REQUEST_SETTING);
                 break;
         }
         return false;
@@ -227,4 +258,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         return false;
     }
+
+    @OnClick({R.id.JiaoLianButton, R.id.XueYuanButton, R.id.textViewThisTime})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.JiaoLianButton:
+                break;
+            case R.id.XueYuanButton:
+                break;
+            case R.id.textViewThisTime:
+                break;
+        }
+    }
+
+    CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+        }
+    };
+
 }

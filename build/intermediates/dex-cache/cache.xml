@@ -3,6 +3,15 @@
 
     <item
         is-multidex="false"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\app\libs\AMap_Location_V3.4.1_20170629.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ebe380d6da0d59db86ff68c843b3b8467ab26506">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\AMap_Location_V3.4.1_20170629_786d7756bc7028c87baffd4dab917423aa2ff356.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\Administrator\Desktop\DriverHelper1\library\irecyclerview\build\intermediates\bundles\default\classes.jar"
         jumboMode="false"
         optimize="true"

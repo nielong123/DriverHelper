@@ -121,6 +121,7 @@
     <orderEntry type="library" exported="" name="AndroidResource-1.2.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
     <orderEntry type="library" exported="" name="Android-PickerView-3.2.4" level="project" />
+    <orderEntry type="library" exported="" name="AMap_Location_V3.4.1_20170629" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.7" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-1.0.1" level="project" />
