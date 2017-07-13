@@ -1,11 +1,12 @@
 package com.driverhelper.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,24 +20,27 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.driverhelper.R;
 import com.driverhelper.app.MyApplication;
+import com.driverhelper.beans.MSG;
 import com.driverhelper.config.Config;
+import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.ReceiverOBDII;
 import com.jaydenxiao.common.base.BaseActivity;
-import com.jaydenxiao.common.commonutils.ToastUitl;
+import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 
 import java.util.Date;
 import java.util.Timer;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
+
+import static com.driverhelper.config.Config.ip;
+import static com.driverhelper.config.Config.port;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener,
@@ -100,6 +104,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     NavigationView navView;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+
     private TextToSpeech ttsClient;
     public ReceiverOBDII OBDReceiver = null;
 
@@ -187,6 +192,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void initData() {
         this.ttsClient = new TextToSpeech(getApplicationContext(), this);
+        MSG.getInstance(this).loadSetting();
     }
 
     @Override
@@ -195,6 +201,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void call(Config.TextInfoType textInfoType) {
                 setTextInfo(textInfoType);
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_TTS_SPEAK, new Action1<String>() {
+            @Override
+            public void call(String str) {
+                ttsClient.speak(str, 1, null);
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_NET_DISCONNECT, new Action1<String>() {
+            @Override
+            public void call(String str) {
+                ttsClient.speak(str, 1, null);
+                networksw.setChecked(false);
             }
         });
     }
@@ -239,7 +258,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         this.ttsClient.speak("欢迎使用EXSUNTerminal计时终端", 1, null);
     }
 
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int i = item.getItemId();
@@ -247,6 +265,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_def_setting:
                 startActivityForResult(SettingsActivity.class, REQUEST_SETTING);
                 break;
+            case R.id.nav_ZhuCe:
+                TcpHelper.getInstance().sendRegistInfo();
+                break;
+            case R.id.nav_ZhuXiao:
+                TcpHelper.getInstance().sendCancellation();
         }
         return false;
     }
@@ -275,8 +298,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+            if (!TcpHelper.getInstance().isConnected && b) {
+                TcpHelper.getInstance().connect(ip, port, 10 * 1000);
+                return;
+            }
+            if (TcpHelper.getInstance().isConnected && !b) {
+                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "是否断开连接");
+                new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("服务器断开提示").setIcon(R.drawable.main_img06).setMessage("是否服务器断开").setCancelable(false).setPositiveButton("断开", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                        TcpHelper.getInstance().disConnect();
+                    }
+                }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                        MainActivity.this.networksw.setChecked(true);
+                        paramAnonymous2DialogInterface.cancel();
+                    }
+                }).show();
+                return;
+            }
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_SETTING:
+                MSG.getInstance(this).loadSetting();
+                break;
+        }
+    }
 
 }

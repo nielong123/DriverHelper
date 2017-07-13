@@ -1,5 +1,7 @@
 package com.driverhelper.config;
 
+import com.driverhelper.beans.MessageBean;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
  */
 
 public class Config {
+
+    public static String ip, port, timeOut;
 
     public static class Config_RxBus {
         public final static String RX_COACH_SIGN = "RX_COACH_SIGN";
@@ -23,19 +27,21 @@ public class Config {
         public final static String RX_PHOTOGRAPH = "RX_PHOTOGRAPH";         //照相
 
         public final static String RX_CHANGE_TEXTINFO = "RX_CHANGE_TEXTINFO";       //刷新界面
+        public final static String RX_TTS_SPEAK = "RX_TTS_SPEAK";           //語音
+        public final static String RX_NET_DISCONNECT = "RX_NET_DISCONNECT";           //語音
     }
 
-    public static class RxBusIndex {
-        public final static int SHOW_MARKACTIVITY = 0;
-        public final static int COACH_SIGN = 1;
-        public final static int COACH_OK = 2;
-        public final static int SHOW_COACH_INFO = 3;
-        public final static int STUDENT_SIGN = 4;
-        public final static int STUDENT_SIGN_OK = 5;
-        public final static int COACH_SIGN_OUT = 6;
-        public final static int STUDENT_SIGN_OUT_OK = 7;
-        public final static int PHOTOGRAPH = 999;
-    }
+//    public static class RxBusIndex {
+//        public final static int SHOW_MARKACTIVITY = 0;
+//        public final static int COACH_SIGN = 1;
+//        public final static int COACH_OK = 2;
+//        public final static int SHOW_COACH_INFO = 3;
+//        public final static int STUDENT_SIGN = 4;
+//        public final static int STUDENT_SIGN_OK = 5;
+//        public final static int COACH_SIGN_OUT = 6;
+//        public final static int STUDENT_SIGN_OUT_OK = 7;
+//        public final static int PHOTOGRAPH = 999;
+//    }
 
     public static class WriteSetting {
         public final static String ISFIRST = "ISFIRST";         //第一次登陆
@@ -49,13 +55,17 @@ public class Config {
         public final static String VEHICLE_COLOR = "VEHICLE_COLOR";         //车辆颜色
         public final static String WATER_CODE = "WATER_CODE";       //流水号
         public final static String EXAM_TYPE = "EXAM_TYPE";       //考试类型
+        public final static String PROVINCE = "PROVINCE";       //省
+        public final static String CITY = "CITY";       //省
     }
 
 
-    public enum TextInfoType{
+    public enum TextInfoType {
         ChangeGPSINFO,
         ClearGPSINFO;
     }
+
+//    public static MessageBean registBean;       //保存注册信息的变量
 
     public static List<String> colors = new ArrayList<String>(Arrays.asList("蓝色", "黄色", "黑色", "白色", "绿色"));
 }

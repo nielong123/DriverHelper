@@ -17,9 +17,15 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.driverhelper.R;
+import com.driverhelper.config.Config;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 
 import java.util.List;
+
+import static com.driverhelper.config.Config.WriteSetting.CITY;
+import static com.driverhelper.config.Config.WriteSetting.TCP_IP;
+import static com.driverhelper.config.Config.WriteSetting.TCP_PORT;
+import static com.driverhelper.config.Config.WriteSetting.VEHICLE_NUMBER;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
@@ -115,23 +121,22 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(paramBundle);
             addPreferencesFromResource(R.xml.pref_default);
             setHasOptionsMenu(true);
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0081"));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0082"));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(Config.WriteSetting.PROVINCE));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(Config.WriteSetting.CITY));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("VENDER_ID"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("MODEL"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("SN"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("IMEI"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0084"));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0083"));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0013"));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0018"));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(VEHICLE_NUMBER));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(TCP_IP));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(TCP_PORT));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("DIAL_NO"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("KEMU"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("PERDRITYPE"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("CameraID"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("Car_ID"));
             SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("idsub0306ret"));
-            ToastUitl.show("显示了一个二级界面", Toast.LENGTH_SHORT);
         }
 
         @Override
@@ -357,8 +362,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0080"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0081"));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0082"));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0083"));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(CITY));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(VEHICLE_NUMBER));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0084"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0085"));
         }

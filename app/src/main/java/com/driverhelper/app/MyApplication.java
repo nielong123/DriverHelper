@@ -4,22 +4,16 @@ import android.content.Context;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
-import com.orhanobut.logger.Logger;
-
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.driverhelper.config.Config;
-import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.jaydenxiao.common.baseapp.BaseApplication;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.PreferenceUtils;
 import com.orhanobut.logger.Logger;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.driverhelper.config.Config.TextInfoType.ClearGPSINFO;
@@ -30,14 +24,9 @@ import static com.driverhelper.config.Config.TextInfoType.ClearGPSINFO;
 
 public class MyApplication extends BaseApplication {
 
-    //    private AMapLocation aMapLocation = null;
     private AMapLocationListener locListener = new MyLocationListener();
     private OnLocationReceiveListener mOnLocationReceiveListener;
 
-    TcpHelper tcpHelper;
-
-    String ip, port, timeOut;
-    String deviceNum;
     public float speedGPS, direction;
     public double lat, lon;
     public long timeGPS, timeSYS;
@@ -65,12 +54,6 @@ public class MyApplication extends BaseApplication {
         PreferenceUtils.init(this);
         initLocation();
 
-
-        ip = WriteSettingHelper.getTCP_IP();
-        port = WriteSettingHelper.getTCP_PORT();
-        timeOut = WriteSettingHelper.getTCP_TIMEOUT();
-        timeOut = "10*1000";
-        deviceNum = WriteSettingHelper.getDEVICE_CODE();
     }
 
     //初始化定位
@@ -85,15 +68,7 @@ public class MyApplication extends BaseApplication {
         mLocationClient.startLocation();
     }
 
-    protected TcpHelper getTcpHelper() {
-        if (tcpHelper == null) {
-            tcpHelper = new TcpHelper();
-        }
-        return tcpHelper;
-    }
-
     void initServer() {
-        getTcpHelper().connect(ip, port, 10 * 1000);
     }
 
     void initLog() {

@@ -96,13 +96,13 @@
     <string name="pref_default_VENDER_ID">制造商ID</string>
     <string name="pref_default_VENDER_ID_d">ssung</string>
     <string name="pref_default_param0013">0x0013 主服务器地址，IP或域名</string>
-    <string name="pref_default_param0013_d">139.196.9.234</string>
+    <string name="pref_default_param0013_d">221.235.53.37</string>
     <string name="pref_default_param0018">0x0018 服务器TCP端口</string>
-    <string name="pref_default_param0018_d">15000</string>
+    <string name="pref_default_param0018_d">2346</string>
     <string name="pref_default_param0081">0x0081 省域ID</string>
     <string name="pref_default_param0081_d">31</string>
     <string name="pref_default_param0082">0x0082 市县域ID</string>
-    <string name="pref_default_param0082_d">0</string>
+    <string name="pref_default_param0082_d">00</string>
     <string name="pref_default_param0083">0x0083 车辆标识</string>
     <string name="pref_default_param0083_d">京ARS35学</string>
     <string name="pref_header_EDUparam">计时终端应用参数设置</string>

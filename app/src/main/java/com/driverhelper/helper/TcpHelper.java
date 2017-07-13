@@ -6,7 +6,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.driverhelper.config.Config;
 import com.driverhelper.utils.ByteUtil;
+import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.orhanobut.logger.Logger;
 import com.vilyever.socketclient.SocketClient;
@@ -17,6 +19,7 @@ import com.vilyever.socketclient.helper.SocketPacketHelper;
 import com.vilyever.socketclient.helper.SocketResponsePacket;
 import com.vilyever.socketclient.util.CharsetUtil;
 
+import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
 
 /**
@@ -25,9 +28,18 @@ import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.A
 
 public class TcpHelper {
 
-    final TcpHelper self = this;
+    static TcpHelper self;
+    public boolean isConnected;
 
-    SocketClient socketClient;
+    static SocketClient socketClient;
+
+    static public TcpHelper getInstance() {
+        if (self == null) {
+            self = new TcpHelper();
+        }
+        return self;
+    }
+
 
     /***
      *
@@ -89,12 +101,12 @@ public class TcpHelper {
          *
          * 每次发送心跳包时自动调用
          */
-        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
-            @Override
-            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
-                return BodyHelper.makeHeart();              //心跳
-            }
-        });
+//        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
+//            @Override
+//            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
+//                return BodyHelper.makeHeart();              //心跳
+//            }
+//        });
     }
 
     private void __i__setReceiverCallBack(SocketClient socketClient) {
@@ -133,43 +145,39 @@ public class TcpHelper {
         socketClient.registerSocketClientDelegate(new SocketClientDelegate() {
             @Override
             public void onConnected(SocketClient client) {
+                isConnected = true;
                 Logger.d("onConnected", "SocketClient: onConnected");
-
+                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp连接成功");
                 if (client.getSocketPacketHelper().getReadStrategy() == SocketPacketHelper.ReadStrategy.Manually) {
                     client.readDataToLength(CharsetUtil.stringToData("Server accepted", CharsetUtil.UTF_8).length);
                 }
-//                if(){
-//                byte[] newDatas = new byte[]{(byte) 0x7E, (byte) 0x80, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x3D, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x58, (byte) 0x68, (byte) 0x82, (byte) 0x59, (byte) 0x93, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x2A, (byte) 0x00, (byte) 0x6F, (byte) 0x48, (byte) 0x5A, (byte) 0x4C, (byte) 0x59, (byte) 0x54, (byte) 0x43, (byte) 0x37, (byte) 0x30, (byte) 0x33, (byte) 0x44, (byte) 0x4D, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x48, (byte) 0x31, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x37, (byte) 0x32, (byte) 0x33, (byte) 0x35, (byte) 0x37, (byte) 0x39, (byte) 0x34, (byte) 0x31, (byte) 0x30, (byte) 0x35, (byte) 0x39, (byte) 0x36, (byte) 0x39, (byte) 0x37, (byte) 0x38, (byte) 0x31, (byte) 0x37, (byte) 0x01, (byte) 0xB6, (byte) 0xF5, (byte) 0x41, (byte) 0x33, (byte) 0x38, (byte) 0x39, (byte) 0x32, (byte) 0xD1, (byte) 0xA7, (byte) 0xA2, (byte) 0x7E};
-//                sendData(newDatas);
-                sendData(BodyHelper.makeRegist());
-//                }
-
             }
 
             @Override
             public void onDisconnected(final SocketClient client) {
-//                Logger.d("onDisconnected", "SocketClient: onDisconnected");
-
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        try {
-                            Thread.sleep(3 * 1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        client.connect();
-
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        super.onPostExecute(aVoid);
-
-                    }
-                }.execute();
+                isConnected = false;
+                Logger.d("onDisconnected", "SocketClient: onDisconnected");
+                RxBus.getInstance().post(Config.Config_RxBus.RX_NET_DISCONNECT, "tcp连接已断开");
+//                new AsyncTask<Void, Void, Void>() {
+//                    @Override
+//                    protected Void doInBackground(Void... params) {
+//                        try {
+//                            Thread.sleep(3 * 1000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        client.connect();
+//
+//                        return null;
+//                    }
+//
+//                    @Override
+//                    protected void onPostExecute(Void aVoid) {
+//                        super.onPostExecute(aVoid);
+//
+//                    }
+//                }.execute();
             }
 
             @Override
@@ -186,6 +194,7 @@ public class TcpHelper {
 
     public void disConnect() {
         self.__i__disConnect(socketClient);
+        socketClient = null;
     }
 
     private void __i__disConnect(SocketClient socketClient) {
@@ -200,7 +209,17 @@ public class TcpHelper {
         if (socketClient != null && socketClient.isConnected()) {
             Log.d(TAG, "sendData: ");
             socketClient.sendData(data);
+        } else {
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp连接已断开");
         }
+    }
+
+    public void sendRegistInfo() {
+        sendData(BodyHelper.makeRegist());
+    }
+
+    public void sendCancellation() {
+        sendData(BodyHelper.makeUnRegist());
     }
 
 

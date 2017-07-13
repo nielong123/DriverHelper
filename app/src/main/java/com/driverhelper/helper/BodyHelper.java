@@ -4,10 +4,12 @@ package com.driverhelper.helper;
 import android.widget.Toast;
 
 import com.driverhelper.beans.MessageBean;
+import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.config.TcpBody;
 import com.driverhelper.other.jiaminew.TestSignAndVerify;
 import com.driverhelper.utils.ByteUtil;
+import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
@@ -135,8 +137,8 @@ public class BodyHelper {
      * 各功能的组包,终端注册
      */
     public static byte[] makeRegist() {
-        byte[] resultBody = ConstantInfo.Province.HuBei;
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.City.WuHan); // 城市
+        byte[] resultBody = ConstantInfo.province;
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.city); // 城市
         resultBody = ByteUtil.add(resultBody, ConstantInfo.makerID); // 制造商id
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(ByteUtil
                 .autoAddZeroByLengthOnRight(ConstantInfo.strTerminalTYPE, 40))); // 终端型号
@@ -268,18 +270,48 @@ public class BodyHelper {
         if (ByteUtil.checkXOR(data)) {
             MessageBean messageBean = ByteUtil.handlerInfo(data);
             switch (messageBean.headBean.messageId) {
-                case "8100":
+                case "8100":            //终端注册应答
                     if (messageBean.headBean.bodyLength == 3) {
-//                        switch ()
+                        switch (messageBean.bodyBean[2]) {
+                            case 0:
+                                break;
+                            case 1:
+                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "车辆已被注册");
+                                break;
+                            case 2:
+                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "数据库中无该车辆");
+                                break;
+                            case 3:
+                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端已被注册");
+                                break;
+                            case 4:
+                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "数据库中无该终端");
+                                break;
+                        }
                     }
-                    ToastUitl.show("", Toast.LENGTH_SHORT);
                     //80 81 00 00 03 00 00 00 00 00 10 00 31 00 09 2A 00 04 03 07
                     //80 81 00 00 03 00 00 00 00 00 10 00 31 23 50 2A 03 14 02 6F
                     //        80 81 00 00 03 00 00 00 00 00 10 00 31 23 64 2A 03 34 02 7B
                     //     80 81 00 00 03 00 00 00 00 00 10 00 31 23 65 2A 03 35 02 7B
 
                     break;
-                case "":
+                case "8001":            //服务端通用应答
+                    if (messageBean.headBean.bodyLength == 5) {
+                        switch (messageBean.bodyBean[4]) {
+                            case 0:
+                                ToastUitl.show("成功/确认", Toast.LENGTH_SHORT);
+                                break;
+                            case 1:
+                                ToastUitl.show("失败", Toast.LENGTH_SHORT);
+                                break;
+                            case 2:
+                                ToastUitl.show("消息有误", Toast.LENGTH_SHORT);
+                                break;
+                            case 3:
+                                ToastUitl.show("不支持", Toast.LENGTH_SHORT);
+                                break;
+                        }
+                    }
                     break;
             }
         }

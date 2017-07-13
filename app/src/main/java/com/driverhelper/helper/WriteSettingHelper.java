@@ -12,14 +12,6 @@ import com.jaydenxiao.common.commonutils.PreferenceUtils;
  */
 public class WriteSettingHelper {
 
-    public static boolean isFirstOpen() {
-        return PreferenceUtils.getInstance().getSettingBool(Config.WriteSetting.ISFIRST, true);
-    }
-
-    public static void setFirstOpen(boolean isFirst) {
-        PreferenceUtils.getInstance().setSettingBoolean(Config.WriteSetting.ISFIRST, isFirst);
-    }
-
     /***
      * 获取TCP的ip
      * @return
@@ -148,7 +140,7 @@ public class WriteSettingHelper {
         return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.EXAM_TYPE, "科目2");
     }
 
-    public static void setEXAM_SUBJECTS(String examSubjects){
+    public static void setEXAM_SUBJECTS(String examSubjects) {
         PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EXAM_TYPE, examSubjects);
     }
 }
