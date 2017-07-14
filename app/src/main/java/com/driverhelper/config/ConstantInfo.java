@@ -31,11 +31,18 @@ public class ConstantInfo {
 //    public static byte[] terminalSerial = {(byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x31};
 
     public static String strIMEI = "100221235053037";
-//    public static byte[] IMEI = {(byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x32, (byte) 0x32, (byte) 0x31, (byte) 0x32, (byte) 0x33, (byte) 0x35, (byte) 0x30, (byte) 0x35, (byte) 0x33, (byte) 0x30, (byte) 0x33, (byte) 0x37};
+    //    public static byte[] IMEI = {(byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x32, (byte) 0x32, (byte) 0x31, (byte) 0x32, (byte) 0x33, (byte) 0x35, (byte) 0x30, (byte) 0x35, (byte) 0x33, (byte) 0x30, (byte) 0x33, (byte) 0x37};
     public static String deviceNum = "15070000001";    //设备号
     public static String vehicleColor;           //车辆颜色
     public static String vehicleNum;            //车牌号
 
+    public static byte[] requestWaterCode = new byte[2];      //应答流水号
+    public static byte[] result = new byte[1];                  //结果
+    public static byte[] platformNum = new byte[5];                        //平台编号
+    public static byte[] institutionNumber = new byte[16];        //培训机构编号
+    public static byte[] terminalNum = new byte[16];       //计时终端编号
+    public static byte[] certificatePassword = new byte[12];       //证书口令;
+    public static String terminalCertificate = "";         //终端证书
 
     /***
      * 重新读取设置数据

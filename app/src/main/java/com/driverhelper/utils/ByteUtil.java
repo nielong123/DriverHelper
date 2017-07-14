@@ -34,7 +34,7 @@ public class ByteUtil {
             }
             printResult = printResult + hex.toUpperCase() + " ";
         }
-        System.out.println(printResult);
+        Log.e(TAG, printResult);
     }
 
     public static void printRecvHexString(byte[] b) {
@@ -46,7 +46,7 @@ public class ByteUtil {
             }
             printResult = printResult + hex.toUpperCase() + " ";
         }
-        System.out.println("recrive data = " + printResult);
+        Log.d(TAG, "recrive data = " + printResult);
     }
 
     private static String getString(byte[] bytes, String charsetName) {
@@ -206,6 +206,29 @@ public class ByteUtil {
         }
         return temp.toString().substring(0, 1).equalsIgnoreCase("0") ? temp
                 .toString().substring(1) : temp.toString();
+    }
+
+    /**
+     * @功能: BCD码转为BCD16进制字符串(阿拉伯数据)
+     * @参数: BCD码
+     * @结果: 10进制串 { (byte) 0x11, (byte) 0x01, (byte) 0xa1 } --->"1101a1"
+     */
+    static String bcdByte2bcdString(byte[] data) {
+
+        String strResult = "";
+        for (int j = 0; j < data.length; j++) {
+            String str;
+            if (data[j] == 0x00) {
+                str = "00";
+            } else {
+                str = Integer.toHexString(data[j] & 0xFF);
+                if (str.length() == 1) {
+                    str = "0" + str;
+                }
+            }
+            strResult = strResult + str;
+        }
+        return strResult;
     }
 
     /**
@@ -474,8 +497,6 @@ public class ByteUtil {
      * @param data
      * @return
      */
-    static List<byte[]> midDatas;
-
     public static MessageBean handlerInfo(byte[] data) {
         MessageBean messageBean = new MessageBean();
         byte[] data0 = new byte[2];         //消息id
@@ -483,43 +504,25 @@ public class ByteUtil {
         messageBean.headBean.messageId = ByteUtil.bcd2Str(data0);
         byte[] data1 = new byte[2];         //消息体属性
         System.arraycopy(data, 3, data1, 0, 2);
-        messageBean.headBean.messageAttribute = ByteUtil.bcd2Str(data1);
+        messageBean.headBean.messageAttribute = ByteUtil.bcdByte2bcdString(data1);
         messageBean.headBean.benAttribute = autoAddZeroByLength(hexStringToBinary(messageBean.headBean.messageAttribute), 10);      //由消息体得到二进制的消息体
-        messageBean.headBean.bodyLength = Integer.valueOf(binString2DexString(messageBean.headBean.benAttribute.substring(7, messageBean.headBean.benAttribute.length())));
+        messageBean.headBean.bodyLength = Integer.valueOf(binString2DexString(messageBean.headBean.benAttribute.substring(6, messageBean.headBean.benAttribute.length())));
         messageBean.headBean.isPart = Integer.valueOf(messageBean.headBean.benAttribute.substring(2, 3));
 
         if (messageBean.headBean.isPart == 1) {               //分包  当消息体属性中第13位为1时表示消息体为长消息，进行分包发送处理，具体分包信息由消息包封装项决定
             messageBean.bodyBean = new byte[messageBean.headBean.bodyLength];
             System.arraycopy(data, data.length - messageBean.headBean.bodyLength - 1, messageBean.bodyBean, 0, messageBean.headBean.bodyLength);
-//            Log.e(TAG, "handlerInfo: ***********************************************************************************************");
             byte[] totle = new byte[2];
             System.arraycopy(data, 16, totle, 0, 2);
-//            printHexString(totle);
             messageBean.headBean.encapsulationInfo.totle = Integer.valueOf(ByteUtil.bcd2Str(totle));
-//            Log.e(TAG, "messageBean.headBean.encapsulationInfo.totle = " + messageBean.headBean.encapsulationInfo.totle);
             byte[] index = new byte[2];
             System.arraycopy(data, 18, index, 0, 2);
-//            printHexString(index);
             messageBean.headBean.encapsulationInfo.index = Integer.valueOf(ByteUtil.bcd2Str(index));
-//            Log.e(TAG, "messageBean.headBean.encapsulationInfo.index = " + messageBean.headBean.encapsulationInfo.index);
-//            Log.e(TAG, "handlerInfo: ***********************************************************************************************");
-            if (midDatas == null) {
-                midDatas = new ArrayList<byte[]>();
-            }
-            if (messageBean.headBean.encapsulationInfo.index <= messageBean.headBean.encapsulationInfo.totle) {
-                midDatas.add(messageBean.bodyBean);
-                if (messageBean.headBean.encapsulationInfo.index == messageBean.headBean.encapsulationInfo.totle) {
-                    for (byte[] midData : midDatas) {
-                        messageBean.bodyBean = ByteUtil.add(messageBean.bodyBean, midData);
-                    }
-                    midDatas = null;
-                }
-            }
-        } else {                    //不分包
-            messageBean.bodyBean = new byte[messageBean.headBean.bodyLength];
-            System.arraycopy(data, data.length - messageBean.headBean.bodyLength - 1, messageBean.bodyBean, 0, messageBean.headBean.bodyLength);
-            Log.d(TAG, "handlerInfo: ");
         }
+        messageBean.bodyBean = new byte[messageBean.headBean.bodyLength];
+        System.arraycopy(data, data.length - messageBean.headBean.bodyLength - 1, messageBean.bodyBean, 0, messageBean.headBean.bodyLength);
+        Log.d(TAG, "handlerInfo: ");
+//    }
         return messageBean;
     }
 }

@@ -1,6 +1,7 @@
 package com.driverhelper.helper;
 
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.beans.MessageBean;
@@ -11,6 +12,10 @@ import com.driverhelper.other.jiaminew.TestSignAndVerify;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.ToastUitl;
+import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
@@ -266,6 +271,9 @@ public class BodyHelper {
 
     static String TAG = "ReceiveInfo";
 
+    static List<byte[]> midDatas;
+    static int index, totle;
+
     public static void handleReceiveInfo(byte[] data) {
         if (ByteUtil.checkXOR(data)) {
             MessageBean messageBean = ByteUtil.handlerInfo(data);
@@ -288,12 +296,49 @@ public class BodyHelper {
                                 RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "数据库中无该终端");
                                 break;
                         }
+                    } else {
+                        if (midDatas == null) {
+                            midDatas = new ArrayList<byte[]>();
+                        }
+                        index = messageBean.headBean.encapsulationInfo.index;
+                        totle = messageBean.headBean.encapsulationInfo.totle;
+                        if (index <= totle) {
+                            midDatas.add(messageBean.bodyBean);
+                            if (messageBean.headBean.encapsulationInfo.index == messageBean.headBean.encapsulationInfo.totle) {
+                                int totleLength = 0;
+                                int posLength = 0;
+                                for (byte[] midData : midDatas) {
+                                    totleLength = totleLength + midData.length;
+                                }
+                                byte[] dataResult = new byte[totleLength];
+                                for (byte[] midData : midDatas) {
+                                    System.arraycopy(midData, 0, dataResult, posLength, midData.length);
+                                    posLength = posLength + midData.length;
+                                    ByteUtil.printHexString(midData);
+                                }
+                                int posIndex = 0;
+                                System.arraycopy(dataResult, posIndex, ConstantInfo.requestWaterCode, 0, ConstantInfo.requestWaterCode.length);       //应答流水号
+                                posIndex = ConstantInfo.requestWaterCode.length;
+                                System.arraycopy(dataResult, posIndex, ConstantInfo.result, 0, ConstantInfo.result.length);         //结果
+                                posIndex = posIndex + ConstantInfo.result.length;
+                                System.arraycopy(dataResult, posIndex, ConstantInfo.platformNum, 0, ConstantInfo.platformNum.length);        //平台编号
+                                posIndex = posIndex + ConstantInfo.platformNum.length;
+                                System.arraycopy(dataResult, posIndex, ConstantInfo.institutionNumber, 0, ConstantInfo.institutionNumber.length);      //培训机构编号
+                                posIndex = posIndex + ConstantInfo.institutionNumber.length;
+                                System.arraycopy(dataResult, posIndex, ConstantInfo.terminalNum, 0, ConstantInfo.terminalNum.length);          //终端编号
+                                posIndex = posIndex + ConstantInfo.terminalNum.length;
+                                System.arraycopy(dataResult, posIndex, ConstantInfo.certificatePassword, 0, ConstantInfo.certificatePassword.length);      //证书口令
+                                posIndex = posIndex + ConstantInfo.certificatePassword.length;
+                                int passwordLength = dataResult.length - posIndex;
+                                byte[] data0 = new byte[passwordLength];
+                                System.arraycopy(dataResult, posIndex, data0, 0, data0.length);
+                                ConstantInfo.terminalCertificate = ByteUtil.bcd2Str(data0);     //终端证书
+//                                ByteUtil.printHexString(dataResult);
+                                midDatas = null;
+                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端注册成功");
+                            }
+                        }
                     }
-                    //80 81 00 00 03 00 00 00 00 00 10 00 31 00 09 2A 00 04 03 07
-                    //80 81 00 00 03 00 00 00 00 00 10 00 31 23 50 2A 03 14 02 6F
-                    //        80 81 00 00 03 00 00 00 00 00 10 00 31 23 64 2A 03 34 02 7B
-                    //     80 81 00 00 03 00 00 00 00 00 10 00 31 23 65 2A 03 35 02 7B
-
                     break;
                 case "8001":            //服务端通用应答
                     if (messageBean.headBean.bodyLength == 5) {
