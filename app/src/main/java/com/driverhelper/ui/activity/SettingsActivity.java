@@ -23,8 +23,10 @@ import com.jaydenxiao.common.commonutils.ToastUitl;
 import java.util.List;
 
 import static com.driverhelper.config.Config.WriteSetting.CITY;
+import static com.driverhelper.config.Config.WriteSetting.IMEI;
 import static com.driverhelper.config.Config.WriteSetting.TCP_IP;
 import static com.driverhelper.config.Config.WriteSetting.TCP_PORT;
+import static com.driverhelper.config.Config.WriteSetting.TERMINALPHONENUMBER;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_NUMBER;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
@@ -126,12 +128,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("VENDER_ID"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("MODEL"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("SN"));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("IMEI"));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(IMEI));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0084"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(VEHICLE_NUMBER));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(TCP_IP));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(TCP_PORT));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("DIAL_NO"));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(TERMINALPHONENUMBER));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("KEMU"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("PERDRITYPE"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("CameraID"));

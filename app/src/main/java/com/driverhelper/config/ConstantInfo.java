@@ -24,15 +24,13 @@ public class ConstantInfo {
      * 终端型号
      */
     public static String strTerminalTYPE = "43373033444D";
-//    public static byte[] terminalTYPE = {(byte) 0x43, (byte) 0x37, (byte) 0x30, (byte) 0x33, (byte) 0x44, (byte) 0x4D, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-//            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
 
     public static String strTerminalSerial = "1001001";
 //    public static byte[] terminalSerial = {(byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x31};
 
     public static String strIMEI = "100221235053037";
     //    public static byte[] IMEI = {(byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x32, (byte) 0x32, (byte) 0x31, (byte) 0x32, (byte) 0x33, (byte) 0x35, (byte) 0x30, (byte) 0x35, (byte) 0x33, (byte) 0x30, (byte) 0x33, (byte) 0x37};
-    public static String deviceNum = "15070000001";    //设备号
+    public static String terminalPhoneNumber = "15070000001";    //终端手机号
     public static String vehicleColor;           //车辆颜色
     public static String vehicleNum;            //车牌号
 

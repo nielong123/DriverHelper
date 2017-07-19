@@ -1,6 +1,7 @@
 package com.driverhelper.helper;
 
 import com.driverhelper.config.Config;
+import com.driverhelper.config.ConstantInfo;
 import com.jaydenxiao.common.commonutils.PreferenceUtils;
 
 /**
@@ -73,18 +74,6 @@ public class WriteSettingHelper {
     }
 
     /***
-     * 获取设备编号
-     * @return
-     */
-    public static String getDEVICE_CODE() {
-        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.DEVICE_CODE, null);
-    }
-
-    public static void setDEVICE_CODE(String device_code) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.DEVICE_CODE, device_code);
-    }
-
-    /***
      * 获取车辆颜色
      * @return
      */
@@ -142,5 +131,85 @@ public class WriteSettingHelper {
 
     public static void setEXAM_SUBJECTS(String examSubjects) {
         PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EXAM_TYPE, examSubjects);
+    }
+
+    /***
+     * 获取平台编号
+     * @return
+     */
+    public static byte[] getPLATFORMNUM() {
+        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.PLATFORMNUM);
+    }
+
+    public static void setPLATFORMNUM(byte[] examSubjects) {
+        PreferenceUtils.getInstance().setSettingBytes(Config.WriteSetting.PLATFORMNUM, examSubjects);
+    }
+
+    /***
+     * 获取培训机构编号
+     * @return
+     */
+    public static byte[] getINSTITUTIONNUMBER() {
+        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.INSTITUTIONNUMBER);
+    }
+
+    public static void setINSTITUTIONNUMBER(byte[] institutionnumber) {
+        PreferenceUtils.getInstance().setSettingBytes(Config.WriteSetting.INSTITUTIONNUMBER, institutionnumber);
+    }
+
+    /***
+     * 获取终端机构编号
+     * @return
+     */
+    public static byte[] getTERMINALNUM() {
+        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.TERMINALNUM);
+    }
+
+    public static void setTERMINALNUM(byte[] terminalnum) {
+        PreferenceUtils.getInstance().setSettingBytes(Config.WriteSetting.TERMINALNUM, terminalnum);
+    }
+
+    /***
+     * 获取证书口令
+     * @return
+     */
+    public static byte[] getCERTIFICATEPASSWORD() {
+        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.CERTIFICATEPASSWORD);
+    }
+
+    public static void setCERTIFICATEPASSWORD(byte[] certificatePassword) {
+        PreferenceUtils.getInstance().setSettingBytes(Config.WriteSetting.CERTIFICATEPASSWORD, certificatePassword);
+    }
+
+    /***
+     * 获取证书口令
+     * @return
+     */
+    public static String getTERMINALCERTIFICATE() {
+        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.TERMINALCERTIFICATE, "");
+    }
+
+    public static void setTERMINALCERTIFICATE(String terminalCertificate) {
+        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.TERMINALCERTIFICATE, terminalCertificate);
+    }
+
+
+    /***
+     * 保存终端注册后返回的信息
+     */
+    public static void saveRegistInfo() {
+        WriteSettingHelper.setINSTITUTIONNUMBER(ConstantInfo.institutionNumber);
+        WriteSettingHelper.setPLATFORMNUM(ConstantInfo.platformNum);
+        WriteSettingHelper.setTERMINALNUM(ConstantInfo.terminalNum);
+        WriteSettingHelper.setCERTIFICATEPASSWORD(ConstantInfo.certificatePassword);
+        WriteSettingHelper.setTERMINALCERTIFICATE(ConstantInfo.terminalCertificate);
+    }
+
+    public static void loadRegistInfo() {
+        ConstantInfo.institutionNumber = WriteSettingHelper.getINSTITUTIONNUMBER();
+        ConstantInfo.platformNum = WriteSettingHelper.getPLATFORMNUM();
+        ConstantInfo.terminalNum = WriteSettingHelper.getTERMINALNUM();
+        ConstantInfo.certificatePassword = WriteSettingHelper.getCERTIFICATEPASSWORD();
+        ConstantInfo.terminalCertificate = WriteSettingHelper.getTERMINALCERTIFICATE();
     }
 }

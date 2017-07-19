@@ -81,7 +81,6 @@ public class PreferenceUtils {
         if (settings.contains(key)) {
             settings.edit().remove(key).commit();
         }
-
     }
 
 
@@ -98,5 +97,14 @@ public class PreferenceUtils {
             return gson.fromJson(str, type);
         }
         return null;
+    }
+
+    public byte[] getSettingBytes(String key) {
+        String str = settings.getString(key, "");
+        return ByteUtils.hexString2BCD(str);
+    }
+
+    public void setSettingBytes(String key, byte[] data) {
+        setSettingString(key, ByteUtils.bcdByte2bcdString(data));
     }
 }

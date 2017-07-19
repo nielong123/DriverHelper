@@ -18,7 +18,9 @@ public final class MSG {
     private SharedPreferences sharePreferences;
     private static MSG msg;
     private MainActivity activity;
-    private int noSendCount_GPS, noSendCount_EDU, noSendCount_PIC;
+    private int noSendCount_GPS;
+    private int noSendCount_EDU;
+    private int noSendCount_PIC;
 
     public MSG() {
     }
@@ -72,11 +74,16 @@ public final class MSG {
         ConstantInfo.vehicleNum = sharePreferences.getString(Config.WriteSetting.VEHICLE_NUMBER, "00");
     }
 
+    public void loadTerminalPhoneNumber() {
+        ConstantInfo.terminalPhoneNumber = sharePreferences.getString(Config.WriteSetting.TERMINALPHONENUMBER, "13469986047");
+    }
+
     public void loadSetting() {
         loadProvince();
         loadCity();
         loadVehicle_number();
         loadTcpSetting();
+        loadTerminalPhoneNumber();
     }
 
     public void loadTcpSetting() {
@@ -84,6 +91,10 @@ public final class MSG {
         Config.port = sharePreferences.getString(Config.WriteSetting.TCP_PORT, "2346");
         Config.timeOut = sharePreferences.getString(Config.WriteSetting.TIME_OUT, "10*1000");
         Config.timeOut = "10*1000";
+    }
+
+    public static class ClientInfo {
+        public static int CameraID = 9;
     }
 
 }

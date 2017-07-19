@@ -214,12 +214,25 @@ public class TcpHelper {
         }
     }
 
+    /***
+     * 终端注册
+     */
     public void sendRegistInfo() {
         sendData(BodyHelper.makeRegist());
     }
 
+    /****
+     * 终端注销
+     */
     public void sendCancellation() {
         sendData(BodyHelper.makeUnRegist());
+    }
+
+    /***
+     * 终端鉴权
+     */
+    public void sendAuthentication() {
+        sendData(BodyHelper.makeAuthentication());
     }
 
 

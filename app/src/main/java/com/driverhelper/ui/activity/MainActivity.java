@@ -1,15 +1,21 @@
 package com.driverhelper.ui.activity;
 
+import com.driverhelper.other.zxing.activity.CaptureActivity;
+
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PixelFormat;
+import android.hardware.Camera;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -27,11 +33,14 @@ import com.driverhelper.beans.MSG;
 import com.driverhelper.config.Config;
 import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
+import com.driverhelper.other.Preview;
 import com.driverhelper.other.ReceiverOBDII;
 import com.jaydenxiao.common.base.BaseActivity;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.VersionUtil;
+import com.orhanobut.logger.Logger;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Timer;
 
@@ -39,12 +48,16 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
+import static com.driverhelper.config.Config.carmerId_HANGJING;
 import static com.driverhelper.config.Config.ip;
 import static com.driverhelper.config.Config.port;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener,
-        Toolbar.OnMenuItemClickListener {
+        Toolbar.OnMenuItemClickListener,
+        SurfaceHolder.Callback, Camera.ErrorCallback, Camera.PreviewCallback {
+
+    final String TAG = getClass().getName().toUpperCase();
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -107,6 +120,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private TextToSpeech ttsClient;
     public ReceiverOBDII OBDReceiver = null;
+    private Camera camera;
+    private SurfaceHolder holder;
 
     static Timer AliveTm;
     static Timer CHKTm;
@@ -119,6 +134,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     static int OpenCamNum;
     static int StartChkcount;
     public int MSGdataPOS;
+    private final static int width = 320;
+    private final static int height = 240;
+    byte[] mPreBuffer = null;
     int OSver = 4;
     int OSverMid = 0;
     int OSverSub = 0;
@@ -136,6 +154,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     boolean QRmode = false;
     boolean SendNewMSGChk = false;
     boolean gpsState;
+    boolean isPreview;
 
     Date CurrDate = new Date();
 
@@ -146,6 +165,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private static final int RESULT_OK = 0;
     private static final String TAGcam = "CameraRtn";
     private static final String TAGdev = "DeviceCHK";
+
+
+    Preview preview;
 
     @Override
     public int getLayoutId() {
@@ -160,7 +182,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void initView() {
         initToolBar();
+        initCamera();
+//        byte[] test = new byte[]{(byte) 0x32, (byte) 0x12, (byte) 0x0a, (byte) 0x0b, (byte) 0xb0, (byte) 0xa0};
         networksw.setOnCheckedChangeListener(onCheckedChangeListener);
+//        PreferenceUtils.getInstance().setSettingBytes("test", test);
+//        ByteUtil.printHexString(PreferenceUtils.getInstance().getSettingBytes("test"));
     }
 
 
@@ -184,6 +210,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(this);
     }
 
+
     public boolean onCreateOptionsMenu(Menu paramMenu) {
         getMenuInflater().inflate(R.menu.main, paramMenu);
         return true;
@@ -191,8 +218,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initData() {
+
         this.ttsClient = new TextToSpeech(getApplicationContext(), this);
         MSG.getInstance(this).loadSetting();
+        WriteSettingHelper.loadRegistInfo();
     }
 
     @Override
@@ -253,6 +282,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onStart();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopPreview();
+    }
 
     public void onInit(int paramInt) {
         this.ttsClient.speak("欢迎使用EXSUNTerminal计时终端", 1, null);
@@ -270,6 +304,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_ZhuXiao:
                 TcpHelper.getInstance().sendCancellation();
+                break;
+            case R.id.nav_DEVlogin:
+                TcpHelper.getInstance().sendAuthentication();
+                break;
         }
         return false;
     }
@@ -282,15 +320,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return false;
     }
 
-    @OnClick({R.id.JiaoLianButton, R.id.XueYuanButton, R.id.textViewThisTime})
+    @OnClick({R.id.JiaoLianButton, R.id.XueYuanButton, R.id.textViewThisTime,
+            R.id.surfaceView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.JiaoLianButton:
+                startActivity(CaptureActivity.class);
                 break;
             case R.id.XueYuanButton:
                 break;
             case R.id.textViewThisTime:
                 break;
+            case R.id.surfaceView:
+                if (!CamStatOK)
+//                    resetCam();
+                    break;
         }
     }
 
@@ -328,4 +372,140 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    private void initCamera() {
+        holder = surfaceView.getHolder();
+        initPreviewListener(this);
+    }
+
+    private void initPreviewListener(SurfaceHolder.Callback callback) {
+        holder.addCallback(callback);
+    }
+
+    private void startCamera() {
+//        LsAdas.open();
+    }
+
+    private void resetCam() {
+        startCamera();
+    }
+
+    @Override
+    public void onError(int i, Camera camera) {
+
+    }
+
+    @Override
+    public void onPreviewFrame(byte[] bytes, Camera camera) {
+        if (bytes == null) {
+            Logger.d("################ bytes == null ");
+            return;
+        } else if (bytes.length != width * height * 3 / 2) {
+            Logger.d("################ bytes.length != width * height * 3 / 2 ");
+            return;
+        } else {
+//            Log.d(TAG, "################ onPreviewFrame success  bytes.length = " + bytes.length);
+//            Log.d(TAG, " " + bytes[0] + " " + bytes[1] + " " + bytes[2] + " " + bytes[3] + " " + bytes[4] + " " + bytes[5] + " " + bytes[6] + " " + bytes[7] + " " + bytes[8] + " " + bytes[9]);
+//            Log.d(TAG, " " + bytes[1000] + " " + bytes[1001] + " " + bytes[1002] + " " + bytes[1003] + " " + bytes[1004] + " " + bytes[1005] + " " + bytes[1006] + " " + bytes[1007] + " " + bytes[1008] + " " + bytes[1009]);
+//            Log.d(TAG, " " + bytes[10000] + " " + bytes[10001] + " " + bytes[10002] + " " + bytes[10003] + " " + bytes[10004] + " " + bytes[10005] + " " + bytes[10006] + " " + bytes[10007] + " " + bytes[10008] + " " + bytes[10009]);
+        }
+        if (mPreBuffer == null) {
+            int size = width * height * 3 / 2;
+            mPreBuffer = new byte[size];
+        }
+        camera.addCallbackBuffer(mPreBuffer);
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        startPreview();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        stopPreview();
+    }
+
+    private void startPreview() {
+        try {
+            Log.d(TAG, "startPreview      &&&&&&      start      isPreview :  " + isPreview + "      camera : " + camera);
+            if (!isPreview) {
+                Log.d("", Camera.getNumberOfCameras() + "");
+                if (null == camera) camera = Camera.open(carmerId_HANGJING);
+                Camera.Parameters parameters = camera.getParameters();
+                parameters.setPictureFormat(PixelFormat.JPEG);
+                parameters.set("jpeg-quality", 85);
+                Log.d(TAG, "width, height ==   " + width + " , " + height);
+                parameters.setPreviewSize(width, height);
+                parameters.setPictureSize(width, height);
+                parameters.setExposureCompensation(0);
+                int size = width * height * 3 / 2;
+                if (mPreBuffer == null) {
+                    mPreBuffer = new byte[size];
+                }
+                camera.addCallbackBuffer(mPreBuffer);
+                camera.setPreviewCallbackWithBuffer(this);
+                camera.setParameters(parameters);
+                camera.setPreviewDisplay(holder);
+                camera.startPreview();
+                isPreview = true;
+                camera.setErrorCallback(this);
+            }
+            Log.d(TAG, "startPreview      &&&&&&      end      isPreview :  " + isPreview + "      camera : " + camera);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopPreview() {
+        Logger.d("stopPreview      &&&&&&      start      isPreview :  " + isPreview + "      camera : " + camera);
+        if (null != camera) {
+            if (isPreview) {
+                camera.stopPreview();
+                camera.setErrorCallback(null);
+                isPreview = false;
+            }
+            camera.release();
+            camera = null;
+            Logger.d("stopPreview      &&&&&&      camera :  " + camera);
+        }
+        Logger.d("stopPreview      &&&&&&      end      isPreview :  " + isPreview);
+    }
+
+/******
+ * 獲取攝像頭id的方法，某些机器上不适用
+ */
+    //    private int getDefaultCameraId() {
+//        int defaultId = -1;
+//
+//        // Find the total number of cameras available
+//        int mNumberOfCameras = Camera.getNumberOfCameras();
+//
+//        // Find the ID of the default camera
+//        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+//        for (int i = 0; i < mNumberOfCameras; i++) {
+//            Camera.getCameraInfo(i, cameraInfo);
+//            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+//                defaultId = i;
+//            }
+//        }
+//        if (-1 == defaultId) {
+//            if (mNumberOfCameras > 0) {
+//                // 如果没有后向摄像头
+//                defaultId = 0;
+//            } else {
+//                // 没有摄像头
+//                Toast.makeText(getApplicationContext(), "没有摄像头",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        }
+//        return defaultId;
+//    }
 }
+
+

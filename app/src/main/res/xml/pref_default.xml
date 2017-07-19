@@ -104,7 +104,7 @@
         android:capitalize="words"
         android:defaultValue="@string/pref_default_DIAL_NO_d"
         android:inputType="phone"
-        android:key="DIAL_NO"
+        android:key="TERMINALPHONENUMBER"
         android:maxLength="16"
         android:maxLines="1"
         android:selectAllOnFocus="true"

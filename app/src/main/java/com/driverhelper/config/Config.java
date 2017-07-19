@@ -1,7 +1,5 @@
 package com.driverhelper.config;
 
-import com.driverhelper.beans.MessageBean;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,20 +26,8 @@ public class Config {
 
         public final static String RX_CHANGE_TEXTINFO = "RX_CHANGE_TEXTINFO";       //刷新界面
         public final static String RX_TTS_SPEAK = "RX_TTS_SPEAK";           //語音
-        public final static String RX_NET_DISCONNECT = "RX_NET_DISCONNECT";           //語音
+        public final static String RX_NET_DISCONNECT = "RX_NET_DISCONNECT";           //网络连接中断
     }
-
-//    public static class RxBusIndex {
-//        public final static int SHOW_MARKACTIVITY = 0;
-//        public final static int COACH_SIGN = 1;
-//        public final static int COACH_OK = 2;
-//        public final static int SHOW_COACH_INFO = 3;
-//        public final static int STUDENT_SIGN = 4;
-//        public final static int STUDENT_SIGN_OK = 5;
-//        public final static int COACH_SIGN_OUT = 6;
-//        public final static int STUDENT_SIGN_OUT_OK = 7;
-//        public final static int PHOTOGRAPH = 999;
-//    }
 
     public static class WriteSetting {
         public final static String ISFIRST = "ISFIRST";         //第一次登陆
@@ -51,12 +37,19 @@ public class Config {
         public final static String HEART_SPACE = "HEART_SPACE";         //心跳包间隔
         public final static String HTTP_URL = "HTTP_URL";               //http 地址
         public final static String VEHICLE_NUMBER = "VEHICLE_NUMBER";       //车牌号
-        public final static String DEVICE_CODE = "DEVICE_CODE";         //硬件设备号
+        public final static String TERMINALPHONENUMBER = "TERMINALPHONENUMBER";         //终端手机号
+        public final static String IMEI = "IMEI";
         public final static String VEHICLE_COLOR = "VEHICLE_COLOR";         //车辆颜色
         public final static String WATER_CODE = "WATER_CODE";       //流水号
         public final static String EXAM_TYPE = "EXAM_TYPE";       //考试类型
         public final static String PROVINCE = "PROVINCE";       //省
         public final static String CITY = "CITY";       //省
+        public final static String PLATFORMNUM = "platformNum";     //平台编号
+        public final static String INSTITUTIONNUMBER = "institutionNumber";     //培训机构编号
+        public final static String TERMINALNUM = "terminalNum";     //终端编号
+        public final static String CERTIFICATEPASSWORD = "certificatePassword";     //证书口令
+        public final static String TERMINALCERTIFICATE = "terminalCertificate";     //终端证书
+
     }
 
 
@@ -65,7 +58,7 @@ public class Config {
         ClearGPSINFO;
     }
 
-//    public static MessageBean registBean;       //保存注册信息的变量
-
     public static List<String> colors = new ArrayList<String>(Arrays.asList("蓝色", "黄色", "黑色", "白色", "绿色"));
+
+    public static final int carmerId_HANGJING = 4;
 }

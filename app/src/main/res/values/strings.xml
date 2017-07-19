@@ -82,7 +82,7 @@
     <string name="path_password_eye_mask_visible">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through">M3.27,4.27 L19.74,20.74</string>
     <string name="pref_default_DIAL_NO">终端电话号码</string>
-    <string name="pref_default_DIAL_NO_d">13872567180</string>
+    <string name="pref_default_DIAL_NO_d">13469986047</string>
     <string name="pref_default_IMEI">IMEI</string>
     <string name="pref_default_IMEI_d">100132001014011</string>
     <string name="pref_default_KEMU">培训部分码</string>

@@ -37,8 +37,8 @@ public final class SplashActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        versionCode.setText(VersionUtil.getVersion(this));
-        serialCode.setText(VersionUtil.getSerialCode());
+//        versionCode.setText(VersionUtil.getVersion(this));
+//        serialCode.setText(VersionUtil.getSerialCode());
     }
 
     @Override

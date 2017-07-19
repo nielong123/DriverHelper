@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
+import static com.driverhelper.config.ConstantInfo.terminalNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
 import static com.driverhelper.config.TcpBody.MessageID.register;
@@ -71,18 +72,17 @@ public class BodyHelper {
      *
      * @param id
      *            消息id
-     * @param phoneNum
      *            设备号/电话号码 11位，不足16位的左边补0
      * @return
      */
-    static private byte[] makeHead(byte[] id, String phoneNum,
+    static private byte[] makeHead(byte[] id,
                                    boolean isDivision, int encryption, int length) {
         byte[] data;
         data = ByteUtil.add(TcpBody.HEAD, VERSION_CODE);
         data = ByteUtil.add(data, id);
         data = ByteUtil.add(data,
                 makeHeadAttribute(isDivision, encryption, length));
-        data = ByteUtil.add(data, makePhone2BCD(phoneNum));
+        data = ByteUtil.add(data, makePhone2BCD(ConstantInfo.terminalPhoneNumber));
         data = ByteUtil.add(data, getWaterCode());
         data = ByteUtil.add(data, getReserve());
         if (isDivision) { // 如果有分包就加这一项
@@ -153,8 +153,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(vehicleNum)); // 车牌号
         int bodyLength = resultBody.length;
         System.out.println("bodyLength = " + bodyLength);
-        byte[] resultHead = makeHead(register, ConstantInfo.deviceNum, false,
-                0, bodyLength); // 包头固定
+        byte[] resultHead = makeHead(register, false, 0, bodyLength); // 包头固定
 
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result); // 添加尾部
@@ -171,8 +170,7 @@ public class BodyHelper {
      */
     public static byte[] makeUnRegist() {
         int bodyLength = 0;
-        byte[] result = makeHead(TcpBody.MessageID.unRegister,
-                ConstantInfo.deviceNum, false, 0, bodyLength);
+        byte[] result = makeHead(TcpBody.MessageID.unRegister, false, 0, bodyLength);
         result = ByteUtil.addXor(result);
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
@@ -185,18 +183,23 @@ public class BodyHelper {
      */
     public static byte[] makeAuthentication() {
 
+        long time = System.currentTimeMillis() / 1000;
+        byte[] timeByte = ByteUtil.str2Bcd(ByteUtil.decString2hexString(time));
         byte[] resultBody = ByteUtil.str2Bcd(ByteUtil
-                .decString2hexString((System.currentTimeMillis() / 1000))); // 时间戳
+                .decString2hexString(time)); // 时间戳
         try {
             resultBody = ByteUtil.add(resultBody,
-                    TestSignAndVerify.encryption(resultBody)); // 校验码
+                    TestSignAndVerify.encryption(ByteUtil.add(terminalNum, timeByte),
+                            ConstantInfo.terminalCertificate,
+                            ByteUtil.getString(ConstantInfo.certificatePassword),
+                            time)); // 校验码
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            Logger.e(e.getMessage());
         }
         int bodyLength = resultBody.length;
-        byte[] resultHead = makeHead(TcpBody.MessageID.authentication,
-                ConstantInfo.deviceNum, false, 0, bodyLength);
+        byte[] resultHead = makeHead(TcpBody.MessageID.authentication, false, 0, bodyLength);
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
@@ -223,8 +226,7 @@ public class BodyHelper {
 
         int bodyLength = resultBody.length;
 
-        byte[] resultHead = makeHead(TcpBody.MessageID.login,
-                ConstantInfo.deviceNum, false, 0, bodyLength);
+        byte[] resultHead = makeHead(TcpBody.MessageID.login, false, 0, bodyLength);
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
@@ -248,8 +250,7 @@ public class BodyHelper {
 
         int bodyLength = resultBody.length;
 
-        byte[] resultHead = makeHead(TcpBody.MessageID.logout,
-                ConstantInfo.deviceNum, false, 0, bodyLength);
+        byte[] resultHead = makeHead(TcpBody.MessageID.logout, false, 0, bodyLength);
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
@@ -260,7 +261,7 @@ public class BodyHelper {
 
     public static byte[] makeHeart() {
         int bodylength = 0;
-        byte[] result = makeHead(TcpBody.MessageID.heart, ConstantInfo.deviceNum, false, 0, bodylength);
+        byte[] result = makeHead(TcpBody.MessageID.heart, false, 0, bodylength);
         result = ByteUtil.addXor(result);
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
@@ -332,10 +333,11 @@ public class BodyHelper {
                                 int passwordLength = dataResult.length - posIndex;
                                 byte[] data0 = new byte[passwordLength];
                                 System.arraycopy(dataResult, posIndex, data0, 0, data0.length);
-                                ConstantInfo.terminalCertificate = ByteUtil.bcd2Str(data0);     //终端证书
+                                ConstantInfo.terminalCertificate = ByteUtil.getString(data0);     //终端证书
 //                                ByteUtil.printHexString(dataResult);
                                 midDatas = null;
                                 RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端注册成功");
+                                WriteSettingHelper.saveRegistInfo();
                             }
                         }
                     }
@@ -360,6 +362,6 @@ public class BodyHelper {
                     break;
             }
         }
-
     }
+
 }

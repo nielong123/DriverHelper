@@ -12,6 +12,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\app\libs\core.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="42fd0eaeee98eb9e1c8cfbcef742a34b54522c4c">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\core_70363479de0b3151611d7e5ed0a54e5804102b8d.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\Administrator\Desktop\DriverHelper1\library\irecyclerview\build\intermediates\bundles\default\classes.jar"
         jumboMode="false"
         optimize="true"
@@ -34,7 +43,7 @@
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="45b21e04f326915c11e55aba4fdcbb2cb7cf37a1">
+        sha1="560a18b7aac6aca08b7420c152a257e44f1a428d">
         <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\classes_23107c3dc83323721a273f549356d0f4a5cb3885.jar" />
     </item>
     <item
