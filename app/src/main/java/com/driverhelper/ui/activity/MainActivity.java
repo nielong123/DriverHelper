@@ -1,6 +1,5 @@
 package com.driverhelper.ui.activity;
 
-import com.driverhelper.other.zxing.activity.CaptureActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.driverhelper.R;
 import com.driverhelper.app.MyApplication;
@@ -35,6 +35,8 @@ import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Preview;
 import com.driverhelper.other.ReceiverOBDII;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.jaydenxiao.common.base.BaseActivity;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.VersionUtil;
@@ -325,9 +327,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.JiaoLianButton:
-                startActivity(CaptureActivity.class);
+                startScanActivity("教练员签到");
                 break;
             case R.id.XueYuanButton:
+                startScanActivity("学员签到");
                 break;
             case R.id.textViewThisTime:
                 break;
@@ -336,6 +339,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                    resetCam();
                     break;
         }
+    }
+
+
+    private void startScanActivity(String title) {
+        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, title);
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setPrompt(title);
+        integrator.setCameraId(Config.carmerId_HANGJING);  // Use a specific camera of the device
+        integrator.setBeepEnabled(false);
+//        integrator.setTimeout(10 * 1000);
+        integrator.setBarcodeImageEnabled(true);
+        integrator.initiateScan();
     }
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
@@ -365,6 +381,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "签到成功");
+            }
+        }
         switch (requestCode) {
             case REQUEST_SETTING:
                 MSG.getInstance(this).loadSetting();
@@ -477,35 +502,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Logger.d("stopPreview      &&&&&&      end      isPreview :  " + isPreview);
     }
 
-/******
- * 獲取攝像頭id的方法，某些机器上不适用
- */
-    //    private int getDefaultCameraId() {
-//        int defaultId = -1;
-//
-//        // Find the total number of cameras available
-//        int mNumberOfCameras = Camera.getNumberOfCameras();
-//
-//        // Find the ID of the default camera
-//        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-//        for (int i = 0; i < mNumberOfCameras; i++) {
-//            Camera.getCameraInfo(i, cameraInfo);
-//            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-//                defaultId = i;
-//            }
-//        }
-//        if (-1 == defaultId) {
-//            if (mNumberOfCameras > 0) {
-//                // 如果没有后向摄像头
-//                defaultId = 0;
-//            } else {
-//                // 没有摄像头
-//                Toast.makeText(getApplicationContext(), "没有摄像头",
-//                        Toast.LENGTH_LONG).show();
-//            }
-//        }
-//        return defaultId;
-//    }
+
 }
 
 

@@ -60,5 +60,5 @@ public class Config {
 
     public static List<String> colors = new ArrayList<String>(Arrays.asList("蓝色", "黄色", "黑色", "白色", "绿色"));
 
-    public static final int carmerId_HANGJING = 4;
+    public static final int carmerId_HANGJING = 4;  //4
 }

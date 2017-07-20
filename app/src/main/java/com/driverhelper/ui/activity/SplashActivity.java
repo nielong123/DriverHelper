@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.widget.TextView;
 
 import com.driverhelper.R;
+import com.driverhelper.config.Config;
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.jaydenxiao.common.base.BaseActivity;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 
@@ -45,7 +47,6 @@ public final class SplashActivity extends BaseActivity {
     public void initData() {
         reloadInfo();
     }
-
 
 
     @Override
