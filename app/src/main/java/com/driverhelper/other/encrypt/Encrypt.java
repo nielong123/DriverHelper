@@ -1,5 +1,7 @@
 package com.driverhelper.other.encrypt;
 
+import android.util.Log;
+
 import com.driverhelper.other.jiaminew.EncodeUtil;
 import com.driverhelper.utils.ByteUtil;
 
@@ -33,10 +35,14 @@ public class Encrypt {
      */
     static public byte[] SHA256(final byte[] data, final String certificate,
                                 final String password, final long timeStamp) {
-
         try {
             char[] pas = password.toCharArray();
             byte[] cabuf = new BASE64Decoder().decodeBuffer(certificate);
+            ByteUtil.printHexString("cabuf = ", cabuf);
+            ByteUtil.printHexString("加密内容 : ", data);
+//            Log.d("11", "证书 : " + certificate);
+//            Log.d("11", "证书秘钥 : " + password);
+//            Log.d("11", "timeStamp = " + timeStamp);
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             keyStore.load(new ByteArrayInputStream(cabuf), pas);
             Enumeration<String> aliases = keyStore.aliases();
@@ -94,12 +100,11 @@ public class Encrypt {
                 // 得到 byte 類型结果
                 byte byteBuffer[] = messageDigest.digest();
 
-                Cipher cipher;
                 try {
-                    cipher = Cipher.getInstance("RSA");
+                    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
                     cipher.init(Cipher.ENCRYPT_MODE, key);
                     byte[] encrypted = cipher.doFinal(byteBuffer);
-                    ByteUtil.printHexString(encrypted);
+                    ByteUtil.printHexString("加密结果为  ", encrypted);
                     return encrypted;
                 } catch (NoSuchPaddingException e) {
                     // TODO Auto-generated catch block
@@ -114,18 +119,6 @@ public class Encrypt {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                // // 將 byte 轉換爲 string
-                // StringBuffer strHexString = new StringBuffer();
-                // // 遍歷 byte buffer
-                // for (int i = 0; i < byteBuffer.length; i++) {
-                // String hex = Integer.toHexString(0xff & byteBuffer[i]);
-                // if (hex.length() == 1) {
-                // strHexString.append('0');
-                // }
-                // strHexString.append(hex);
-                // }
-                // // 得到返回結果
-                // strResult = strHexString.toString();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }

@@ -8,6 +8,8 @@ import com.driverhelper.helper.WriteSettingHelper;
 
 public class ConstantInfo {
 
+    public static boolean isDebug = true;
+
     /***
      * 省代码
      */

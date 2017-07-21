@@ -9,6 +9,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.driverhelper.config.ConstantInfo.isDebug;
+
 /**
  * Created by Administrator on 2017/6/6.
  */
@@ -26,27 +28,45 @@ public class ByteUtil {
      * @param b
      */
     public static void printHexString(byte[] b) {
-        String printResult = "";
-        for (int i = 0; i < b.length; i++) {
-            String hex = Integer.toHexString(b[i] & 0xFF);
-            if (hex.length() == 1) {
-                hex = '0' + hex;
+        if(isDebug){
+            String printResult = "";
+            for (int i = 0; i < b.length; i++) {
+                String hex = Integer.toHexString(b[i] & 0xFF);
+                if (hex.length() == 1) {
+                    hex = '0' + hex;
+                }
+                printResult = printResult + hex.toUpperCase() + " ";
             }
-            printResult = printResult + hex.toUpperCase() + " ";
+            Log.e(TAG, printResult);
         }
-        Log.e(TAG, printResult);
+    }
+
+    public static void printHexString(String str, byte[] b) {
+        if(isDebug){
+            String printResult = "";
+            for (int i = 0; i < b.length; i++) {
+                String hex = Integer.toHexString(b[i] & 0xFF);
+                if (hex.length() == 1) {
+                    hex = '0' + hex;
+                }
+                printResult = str + printResult + hex.toUpperCase();
+            }
+            Log.e(TAG, printResult);
+        }
     }
 
     public static void printRecvHexString(byte[] b) {
-        String printResult = "";
-        for (int i = 0; i < b.length; i++) {
-            String hex = Integer.toHexString(b[i] & 0xFF);
-            if (hex.length() == 1) {
-                hex = '0' + hex;
+        if(isDebug){
+            String printResult = "";
+            for (int i = 0; i < b.length; i++) {
+                String hex = Integer.toHexString(b[i] & 0xFF);
+                if (hex.length() == 1) {
+                    hex = '0' + hex;
+                }
+                printResult = printResult + hex.toUpperCase() + " ";
             }
-            printResult = printResult + hex.toUpperCase() + " ";
+            Log.d(TAG, "recrive data = " + printResult);
         }
-        Log.d(TAG, "recrive data = " + printResult);
     }
 
     private static String getString(byte[] bytes, String charsetName) {

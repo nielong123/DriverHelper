@@ -406,14 +406,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         holder.addCallback(callback);
     }
 
-    private void startCamera() {
-//        LsAdas.open();
-    }
-
-    private void resetCam() {
-        startCamera();
-    }
-
     @Override
     public void onError(int i, Camera camera) {
 
@@ -457,7 +449,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void startPreview() {
         try {
-            Log.d(TAG, "startPreview      &&&&&&      start      isPreview :  " + isPreview + "      camera : " + camera);
+//            Log.d(TAG, "startPreview      &&&&&&      start      isPreview :  " + isPreview + "      camera : " + camera);
             if (!isPreview) {
                 Log.d("", Camera.getNumberOfCameras() + "");
                 if (null == camera) camera = Camera.open(carmerId_HANGJING);
@@ -480,15 +472,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 isPreview = true;
                 camera.setErrorCallback(this);
             }
-            Log.d(TAG, "startPreview      &&&&&&      end      isPreview :  " + isPreview + "      camera : " + camera);
-
+//            Log.d(TAG, "startPreview      &&&&&&      end      isPreview :  " + isPreview + "      camera : " + camera);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void stopPreview() {
-        Logger.d("stopPreview      &&&&&&      start      isPreview :  " + isPreview + "      camera : " + camera);
+//        Logger.d("stopPreview      &&&&&&      start      isPreview :  " + isPreview + "      camera : " + camera);
         if (null != camera) {
             if (isPreview) {
                 camera.stopPreview();
@@ -497,12 +488,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
             camera.release();
             camera = null;
-            Logger.d("stopPreview      &&&&&&      camera :  " + camera);
+//            Logger.d("stopPreview      &&&&&&      camera :  " + camera);
         }
-        Logger.d("stopPreview      &&&&&&      end      isPreview :  " + isPreview);
+//        Logger.d("stopPreview      &&&&&&      end      isPreview :  " + isPreview);
     }
-
-
 }
 
 
