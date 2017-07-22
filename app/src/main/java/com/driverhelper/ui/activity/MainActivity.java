@@ -30,11 +30,13 @@ import android.widget.Toast;
 import com.driverhelper.R;
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MSG;
+import com.driverhelper.beans.QRbean;
 import com.driverhelper.config.Config;
 import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Preview;
 import com.driverhelper.other.ReceiverOBDII;
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.jaydenxiao.common.base.BaseActivity;
@@ -53,6 +55,7 @@ import rx.functions.Action1;
 import static com.driverhelper.config.Config.carmerId_HANGJING;
 import static com.driverhelper.config.Config.ip;
 import static com.driverhelper.config.Config.port;
+import static com.driverhelper.config.ConstantInfo.qRbean;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener,
@@ -124,6 +127,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public ReceiverOBDII OBDReceiver = null;
     private Camera camera;
     private SurfaceHolder holder;
+
 
     static Timer AliveTm;
     static Timer CHKTm;
@@ -270,6 +274,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 lat.setText("");
                 lon.setText("");
                 break;
+            case SETJIAOLIAN:
+                COACHNUMtext.setText(qRbean.getName());
+                IDCARDtext.setText(qRbean.getNumber());
+                break;
+            case SETXUEYUAN:
+                XueYuanTEXT.setText(qRbean.getName());
+                STUNUMtext.setText(qRbean.getNumber());
+                break;
         }
     }
 
@@ -385,6 +397,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\"}";
+                qRbean = new Gson().fromJson(str, QRbean.class);
+                if (qRbean.getType() != null) {
+                    RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员扫描成功");
+                    setTextInfo(Config.TextInfoType.SETJIAOLIAN);
+                } else {
+                    RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员扫描成功");
+                    setTextInfo(Config.TextInfoType.SETXUEYUAN);
+                }
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "签到成功");

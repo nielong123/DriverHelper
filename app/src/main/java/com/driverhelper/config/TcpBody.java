@@ -14,10 +14,11 @@ public final class TcpBody {
         public static byte[] register = {(byte) 0x01, (byte) 0x00}; // 注册
         public static byte[] unRegister = {(byte) 0x00, (byte) 0x03}; // 注销
         public static byte[] authentication = {(byte) 0x01, (byte) 0x02}; // 终端鉴权
-        public static byte[] login = {(byte) 0x01, (byte) 0xF0}; // 登录
-        public static byte[] logout = {(byte) 0x01, (byte) 0xF1}; // 登出
         public static byte[] queryTerminalInfoReq = {(byte) 0x81, (byte) 0x06};    //查询终端参数应答
         public static byte[] heart = {(byte) 0x00, (byte) 0x02};        //心跳包
+        public static byte[] clientCommonResponse = {(byte) 0x00, (byte) 0x01};         //客户端通用应答
+        public static byte[] locationInfoUpdata = {(byte) 0x02, (byte) 0x00};       //B.3.2.3.16　位置信息汇报
+        public static byte[] findLocatInfoRequest = {(byte) 0x02, (byte) 0x01};     //查询位置信息应答
     }
 
     public static class ReceiveMessageId {

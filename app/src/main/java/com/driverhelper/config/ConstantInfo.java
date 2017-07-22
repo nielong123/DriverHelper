@@ -1,5 +1,6 @@
 package com.driverhelper.config;
 
+import com.driverhelper.beans.QRbean;
 import com.driverhelper.helper.WriteSettingHelper;
 
 /**
@@ -44,6 +45,9 @@ public class ConstantInfo {
     public static byte[] certificatePassword = new byte[12];       //证书口令;
     public static String terminalCertificate = "";         //终端证书
 
+
+
+    public static QRbean qRbean;
     /***
      * 重新读取设置数据
      */

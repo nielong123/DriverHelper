@@ -55,7 +55,9 @@ public class Config {
 
     public enum TextInfoType {
         ChangeGPSINFO,
-        ClearGPSINFO;
+        ClearGPSINFO,
+        SETJIAOLIAN,
+        SETXUEYUAN;
     }
 
     public static List<String> colors = new ArrayList<String>(Arrays.asList("蓝色", "黄色", "黑色", "白色", "绿色"));

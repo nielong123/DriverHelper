@@ -1,7 +1,6 @@
 package com.driverhelper.helper;
 
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.beans.MessageBean;
@@ -9,7 +8,6 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.config.TcpBody;
 import com.driverhelper.other.encrypt.Encrypt;
-import com.driverhelper.other.jiaminew.TestSignAndVerify;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.ToastUitl;
@@ -22,8 +20,12 @@ import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
+import static com.driverhelper.config.TcpBody.MessageID.clientCommonResponse;
+import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
+import static com.driverhelper.config.TcpBody.MessageID.locationInfoUpdata;
 import static com.driverhelper.config.TcpBody.MessageID.register;
 import static com.driverhelper.config.TcpBody.VERSION_CODE;
+import static com.driverhelper.utils.ByteUtil.int2Bytes;
 
 /**
  * Created by Administrator on 2017/6/7.
@@ -180,12 +182,11 @@ public class BodyHelper {
     }
 
     /***
-     * 终端鉴权 加密数据长度有问题
+     * 终端鉴权
      */
     public static byte[] makeAuthentication() {
 
         long time = System.currentTimeMillis() / 1000;
-//        byte[] timeByte = ByteUtil.str2Bcd(ByteUtil.decString2hexString(time));
         byte[] resultBody = ByteUtil.str2Bcd(ByteUtil
                 .decString2hexString(time)); // 时间戳
         try {
@@ -209,56 +210,6 @@ public class BodyHelper {
         return result;
     }
 
-    /****
-     * 终端登录
-     *
-     * @param terminalNumber
-     * @param terminalNumberPwd
-     * @param insertCode
-     * @return
-     */
-    public static byte[] makeLogin(String terminalNumber,
-                                   String terminalNumberPwd, String insertCode) {
-        byte[] resultBody = ByteUtil.hexString2BCD(terminalNumber); // 终端编号
-        resultBody = ByteUtil.add(resultBody,
-                ByteUtil.hexString2BCD(terminalNumberPwd)); // 终端密码
-        resultBody = ByteUtil.add(resultBody,
-                ByteUtil.hexString2BCD(insertCode)); // 平台接入码
-
-        int bodyLength = resultBody.length;
-
-        byte[] resultHead = makeHead(TcpBody.MessageID.login, false, 0, bodyLength);
-        byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
-        result = ByteUtil.addEND(result);
-        result = ByteUtil.checkMark(result);
-        ByteUtil.printHexString(result);
-
-        return result;
-    }
-
-    /****
-     * 终端登出
-     *
-     * @param terminalNumber
-     * @param terminalNumberPwd
-     * @return
-     */
-    public static byte[] makeLogout(String terminalNumber,
-                                    String terminalNumberPwd) {
-        byte[] resultBody = ByteUtil.hexString2BCD(terminalNumber); // 终端编号
-        resultBody = ByteUtil.add(resultBody,
-                ByteUtil.hexString2BCD(terminalNumberPwd)); // 终端密码
-
-        int bodyLength = resultBody.length;
-
-        byte[] resultHead = makeHead(TcpBody.MessageID.logout, false, 0, bodyLength);
-        byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
-        result = ByteUtil.addEND(result);
-        result = ByteUtil.checkMark(result);
-        ByteUtil.printHexString(result);
-
-        return result;
-    }
 
     public static byte[] makeHeart() {
         int bodylength = 0;
@@ -270,6 +221,144 @@ public class BodyHelper {
 
         return result;
     }
+
+    /****
+     * 客户端通用应答
+     * @param para1
+     * @param para2
+     * @param para3
+     * @return
+     */
+    public static byte[] makeClientCommonResponse(int para1, int para2, int para3) {
+        byte[] resultBody = int2Bytes(para1, 2);
+        resultBody = ByteUtil.add(resultBody, int2Bytes(para2, 2));
+        resultBody = ByteUtil.add(resultBody, int2Bytes(para3, 1));
+
+        byte[] resultHead = makeHead(clientCommonResponse, false, 0, resultBody.length); // 包头固定
+
+        byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
+        result = ByteUtil.addEND(result); // 添加尾部
+        result = ByteUtil.checkMark(result);
+
+        ByteUtil.printHexString(result);
+        return result;
+    }
+
+    /**
+     * B.3.2.3.16　位置信息汇报
+     *
+     * @param para1  报警标识	DWORD	报警标识位定义见表B.22
+     * @param para2  状态	DWORD	状态位定义见表B.23
+     * @param para3  纬度	DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
+     * @param para4  经度	DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
+     * @param para5  行驶记录速度	WORD	行驶记录功能获取的速度，1/10km/h
+     * @param para6  卫星定位速度	WORD	1/10km/h
+     * @param para7  方向	WORD	0-359，正北为0，顺时针
+     * @param para8  时间	BCD[6]	YYMMDDhhmmss(GMT+8时间，本规范之后涉及的时间均采用此时区)
+     * @param para9  里程，DWORD，1/10km，对应车上里程表读书  附加信息 >=0 ,负数就不添加
+     * @param para10 油量，WORD，1/10L，对应车上油量表读书   附加信息 >=0 ,负数就不添加
+     * @param para11 海拔高度，单位为m  附加信息 >=-1000 ,小于-1000不添加
+     * @param para12 发动机转速，WORD  附加信息 >=0 ,负数就不添加
+     * @return
+     */
+    public static byte[] makeLocationInfoBody(int para1, int para2, int para3, int para4, int para5, int para6, int para7, String para8, int para9, int para10, int para11, int para12) {
+        byte[] resultBody = int2Bytes(para1, 4);
+        resultBody = ByteUtil.add(resultBody, int2Bytes(para2, 4));
+        resultBody = ByteUtil.add(resultBody, int2Bytes(para3, 4));
+        resultBody = ByteUtil.add(resultBody, int2Bytes(para4, 4));
+        resultBody = ByteUtil.add(resultBody, int2Bytes(para5, 2));
+        resultBody = ByteUtil.add(resultBody, int2Bytes(para6, 2));
+        resultBody = ByteUtil.add(resultBody, int2Bytes(para7, 2));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(para8));
+        if (para9 >= 0) {
+            resultBody = ByteUtil.add(resultBody, int2Bytes(0x01, 1));
+            resultBody = ByteUtil.add(resultBody, int2Bytes(4, 1));
+            resultBody = ByteUtil.add(resultBody, int2Bytes(para9, 4));
+        }
+        if (para10 >= 0) {
+            resultBody = ByteUtil.add(resultBody, int2Bytes(0x02, 1));
+            resultBody = ByteUtil.add(resultBody, int2Bytes(2, 1));
+            resultBody = ByteUtil.add(resultBody, int2Bytes(para10, 2));
+        }
+        if (para11 >= -1000) {
+            resultBody = ByteUtil.add(resultBody, int2Bytes(0x03, 1));
+            resultBody = ByteUtil.add(resultBody, int2Bytes(2, 1));
+            resultBody = ByteUtil.add(resultBody, int2Bytes(para11, 2));
+        }
+        if (para12 >= 0) {
+            resultBody = ByteUtil.add(resultBody, int2Bytes(0x04, 1));
+            resultBody = ByteUtil.add(resultBody, int2Bytes(2, 1));
+            resultBody = ByteUtil.add(resultBody, int2Bytes(para12, 2));
+        }
+        byte[] resultHead = makeHead(locationInfoUpdata, false, 0, resultBody.length); // 包头固定
+
+        return resultBody;
+    }
+
+
+    /**
+     * B.3.2.3.16　位置信息汇报
+     *
+     * @param para1  报警标识	DWORD	报警标识位定义见表B.22
+     * @param para2  状态	DWORD	状态位定义见表B.23
+     * @param para3  纬度	DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
+     * @param para4  经度	DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
+     * @param para5  行驶记录速度	WORD	行驶记录功能获取的速度，1/10km/h
+     * @param para6  卫星定位速度	WORD	1/10km/h
+     * @param para7  方向	WORD	0-359，正北为0，顺时针
+     * @param para8  时间	BCD[6]	YYMMDDhhmmss(GMT+8时间，本规范之后涉及的时间均采用此时区)
+     * @param para9  里程，DWORD，1/10km，对应车上里程表读书  附加信息 >=0 ,负数就不添加
+     * @param para10 油量，WORD，1/10L，对应车上油量表读书   附加信息 >=0 ,负数就不添加
+     * @param para11 海拔高度，单位为m  附加信息 >=-1000 ,小于-1000不添加
+     * @param para12 发动机转速，WORD  附加信息 >=0 ,负数就不添加
+     * @return
+     */
+    public static byte[] makeLocationInfo(int para1, int para2, int para3, int para4, int para5, int para6, int para7, String para8, int para9, int para10, int para11, int para12) {
+        byte[] resultBody = makeLocationInfoBody(para1, para2, para3, para4, para5, para6, para7, para8, para9, para10, para11, para12);
+        byte[] resultHead = makeHead(locationInfoUpdata, false, 0, resultBody.length); // 包头固定
+        sticky(resultHead, resultBody);
+        return resultBody;
+    }
+
+
+    /**
+     * B.3.2.3.19　位置信息查询应答
+     *
+     * @param para1 报警标识   DWORD	报警标识位定义见表B.22
+     * @param para2 状态     DWORD	状态位定义见表B.23
+     * @param para3 纬度     DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
+     * @param para4 经度     DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
+     * @param para5 行驶记录速度 WORD	行驶记录功能获取的速度，1/10km/h
+     * @param para6 卫星定位速度 WORD	1/10km/h
+     * @param para7 方向     WORD	0-359，正北为0，顺时针
+     * @param para8 时间     BCD[6]	YYMMDDhhmmss(GMT+8时间，本规范之后涉及的时间均采用此时区)
+     * @return
+     */
+    public static byte[] makeFindLocatInfoRequest(int para1, int para2, int para3, int para4, int para5, int para6, int para7, String para8) {
+
+        byte[] resultBody = makeLocationInfoBody(para1, para2, para3, para4, para5, para6, para7, para8, -10, -10, -20000, -10);
+        byte[] resultHead = makeHead(findLocatInfoRequest, false, 0, resultBody.length); // 包头固定
+
+        byte[] result = sticky(resultHead, resultBody);
+        ByteUtil.printHexString(result);
+        return result;
+    }
+
+    /***
+     *          黏
+     * @param head
+     * @param body
+     * @return
+     */
+    private static byte[] sticky(byte[] head, byte[] body) {
+        byte[] result = ByteUtil.addXor(ByteUtil.add(head, body));
+        result = ByteUtil.addEND(result); // 添加尾部
+        result = ByteUtil.checkMark(result);
+
+        ByteUtil.printHexString(result);
+        return result;
+    }
+
 
     static String TAG = "ReceiveInfo";
 
@@ -362,6 +451,14 @@ public class BodyHelper {
                                 break;
                         }
                     }
+                    break;
+
+                case "8103":            //设置终端参数
+
+
+                    break;
+
+                default:
                     break;
             }
         }

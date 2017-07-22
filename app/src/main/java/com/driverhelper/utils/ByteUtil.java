@@ -28,7 +28,7 @@ public class ByteUtil {
      * @param b
      */
     public static void printHexString(byte[] b) {
-        if(isDebug){
+        if (isDebug) {
             String printResult = "";
             for (int i = 0; i < b.length; i++) {
                 String hex = Integer.toHexString(b[i] & 0xFF);
@@ -42,7 +42,7 @@ public class ByteUtil {
     }
 
     public static void printHexString(String str, byte[] b) {
-        if(isDebug){
+        if (isDebug) {
             String printResult = "";
             for (int i = 0; i < b.length; i++) {
                 String hex = Integer.toHexString(b[i] & 0xFF);
@@ -56,7 +56,7 @@ public class ByteUtil {
     }
 
     public static void printRecvHexString(byte[] b) {
-        if(isDebug){
+        if (isDebug) {
             String printResult = "";
             for (int i = 0; i < b.length; i++) {
                 String hex = Integer.toHexString(b[i] & 0xFF);
@@ -427,6 +427,21 @@ public class ByteUtil {
     public static byte[] addEND(byte[] data) {
         byte[] result = ByteUtil.add(data, TcpBody.END);
         return result;
+    }
+
+    /**
+     * int 转 byte[]
+     *
+     * @param value int
+     * @param len   转byte【】 长度
+     * @return
+     */
+    public static byte[] int2Bytes(int value, int len) {
+        byte[] b = new byte[len];
+        for (int i = 0; i < len; i++) {
+            b[len - i - 1] = (byte) ((value >> 8 * i) & 0xff);
+        }
+        return b;
     }
 
     /*****
