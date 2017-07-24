@@ -1,7 +1,5 @@
 package com.driverhelper.other.encrypt;
 
-import android.util.Log;
-
 import com.driverhelper.other.jiaminew.EncodeUtil;
 import com.driverhelper.utils.ByteUtil;
 
@@ -38,8 +36,8 @@ public class Encrypt {
         try {
             char[] pas = password.toCharArray();
             byte[] cabuf = new BASE64Decoder().decodeBuffer(certificate);
-            ByteUtil.printHexString("cabuf = ", cabuf);
-            ByteUtil.printHexString("加密内容 : ", data);
+//            ByteUtil.printHexString("cabuf = ", cabuf);
+//            ByteUtil.printHexString("加密内容 : ", data);
 //            Log.d("11", "证书 : " + certificate);
 //            Log.d("11", "证书秘钥 : " + password);
 //            Log.d("11", "timeStamp = " + timeStamp);

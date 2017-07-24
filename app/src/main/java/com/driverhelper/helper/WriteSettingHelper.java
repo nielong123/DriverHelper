@@ -110,6 +110,18 @@ public class WriteSettingHelper {
     }
 
     /***
+     * 获取透传消息编号
+     * @return
+     */
+    public static String getEX_CODE() {
+        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.EX_CODE, "0000");
+    }
+
+    public static void setEX_CODE(String waterCode) {
+        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EX_CODE, waterCode);
+    }
+
+    /***
      * 获取考试种类  C1  C2  C3
      * @return
      */

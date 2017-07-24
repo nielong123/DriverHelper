@@ -173,8 +173,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private static final String TAGdev = "DeviceCHK";
 
 
-    Preview preview;
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -189,10 +187,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void initView() {
         initToolBar();
         initCamera();
-//        byte[] test = new byte[]{(byte) 0x32, (byte) 0x12, (byte) 0x0a, (byte) 0x0b, (byte) 0xb0, (byte) 0xa0};
         networksw.setOnCheckedChangeListener(onCheckedChangeListener);
-//        PreferenceUtils.getInstance().setSettingBytes("test", test);
-//        ByteUtil.printHexString(PreferenceUtils.getInstance().getSettingBytes("test"));
     }
 
 

@@ -34,6 +34,7 @@ public class TimeUtil {
      * 时间日期格式化到年月日时分秒.
      */
     public static String dateFormatYMDHMS = "yyyy-MM-dd HH:mm:ss";
+    public static String dateFormatYMDHMS_ = "yyMMddHHmmss";
     public static String dateFormatYMDHMS_f = "yyyyMMddHHmmss";
     public static String dateFormatMDHM = "MM-dd HH:mm";
     public static String dateFormat = "yyyy-MM-dd HH:mm";

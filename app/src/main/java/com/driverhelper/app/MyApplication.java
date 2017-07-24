@@ -30,6 +30,7 @@ public class MyApplication extends BaseApplication {
     public float speedGPS, direction;
     public double lat, lon;
     public long timeGPS, timeSYS;
+    public boolean isLocation;
 
     public static Context mApplicationContext;
     public static MyApplication myApp;
@@ -94,8 +95,10 @@ public class MyApplication extends BaseApplication {
                 MyApplication.getInstance().speedGPS = 36.0F * amapLocation.getSpeed();
                 MyApplication.getInstance().direction = amapLocation.getBearing();
                 MyApplication.getInstance().timeGPS = amapLocation.getTime();
+                MyApplication.getInstance().isLocation = true;
                 RxBus.getInstance().post(Config.Config_RxBus.RX_CHANGE_TEXTINFO, ChangeGPSINFO);
             } else {
+                MyApplication.getInstance().isLocation = false;
                 Logger.e("AmapError", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
                 RxBus.getInstance().post(Config.Config_RxBus.RX_CHANGE_TEXTINFO, ClearGPSINFO);
             }

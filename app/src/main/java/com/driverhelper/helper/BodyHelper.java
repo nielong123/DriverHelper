@@ -1,6 +1,7 @@
 package com.driverhelper.helper;
 
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.beans.MessageBean;
@@ -24,6 +25,7 @@ import static com.driverhelper.config.TcpBody.MessageID.clientCommonResponse;
 import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
 import static com.driverhelper.config.TcpBody.MessageID.locationInfoUpdata;
 import static com.driverhelper.config.TcpBody.MessageID.register;
+import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogin;
 import static com.driverhelper.config.TcpBody.VERSION_CODE;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
 
@@ -115,6 +117,14 @@ public class BodyHelper {
      */
     public static byte[] getWaterCode() {
         return ByteUtil.hexString2BCD(WaterCodeHelper.getWaterCode());
+    }
+
+    /******
+     * 获取透传消息流水号
+     * @return
+     */
+    public static byte[] getExCode() {
+        return ByteUtil.hexString2BCD(ExCodeHelper.getExCode());
     }
 
     /***
@@ -211,6 +221,25 @@ public class BodyHelper {
     }
 
 
+    /**
+     * B.4.2.1.1　上报教练员登录
+     *
+     * @param IdCard   教练员身份证号 BYTE[18]	ASCII码，不足18位前补0x00
+     * @param coachnum 教练员编号 BYTE[16]	统一编号
+     * @param carType  准教车型   BYTE[2]	A1\A2\A3\B1\B2\C1\C2\C3\C4\D\E\F
+     * @param gnss     基本GNSS数据包
+     * @return
+     */
+    public static byte[] makeCoachInfo(String IdCard, String coachnum, String carType, byte[] gnss) {
+        byte[] resultBody = ByteUtil.str2Word(ByteUtil.autoAddZeroByLength(IdCard,
+                18));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(coachnum));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(carType));
+        resultBody = ByteUtil.add(resultBody, gnss);
+        return buildExMsg(updataCoachLogin, 0, 1, 2, resultBody);
+    }
+
+
     public static byte[] makeHeart() {
         int bodylength = 0;
         byte[] result = makeHead(TcpBody.MessageID.heart, false, 0, bodylength);
@@ -261,9 +290,9 @@ public class BodyHelper {
      * @param para12 发动机转速，WORD  附加信息 >=0 ,负数就不添加
      * @return
      */
-    public static byte[] makeLocationInfoBody(int para1, int para2, int para3, int para4, int para5, int para6, int para7, String para8, int para9, int para10, int para11, int para12) {
-        byte[] resultBody = int2Bytes(para1, 4);
-        resultBody = ByteUtil.add(resultBody, int2Bytes(para2, 4));
+    public static byte[] makeLocationInfoBody(String para1, String para2, int para3, int para4, int para5, int para6, int para7, String para8, int para9, int para10, int para11, int para12) {
+        byte[] resultBody = ByteUtil.hexString2BCD(para1);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.hexString2BCD(para2));
         resultBody = ByteUtil.add(resultBody, int2Bytes(para3, 4));
         resultBody = ByteUtil.add(resultBody, int2Bytes(para4, 4));
         resultBody = ByteUtil.add(resultBody, int2Bytes(para5, 2));
@@ -299,25 +328,36 @@ public class BodyHelper {
     /**
      * B.3.2.3.16　位置信息汇报
      *
-     * @param para1  报警标识	DWORD	报警标识位定义见表B.22
-     * @param para2  状态	DWORD	状态位定义见表B.23
-     * @param para3  纬度	DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
-     * @param para4  经度	DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
-     * @param para5  行驶记录速度	WORD	行驶记录功能获取的速度，1/10km/h
-     * @param para6  卫星定位速度	WORD	1/10km/h
-     * @param para7  方向	WORD	0-359，正北为0，顺时针
-     * @param para8  时间	BCD[6]	YYMMDDhhmmss(GMT+8时间，本规范之后涉及的时间均采用此时区)
-     * @param para9  里程，DWORD，1/10km，对应车上里程表读书  附加信息 >=0 ,负数就不添加
-     * @param para10 油量，WORD，1/10L，对应车上油量表读书   附加信息 >=0 ,负数就不添加
-     * @param para11 海拔高度，单位为m  附加信息 >=-1000 ,小于-1000不添加
-     * @param para12 发动机转速，WORD  附加信息 >=0 ,负数就不添加
+     * @param warningSignHex 报警标识	DWORD	报警标识位定义见表B.22
+     * @param stateHex       状态	DWORD	状态位定义见表B.23
+     * @param para3          纬度	DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
+     * @param para4          经度	DWORD	以度为单位的纬度值乘以10的6次方，精确到百万分之一度
+     * @param para5          行驶记录速度	WORD	行驶记录功能获取的速度，1/10km/h
+     * @param para6          卫星定位速度	WORD	1/10km/h
+     * @param para7          方向	WORD	0-359，正北为0，顺时针
+     * @param para8          时间	BCD[6]	YYMMDDhhmmss(GMT+8时间，本规范之后涉及的时间均采用此时区)
+     * @param para9          里程，DWORD，1/10km，对应车上里程表读书  附加信息 >=0 ,负数就不添加
+     * @param para10         油量，WORD，1/10L，对应车上油量表读书   附加信息 >=0 ,负数就不添加
+     * @param para11         海拔高度，单位为m  附加信息 >=-1000 ,小于-1000不添加
+     * @param para12         发动机转速，WORD  附加信息 >=0 ,负数就不添加
      * @return
      */
-    public static byte[] makeLocationInfo(int para1, int para2, int para3, int para4, int para5, int para6, int para7, String para8, int para9, int para10, int para11, int para12) {
-        byte[] resultBody = makeLocationInfoBody(para1, para2, para3, para4, para5, para6, para7, para8, para9, para10, para11, para12);
+    public static byte[] makeLocationInfo(String warningSignHex, String stateHex, int para3, int para4, int para5, int para6, int para7, String para8, int para9, int para10, int para11, int para12) {
+
+        byte[] resultBody = makeLocationInfoBody(warningSignHex,
+                stateHex,
+                para3,
+                para4,
+                para5,
+                para6,
+                para7,
+                para8,
+                para9,
+                para10,
+                para11,
+                para12);
         byte[] resultHead = makeHead(locationInfoUpdata, false, 0, resultBody.length); // 包头固定
-        sticky(resultHead, resultBody);
-        return resultBody;
+        return sticky(resultHead, resultBody);
     }
 
 
@@ -334,7 +374,7 @@ public class BodyHelper {
      * @param para8 时间     BCD[6]	YYMMDDhhmmss(GMT+8时间，本规范之后涉及的时间均采用此时区)
      * @return
      */
-    public static byte[] makeFindLocatInfoRequest(int para1, int para2, int para3, int para4, int para5, int para6, int para7, String para8) {
+    public static byte[] makeFindLocatInfoRequest(String para1, String para2, int para3, int para4, int para5, int para6, int para7, String para8) {
 
         byte[] resultBody = makeLocationInfoBody(para1, para2, para3, para4, para5, para6, para7, para8, -10, -10, -20000, -10);
         byte[] resultHead = makeHead(findLocatInfoRequest, false, 0, resultBody.length); // 包头固定
@@ -357,6 +397,32 @@ public class BodyHelper {
 
         ByteUtil.printHexString(result);
         return result;
+    }
+
+
+    /**
+     * B.4.1.2　扩展计时培训消息内容
+     *
+     * @param exMsgId 透传消息ID
+     * @param para2   消息时效类型 ，0：实时消息，1：补传消息；
+     * @param para3   应答属性，0：不需要应答，1：需要应答；
+     * @param para4   表示加密算法，0：未加密，1：SHA1，2：SHA256；其他保留
+     * @param para6   数据内容
+     * @return
+     */
+    public static byte[] buildExMsg(byte[] exMsgId, int para2, int para3, int para4, byte[] para6) {
+        int attrr = para2 + para3 * 2 + para4 * 16;
+        byte[] resultBody = ByteUtil.add(exMsgId, int2Bytes(attrr, 2));
+        resultBody = ByteUtil.add(resultBody, getExCode());
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(strTerminalSerial));
+        resultBody = ByteUtil.add(resultBody, int2Bytes(para6.length, 4));
+        resultBody = ByteUtil.add(resultBody, para6);
+        ///加密
+        if (para4 == 2) {
+
+        }
+
+        return resultBody;
     }
 
 

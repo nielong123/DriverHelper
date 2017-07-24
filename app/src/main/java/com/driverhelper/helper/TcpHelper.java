@@ -1,14 +1,17 @@
 package com.driverhelper.helper;
 
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.Config;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
+import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.orhanobut.logger.Logger;
 import com.vilyever.socketclient.SocketClient;
@@ -18,6 +21,8 @@ import com.vilyever.socketclient.helper.SocketHeartBeatHelper;
 import com.vilyever.socketclient.helper.SocketPacketHelper;
 import com.vilyever.socketclient.helper.SocketResponsePacket;
 import com.vilyever.socketclient.util.CharsetUtil;
+
+import java.util.Timer;
 
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
@@ -151,6 +156,7 @@ public class TcpHelper {
                 if (client.getSocketPacketHelper().getReadStrategy() == SocketPacketHelper.ReadStrategy.Manually) {
                     client.readDataToLength(CharsetUtil.stringToData("Server accepted", CharsetUtil.UTF_8).length);
                 }
+                startUpDataLocationInfo();
             }
 
             @Override
@@ -190,6 +196,24 @@ public class TcpHelper {
             }
         });
     }
+
+
+    private void startUpDataLocationInfo() {
+        updataLocationInfoHandler.postDelayed(updataLocationInfo, delayTime);
+    }
+
+    long delayTime = 1000;
+    Handler updataLocationInfoHandler = new Handler();
+
+    Runnable updataLocationInfo = new Runnable() {
+        @Override
+        public void run() {
+//            if (isConnected) {
+            sendMakeLocationInfo();
+//                updataLocationInfoHandler.postDelayed(this, delayTime);
+//            }
+        }
+    };
 
 
     public void disConnect() {
@@ -239,8 +263,27 @@ public class TcpHelper {
      * 发送位置信息
      */
     public void sendMakeLocationInfo() {
-//        sendData(BodyHelper.makeLocationInfo(para1, para2, para3, para4, para5, para6, para7, para8, para9, para10, para11, para12));
+
+        if (MyApplication.getInstance().isLocation) {
+            sendData(BodyHelper.makeLocationInfo("00000000",
+                    "40080000",
+                    (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
+                    (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                    10,
+                    (int) MyApplication.getInstance().speedGPS,
+                    (int) MyApplication.getInstance().direction,
+                    TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                    -2000, -2000, -2000, -2000));
+        } else {
+            sendData(BodyHelper.makeLocationInfo("00000000",
+                    "40080000",
+                    (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
+                    (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                    10,
+                    (int) MyApplication.getInstance().speedGPS,
+                    (int) MyApplication.getInstance().direction,
+                    TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                    -2000, -2000, -2000, -2000));
+        }
     }
-
-
 }

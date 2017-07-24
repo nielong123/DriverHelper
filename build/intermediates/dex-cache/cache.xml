@@ -21,6 +21,33 @@
     </item>
     <item
         is-multidex="false"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\irecyclerview\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9080064d4923c6a184c41e1452cd33b2874a57d7">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\classes_22265f1c7f6525f3f4cef6170d6e6052793ff36f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\common\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="35fa11dc05a67343c37a34263e462018f81e1e5f">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\classes_23107c3dc83323721a273f549356d0f4a5cb3885.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\common\build\intermediates\bundles\default\libs\alipaySdk-20160516.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3dc967df12a04b5e1fd7641a5661d159b747297f">
+        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\alipaySdk-20160516_d47ee9174d8b339b03fcddd14c9f610a6675f32b.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\Administrator\Desktop\DriverHelper1\library\common\build\intermediates\bundles\default\libs\Parse-1.9.4.jar"
         jumboMode="false"
         optimize="true"
@@ -45,33 +72,6 @@
         revision="25.0.2"
         sha1="552cd54385c88e92eeb4bbb619a94a5c883d72ab">
         <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\commons-codec-1.6_996fc05a1699bab081d31bfc1764f91aa29816dc.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\irecyclerview\build\intermediates\bundles\default\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="9080064d4923c6a184c41e1452cd33b2874a57d7">
-        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\classes_22265f1c7f6525f3f4cef6170d6e6052793ff36f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\common\build\intermediates\bundles\default\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="560a18b7aac6aca08b7420c152a257e44f1a428d">
-        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\classes_23107c3dc83323721a273f549356d0f4a5cb3885.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Administrator\Desktop\DriverHelper1\library\common\build\intermediates\bundles\default\libs\alipaySdk-20160516.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="3dc967df12a04b5e1fd7641a5661d159b747297f">
-        <dex dex="C:\Users\Administrator\Desktop\DriverHelper1\app\build\intermediates\pre-dexed\debug\alipaySdk-20160516_d47ee9174d8b339b03fcddd14c9f610a6675f32b.jar" />
     </item>
 
 </items>
