@@ -32,6 +32,7 @@ import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.QRbean;
 import com.driverhelper.config.Config;
+import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Preview;
@@ -396,6 +397,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 qRbean = new Gson().fromJson(str, QRbean.class);
                 if (qRbean.getType() != null) {
                     RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员扫描成功");
+                    TcpHelper.getInstance().sendCoachLogin(qRbean.getId(), qRbean.getNumber(), "C1");
                     setTextInfo(Config.TextInfoType.SETJIAOLIAN);
                 } else {
                     RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员扫描成功");

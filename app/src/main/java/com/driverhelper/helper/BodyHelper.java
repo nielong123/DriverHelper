@@ -4,6 +4,7 @@ package com.driverhelper.helper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MessageBean;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
@@ -11,6 +12,7 @@ import com.driverhelper.config.TcpBody;
 import com.driverhelper.other.encrypt.Encrypt;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
+import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.orhanobut.logger.Logger;
 
@@ -227,15 +229,22 @@ public class BodyHelper {
      * @param IdCard   教练员身份证号 BYTE[18]	ASCII码，不足18位前补0x00
      * @param coachnum 教练员编号 BYTE[16]	统一编号
      * @param carType  准教车型   BYTE[2]	A1\A2\A3\B1\B2\C1\C2\C3\C4\D\E\F
-     * @param gnss     基本GNSS数据包
      * @return
      */
-    public static byte[] makeCoachInfo(String IdCard, String coachnum, String carType, byte[] gnss) {
+    public static byte[] makeCoachLogin(String IdCard, String coachnum, String carType) {
         byte[] resultBody = ByteUtil.str2Word(ByteUtil.autoAddZeroByLength(IdCard,
                 18));
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(coachnum));
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(carType));
-        resultBody = ByteUtil.add(resultBody, gnss);
+        resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfo("00000000",
+                "40080000",
+                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
+                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                10,
+                (int) MyApplication.getInstance().speedGPS,
+                (int) MyApplication.getInstance().direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                -2000, -2000, -2000, -2000));
         return buildExMsg(updataCoachLogin, 0, 1, 2, resultBody);
     }
 
@@ -319,8 +328,9 @@ public class BodyHelper {
             resultBody = ByteUtil.add(resultBody, int2Bytes(2, 1));
             resultBody = ByteUtil.add(resultBody, int2Bytes(para12, 2));
         }
-        byte[] resultHead = makeHead(locationInfoUpdata, false, 0, resultBody.length); // 包头固定
+//        byte[] resultHead = makeHead(locationInfoUpdata, false, 0, resultBody.length); // 包头固定
 
+//        return sticky(resultHead, resultBody);
         return resultBody;
     }
 
@@ -376,7 +386,7 @@ public class BodyHelper {
      */
     public static byte[] makeFindLocatInfoRequest(String para1, String para2, int para3, int para4, int para5, int para6, int para7, String para8) {
 
-        byte[] resultBody = makeLocationInfoBody(para1, para2, para3, para4, para5, para6, para7, para8, -10, -10, -20000, -10);
+        byte[] resultBody = makeLocationInfoBody(para1, para2, para3, para4, para5, para6, para7, para8, -2000, -2000, -2000, -2000);
         byte[] resultHead = makeHead(findLocatInfoRequest, false, 0, resultBody.length); // 包头固定
 
         byte[] result = sticky(resultHead, resultBody);
@@ -456,7 +466,7 @@ public class BodyHelper {
                         }
                     } else {
                         if (midDatas == null) {
-                            midDatas = new ArrayList<byte[]>();
+                            midDatas = new ArrayList<>();
                         }
                         index = messageBean.headBean.encapsulationInfo.index;
                         totle = messageBean.headBean.encapsulationInfo.totle;
@@ -492,7 +502,6 @@ public class BodyHelper {
                                 byte[] data0 = new byte[passwordLength];
                                 System.arraycopy(dataResult, posIndex, data0, 0, data0.length);
                                 ConstantInfo.terminalCertificate = ByteUtil.getString(data0);     //终端证书
-//                                ByteUtil.printHexString(dataResult);
                                 midDatas = null;
                                 RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端注册成功");
                                 WriteSettingHelper.saveRegistInfo();

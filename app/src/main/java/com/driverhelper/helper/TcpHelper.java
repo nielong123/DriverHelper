@@ -64,8 +64,8 @@ public class TcpHelper {
         if (this.socketClient == null) {
             this.socketClient = new SocketClient();
         }
-        __i__setupAddress(socketClient, ip, port, timeOut);
-//        __i__setupAddress(socketClient, "192.168.0.124", "8098", timeOut);
+//        __i__setupAddress(socketClient, ip, port, timeOut);
+        __i__setupAddress(socketClient, "221.235.53.37", "2346", timeOut);
         __i__setupEncoding(socketClient);
         __i__setupConstantHeartBeat(socketClient);
         __i__setupVariableHeartBeat(socketClient);
@@ -164,26 +164,24 @@ public class TcpHelper {
                 isConnected = false;
                 Logger.d("onDisconnected", "SocketClient: onDisconnected");
                 RxBus.getInstance().post(Config.Config_RxBus.RX_NET_DISCONNECT, "tcp连接已断开");
-//                new AsyncTask<Void, Void, Void>() {
-//                    @Override
-//                    protected Void doInBackground(Void... params) {
-//                        try {
-//                            Thread.sleep(3 * 1000);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        client.connect();
-//
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    protected void onPostExecute(Void aVoid) {
-//                        super.onPostExecute(aVoid);
-//
-//                    }
-//                }.execute();
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        try {
+                            Thread.sleep(3 * 1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        client.connect();
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        super.onPostExecute(aVoid);
+
+                    }
+                }.execute();
             }
 
             @Override
@@ -285,5 +283,12 @@ public class TcpHelper {
                     TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
                     -2000, -2000, -2000, -2000));
         }
+    }
+
+    /****
+     * 发送教练登录信息
+     */
+    public void sendCoachLogin(String idCard, String coachnum, String carType) {
+        sendData(BodyHelper.makeCoachLogin(idCard, coachnum, carType));
     }
 }
