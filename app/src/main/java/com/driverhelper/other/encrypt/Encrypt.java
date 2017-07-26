@@ -1,6 +1,5 @@
 package com.driverhelper.other.encrypt;
 
-import com.driverhelper.other.jiaminew.EncodeUtil;
 import com.driverhelper.utils.ByteUtil;
 
 import java.io.ByteArrayInputStream;
@@ -19,6 +18,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.security.cert.X509Certificate;
 
 import Decoder.BASE64Decoder;
 
@@ -94,7 +94,9 @@ public class Encrypt {
                         .getInstance(strType);
                 // 传入要加密的字符串
                 messageDigest.update(data);
-                messageDigest.update(EncodeUtil.toBE(timeStamp));
+                if(timeStamp != 0){
+                    messageDigest.update(EncodeUtil.toBE(timeStamp));
+                }
                 // 得到 byte 類型结果
                 byte byteBuffer[] = messageDigest.digest();
 
@@ -102,7 +104,7 @@ public class Encrypt {
                     Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
                     cipher.init(Cipher.ENCRYPT_MODE, key);
                     byte[] encrypted = cipher.doFinal(byteBuffer);
-                    ByteUtil.printHexString("加密结果为  ", encrypted);
+                    ByteUtil.printHexString("11111加密结果为  ", encrypted);
                     return encrypted;
                 } catch (NoSuchPaddingException e) {
                     // TODO Auto-generated catch block
@@ -123,4 +125,20 @@ public class Encrypt {
         }
         return null;
     }
+
+    private boolean Decrypt(byte[] data, KeyStore keyStore,String alias) {
+//        X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);// X509Certificate֤˩הг
+//        // long timestamp = new Date().getTime();
+//        long timestamp = 1500433671;
+
+
+
+//        ISign sign = new Sign();
+//        IVerify verify = new Verify();
+//        boolean ok = verify.verify(data, timestamp, sign_hex, cert);
+//        System.out.println(ok);
+        return false;
+    }
+
+
 }

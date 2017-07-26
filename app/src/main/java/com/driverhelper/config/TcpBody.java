@@ -20,6 +20,11 @@ public final class TcpBody {
         public static byte[] locationInfoUpdata = {(byte) 0x02, (byte) 0x00};       //B.3.2.3.16　位置信息汇报
         public static byte[] findLocatInfoRequest = {(byte) 0x02, (byte) 0x01};     //查询位置信息应答
         public static byte[] updataCoachLogin = {(byte) 0x01, (byte) 0x01};             //上传教练员登录
+        public static byte[] transparentInfo = {(byte) 0x09, (byte) 0x00};          //透传消息
+    }
+
+    public static class TransformID {
+        public static byte[] upData = {(byte) 0x13};
     }
 
     public static class ReceiveMessageId {

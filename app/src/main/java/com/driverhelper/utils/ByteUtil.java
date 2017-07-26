@@ -49,9 +49,9 @@ public class ByteUtil {
                 if (hex.length() == 1) {
                     hex = '0' + hex;
                 }
-                printResult = str + printResult + hex.toUpperCase();
+                printResult = printResult + hex.toUpperCase() + " ";
             }
-            Log.e(TAG, printResult);
+            Log.e(TAG, str + printResult);
         }
     }
 
@@ -228,12 +228,26 @@ public class ByteUtil {
                 .toString().substring(1) : temp.toString();
     }
 
+    /********
+     *          4字节byte[] 转化成int
+     * @param res
+     * @return
+     */
+    public static int byte2int(byte[] res) {
+
+        int intValue = 0;
+        for (int i = 0; i < res.length; i++) {
+            intValue += (res[i] & 0xFF) << (8 * (3 - i));
+        }
+        return intValue;
+    }
+
     /**
      * @功能: BCD码转为BCD16进制字符串(阿拉伯数据)
      * @参数: BCD码
      * @结果: 10进制串 { (byte) 0x11, (byte) 0x01, (byte) 0xa1 } --->"1101a1"
      */
-    static String bcdByte2bcdString(byte[] data) {
+    public static String bcdByte2bcdString(byte[] data) {
 
         String strResult = "";
         for (int j = 0; j < data.length; j++) {

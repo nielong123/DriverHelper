@@ -393,7 +393,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\"}";
+                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
                 qRbean = new Gson().fromJson(str, QRbean.class);
                 if (qRbean.getType() != null) {
                     RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员扫描成功");

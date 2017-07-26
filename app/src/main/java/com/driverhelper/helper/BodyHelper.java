@@ -27,7 +27,9 @@ import static com.driverhelper.config.TcpBody.MessageID.clientCommonResponse;
 import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
 import static com.driverhelper.config.TcpBody.MessageID.locationInfoUpdata;
 import static com.driverhelper.config.TcpBody.MessageID.register;
+import static com.driverhelper.config.TcpBody.MessageID.transparentInfo;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogin;
+import static com.driverhelper.config.TcpBody.TransformID.upData;
 import static com.driverhelper.config.TcpBody.VERSION_CODE;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
 
@@ -198,10 +200,12 @@ public class BodyHelper {
      */
     public static byte[] makeAuthentication() {
 
+//        long time = 0;
         long time = System.currentTimeMillis() / 1000;
         byte[] resultBody = ByteUtil.str2Bcd(ByteUtil
                 .decString2hexString(time)); // 时间戳
         try {
+//            byte[] data = new byte[]{(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x22,(byte)0x00,(byte)0x55,(byte)0x33,(byte)0x33,(byte)0x39,(byte)0x36,(byte)0x30,(byte)0x30,(byte)0x35,(byte)0x33,(byte)0x33,(byte)0x35,(byte)0x35,(byte)0x31,(byte)0x38,(byte)0x38,(byte)0x32,(byte)0x32,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x40,(byte)0x33,(byte)0x34,(byte)0x30,(byte)0x30,(byte)0x34,(byte)0x35,(byte)0x32,(byte)0x36,(byte)0x33,(byte)0x33,(byte)0x36,(byte)0x34,(byte)0x33,(byte)0x37,(byte)0x35,(byte)0x38,(byte)0x31,(byte)0x33,(byte)0x30,(byte)0x37,(byte)0x32,(byte)0x37,(byte)0x31,(byte)0x39,(byte)0x39,(byte)0x36,(byte)0x30,(byte)0x34,(byte)0x30,(byte)0x31,(byte)0x31,(byte)0x30,(byte)0x39,(byte)0x32,(byte)0x43,(byte)0x31,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x40,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x06,(byte)0xEE,(byte)0xE7,(byte)0xAC,(byte)0x02,(byte)0x61,(byte)0xFA,(byte)0xDF,(byte)0x00,(byte)0x0A,(byte)0x00,(byte)0x04,(byte)0x00,(byte)0x00,(byte)0x17,(byte)0x07,(byte)0x26,(byte)0x09,(byte)0x44,(byte)0x21};
             resultBody = ByteUtil.add(resultBody,
                     Encrypt.SHA256(terminalNum,
                             ConstantInfo.terminalCertificate,
@@ -212,8 +216,7 @@ public class BodyHelper {
             e.printStackTrace();
             Logger.e(e.getMessage());
         }
-        int bodyLength = resultBody.length;
-        byte[] resultHead = makeHead(TcpBody.MessageID.authentication, false, 0, bodyLength);
+        byte[] resultHead = makeHead(TcpBody.MessageID.authentication, false, 0, resultBody.length);
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
@@ -226,17 +229,17 @@ public class BodyHelper {
     /**
      * B.4.2.1.1　上报教练员登录
      *
-     * @param IdCard   教练员身份证号 BYTE[18]	ASCII码，不足18位前补0x00
+     * @param idCard   教练员身份证号 BYTE[18]	ASCII码，不足18位前补0x00
      * @param coachnum 教练员编号 BYTE[16]	统一编号
      * @param carType  准教车型   BYTE[2]	A1\A2\A3\B1\B2\C1\C2\C3\C4\D\E\F
      * @return
      */
-    public static byte[] makeCoachLogin(String IdCard, String coachnum, String carType) {
-        byte[] resultBody = ByteUtil.str2Word(ByteUtil.autoAddZeroByLength(IdCard,
-                18));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(coachnum));
+    public static byte[] makeCoachLogin(String idCard, String coachnum, String carType) {
+
+        byte[] resultBody = ByteUtil.str2Word(coachnum);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(idCard));
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(carType));
-        resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfo("00000000",
+        resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
                 (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
@@ -245,7 +248,11 @@ public class BodyHelper {
                 (int) MyApplication.getInstance().direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
                 -2000, -2000, -2000, -2000));
-        return buildExMsg(updataCoachLogin, 0, 1, 2, resultBody);
+
+        resultBody = buildExMsg(updataCoachLogin, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(upData, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
     }
 
 
@@ -328,9 +335,6 @@ public class BodyHelper {
             resultBody = ByteUtil.add(resultBody, int2Bytes(2, 1));
             resultBody = ByteUtil.add(resultBody, int2Bytes(para12, 2));
         }
-//        byte[] resultHead = makeHead(locationInfoUpdata, false, 0, resultBody.length); // 包头固定
-
-//        return sticky(resultHead, resultBody);
         return resultBody;
     }
 
@@ -421,17 +425,22 @@ public class BodyHelper {
      * @return
      */
     public static byte[] buildExMsg(byte[] exMsgId, int para2, int para3, int para4, byte[] para6) {
-        int attrr = para2 + para3 * 2 + para4 * 16;
+        int attrr = para2 + (int) (para3 * Math.pow(2, 1)) + (int) (para4 * Math.pow(2, 4));
         byte[] resultBody = ByteUtil.add(exMsgId, int2Bytes(attrr, 2));
         resultBody = ByteUtil.add(resultBody, getExCode());
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(strTerminalSerial));
+        resultBody = ByteUtil.add(resultBody, terminalNum);
         resultBody = ByteUtil.add(resultBody, int2Bytes(para6.length, 4));
         resultBody = ByteUtil.add(resultBody, para6);
         ///加密
         if (para4 == 2) {
-
+            byte[] jiami = Encrypt.SHA256(resultBody,
+                    ConstantInfo.terminalCertificate,
+                    ByteUtil.getString(ConstantInfo.certificatePassword),
+                    0);
+            ByteUtil.printHexString("加密的结果", jiami);
+            resultBody = ByteUtil.add(resultBody, jiami); // 校验码  时间戳用0
         }
-
+        ByteUtil.printHexString("加密最后的结果和前面", resultBody);
         return resultBody;
     }
 
@@ -531,6 +540,24 @@ public class BodyHelper {
                 case "8103":            //设置终端参数
 
 
+                    break;
+                case "8900":            //教练员登录应答
+                    messageBean.getThroughExpand(messageBean.bodyBean);
+                    HandMsgHelper.Class8101 class8101 = HandMsgHelper.getClass8101(messageBean.throughExpand.data);
+                    switch (Integer.valueOf(ByteUtil.bcdByte2bcdString(class8101.result))) {
+                        case 1:
+                            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员登录成功");
+                            break;
+                        case 2:
+                            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "无效的教练员编号");
+                            break;
+                        case 3:
+                            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "准教车型不符");
+                            break;
+                        case 9:
+                            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "其他错误");
+                            break;
+                    }
                     break;
 
                 default:
