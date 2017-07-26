@@ -278,6 +278,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 XueYuanTEXT.setText(qRbean.getName());
                 STUNUMtext.setText(qRbean.getNumber());
                 break;
+            case CLEARJIAOLIAN:
+                COACHNUMtext.setText("");
+                IDCARDtext.setText("");
+                break;
         }
     }
 
@@ -335,10 +339,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.JiaoLianButton:
-                startScanActivity("教练员签到");
+                if (!Config.isCoachLoginOK) {
+                    startScanActivity("教练员签到");
+                } else {
+                    new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("教练员登出提示").setIcon(R.drawable.main_img06).setMessage("教练员是否登出").setCancelable(false).setPositiveButton("断开", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                            coachLogout();
+                        }
+                    }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                            paramAnonymous2DialogInterface.dismiss();
+                        }
+                    }).show();
+                }
                 break;
             case R.id.XueYuanButton:
-                startScanActivity("学员签到");
+                if (!Config.isStudentLoginOK) {
+                    startScanActivity("学员签到");
+                } else {
+                    studentLogout();
+                }
                 break;
             case R.id.textViewThisTime:
                 break;
@@ -413,6 +433,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 MSG.getInstance(this).loadSetting();
                 break;
         }
+    }
+
+    private void coachLogout() {
+        TcpHelper.getInstance().sendCoachLogout();
+    }
+
+    private void studentLogout() {
+
     }
 
     private void initCamera() {

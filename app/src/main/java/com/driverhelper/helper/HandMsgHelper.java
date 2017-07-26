@@ -35,5 +35,19 @@ public final class HandMsgHelper {
         return class8101;
     }
 
+    public static class Class8201 {
+        byte[] result = new byte[1];
+        byte[] coachNum = new byte[16];
+    }
+
+    public static Class8201 getClass8201(byte[] data) {
+        Class8201 class8201 = new Class8201();
+        int index = 0;
+        System.arraycopy(data, index, class8201.result, 0, class8201.result.length);
+        index = index + class8201.result.length;
+        System.arraycopy(data, index, class8201.coachNum, 0, class8201.coachNum.length);
+        return class8201;
+    }
+
 
 }

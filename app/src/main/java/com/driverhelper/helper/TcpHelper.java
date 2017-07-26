@@ -17,14 +17,11 @@ import com.orhanobut.logger.Logger;
 import com.vilyever.socketclient.SocketClient;
 import com.vilyever.socketclient.helper.SocketClientDelegate;
 import com.vilyever.socketclient.helper.SocketClientReceivingDelegate;
-import com.vilyever.socketclient.helper.SocketHeartBeatHelper;
 import com.vilyever.socketclient.helper.SocketPacketHelper;
 import com.vilyever.socketclient.helper.SocketResponsePacket;
 import com.vilyever.socketclient.util.CharsetUtil;
 
-import java.util.Timer;
-
-import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
+import static com.driverhelper.config.ConstantInfo.coachNum;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
 
 /**
@@ -65,8 +62,8 @@ public class TcpHelper {
             this.socketClient = new SocketClient();
         }
 //        __i__setupAddress(socketClient, ip, port, timeOut);
-//        __i__setupAddress(socketClient, "221.235.53.37", "2346", timeOut);
-        __i__setupAddress(socketClient, "192.168.1.103", "2346", timeOut);
+        __i__setupAddress(socketClient, "221.235.53.37", "2346", timeOut);
+//        __i__setupAddress(socketClient, "192.168.1.103", "2346", timeOut);
         __i__setupEncoding(socketClient);
         __i__setupConstantHeartBeat(socketClient);
         __i__setupVariableHeartBeat(socketClient);
@@ -206,10 +203,10 @@ public class TcpHelper {
     Runnable updataLocationInfo = new Runnable() {
         @Override
         public void run() {
-//            if (isConnected) {
-            sendMakeLocationInfo();
+            if (isConnected) {
+                sendMakeLocationInfo();
 //                updataLocationInfoHandler.postDelayed(this, delayTime);
-//            }
+            }
         }
     };
 
@@ -290,5 +287,10 @@ public class TcpHelper {
      */
     public void sendCoachLogin(String idCard, String coachnum, String carType) {
         sendData(BodyHelper.makeCoachLogin(idCard, coachnum, carType));
+    }
+
+
+    public void sendCoachLogout() {
+        sendData(BodyHelper.makeCoachLogout(coachNum));
     }
 }

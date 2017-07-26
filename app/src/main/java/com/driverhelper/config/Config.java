@@ -58,10 +58,15 @@ public class Config {
         ChangeGPSINFO,
         ClearGPSINFO,
         SETJIAOLIAN,
+        CLEARJIAOLIAN,
         SETXUEYUAN;
     }
 
     public static List<String> colors = new ArrayList<String>(Arrays.asList("蓝色", "黄色", "黑色", "白色", "绿色"));
 
     public static final int carmerId_HANGJING = 4;  //4
+
+    public static boolean isCoachLoginOK;           //教练员登录成功
+    public static boolean isStudentLoginOK;         //学员登录成功
+
 }

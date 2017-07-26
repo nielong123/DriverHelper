@@ -132,6 +132,23 @@ public class ByteUtil {
         return result;
     }
 
+    public static byte[] add(byte data1, byte[] data2) {
+
+        byte[] result = new byte[1 + data2.length];
+        result[0] = data1;
+        System.arraycopy(data2, 0, result, 1, data2.length);
+        return result;
+    }
+
+    public static byte[] add(byte[] data1, byte data2) {
+
+        byte[] result = new byte[data1.length + 1];
+        System.arraycopy(data1, 0, result, 0, data1.length);
+        result[result.length - 1] = data2;
+        return result;
+    }
+
+
     /****
      * 按数据长度自动左补齐"0"
      *

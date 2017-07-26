@@ -44,10 +44,11 @@ public class ConstantInfo {
     public static byte[] terminalNum = new byte[16];       //计时终端编号
     public static byte[] certificatePassword = new byte[12];       //证书口令;
     public static String terminalCertificate = "";         //终端证书
-
+    public static String coachNum;      //教练员编号
 
 
     public static QRbean qRbean;
+
     /***
      * 重新读取设置数据
      */

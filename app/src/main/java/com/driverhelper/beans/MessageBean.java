@@ -42,7 +42,7 @@ public class MessageBean {
      * 透传消息
      */
     public class ThroughExpand {
-        public byte[] type = new byte[1];           //透传消息类型
+        public byte type;           //透传消息类型
         public byte[] id = new byte[2];              //穿透消息id
         public byte[] expandAttribute = new byte[2];     //拓展属性
         public byte[] drivingPackageNumber = new byte[2];        //驾培包序号
@@ -55,7 +55,7 @@ public class MessageBean {
 
     public void getThroughExpand(byte[] bodyBean) {
         this.throughExpand = new ThroughExpand();
-        System.arraycopy(bodyBean, 0, throughExpand.type, 0, throughExpand.type.length);
+        throughExpand.type = bodyBean[0];
         System.arraycopy(bodyBean, 1, throughExpand.id, 0, throughExpand.id.length);
         System.arraycopy(bodyBean, 3, throughExpand.expandAttribute, 0, throughExpand.expandAttribute.length);
         System.arraycopy(bodyBean, 5, throughExpand.drivingPackageNumber, 0, throughExpand.drivingPackageNumber.length);
