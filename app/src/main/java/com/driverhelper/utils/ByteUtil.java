@@ -69,6 +69,18 @@ public class ByteUtil {
         }
     }
 
+    public static void printHex(String str, byte b) {
+        if (isDebug) {
+            String printResult = "";
+            String hex = Integer.toHexString(b & 0xFF);
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            printResult = printResult + hex.toUpperCase() + " ";
+            Log.d(TAG, str + printResult);
+        }
+    }
+
     private static String getString(byte[] bytes, String charsetName) {
         return new String(bytes, Charset.forName(charsetName));
     }
@@ -421,6 +433,34 @@ public class ByteUtil {
      */
     private static byte charToByte(char c) {
         return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+
+    /***
+     *          计算sum的结果
+     * @param data
+     * @return
+     */
+    private static byte getSum(byte[] data) {
+        byte result = 0;
+        for (int i = 0; i < data.length; i++) {
+            result += data[i];
+        }
+        result = (byte) (result ^ 0xff);
+        return result;
+    }
+
+    /*****
+     * 检查 sum的结果  是否相同
+     * @param data
+     * @param sumResult
+     * @return
+     */
+    public static boolean checkSum(byte[] data, byte sumResult) {
+        if (getSum(data) == sumResult) {
+            return true;
+        }
+        return false;
     }
 
     /****

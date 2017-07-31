@@ -86,6 +86,7 @@ public final class MSG {
         loadTerminalPhoneNumber();
     }
 
+
     public void loadTcpSetting() {
         Config.ip = sharePreferences.getString(Config.WriteSetting.TCP_IP, "221.235.53.37");
         Config.port = sharePreferences.getString(Config.WriteSetting.TCP_PORT, "2346");

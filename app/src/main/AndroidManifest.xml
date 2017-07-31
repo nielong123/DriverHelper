@@ -86,11 +86,13 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
+        <activity android:name=".ui.activity.TestActivity" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="dae401cacbd86ebf0871ce5d43e8461f" />
 
+        <activity android:name=".ui.activity.UsbTestActivity"></activity>
     </application>
 
 </manifest>

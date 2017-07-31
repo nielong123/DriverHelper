@@ -55,6 +55,7 @@ dependencies {
     })
     compile project(path: ':library:common')
     compile project(path: ':library:irecyclerview')
+    compile project(path: ':library:SerialPortLibrary')
     compile files('libs/AMap_Location_V3.4.1_20170629.jar')
     compile files('libs/sun.misc.BASE64Decoder.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -69,5 +70,6 @@ dependencies {
     compile 'com.github.vilyever:AndroidLogger:1.0.9'
     compile 'com.github.vilyever:AndroidJsonModel:1.2.0'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
+    compile 'com.github.felHR85:UsbSerial:4.5'
     testCompile 'junit:junit:4.12'
 }

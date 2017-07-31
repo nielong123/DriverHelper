@@ -289,8 +289,17 @@ public class TcpHelper {
         sendData(BodyHelper.makeCoachLogin(idCard, coachnum, carType));
     }
 
-
+    /*****
+     * 教练员登出
+     */
     public void sendCoachLogout() {
         sendData(BodyHelper.makeCoachLogout(coachNum));
+    }
+
+    /******
+     * 学员登录
+     */
+    public void sendStudentLogin(String studentNum, String coachNum) {
+        sendData(BodyHelper.makeStudentLogout(""));
     }
 }

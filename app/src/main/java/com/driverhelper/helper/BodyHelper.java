@@ -275,6 +275,24 @@ public class BodyHelper {
         return sticky(resultHead, resultBody);
     }
 
+    public static byte[] makeStudentLogout(String coachnum) {
+        byte[] resultBody = ByteUtil.str2Word(coachnum);
+        resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
+                "40080000",
+                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
+                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                10,
+                (int) MyApplication.getInstance().speedGPS,
+                (int) MyApplication.getInstance().direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                -2000, -2000, -2000, -2000));
+
+        resultBody = buildExMsg(updataCoachLogout, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
 
     public static byte[] makeHeart() {
         int bodylength = 0;

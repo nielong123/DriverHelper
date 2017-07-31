@@ -4,6 +4,9 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.jaydenxiao.common.commonutils.PreferenceUtils;
 
+import static com.driverhelper.config.ConstantInfo.institutionNumber;
+import static com.driverhelper.config.ConstantInfo.platformNum;
+
 /**
  * Created by Administrator on 2017/6/2.
  */
@@ -150,7 +153,11 @@ public class WriteSettingHelper {
      * @return
      */
     public static byte[] getPLATFORMNUM() {
-        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.PLATFORMNUM);
+        byte[] data = PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.PLATFORMNUM);
+        if (data == null) {
+            return new byte[platformNum.length];
+        }
+        return data;
     }
 
     public static void setPLATFORMNUM(byte[] examSubjects) {
@@ -162,7 +169,11 @@ public class WriteSettingHelper {
      * @return
      */
     public static byte[] getINSTITUTIONNUMBER() {
-        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.INSTITUTIONNUMBER);
+        byte[] data = PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.INSTITUTIONNUMBER);
+        if (data == null) {
+            return new byte[ConstantInfo.institutionNumber.length];
+        }
+        return data;
     }
 
     public static void setINSTITUTIONNUMBER(byte[] institutionnumber) {
@@ -174,7 +185,11 @@ public class WriteSettingHelper {
      * @return
      */
     public static byte[] getTERMINALNUM() {
-        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.TERMINALNUM);
+        byte[] data = PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.TERMINALNUM);
+        if (data == null) {
+            return new byte[ConstantInfo.terminalNum.length];
+        }
+        return data;
     }
 
     public static void setTERMINALNUM(byte[] terminalnum) {
@@ -186,7 +201,11 @@ public class WriteSettingHelper {
      * @return
      */
     public static byte[] getCERTIFICATEPASSWORD() {
-        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.CERTIFICATEPASSWORD);
+        byte[] data = PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.CERTIFICATEPASSWORD);
+        if (data == null) {
+            return new byte[ConstantInfo.certificatePassword.length];
+        }
+        return data;
     }
 
     public static void setCERTIFICATEPASSWORD(byte[] certificatePassword) {
@@ -210,7 +229,7 @@ public class WriteSettingHelper {
      * 保存终端注册后返回的信息
      */
     public static void saveRegistInfo() {
-        WriteSettingHelper.setINSTITUTIONNUMBER(ConstantInfo.institutionNumber);
+        WriteSettingHelper.setINSTITUTIONNUMBER(institutionNumber);
         WriteSettingHelper.setPLATFORMNUM(ConstantInfo.platformNum);
         WriteSettingHelper.setTERMINALNUM(ConstantInfo.terminalNum);
         WriteSettingHelper.setCERTIFICATEPASSWORD(ConstantInfo.certificatePassword);
@@ -224,4 +243,6 @@ public class WriteSettingHelper {
         ConstantInfo.certificatePassword = WriteSettingHelper.getCERTIFICATEPASSWORD();
         ConstantInfo.terminalCertificate = WriteSettingHelper.getTERMINALCERTIFICATE();
     }
+
+
 }

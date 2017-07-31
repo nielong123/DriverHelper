@@ -32,19 +32,22 @@ import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.QRbean;
 import com.driverhelper.config.Config;
-import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
-import com.driverhelper.other.Preview;
 import com.driverhelper.other.ReceiverOBDII;
+import com.driverhelper.other.SerialPortActivity;
+import com.driverhelper.other.handle.ObdHandle;
+import com.driverhelper.utils.ByteUtil;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.jaydenxiao.common.base.BaseActivity;
 import com.jaydenxiao.common.baserx.RxBus;
+import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 import com.orhanobut.logger.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Timer;
@@ -58,7 +61,7 @@ import static com.driverhelper.config.Config.ip;
 import static com.driverhelper.config.Config.port;
 import static com.driverhelper.config.ConstantInfo.qRbean;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
+public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener,
         Toolbar.OnMenuItemClickListener,
         SurfaceHolder.Callback, Camera.ErrorCallback, Camera.PreviewCallback {
@@ -128,6 +131,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public ReceiverOBDII OBDReceiver = null;
     private Camera camera;
     private SurfaceHolder holder;
+//    SerialPort serialPortFinger, serialPortOBD;
 
 
     static Timer AliveTm;
@@ -287,6 +291,41 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     @Override
+    protected void onOBDDataReceived(final byte[] buffer, final int length) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                byte[] data = new byte[length];
+                System.arraycopy(buffer, 0, data, 0, length);
+//                ByteUtil.printHexString("obd接收到数据", data);
+                ObdHandle.handle(data);
+            }
+        }).start();
+
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                byte[] data = new byte[length];
+//                System.arraycopy(buffer, 0, data, 0, length);
+//                ByteUtil.printHexString("obd接收到数据", data);
+//                ObdHandle.handle(data);
+//            }
+//        });
+    }
+
+    @Override
+    protected void onIcReaderDataReceived(final byte[] buffer, final int size) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ByteUtil.printHexString("读卡器接收到数据", buffer);
+                ToastUitl.show(ByteUtil.getString(buffer), Toast.LENGTH_SHORT);
+            }
+        });
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
     }
@@ -342,7 +381,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (!Config.isCoachLoginOK) {
                     startScanActivity("教练员签到");
                 } else {
-                    new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("教练员登出提示").setIcon(R.drawable.main_img06).setMessage("教练员是否登出").setCancelable(false).setPositiveButton("断开", new DialogInterface.OnClickListener() {
+                    new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("教练员登出提示").setIcon(R.drawable.main_img06).setMessage("教练员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
                             coachLogout();
                         }
@@ -357,15 +396,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (!Config.isStudentLoginOK) {
                     startScanActivity("学员签到");
                 } else {
-                    studentLogout();
+                    new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("学员登出提示").setIcon(R.drawable.main_img06).setMessage("学员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                            studentLogout();
+                        }
+                    }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                            paramAnonymous2DialogInterface.dismiss();
+                        }
+                    }).show();
                 }
                 break;
             case R.id.textViewThisTime:
                 break;
             case R.id.surfaceView:
-                if (!CamStatOK)
+//                if (!CamStatOK)
 //                    resetCam();
-                    break;
+                break;
         }
     }
 
@@ -413,19 +460,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
+//                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";//为了调试把逻辑写反了
+                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"c1\"}";
                 qRbean = new Gson().fromJson(str, QRbean.class);
-                if (qRbean.getType() != null) {
-                    RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员扫描成功");
-                    TcpHelper.getInstance().sendCoachLogin(qRbean.getId(), qRbean.getNumber(), "C1");
-                    setTextInfo(Config.TextInfoType.SETJIAOLIAN);
+                if (qRbean.getType() != null && !Config.isCoachLoginOK) {
+                    coachLogin();                       //教练登录
                 } else {
-                    RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员扫描成功");
-                    setTextInfo(Config.TextInfoType.SETXUEYUAN);
+                    coachLogout();                 //学员登录
                 }
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "签到成功");
+                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
+//                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";
+                qRbean = new Gson().fromJson(result.getContents(), QRbean.class);
+                if (qRbean.getType() != null && !Config.isCoachLoginOK) {
+                    coachLogin();                       //教练登录
+                } else {
+                    coachLogout();                 //学员登录
+                }
             }
         }
         switch (requestCode) {
@@ -435,8 +486,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+
+    private void coachLogin() {
+        TcpHelper.getInstance().sendCoachLogin(qRbean.getId(), qRbean.getNumber(), qRbean.getType());
+    }
+
     private void coachLogout() {
+        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员扫描成功");
+        setTextInfo(Config.TextInfoType.SETJIAOLIAN);
         TcpHelper.getInstance().sendCoachLogout();
+    }
+
+    private void studentLogin() {
+        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员扫描成功");
+        setTextInfo(Config.TextInfoType.SETXUEYUAN);
+        TcpHelper.getInstance().sendStudentLogin("", "");
     }
 
     private void studentLogout() {
