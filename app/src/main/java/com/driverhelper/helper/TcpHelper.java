@@ -299,7 +299,14 @@ public class TcpHelper {
     /******
      * 学员登录
      */
-    public void sendStudentLogin(String studentNum, String coachNum) {
-        sendData(BodyHelper.makeStudentLogout(""));
+    public void sendStudentLogin(String coachNum, String studentNum) {
+        sendData(BodyHelper.makeStudentLogin(coachNum, studentNum));
+    }
+
+    /******
+     * 学员登出
+     */
+    public void sendStudentLogiout() {
+        sendData(BodyHelper.makeStudentLogiout(coachNum));
     }
 }

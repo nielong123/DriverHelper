@@ -1,6 +1,7 @@
 package com.driverhelper.ui.activity;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -11,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,24 +34,24 @@ import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.QRbean;
 import com.driverhelper.config.Config;
+import com.driverhelper.config.ConstantInfo;
+import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
-import com.driverhelper.other.ReceiverOBDII;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
 import com.driverhelper.utils.ByteUtil;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.jaydenxiao.common.base.BaseActivity;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 import com.orhanobut.logger.Logger;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Timer;
 
 import butterknife.Bind;
@@ -128,10 +130,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     DrawerLayout drawerLayout;
 
     private TextToSpeech ttsClient;
-    public ReceiverOBDII OBDReceiver = null;
     private Camera camera;
     private SurfaceHolder holder;
-//    SerialPort serialPortFinger, serialPortOBD;
+    public static Context context;
 
 
     static Timer AliveTm;
@@ -224,11 +225,12 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     @Override
     public void initData() {
-
+        context = this;
         this.ttsClient = new TextToSpeech(getApplicationContext(), this);
         MSG.getInstance(this).loadSetting();
         WriteSettingHelper.loadRegistInfo();
     }
+
 
     @Override
     public void initEvent() {
@@ -251,10 +253,49 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 networksw.setChecked(false);
             }
         });
+        mRxManager.on(Config.Config_RxBus.RX_COACH_LOGINOK, new Action1<String>() {
+            @Override
+            public void call(String str) {
+                ttsClient.speak(str, 1, null);
+                setTextInfo(Config.TextInfoType.SETJIAOLIAN);
+                Config.isCoachLoginOK = true;
+                ConstantInfo.coachNum = qRbean.getNumber();
+                WriteSettingHelper.setCOACHNUM(ConstantInfo.coachNum);
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_COACH_LOGOUTOK, new Action1<String>() {
+            @Override
+            public void call(String str) {
+                ttsClient.speak(str, 1, null);
+                setTextInfo(Config.TextInfoType.CLEARJIAOLIAN);
+                Config.isCoachLoginOK = false;
+                WriteSettingHelper.setCOACHNUM("");
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_STUDENT_LOGINOK, new Action1<HandMsgHelper.Class8201>() {
+            @Override
+            public void call(HandMsgHelper.Class8201 class8201) {
+                ttsClient.speak("学员登录成功", 1, null);
+                setTextInfo(Config.TextInfoType.SETXUEYUAN);
+                Config.isStudentLoginOK = true;
+                ConstantInfo.studentNum = class8201.studentNum.toString();
+//                WriteSettingHelper.setCOACHNUM("");
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_STUDENT_LOGOUTOK, new Action1<String>() {
+            @Override
+            public void call(String str) {
+                ttsClient.speak("学员登录出成功", 1, null);
+//                setTextInfo(Config.TextInfoType.SETXUEYUAN);
+//                Config.isStudentLoginOK = true;
+//                ConstantInfo.studentNum = class8201.studentNum.toString();
+////                WriteSettingHelper.setCOACHNUM("");
+            }
+        });
     }
 
 
-    private void setTextInfo(Config.TextInfoType type) {
+    public void setTextInfo(Config.TextInfoType type) {
         switch (type) {
             case ChangeGPSINFO:
                 if (!gpsState) {
@@ -292,26 +333,21 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     @Override
     protected void onOBDDataReceived(final byte[] buffer, final int length) {
-
-        new Thread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 byte[] data = new byte[length];
                 System.arraycopy(buffer, 0, data, 0, length);
-//                ByteUtil.printHexString("obd接收到数据", data);
-                ObdHandle.handle(data);
+                ByteUtil.printHexString("obd接收到数据", data);
+                HashMap<String, String> map = ObdHandle.handle(data);
+                if (map.get("car speed") != null) {
+                    textViewSpeed.setText(map.get("car speed") + "km/h");
+                }
+                if (map.get("speed") != null) {
+                    textViewRPM.setText(map.get("speed") + "RPM");
+                }
             }
-        }).start();
-
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                byte[] data = new byte[length];
-//                System.arraycopy(buffer, 0, data, 0, length);
-//                ByteUtil.printHexString("obd接收到数据", data);
-//                ObdHandle.handle(data);
-//            }
-//        });
+        });
     }
 
     @Override
@@ -373,8 +409,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         return false;
     }
 
-    @OnClick({R.id.JiaoLianButton, R.id.XueYuanButton, R.id.textViewThisTime,
-            R.id.surfaceView})
+    @OnClick({R.id.JiaoLianButton, R.id.XueYuanButton, R.id.textViewThisTime, R.id.surfaceView})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.JiaoLianButton:
@@ -460,22 +495,16 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-//                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";//为了调试把逻辑写反了
-                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"c1\"}";
-                qRbean = new Gson().fromJson(str, QRbean.class);
-                if (qRbean.getType() != null && !Config.isCoachLoginOK) {
-                    coachLogin();                       //教练登录
-                } else {
-                    coachLogout();                 //学员登录
-                }
             } else {
                 ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
-//                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";
+//                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";//为了调试把逻辑写反了
+//                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
+//                qRbean = new Gson().fromJson(str, QRbean.class);
                 qRbean = new Gson().fromJson(result.getContents(), QRbean.class);
                 if (qRbean.getType() != null && !Config.isCoachLoginOK) {
                     coachLogin();                       //教练登录
                 } else {
-                    coachLogout();                 //学员登录
+                    studentLogin(qRbean.getNumber());                 //学员登录
                 }
             }
         }
@@ -488,22 +517,33 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
 
     private void coachLogin() {
+        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员扫描成功");
         TcpHelper.getInstance().sendCoachLogin(qRbean.getId(), qRbean.getNumber(), qRbean.getType());
     }
 
     private void coachLogout() {
-        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员扫描成功");
-        setTextInfo(Config.TextInfoType.SETJIAOLIAN);
+//        setTextInfo(Config.TextInfoType.SETJIAOLIAN);
         TcpHelper.getInstance().sendCoachLogout();
     }
 
-    private void studentLogin() {
+    private void studentLogin(String studentNum) {
+        if (TextUtils.isEmpty(ConstantInfo.coachNum)) {
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员未签到");
+            return;
+        }
         RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员扫描成功");
-        setTextInfo(Config.TextInfoType.SETXUEYUAN);
-        TcpHelper.getInstance().sendStudentLogin("", "");
+        TcpHelper.getInstance().sendStudentLogin(ConstantInfo.coachNum, studentNum);
     }
 
     private void studentLogout() {
+        TcpHelper.getInstance().sendStudentLogiout();
+        ToastUitl.show("学员登出", Toast.LENGTH_SHORT);
+    }
+
+    /***
+     * 开始培训
+     */
+    private void startStudy() {
 
     }
 

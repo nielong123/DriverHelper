@@ -60,7 +60,7 @@ public final class SplashActivity extends BaseActivity {
         public void run() {
 //            startActivity(Main2Activity.class);
             startActivity(MainActivity.class);
-//            startActivity(UsbTestActivity.class);
+//            startActivity(TestActivity.class);
             finish();
         }
     };

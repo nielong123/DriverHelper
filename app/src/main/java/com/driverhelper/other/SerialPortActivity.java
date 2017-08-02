@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.util.Log;
 
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.utils.ByteUtil;
@@ -103,7 +104,6 @@ public abstract class SerialPortActivity extends BaseActivity {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    return;
                 }
             }
         }

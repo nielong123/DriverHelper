@@ -262,13 +262,24 @@ public class ByteUtil {
      * @param res
      * @return
      */
-    public static int byte2int(byte[] res) {
-
+//    public static int byte2int(byte[] res) {
+//
+//        int intValue = 0;
+//        for (int i = 0; i < res.length; i++) {
+//            intValue += (res[i] & 0xFF) << (8 * (3 - i));
+//        }
+//        return intValue;
+//    }
+    public static int byte2int(byte[] data) {
         int intValue = 0;
-        for (int i = 0; i < res.length; i++) {
-            intValue += (res[i] & 0xFF) << (8 * (3 - i));
+        for (int i = 0; i < data.length; i++) {
+            intValue += data[i] * Math.pow(256, data.length - i - 1);
         }
         return intValue;
+    }
+
+    public static int byte2int(byte data) {
+        return data & 0xff;
     }
 
     /**

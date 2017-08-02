@@ -137,7 +137,7 @@ public class MyApplication extends BaseApplication {
                 RxBus.getInstance().post(Config.Config_RxBus.RX_CHANGE_TEXTINFO, ChangeGPSINFO);
             } else {
                 MyApplication.getInstance().isLocation = false;
-                Logger.e("AmapError", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
+//                Logger.e("AmapError", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
                 RxBus.getInstance().post(Config.Config_RxBus.RX_CHANGE_TEXTINFO, ClearGPSINFO);
             }
         }

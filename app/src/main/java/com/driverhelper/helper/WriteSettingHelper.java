@@ -28,6 +28,18 @@ public class WriteSettingHelper {
         PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.TCP_IP, ip);
     }
 
+    /*****
+     * 教练员编号
+     * @return
+     */
+    public static String getCOACHNUM() {
+        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.COACHNUM, null);
+    }
+
+    public static void setCOACHNUM(String coachnum) {
+        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.COACHNUM, coachnum);
+    }
+
     /***
      * 获取TCP的端口信息
      * @return
@@ -242,6 +254,7 @@ public class WriteSettingHelper {
         ConstantInfo.terminalNum = WriteSettingHelper.getTERMINALNUM();
         ConstantInfo.certificatePassword = WriteSettingHelper.getCERTIFICATEPASSWORD();
         ConstantInfo.terminalCertificate = WriteSettingHelper.getTERMINALCERTIFICATE();
+        ConstantInfo.coachNum = WriteSettingHelper.getCOACHNUM();
     }
 
 

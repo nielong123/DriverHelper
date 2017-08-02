@@ -24,9 +24,14 @@ public class Config {
         public final static String RX_STUDENT_SIGN_OUT = "RX_STUDENT_SIGN_OUT";    //签退
         public final static String RX_PHOTOGRAPH = "RX_PHOTOGRAPH";         //照相
 
+        public final static String RX_UPDATA_OBD = "RX_UPDATA_OBD";           //更新obd信息
         public final static String RX_CHANGE_TEXTINFO = "RX_CHANGE_TEXTINFO";       //刷新界面
         public final static String RX_TTS_SPEAK = "RX_TTS_SPEAK";           //語音
         public final static String RX_NET_DISCONNECT = "RX_NET_DISCONNECT";           //网络连接中断
+        public final static String RX_COACH_LOGINOK = "RX_COACH_LOGINOK";           //教练员登录
+        public final static String RX_COACH_LOGOUTOK = "RX_COACH_LOGOUTOK";           //教练员登出
+        public final static String RX_STUDENT_LOGINOK = "RX_STUDENT_LOGINOK";           //学员员登录
+        public final static String RX_STUDENT_LOGOUTOK = "RX_STUDENT_LOGOUTOK";           //学员登出
     }
 
     public static class WriteSetting {
@@ -50,6 +55,7 @@ public class Config {
         public final static String TERMINALNUM = "terminalNum";     //终端编号
         public final static String CERTIFICATEPASSWORD = "certificatePassword";     //证书口令
         public final static String TERMINALCERTIFICATE = "terminalCertificate";     //终端证书
+        public final static String COACHNUM = "COACHNUM";           //          教练员编号
 
     }
 
