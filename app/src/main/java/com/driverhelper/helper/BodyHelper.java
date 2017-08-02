@@ -310,11 +310,11 @@ public class BodyHelper {
 
     /****
      * 学员登出
-     * @param coachNum
+     * @param studentNum
      * @return
      */
-    public static byte[] makeStudentLogiout(String coachNum) {
-        byte[] resultBody = ByteUtil.str2Word(coachNum);
+    public static byte[] makeStudentLogiout(String studentNum) {
+        byte[] resultBody = ByteUtil.str2Word(studentNum);
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
         long time = TimeUtil.getTime();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes((int) time, 4));           //课堂id  时间戳

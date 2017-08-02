@@ -61,23 +61,23 @@ public class ObdHandle {
                 case (byte) 0x02:            //转速
                     long speed = ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256;
                     map.put("speed", speed + "");
-                    Log.e("", "转速 = " + speed + "rpm");
+//                    Log.e("", "转速 = " + speed + "rpm");
                     break;
                 case (byte) 0x03:            //车速
                     long carSpeed1 = ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256;
                     map.put("car speed", carSpeed1 + "");
-                    Log.e("", "车速 = " + carSpeed1 + "km/h");
+//                    Log.e("", "车速 = " + carSpeed1 + "km/h");
                     break;
                 case (byte) 0x06:            //本次行驶里程
                     long mileage = ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256 + ByteUtil.byte2int(dataOne[5]) * 65536;
                     map.put("mileage", mileage + "");
-                    Log.e("", "里程 = " + mileage + "km");
+//                    Log.e("", "里程 = " + mileage + "km");
                     break;
                 case (byte) 0x7d:
                     if (dataOne[3] == 0) {
-                        Log.e("", "ACC关");
+//                        Log.e("", "ACC关");
                     } else {
-                        Log.e("", "ACC开");
+//                        Log.e("", "ACC开");
                     }
                     break;
             }

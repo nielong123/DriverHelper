@@ -46,6 +46,8 @@ public class ConstantInfo {
     public static String terminalCertificate = "";         //终端证书
     public static String coachNum;      //教练员编号
     public static String studentNum;        //学员编号
+    public static long studyTime = 0;             //学习的时间
+    public static long studyDistance = 0;             //学习的时间
 
 
     public static QRbean qRbean;

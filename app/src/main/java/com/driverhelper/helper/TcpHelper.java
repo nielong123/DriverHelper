@@ -22,6 +22,7 @@ import com.vilyever.socketclient.helper.SocketResponsePacket;
 import com.vilyever.socketclient.util.CharsetUtil;
 
 import static com.driverhelper.config.ConstantInfo.coachNum;
+import static com.driverhelper.config.ConstantInfo.studentNum;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
 
 /**
@@ -307,6 +308,6 @@ public class TcpHelper {
      * 学员登出
      */
     public void sendStudentLogiout() {
-        sendData(BodyHelper.makeStudentLogiout(coachNum));
+        sendData(BodyHelper.makeStudentLogiout(studentNum));
     }
 }

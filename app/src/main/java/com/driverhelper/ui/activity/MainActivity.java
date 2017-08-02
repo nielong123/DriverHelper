@@ -4,8 +4,11 @@ package com.driverhelper.ui.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ConfigurationInfo;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.os.Handler;
+import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -45,6 +48,7 @@ import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.jaydenxiao.common.baserx.RxBus;
+import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 import com.orhanobut.logger.Logger;
@@ -53,6 +57,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -134,49 +139,35 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     private SurfaceHolder holder;
     public static Context context;
 
-
-    static Timer AliveTm;
-    static Timer CHKTm;
-    static Timer ChkTHREAD;
-    static Timer GPSCHKTm;
-    static Timer GPSSendTime;
-    static Timer NOSENDtask;
-    static Timer StartTm;
-
-    static int OpenCamNum;
-    static int StartChkcount;
-    public int MSGdataPOS;
     private final static int width = 320;
     private final static int height = 240;
     byte[] mPreBuffer = null;
-    int OSver = 4;
-    int OSverMid = 0;
-    int OSverSub = 0;
 
-    long NetChkTime;
-    long NotSpeek;
-
-    String CamPic;
-    String SpdStr;
-    String GPSStr;
-
-    boolean CamStatOK = false;
-    boolean NoSIMcard = false;
-    boolean NoSendReding = false;
-    boolean QRmode = false;
-    boolean SendNewMSGChk = false;
     boolean gpsState;
     boolean isPreview;
 
-    Date CurrDate = new Date();
-
-    private static final int REQUEST_PERM = 1000;
-    private static final int REQUEST_QR = 49374;
     private static final int REQUEST_SETTING = 1;
-    private static final int RESULT_FAIL = 1;
-    private static final int RESULT_OK = 0;
-    private static final String TAGcam = "CameraRtn";
-    private static final String TAGdev = "DeviceCHK";
+
+    Timer studyTimer;
+
+    TimerTask studyTask = new TimerTask() {
+
+        public void run() {
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+            ConstantInfo.studyTime += 1;
+        }
+    };
+    private Handler handler = new Handler() {
+
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                textViewTime.setText(TimeUtil.getFriendlyDuration2(ConstantInfo.studyTime));
+            }
+            super.handleMessage(msg);
+        }
+    };
 
 
     @Override
@@ -191,6 +182,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     @Override
     public void initView() {
+//        startStudy();
         initToolBar();
         initCamera();
         networksw.setOnCheckedChangeListener(onCheckedChangeListener);
@@ -278,7 +270,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 ttsClient.speak("学员登录成功", 1, null);
                 setTextInfo(Config.TextInfoType.SETXUEYUAN);
                 Config.isStudentLoginOK = true;
-                ConstantInfo.studentNum = class8201.studentNum.toString();
+                ConstantInfo.studentNum = ByteUtil.getString(class8201.studentNum);
+                startStudy();
 //                WriteSettingHelper.setCOACHNUM("");
             }
         });
@@ -286,7 +279,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             @Override
             public void call(String str) {
                 ttsClient.speak("学员登录出成功", 1, null);
-//                setTextInfo(Config.TextInfoType.SETXUEYUAN);
+                stopStudy();
+//                ConstantInfo.studyTime = 0;
+                setTextInfo(Config.TextInfoType.CLEARXUEYUAN);
 //                Config.isStudentLoginOK = true;
 //                ConstantInfo.studentNum = class8201.studentNum.toString();
 ////                WriteSettingHelper.setCOACHNUM("");
@@ -327,6 +322,10 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 COACHNUMtext.setText("");
                 IDCARDtext.setText("");
                 break;
+            case CLEARXUEYUAN:
+                XueYuanTEXT.setText("");
+                STUNUMtext.setText("");
+                break;
         }
     }
 
@@ -338,13 +337,19 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void run() {
                 byte[] data = new byte[length];
                 System.arraycopy(buffer, 0, data, 0, length);
-                ByteUtil.printHexString("obd接收到数据", data);
+//                ByteUtil.printHexString("obd接收到数据", data);
                 HashMap<String, String> map = ObdHandle.handle(data);
-                if (map.get("car speed") != null) {
-                    textViewSpeed.setText(map.get("car speed") + "km/h");
+                String carSpeed = map.get("car speed");
+                if (!TextUtils.isEmpty(carSpeed)) {
+                    textViewSpeed.setText(carSpeed + "km/h");
                 }
-                if (map.get("speed") != null) {
-                    textViewRPM.setText(map.get("speed") + "RPM");
+                String speed = map.get("speed");
+                if (!TextUtils.isEmpty(speed)) {
+                    textViewRPM.setText(speed + "RPM");
+                }
+                String mileage = map.get("mileage");
+                if (!TextUtils.isEmpty(mileage)) {
+                    textViewDistance.setText(mileage + "km");
                 }
             }
         });
@@ -544,7 +549,16 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
      * 开始培训
      */
     private void startStudy() {
+        ConstantInfo.studyTime = 0;
+        studyTimer = new Timer(true);
+        studyTimer.schedule(studyTask, 1000, 1000);
+    }
 
+    private void stopStudy() {
+        if (studyTimer != null) {
+            studyTimer.cancel();
+            studyTimer = null;
+        }
     }
 
     private void initCamera() {
@@ -642,6 +656,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         }
 //        Logger.d("stopPreview      &&&&&&      end      isPreview :  " + isPreview);
     }
+
 }
 
 
