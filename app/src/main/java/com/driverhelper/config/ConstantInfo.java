@@ -48,6 +48,7 @@ public class ConstantInfo {
     public static String studentNum;        //学员编号
     public static long studyTime = 0;             //学习的时间
     public static long studyDistance = 0;             //学习的时间
+    public static byte[] classId;             //课堂id
 
 
     public static QRbean qRbean;

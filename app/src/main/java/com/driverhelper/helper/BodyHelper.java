@@ -1,6 +1,7 @@
 package com.driverhelper.helper;
 
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
@@ -21,6 +22,8 @@ import java.util.List;
 import static com.driverhelper.config.Config.TextInfoType.CLEARJIAOLIAN;
 import static com.driverhelper.config.ConstantInfo.coachNum;
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
+import static com.driverhelper.config.ConstantInfo.studyDistance;
+import static com.driverhelper.config.ConstantInfo.studyTime;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
@@ -32,6 +35,7 @@ import static com.driverhelper.config.TcpBody.MessageID.transparentInfo;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogin;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogout;
 import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogin;
+import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogiout;
 import static com.driverhelper.config.TcpBody.TransformID.driving;
 import static com.driverhelper.config.TcpBody.VERSION_CODE;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
@@ -238,9 +242,9 @@ public class BodyHelper {
      */
     public static byte[] makeCoachLogin(String idCard, String coachnum, String carType) {
 
-        byte[] resultBody = ByteUtil.str2Word(coachnum);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(idCard));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(carType));
+        byte[] resultBody = ByteUtil.str2Word(coachnum.toUpperCase());
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(idCard.toUpperCase()));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(carType.toUpperCase()));
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -291,7 +295,8 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(coachNum));      //当前教练编号
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
         long time = TimeUtil.getTime();
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes((int) time, 4));           //课堂id  时间戳
+        ConstantInfo.classId = ByteUtil.int2Bytes((int) time, 4);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -314,10 +319,15 @@ public class BodyHelper {
      * @return
      */
     public static byte[] makeStudentLogiout(String studentNum) {
-        byte[] resultBody = ByteUtil.str2Word(studentNum);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
-        long time = TimeUtil.getTime();
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes((int) time, 4));           //课堂id  时间戳
+        long time = TimeUtil.getTime() / 1000;
+        byte[] resultBody = ByteUtil.str2Word(studentNum);              //学员编号
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));     //登出时间
+        ByteUtil.printHexString("登出时间  =  ", ByteUtil.str2Bcd(TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));
+//        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(studyTime / 60 + ""));                //学员该次登录总时间   min
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word("01"));                //学员该次登录总时间   min
+//        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(studyDistance / 10 + ""));                //学员该次登录总时间   min
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word("02"));                //学员该次登录总时间   min
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -327,8 +337,8 @@ public class BodyHelper {
                 (int) MyApplication.getInstance().direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time),
                 -2000, -2000, -2000, -2000));
-
-        resultBody = buildExMsg(updataStudentLogin, 0, 1, 2, resultBody);
+        Log.d("", " resultBody.length = " + resultBody.length);
+        resultBody = buildExMsg(updataStudentLogiout, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
         return sticky(resultHead, resultBody);
@@ -680,6 +690,22 @@ public class BodyHelper {
                                         break;
                                     case 9:
                                         RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "其他错误");
+                                        break;
+                                }
+                                break;
+                            case "8202":
+                                HandMsgHelper.Class8202 class8202 = HandMsgHelper.getClass8202(messageBean.throughExpand.data);
+                                switch (class8202.result) {
+                                    case 1:
+                                        RxBus.getInstance().post(Config.Config_RxBus.RX_STUDENT_LOGOUTOK, "学员登出成功");
+                                        break;
+                                    case 2:
+                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员登出失败");
+                                        Config.isCoachLoginOK = false;
+                                        break;
+                                    case 9:
+                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员登出失败，其他错误");
+                                        Config.isCoachLoginOK = false;
                                         break;
                                 }
                                 break;

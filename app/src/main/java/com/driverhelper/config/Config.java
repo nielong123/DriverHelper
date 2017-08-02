@@ -24,7 +24,6 @@ public class Config {
         public final static String RX_STUDENT_SIGN_OUT = "RX_STUDENT_SIGN_OUT";    //签退
         public final static String RX_PHOTOGRAPH = "RX_PHOTOGRAPH";         //照相
 
-        public final static String RX_UPDATA_OBD = "RX_UPDATA_OBD";           //更新obd信息
         public final static String RX_CHANGE_TEXTINFO = "RX_CHANGE_TEXTINFO";       //刷新界面
         public final static String RX_TTS_SPEAK = "RX_TTS_SPEAK";           //語音
         public final static String RX_NET_DISCONNECT = "RX_NET_DISCONNECT";           //网络连接中断

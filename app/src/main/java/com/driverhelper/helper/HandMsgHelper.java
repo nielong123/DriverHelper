@@ -97,13 +97,27 @@ public final class HandMsgHelper {
         if (data4[0] == 1) {
             class8201.isUpdataOtherInfo = true;
         }
-        if(class8201.otherInfoLength != 0){
+        if (class8201.otherInfoLength != 0) {
             byte[] data5 = new byte[class8201.otherInfoLength];
             System.arraycopy(data, index, data5, 0, data5.length);
             class8201.otherInfo = ByteUtil.getString(data5);
         }
 
         return class8201;
+    }
+
+    public static class Class8202 {
+        byte result;
+        byte[] studentNum = new byte[16];
+    }
+
+
+    public static Class8202 getClass8202(byte[] data) {
+
+        Class8202 class8202 = new Class8202();
+        class8202.result = data[0];
+        System.arraycopy(data, 1, class8202.studentNum, 0, class8202.studentNum.length);
+        return  class8202;
     }
 
 

@@ -63,6 +63,8 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
+import static com.driverhelper.config.Config.Config_RxBus.RX_STUDENT_SIGN_OK;
+import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.Config.carmerId_HANGJING;
 import static com.driverhelper.config.Config.ip;
 import static com.driverhelper.config.Config.port;
@@ -232,7 +234,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 setTextInfo(textInfoType);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_TTS_SPEAK, new Action1<String>() {
+        mRxManager.on(RX_TTS_SPEAK, new Action1<String>() {
             @Override
             public void call(String str) {
                 ttsClient.speak(str, 1, null);
@@ -272,19 +274,14 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 Config.isStudentLoginOK = true;
                 ConstantInfo.studentNum = ByteUtil.getString(class8201.studentNum);
                 startStudy();
-//                WriteSettingHelper.setCOACHNUM("");
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_STUDENT_LOGOUTOK, new Action1<String>() {
             @Override
             public void call(String str) {
-                ttsClient.speak("学员登录出成功", 1, null);
+                ttsClient.speak(str, 1, null);
                 stopStudy();
-//                ConstantInfo.studyTime = 0;
                 setTextInfo(Config.TextInfoType.CLEARXUEYUAN);
-//                Config.isStudentLoginOK = true;
-//                ConstantInfo.studentNum = class8201.studentNum.toString();
-////                WriteSettingHelper.setCOACHNUM("");
             }
         });
     }
@@ -458,7 +455,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
 
     private void startScanActivity(String title) {
-        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, title);
+        RxBus.getInstance().post(RX_TTS_SPEAK, title);
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         integrator.setPrompt(title);
@@ -478,7 +475,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 return;
             }
             if (TcpHelper.getInstance().isConnected && !b) {
-                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "是否断开连接");
+                RxBus.getInstance().post(RX_TTS_SPEAK, "是否断开连接");
                 new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("服务器断开提示").setIcon(R.drawable.main_img06).setMessage("是否服务器断开").setCancelable(false).setPositiveButton("断开", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
                         TcpHelper.getInstance().disConnect();
@@ -500,16 +497,59 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+
+                /********************************************************************************/
+//                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
+////                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";//为了调试把逻辑写反了
+//                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
+//                qRbean = new Gson().fromJson(str, QRbean.class);
+////                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
+////                qRbean = new Gson().fromJson(result.getContents(), QRbean.class);
+//                if (qRbean.getType() != null && !Config.isCoachLoginOK) {
+//                    coachLogin();                       //教练登录
+//                    return;
+//                }
+//                if (qRbean.getType() != null && Config.isCoachLoginOK) {
+//                    RxBus.getInstance().post(RX_TTS_SPEAK, "教练员已签到");
+//                    return;
+//                }
+//                if (qRbean.getType() == null && !Config.isCoachLoginOK) {
+//                    studentLogin(qRbean.getNumber());                 //学员登录
+//                    return;
+//                }
+//                if (qRbean.getType() == null && Config.isCoachLoginOK) {
+//                    RxBus.getInstance().post(RX_TTS_SPEAK, "学员已签到");
+//                    return;
+//                }
+                /********************************************************************************/
+
+
             } else {
                 ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
 //                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";//为了调试把逻辑写反了
 //                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
 //                qRbean = new Gson().fromJson(str, QRbean.class);
+                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
                 qRbean = new Gson().fromJson(result.getContents(), QRbean.class);
                 if (qRbean.getType() != null && !Config.isCoachLoginOK) {
                     coachLogin();                       //教练登录
-                } else {
+                    return;
+                }
+                if (qRbean.getType() == null && Config.isCoachLoginOK && !Config.isStudentLoginOK) {
                     studentLogin(qRbean.getNumber());                 //学员登录
+                    return;
+                }
+                if (qRbean.getType() == null && Config.isStudentLoginOK) {
+                    RxBus.getInstance().post(RX_TTS_SPEAK, "学员已签到");
+                    return;
+                }
+                if (qRbean.getType() != null && Config.isCoachLoginOK) {
+                    RxBus.getInstance().post(RX_TTS_SPEAK, "教练员已签到");
+                    return;
+                }
+                if (qRbean.getType() == null && !Config.isCoachLoginOK) {
+                    RxBus.getInstance().post(RX_TTS_SPEAK, "教练员未签到");
+                    return;
                 }
             }
         }
@@ -522,7 +562,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
 
     private void coachLogin() {
-        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员扫描成功");
+        RxBus.getInstance().post(RX_TTS_SPEAK, "教练员扫描成功");
         TcpHelper.getInstance().sendCoachLogin(qRbean.getId(), qRbean.getNumber(), qRbean.getType());
     }
 
@@ -533,10 +573,10 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     private void studentLogin(String studentNum) {
         if (TextUtils.isEmpty(ConstantInfo.coachNum)) {
-            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员未签到");
+            RxBus.getInstance().post(RX_TTS_SPEAK, "教练员未签到");
             return;
         }
-        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员扫描成功");
+        RxBus.getInstance().post(RX_TTS_SPEAK, "学员扫描成功");
         TcpHelper.getInstance().sendStudentLogin(ConstantInfo.coachNum, studentNum);
     }
 
@@ -559,6 +599,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             studyTimer.cancel();
             studyTimer = null;
         }
+        Config.isStudentLoginOK = false;
+        ConstantInfo.studyTime = 0;
+        ConstantInfo.studyDistance = 0;
     }
 
     private void initCamera() {
