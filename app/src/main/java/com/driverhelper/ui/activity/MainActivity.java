@@ -149,6 +149,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     private static final int REQUEST_SETTING = 1;
 
     Timer studyTimer;
+    Timer updataTimer;
 
     private void sendMessage(int what) {
         Message message = new Message();
@@ -585,15 +586,26 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void run() {
                 sendMessage(UPDATATIME);
                 ConstantInfo.studyTimeThis += 1;
-                TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息
             }
         }, 1000, 1000);
+
+        updataTimer = new Timer(true);
+        updataTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息
+            }
+        }, 1000, 6*1000);
     }
 
     private void stopStudy() {
         if (studyTimer != null) {
             studyTimer.cancel();
             studyTimer = null;
+        }
+        if (updataTimer != null) {
+            updataTimer.cancel();
+            updataTimer = null;
         }
         Config.isStudentLoginOK = false;
         ConstantInfo.studyTimeThis = 0;

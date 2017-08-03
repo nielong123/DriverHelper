@@ -137,6 +137,18 @@ public class WriteSettingHelper {
     }
 
     /***
+     * 获取学时id
+     * @return
+     */
+    public static String getSTUDY_ID() {
+        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.STUDY_CODE, "0000");
+    }
+
+    public static void setSTUDY_ID(String studyId) {
+        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.STUDY_CODE, studyId);
+    }
+
+    /***
      * 获取考试种类  C1  C2  C3
      * @return
      */

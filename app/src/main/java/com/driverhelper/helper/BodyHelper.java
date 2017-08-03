@@ -133,7 +133,7 @@ public class BodyHelper {
      * @return
      */
     public static byte[] getExCode() {
-        return ByteUtil.hexString2BCD(ExCodeHelper.getExCode());
+        return ByteUtil.hexString2BCD(IdHelper.getExCode());
     }
 
     /***
@@ -209,7 +209,6 @@ public class BodyHelper {
         byte[] resultBody = ByteUtil.str2Bcd(ByteUtil
                 .decString2hexString(time)); // 时间戳
         try {
-//            byte[] data = new byte[]{(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x22,(byte)0x00,(byte)0x55,(byte)0x33,(byte)0x33,(byte)0x39,(byte)0x36,(byte)0x30,(byte)0x30,(byte)0x35,(byte)0x33,(byte)0x33,(byte)0x35,(byte)0x35,(byte)0x31,(byte)0x38,(byte)0x38,(byte)0x32,(byte)0x32,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x40,(byte)0x33,(byte)0x34,(byte)0x30,(byte)0x30,(byte)0x34,(byte)0x35,(byte)0x32,(byte)0x36,(byte)0x33,(byte)0x33,(byte)0x36,(byte)0x34,(byte)0x33,(byte)0x37,(byte)0x35,(byte)0x38,(byte)0x31,(byte)0x33,(byte)0x30,(byte)0x37,(byte)0x32,(byte)0x37,(byte)0x31,(byte)0x39,(byte)0x39,(byte)0x36,(byte)0x30,(byte)0x34,(byte)0x30,(byte)0x31,(byte)0x31,(byte)0x30,(byte)0x39,(byte)0x32,(byte)0x43,(byte)0x31,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x40,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x06,(byte)0xEE,(byte)0xE7,(byte)0xAC,(byte)0x02,(byte)0x61,(byte)0xFA,(byte)0xDF,(byte)0x00,(byte)0x0A,(byte)0x00,(byte)0x04,(byte)0x00,(byte)0x00,(byte)0x17,(byte)0x07,(byte)0x26,(byte)0x09,(byte)0x44,(byte)0x21};
             resultBody = ByteUtil.add(resultBody,
                     Encrypt.SHA256(terminalNum,
                             ConstantInfo.terminalCertificate,
@@ -251,7 +250,8 @@ public class BodyHelper {
                 (int) MyApplication.getInstance().speedGPS,
                 (int) MyApplication.getInstance().direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
-                -2000, -2000, -2000, -2000));
+                -2000, -2000, -2000, -2000)
+        );
 
         resultBody = buildExMsg(updataCoachLogin, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
@@ -274,7 +274,8 @@ public class BodyHelper {
                 (int) MyApplication.getInstance().speedGPS,
                 (int) MyApplication.getInstance().direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
-                -2000, -2000, -2000, -2000));
+                -2000, -2000, -2000, -2000)
+        );
 
         resultBody = buildExMsg(updataCoachLogout, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
@@ -303,7 +304,8 @@ public class BodyHelper {
                 (int) MyApplication.getInstance().speedGPS,
                 (int) MyApplication.getInstance().direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time),
-                -2000, -2000, -2000, -2000));
+                -2000, -2000, -2000, -2000)
+        );
 
         resultBody = buildExMsg(updataStudentLogin, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
@@ -335,7 +337,8 @@ public class BodyHelper {
                 (int) MyApplication.getInstance().speedGPS,
                 (int) MyApplication.getInstance().direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time),
-                -2000, -2000, -2000, -2000));
+                -2000, -2000, -2000, -2000)
+        );
         Log.d("", " resultBody.length = " + resultBody.length);
         resultBody = buildExMsg(updataStudentLogiout, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
@@ -348,11 +351,21 @@ public class BodyHelper {
      * @param updataType
      * @return
      */
-    public static byte[] makeSendStudyInfo(byte updataType) {
-        byte[] resultBody = ByteUtil.int2Bytes(updataType, 2);
-        resultBody = ByteUtil.add(resultBody, updataType);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(ConstantInfo.StudentInfo.studentNum));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(ConstantInfo.coachNum));
+    public static byte[] makeSendStudyInfo(byte updataType, String time666, byte recordType) {
+        String strTime = TimeUtil.formatData(TimeUtil.dataFormatYMD, TimeUtil.getTime() / 1000);
+        strTime = strTime.substring(0, 6);
+        byte[] resultBody = ("0000000000000000" +
+                strTime +
+                IdHelper.getStudyCode()).getBytes();           //26        学时记录编号
+        resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentNum.getBytes());       //学员编号
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.coachNum.getBytes());             //教练员编号
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
+        resultBody = ByteUtil.add(resultBody, recordType);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(10, 4));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(11, 4));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -361,11 +374,51 @@ public class BodyHelper {
                 (int) MyApplication.getInstance().speedGPS,
                 (int) MyApplication.getInstance().direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
-                -2000, -2000, -2000, -2000));
+                20, -2000, -2000, 30)
+        );
 
-        resultBody = buildExMsg(updataCoachLogout, 0, 1, 2, resultBody);
+        resultBody = buildExMsg(updataStudyInfo, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(updataStudyInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+
+
+    /****
+     * 上传学时信息
+     * @param updataType
+     * @return
+     */
+    public static byte[] makeSendStudyInfoByCommond(byte updataType, String time666, byte recordType) {
+        String strTime = TimeUtil.formatData(TimeUtil.dataFormatYMD, TimeUtil.getTime() / 1000);
+        strTime = strTime.substring(0, 6);
+        byte[] resultBody = ("0000000000000000" +
+                strTime +
+                IdHelper.getStudyCode()).getBytes();           //26        学时记录编号
+        resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentNum.getBytes());       //学员编号
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.coachNum.getBytes());             //教练员编号
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
+        resultBody = ByteUtil.add(resultBody, recordType);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(10, 4));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(11, 4));            //最大里程  10
+        resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
+                "40080000",
+                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
+                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                10,
+                (int) MyApplication.getInstance().speedGPS,
+                (int) MyApplication.getInstance().direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                20, -2000, -2000, 30)
+        );
+
+        resultBody = buildExMsg(updataStudyInfo, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -445,7 +498,7 @@ public class BodyHelper {
             resultBody = ByteUtil.add(resultBody, int2Bytes(para11, 2));
         }
         if (para12 >= 0) {
-            resultBody = ByteUtil.add(resultBody, int2Bytes(0x04, 1));
+            resultBody = ByteUtil.add(resultBody, int2Bytes(0x05, 1));
             resultBody = ByteUtil.add(resultBody, int2Bytes(2, 1));
             resultBody = ByteUtil.add(resultBody, int2Bytes(para12, 2));
         }
@@ -551,7 +604,6 @@ public class BodyHelper {
                     ConstantInfo.terminalCertificate,
                     ByteUtil.getString(ConstantInfo.certificatePassword),
                     0);
-            ByteUtil.printHexString("加密的结果", jiami);
             resultBody = ByteUtil.add(resultBody, jiami); // 校验码  时间戳用0
         }
         ByteUtil.printHexString("加密最后的结果和前面", resultBody);
@@ -733,6 +785,12 @@ public class BodyHelper {
                                         Config.isCoachLoginOK = false;
                                         break;
                                 }
+                                break;
+                            case "8205":
+                                HandMsgHelper.Class8205 class8205 = HandMsgHelper.getClass8205(messageBean.throughExpand.data);
+                                TcpHelper.sendStudyInfoByCommand();
+                                break;
+                            default:
                                 break;
                         }
                     }

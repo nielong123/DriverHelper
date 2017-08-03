@@ -23,6 +23,7 @@ import com.vilyever.socketclient.util.CharsetUtil;
 
 import static com.driverhelper.config.ConstantInfo.StudentInfo.studentNum;
 import static com.driverhelper.config.ConstantInfo.coachNum;
+import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
 
 /**
@@ -268,7 +269,7 @@ public class TcpHelper {
                     10,
                     (int) MyApplication.getInstance().speedGPS,
                     (int) MyApplication.getInstance().direction,
-                    TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                    TimeUtil.formatData(dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
                     -2000, -2000, -2000, -2000));
         } else {
             sendData(BodyHelper.makeLocationInfo("00000000",
@@ -278,7 +279,7 @@ public class TcpHelper {
                     10,
                     (int) MyApplication.getInstance().speedGPS,
                     (int) MyApplication.getInstance().direction,
-                    TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                    TimeUtil.formatData(dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
                     -2000, -2000, -2000, -2000));
         }
     }
@@ -312,9 +313,19 @@ public class TcpHelper {
     }
 
     /*****
-     * 教练员登出
+     * 发送学时信息
      */
     public void sendStudyInfo(byte updataType) {
-        sendData(BodyHelper.makeSendStudyInfo( updataType));
+        String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
+        String str66666 = str.substring(str.length() - 6, str.length());
+        str = str.substring(str.length() - 2, str.length());            //发送时间
+        int index = Integer.valueOf(str);
+//        if (index > 50 && index < 59) {
+        sendData(BodyHelper.makeSendStudyInfo(updataType, str66666, (byte) 0x00));
+//        }
+    }
+
+    public void sendStudyInfoByCommand() {
+        sendData(BodyHelper.makeSendStudyInfoByCommond((byte) 0x01, "", (byte) 0x01));
     }
 }

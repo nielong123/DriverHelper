@@ -34,6 +34,7 @@ public class TimeUtil {
      */
     public static String dateFormatYMDHMS = "yyyy-MM-dd HH:mm:ss";
     public static String dateFormatYMDHMS_ = "yyMMddHHmmss";
+    public static String dataFormatYMD = "yyMMdd";
     public static String dateFormatYMDHMS_f = "yyyyMMddHHmmss";
     public static String dateFormatMDHM = "MM-dd HH:mm";
     public static String dateFormat = "yyyy-MM-dd HH:mm";
@@ -86,7 +87,6 @@ public class TimeUtil {
      * 时分秒.
      */
     public static String dateFormatHMS = "HH:mm:ss";
-
     /**
      * 时分.
      */

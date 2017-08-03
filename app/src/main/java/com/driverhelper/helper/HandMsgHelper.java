@@ -117,8 +117,26 @@ public final class HandMsgHelper {
         Class8202 class8202 = new Class8202();
         class8202.result = data[0];
         System.arraycopy(data, 1, class8202.studentNum, 0, class8202.studentNum.length);
-        return  class8202;
+        return class8202;
     }
 
+    public static class Class8205 {
+        byte findType;
+        byte[] startTime = new byte[6];
+        byte[] endTime = new byte[6];
+        byte findNum;
+    }
 
+    public static Class8205 getClass8205(byte[] data) {
+
+        int index;
+        Class8205 class8205 = new Class8205();
+        class8205.findType = data[0];
+        index = 1;
+        System.arraycopy(data, index, class8205.startTime, 0, class8205.startTime.length);
+        index += class8205.startTime.length;
+        System.arraycopy(data, index, class8205.endTime, 0, class8205.endTime.length);
+        class8205.findNum = data[data.length - 1];
+        return class8205;
+    }
 }
