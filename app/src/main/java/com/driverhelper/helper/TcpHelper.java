@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.Config;
+import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
@@ -327,5 +328,17 @@ public class TcpHelper {
 
     public void sendStudyInfoByCommand() {
         sendData(BodyHelper.makeSendStudyInfoByCommond((byte) 0x01, "", (byte) 0x01));
+    }
+
+    public void sendTakePhotoNowInit(byte updataType) {
+        sendData(BodyHelper.makeTakePhotoNowInit((byte) 0x01, updataType, (byte) 0x04, (byte) 0x02));
+    }
+
+    public void send0305(byte updataType) {
+        sendData(BodyHelper.make0305("1111", ConstantInfo.coachNum, (byte) 0x01, (byte) 0x00, 1, 9999));
+    }
+
+    public void send0306() {
+        sendData(BodyHelper.make0306());
     }
 }

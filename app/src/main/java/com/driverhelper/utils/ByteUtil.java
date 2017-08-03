@@ -1,10 +1,12 @@
 package com.driverhelper.utils;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.driverhelper.beans.MessageBean;
 import com.driverhelper.config.TcpBody;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -524,6 +526,22 @@ public class ByteUtil {
             b[len - i - 1] = (byte) ((value >> 8 * i) & 0xff);
         }
         return b;
+    }
+
+
+    public static byte[] int2WORD(int str) {
+        return int2Bytes(str, 2);
+    }
+
+    public static byte[] int2DWORD(int str) {
+        return int2Bytes(str, 4);
+    }
+
+
+    public static byte[] Bitmap2Bytes(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
     }
 
     /*****

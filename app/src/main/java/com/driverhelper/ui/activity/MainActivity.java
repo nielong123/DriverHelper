@@ -452,6 +452,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             case R.id.textViewThisTime:
                 break;
             case R.id.surfaceView:
+                getPhoto();
 //                if (!CamStatOK)
 //                    resetCam();
                 break;
@@ -595,7 +596,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void run() {
                 TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息
             }
-        }, 1000, 6*1000);
+        }, 1000, 6 * 1000);
     }
 
     private void stopStudy() {
@@ -708,6 +709,10 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 //        Logger.d("stopPreview      &&&&&&      end      isPreview :  " + isPreview);
     }
 
+
+    private void getPhoto() {
+
+    }
 }
 
 

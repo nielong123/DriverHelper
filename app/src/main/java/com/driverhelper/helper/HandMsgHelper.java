@@ -139,4 +139,30 @@ public final class HandMsgHelper {
         class8205.findNum = data[data.length - 1];
         return class8205;
     }
+
+    public static class Class8301 {
+        byte updataType;
+        byte cameraNum;
+        byte size;
+    }
+
+
+    public static Class8301 getClass8301(byte[] data) {
+        Class8301 class8301 = new Class8301();
+        class8301.updataType = data[0];
+        class8301.cameraNum = data[1];
+        class8301.size = data[2];
+        return class8301;
+    }
+
+    public static class Class8305 {
+        byte code;
+    }
+
+    public static Class8305 getClass8305(byte[] data) {
+        Class8305 class8305 = new Class8305();
+        class8305.code = data[0];
+        return class8305;
+    }
+
 }

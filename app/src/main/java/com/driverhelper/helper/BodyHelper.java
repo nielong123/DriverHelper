@@ -26,8 +26,11 @@ import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
 import static com.driverhelper.config.TcpBody.MessageID.clientCommonResponse;
 import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
+import static com.driverhelper.config.TcpBody.MessageID.id0304;
+import static com.driverhelper.config.TcpBody.MessageID.id0305;
 import static com.driverhelper.config.TcpBody.MessageID.locationInfoUpdata;
 import static com.driverhelper.config.TcpBody.MessageID.register;
+import static com.driverhelper.config.TcpBody.MessageID.takePhotoNow;
 import static com.driverhelper.config.TcpBody.MessageID.transparentInfo;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogin;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogout;
@@ -384,7 +387,6 @@ public class BodyHelper {
     }
 
 
-
     /****
      * 上传学时信息
      * @param updataType
@@ -417,6 +419,84 @@ public class BodyHelper {
         );
 
         resultBody = buildExMsg(updataStudyInfo, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+
+    /****
+     * 立即拍照应答
+     * @param updataType
+     * @return
+     */
+    public static byte[] makeTakePhotoNowInit(byte doResult, byte updataType, byte carmerNum, byte size) {
+
+        byte[] resultBody = new byte[]{doResult, updataType, carmerNum, size};
+        resultBody = buildExMsg(takePhotoNow, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+    /****
+     * B.4.2.3.9　照片上传初始化
+     * @param
+     * @return
+     */
+    public static byte[] make0305(String phoneId, String id, byte updataType, byte eventType, int totle, int photoSize) {
+
+        phoneId = "1234567890";
+        byte[] resultBody = phoneId.getBytes();            //照片编号
+        resultBody = ByteUtil.add(resultBody, id.getBytes());
+        resultBody = ByteUtil.add(resultBody, updataType);
+        resultBody = ByteUtil.add(resultBody, (byte) 0x00);         //摄像头通道好
+        resultBody = ByteUtil.add(resultBody, (byte) 0x01);         //照片尺寸
+        resultBody = ByteUtil.add(resultBody, eventType);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(totle));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(photoSize));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(1234567890));           //课堂id
+        resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
+                "40080000",
+                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
+                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                10,
+                (int) MyApplication.getInstance().speedGPS,
+                (int) MyApplication.getInstance().direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                20, -2000, -2000, 30)
+        );
+        resultBody = ByteUtil.add(resultBody, (byte) 0x50);           //人脸识别程度
+        resultBody = buildExMsg(id0305, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+    /****
+     * B.4.2.3.9　照片上传初始化
+     * @param
+     * @return
+     */
+    public static byte[] make0304(byte eventType) {
+
+        byte[] resultBody = new byte[]{eventType};            //照片编号
+        resultBody = buildExMsg(id0304, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+    /****
+     * B.4.2.3.11　上传照片数据包
+     * @param
+     * @return
+     */
+    public static byte[] make0306() {
+
+        byte[] resultBody = "1234567890".getBytes();
+        resultBody = ByteUtil.add(resultBody, ByteUtil.Bitmap2Bytes(AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123.jpg")));
+        resultBody = buildExMsg(id0304, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
         return sticky(resultHead, resultBody);
@@ -788,7 +868,27 @@ public class BodyHelper {
                                 break;
                             case "8205":
                                 HandMsgHelper.Class8205 class8205 = HandMsgHelper.getClass8205(messageBean.throughExpand.data);
-                                TcpHelper.sendStudyInfoByCommand();
+                                TcpHelper.getInstance().sendStudyInfoByCommand();
+                                break;
+                            case "8301":
+                                HandMsgHelper.Class8301 class8301 = HandMsgHelper.getClass8301(messageBean.throughExpand.data);
+                                TcpHelper.getInstance().sendTakePhotoNowInit(class8301.updataType);
+                                TcpHelper.getInstance().send0305(class8301.updataType);
+                                break;
+                            case "8305":
+                                HandMsgHelper.Class8305 class8305 = HandMsgHelper.getClass8305(messageBean.throughExpand.data);
+                                switch (class8305.code) {
+                                    case (byte) 0x00:
+                                        TcpHelper.getInstance().send0306();
+                                        break;
+                                    case (byte) 0x01:
+                                        TcpHelper.getInstance().send0306();
+                                        break;
+                                    case (byte) 0x09:
+                                        break;
+                                    case (byte) 0xff:
+                                        break;
+                                }
                                 break;
                             default:
                                 break;
