@@ -23,6 +23,7 @@ public final class TcpBody {
         public static byte[] updataCoachLogout = {(byte) 0x01, (byte) 0x02};               //上传教练员登出
         public static byte[] updataStudentLogin = {(byte) 0x02, (byte) 0x01};               //上传学员登录
         public static byte[] updataStudentLogiout = {(byte) 0x02, (byte) 0x02};               //上传学员登出
+        public static byte[] updataStudyInfo = {(byte) 0x02, (byte) 0x03};               //上报学时记录
         public static byte[] transparentInfo = {(byte) 0x09, (byte) 0x00};          //透传消息
     }
 

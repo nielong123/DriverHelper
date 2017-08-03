@@ -29,10 +29,8 @@ public class ConstantInfo {
     public static String strTerminalTYPE = "43373033444D";
 
     public static String strTerminalSerial = "1001001";
-//    public static byte[] terminalSerial = {(byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x31};
 
     public static String strIMEI = "100221235053037";
-    //    public static byte[] IMEI = {(byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x32, (byte) 0x32, (byte) 0x31, (byte) 0x32, (byte) 0x33, (byte) 0x35, (byte) 0x30, (byte) 0x35, (byte) 0x33, (byte) 0x30, (byte) 0x33, (byte) 0x37};
     public static String terminalPhoneNumber = "15070000001";    //终端手机号
     public static String vehicleColor;           //车辆颜色
     public static String vehicleNum;            //车牌号
@@ -45,10 +43,20 @@ public class ConstantInfo {
     public static byte[] certificatePassword = new byte[12];       //证书口令;
     public static String terminalCertificate = "";         //终端证书
     public static String coachNum;      //教练员编号
-    public static String studentNum;        //学员编号
-    public static long studyTime = 0;             //学习的时间
-    public static long studyDistance = 0;             //学习的时间
+
+    public static long studyTimeThis = 0;             //学习的时间
+    public static long studyDistanceThis = 0;             //学习的时间
     public static byte[] classId;             //课堂id
+
+
+    public static class StudentInfo{
+        public static String studentNum;        //学员编号
+        public static int totleTime;            //需要完成的总学时
+        public static int finishedTime;               //已完成的学时
+        public static int totleMileage;             //需要完成的总里程
+        public static int finishedMileage;            //已完成的里程
+    }
+
 
 
     public static QRbean qRbean;

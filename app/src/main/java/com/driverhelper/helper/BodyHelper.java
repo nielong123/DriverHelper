@@ -19,11 +19,8 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.driverhelper.config.Config.TextInfoType.CLEARJIAOLIAN;
 import static com.driverhelper.config.ConstantInfo.coachNum;
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
-import static com.driverhelper.config.ConstantInfo.studyDistance;
-import static com.driverhelper.config.ConstantInfo.studyTime;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
@@ -36,6 +33,7 @@ import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogin;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogout;
 import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogin;
 import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogiout;
+import static com.driverhelper.config.TcpBody.MessageID.updataStudyInfo;
 import static com.driverhelper.config.TcpBody.TransformID.driving;
 import static com.driverhelper.config.TcpBody.VERSION_CODE;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
@@ -313,6 +311,7 @@ public class BodyHelper {
         return sticky(resultHead, resultBody);
     }
 
+
     /****
      * 学员登出
      * @param studentNum
@@ -341,6 +340,32 @@ public class BodyHelper {
         resultBody = buildExMsg(updataStudentLogiout, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+    /****
+     * 上传学时信息
+     * @param updataType
+     * @return
+     */
+    public static byte[] makeSendStudyInfo(byte updataType) {
+        byte[] resultBody = ByteUtil.int2Bytes(updataType, 2);
+        resultBody = ByteUtil.add(resultBody, updataType);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(ConstantInfo.StudentInfo.studentNum));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(ConstantInfo.coachNum));
+        resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
+                "40080000",
+                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
+                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                10,
+                (int) MyApplication.getInstance().speedGPS,
+                (int) MyApplication.getInstance().direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                -2000, -2000, -2000, -2000));
+
+        resultBody = buildExMsg(updataCoachLogout, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(updataStudyInfo, false, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 

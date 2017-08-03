@@ -4,7 +4,6 @@ package com.driverhelper.ui.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ConfigurationInfo;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.Handler;
@@ -54,7 +53,6 @@ import com.jaydenxiao.common.commonutils.VersionUtil;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,8 +61,9 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-import static com.driverhelper.config.Config.Config_RxBus.RX_STUDENT_SIGN_OK;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
+import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
+import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
 import static com.driverhelper.config.Config.carmerId_HANGJING;
 import static com.driverhelper.config.Config.ip;
 import static com.driverhelper.config.Config.port;
@@ -145,27 +144,56 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     private final static int height = 240;
     byte[] mPreBuffer = null;
 
-    boolean gpsState;
     boolean isPreview;
 
     private static final int REQUEST_SETTING = 1;
 
     Timer studyTimer;
 
-    TimerTask studyTask = new TimerTask() {
+    private void sendMessage(int what) {
+        Message message = new Message();
+        message.what = what;
+        handler.sendMessage(message);
+    }
 
-        public void run() {
-            Message message = new Message();
-            message.what = 1;
-            handler.sendMessage(message);
-            ConstantInfo.studyTime += 1;
-        }
-    };
     private Handler handler = new Handler() {
 
         public void handleMessage(Message msg) {
-            if (msg.what == 1) {
-                textViewTime.setText(TimeUtil.getFriendlyDuration2(ConstantInfo.studyTime));
+            switch (msg.what) {
+                case Config.TextInfoType.UPDATATIME:
+                    textViewTime.setText(TimeUtil.getFriendlyDuration2(ConstantInfo.studyTimeThis));
+                    break;
+                case Config.TextInfoType.ChangeGPSINFO:
+                    direction.setText("方向:" + MyApplication.getInstance().direction + "度");
+                    speed.setText("速度:" + MyApplication.getInstance().speedGPS + "km/h");
+                    lat.setText("纬度:" + MyApplication.getInstance().lat);
+                    lon.setText("经度:" + MyApplication.getInstance().lon);
+                    break;
+                case Config.TextInfoType.ClearGPSINFO:
+                    direction.setText(" ");
+                    speed.setText("");
+                    lat.setText("");
+                    lon.setText("");
+                    break;
+                case Config.TextInfoType.SETJIAOLIAN:
+                    COACHNUMtext.setText(qRbean.getName());
+                    IDCARDtext.setText(qRbean.getNumber());
+                    break;
+                case Config.TextInfoType.SETXUEYUAN:
+                    XueYuanTEXT.setText(qRbean.getName());
+                    STUNUMtext.setText(qRbean.getNumber());
+                    textViewStat.setText("总里程:" + ConstantInfo.StudentInfo.totleMileage / 10 + "km  已完成里程" + ConstantInfo.StudentInfo.finishedMileage / 10 + "分钟\n"
+                            + "总培训时间:" + ConstantInfo.StudentInfo.totleTime + "分  已完成培训时间" + ConstantInfo.StudentInfo.finishedTime + "分");
+                    break;
+                case Config.TextInfoType.CLEARJIAOLIAN:
+                    COACHNUMtext.setText("");
+                    IDCARDtext.setText("");
+                    break;
+                case Config.TextInfoType.CLEARXUEYUAN:
+                    XueYuanTEXT.setText("");
+                    STUNUMtext.setText("");
+                    textViewTime.setText("00:00:00");
+                    break;
             }
             super.handleMessage(msg);
         }
@@ -184,7 +212,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     @Override
     public void initView() {
-//        startStudy();
         initToolBar();
         initCamera();
         networksw.setOnCheckedChangeListener(onCheckedChangeListener);
@@ -225,13 +252,26 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         WriteSettingHelper.loadRegistInfo();
     }
 
-
     @Override
     public void initEvent() {
         mRxManager.on(Config.Config_RxBus.RX_CHANGE_TEXTINFO, new Action1<Config.TextInfoType>() {
             @Override
             public void call(Config.TextInfoType textInfoType) {
-                setTextInfo(textInfoType);
+
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_LOCATION_OK, new Action1<Object>() {
+            @Override
+            public void call(Object object) {
+                ttsClient.speak("gps定位成功", 1, null);
+                sendMessage(ChangeGPSINFO);
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_LOCATION_FALINE, new Action1<Object>() {
+            @Override
+            public void call(Object object) {
+                ttsClient.speak("gps定位失败", 1, null);
+                sendMessage(Config.TextInfoType.ClearGPSINFO);
             }
         });
         mRxManager.on(RX_TTS_SPEAK, new Action1<String>() {
@@ -251,7 +291,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             @Override
             public void call(String str) {
                 ttsClient.speak(str, 1, null);
-                setTextInfo(Config.TextInfoType.SETJIAOLIAN);
+                sendMessage(Config.TextInfoType.SETJIAOLIAN);
                 Config.isCoachLoginOK = true;
                 ConstantInfo.coachNum = qRbean.getNumber();
                 WriteSettingHelper.setCOACHNUM(ConstantInfo.coachNum);
@@ -261,7 +301,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             @Override
             public void call(String str) {
                 ttsClient.speak(str, 1, null);
-                setTextInfo(Config.TextInfoType.CLEARJIAOLIAN);
+                sendMessage(Config.TextInfoType.CLEARJIAOLIAN);
                 Config.isCoachLoginOK = false;
                 WriteSettingHelper.setCOACHNUM("");
             }
@@ -270,60 +310,24 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             @Override
             public void call(HandMsgHelper.Class8201 class8201) {
                 ttsClient.speak("学员登录成功", 1, null);
-                setTextInfo(Config.TextInfoType.SETXUEYUAN);
+                sendMessage(Config.TextInfoType.SETXUEYUAN);
                 Config.isStudentLoginOK = true;
-                ConstantInfo.studentNum = ByteUtil.getString(class8201.studentNum);
+                ConstantInfo.StudentInfo.studentNum = ByteUtil.getString(class8201.studentNum);
+                ConstantInfo.StudentInfo.totleMileage = class8201.totleMileage;
+                ConstantInfo.StudentInfo.finishedMileage = class8201.finishedMileage;
+                ConstantInfo.StudentInfo.totleTime = class8201.totleStudyTime;
+                ConstantInfo.StudentInfo.finishedTime = class8201.finishedStudyTime;
                 startStudy();
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_STUDENT_LOGOUTOK, new Action1<String>() {
             @Override
             public void call(String str) {
-                ttsClient.speak(str, 1, null);
                 stopStudy();
-                setTextInfo(Config.TextInfoType.CLEARXUEYUAN);
+                ttsClient.speak(str, 1, null);
+                sendMessage(Config.TextInfoType.CLEARXUEYUAN);
             }
         });
-    }
-
-
-    public void setTextInfo(Config.TextInfoType type) {
-        switch (type) {
-            case ChangeGPSINFO:
-                if (!gpsState) {
-                    ttsClient.speak("gps定位成功", 1, null);
-                    gpsState = true;
-                }
-                direction.setText("方向:" + MyApplication.getInstance().direction + "度");
-                speed.setText("速度:" + MyApplication.getInstance().speedGPS + "km/h");
-                lat.setText("纬度:" + MyApplication.getInstance().lat);
-                lon.setText("经度:" + MyApplication.getInstance().lon);
-                break;
-            case ClearGPSINFO:
-                gpsState = false;
-                ttsClient.speak("gps定位失败", 1, null);
-                direction.setText(" ");
-                speed.setText("");
-                lat.setText("");
-                lon.setText("");
-                break;
-            case SETJIAOLIAN:
-                COACHNUMtext.setText(qRbean.getName());
-                IDCARDtext.setText(qRbean.getNumber());
-                break;
-            case SETXUEYUAN:
-                XueYuanTEXT.setText(qRbean.getName());
-                STUNUMtext.setText(qRbean.getNumber());
-                break;
-            case CLEARJIAOLIAN:
-                COACHNUMtext.setText("");
-                IDCARDtext.setText("");
-                break;
-            case CLEARXUEYUAN:
-                XueYuanTEXT.setText("");
-                STUNUMtext.setText("");
-                break;
-        }
     }
 
 
@@ -500,27 +504,13 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
                 /********************************************************************************/
 //                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
-////                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";//为了调试把逻辑写反了
+                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";//为了调试把逻辑写反了
 //                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
-//                qRbean = new Gson().fromJson(str, QRbean.class);
-////                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
-////                qRbean = new Gson().fromJson(result.getContents(), QRbean.class);
-//                if (qRbean.getType() != null && !Config.isCoachLoginOK) {
+                qRbean = new Gson().fromJson(str, QRbean.class);
+//                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
+//                qRbean = new Gson().fromJson(result.getContents(), QRbean.class);
 //                    coachLogin();                       //教练登录
-//                    return;
-//                }
-//                if (qRbean.getType() != null && Config.isCoachLoginOK) {
-//                    RxBus.getInstance().post(RX_TTS_SPEAK, "教练员已签到");
-//                    return;
-//                }
-//                if (qRbean.getType() == null && !Config.isCoachLoginOK) {
-//                    studentLogin(qRbean.getNumber());                 //学员登录
-//                    return;
-//                }
-//                if (qRbean.getType() == null && Config.isCoachLoginOK) {
-//                    RxBus.getInstance().post(RX_TTS_SPEAK, "学员已签到");
-//                    return;
-//                }
+                studentLogin(qRbean.getNumber());                 //学员登录
                 /********************************************************************************/
 
 
@@ -567,7 +557,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     }
 
     private void coachLogout() {
-//        setTextInfo(Config.TextInfoType.SETJIAOLIAN);
         TcpHelper.getInstance().sendCoachLogout();
     }
 
@@ -589,9 +578,16 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
      * 开始培训
      */
     private void startStudy() {
-        ConstantInfo.studyTime = 0;
+        ConstantInfo.studyTimeThis = 0;
         studyTimer = new Timer(true);
-        studyTimer.schedule(studyTask, 1000, 1000);
+        studyTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                sendMessage(UPDATATIME);
+                ConstantInfo.studyTimeThis += 1;
+                TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息
+            }
+        }, 1000, 1000);
     }
 
     private void stopStudy() {
@@ -600,8 +596,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             studyTimer = null;
         }
         Config.isStudentLoginOK = false;
-        ConstantInfo.studyTime = 0;
-        ConstantInfo.studyDistance = 0;
+        ConstantInfo.studyTimeThis = 0;
+        ConstantInfo.studyDistanceThis = 0;
     }
 
     private void initCamera() {

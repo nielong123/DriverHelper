@@ -24,6 +24,8 @@ public class Config {
         public final static String RX_STUDENT_SIGN_OUT = "RX_STUDENT_SIGN_OUT";    //签退
         public final static String RX_PHOTOGRAPH = "RX_PHOTOGRAPH";         //照相
 
+        public final static String RX_LOCATION_OK = "RX_LOCATION_OK";           //定位成功
+        public final static String RX_LOCATION_FALINE = "RX_LOCATION_FAILE";           //定位失败
         public final static String RX_CHANGE_TEXTINFO = "RX_CHANGE_TEXTINFO";       //刷新界面
         public final static String RX_TTS_SPEAK = "RX_TTS_SPEAK";           //語音
         public final static String RX_NET_DISCONNECT = "RX_NET_DISCONNECT";           //网络连接中断
@@ -59,13 +61,15 @@ public class Config {
     }
 
 
-    public enum TextInfoType {
-        ChangeGPSINFO,
-        ClearGPSINFO,
-        SETJIAOLIAN,
-        CLEARJIAOLIAN,
-        SETXUEYUAN,
-        CLEARXUEYUAN;
+    public static class TextInfoType {
+        final public static int SETSTUDYINFO = 0;
+        final public static int ChangeGPSINFO = 1;
+        final public static int ClearGPSINFO = 2;
+        final public static int SETJIAOLIAN = 3;
+        final public static int CLEARJIAOLIAN = 4;
+        final public static int SETXUEYUAN = 5;
+        final public static int CLEARXUEYUAN = 6;
+        final public static int UPDATATIME = 7;
     }
 
     public static List<String> colors = new ArrayList<String>(Arrays.asList("蓝色", "黄色", "黑色", "白色", "绿色"));
