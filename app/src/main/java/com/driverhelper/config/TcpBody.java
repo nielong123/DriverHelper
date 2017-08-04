@@ -14,7 +14,7 @@ public final class TcpBody {
         public static byte[] register = {(byte) 0x01, (byte) 0x00}; // 注册
         public static byte[] unRegister = {(byte) 0x00, (byte) 0x03}; // 注销
         public static byte[] authentication = {(byte) 0x01, (byte) 0x02}; // 终端鉴权
-        public static byte[] queryTerminalInfoReq = {(byte) 0x81, (byte) 0x06};    //查询终端参数应答
+        public static byte[] id0104 = {(byte)0x01,(byte)0x04};
         public static byte[] heart = {(byte) 0x00, (byte) 0x02};        //心跳包
         public static byte[] clientCommonResponse = {(byte) 0x00, (byte) 0x01};         //客户端通用应答
         public static byte[] locationInfoUpdata = {(byte) 0x02, (byte) 0x00};       //B.3.2.3.16　位置信息汇报
@@ -42,7 +42,7 @@ public final class TcpBody {
         public static byte[] id0403 = {(byte) 0x04, (byte) 0x03};               //A.1.1.1.1　上报车辆绑定信息
 
         public static byte[] transparentInfo = {(byte) 0x09, (byte) 0x00};          //透传消息
-    }s
+    }
 
     public static class TransformID {
         public static final byte driving = (byte) 0x13;              //驾培业务

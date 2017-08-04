@@ -19,6 +19,7 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.ConstantInfo.coachNum;
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
@@ -26,6 +27,7 @@ import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
 import static com.driverhelper.config.TcpBody.MessageID.clientCommonResponse;
 import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
+import static com.driverhelper.config.TcpBody.MessageID.id0104;
 import static com.driverhelper.config.TcpBody.MessageID.id0302;
 import static com.driverhelper.config.TcpBody.MessageID.id0303;
 import static com.driverhelper.config.TcpBody.MessageID.id0304;
@@ -395,8 +397,29 @@ public class BodyHelper {
     }
 
 
+    public static byte[] make0104(int waterId, byte number, List<HandMsgHelper.Class8103.Setting> settingList) {
+        byte[] resultBody = ByteUtil.int2WORD(waterId);
+        resultBody = ByteUtil.add(resultBody, number);          //应答参数个数
+        resultBody = ByteUtil.add(resultBody, number);          //包参数个数
+        if (settingList != null) {
+            for (HandMsgHelper.Class8103.Setting setting : settingList) {
+                resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(setting.id));
+                resultBody = ByteUtil.add(resultBody, setting.parameterLength);
+                resultBody = ByteUtil.add(resultBody, setting.parameter.getBytes());
+            }
+        }
+        byte[] resultHead = makeHead(id0104, false, 0, resultBody.length); // 包头固定
+
+        byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
+        result = ByteUtil.addEND(result); // 添加尾部
+        result = ByteUtil.checkMark(result);
+
+        ByteUtil.printHexString(result);
+        return result;
+    }
+
     /****
-     * 上传学时信息
+     * 命令上传学时信息
      * @param updataType
      * @return
      */
@@ -716,10 +739,12 @@ public class BodyHelper {
         return sticky(resultHead, resultBody);
     }
 
-    public static byte[] make0402(byte infoType) {
+    public static byte[] make0402(byte infoType, String id) {
         byte[] resultBody = new byte[20];
         resultBody[0] = infoType;
-        resultBody = ByteUtil.add(resultBody, "123456789012345678".getBytes());
+        if (infoType == 2 || infoType == 3 || infoType == 4 || infoType == 6) {
+            resultBody = ByteUtil.add(resultBody, id.getBytes());
+        }
         resultBody = buildExMsg(id0402, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
@@ -812,16 +837,16 @@ public class BodyHelper {
                             case 0:
                                 break;
                             case 1:
-                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "车辆已被注册");
+                                RxBus.getInstance().post(RX_TTS_SPEAK, "车辆已被注册");
                                 break;
                             case 2:
-                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "数据库中无该车辆");
+                                RxBus.getInstance().post(RX_TTS_SPEAK, "数据库中无该车辆");
                                 break;
                             case 3:
-                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端已被注册");
+                                RxBus.getInstance().post(RX_TTS_SPEAK, "终端已被注册");
                                 break;
                             case 4:
-                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "数据库中无该终端");
+                                RxBus.getInstance().post(RX_TTS_SPEAK, "数据库中无该终端");
                                 break;
                         }
                     } else {
@@ -862,7 +887,7 @@ public class BodyHelper {
                                 System.arraycopy(dataResult, posIndex, data0, 0, data0.length);
                                 ConstantInfo.terminalCertificate = ByteUtil.getString(data0);     //终端证书
                                 midDatas = null;
-                                RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端注册成功");
+                                RxBus.getInstance().post(RX_TTS_SPEAK, "终端注册成功");
                                 WriteSettingHelper.saveRegistInfo();
                             }
                         }
@@ -888,8 +913,24 @@ public class BodyHelper {
                     break;
 
                 case "8103":            //设置终端参数
+                    HandMsgHelper.Class8103 class8103 = HandMsgHelper.getClass8103(messageBean.bodyBean);
+                    /*****
+                     *          设置
+                     */
+                    break;
+                case "8104":
+                    TcpHelper.getInstance().send0104();
+                    /*****
+                     * 上传参数列表
+                     */
+                    break;
+                case "8106":
 
 
+                    break;
+
+                case "8201":            //位置信息查询
+//                    TcpHelper.getInstance().makeFindLocatInfoRequest();
                     break;
                 case "8900":            //透传消息应答
                     messageBean.getThroughExpand(messageBean.bodyBean);
@@ -903,15 +944,15 @@ public class BodyHelper {
                                         coachNum = ByteUtil.getString(class8101.coachNum);
                                         break;
                                     case 2:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "无效的教练员编号");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "无效的教练员编号");
                                         Config.isCoachLoginOK = false;
                                         break;
                                     case 3:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "准教车型不符");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "准教车型不符");
                                         Config.isCoachLoginOK = false;
                                         break;
                                     case 9:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "其他错误");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "其他错误");
                                         Config.isCoachLoginOK = false;
                                         break;
                                 }
@@ -923,11 +964,11 @@ public class BodyHelper {
                                         RxBus.getInstance().post(Config.Config_RxBus.RX_COACH_LOGOUTOK, "教练员登出成功");
                                         break;
                                     case 2:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员登出失败");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "教练员登出失败");
                                         Config.isCoachLoginOK = false;
                                         break;
                                     case 9:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "教练员登出失败，其他错误");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "教练员登出失败，其他错误");
                                         Config.isCoachLoginOK = false;
                                         break;
                                 }
@@ -939,19 +980,19 @@ public class BodyHelper {
                                         RxBus.getInstance().post(Config.Config_RxBus.RX_STUDENT_LOGINOK, class8201);
                                         break;
                                     case 2:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "无效的学员编号");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "无效的学员编号");
                                         break;
                                     case 3:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "禁止登录的学员");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "禁止登录的学员");
                                         break;
                                     case 4:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "区域外教学提醒");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "区域外教学提醒");
                                         break;
                                     case 5:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "准教车型与培训车型不符");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "准教车型与培训车型不符");
                                         break;
                                     case 9:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "其他错误");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "其他错误");
                                         break;
                                 }
                                 break;
@@ -962,11 +1003,11 @@ public class BodyHelper {
                                         RxBus.getInstance().post(Config.Config_RxBus.RX_STUDENT_LOGOUTOK, "学员登出成功");
                                         break;
                                     case 2:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员登出失败");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "学员登出失败");
                                         Config.isCoachLoginOK = false;
                                         break;
                                     case 9:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员登出失败，其他错误");
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "学员登出失败，其他错误");
                                         Config.isCoachLoginOK = false;
                                         break;
                                 }
@@ -1012,6 +1053,14 @@ public class BodyHelper {
                                 break;
                             case "8402":
                                 HandMsgHelper.Class8402 class8402 = HandMsgHelper.getClass8402(messageBean.throughExpand.data);
+                                switch (class8402.result) {
+                                    case 0:
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "请求编号成功");
+                                        break;
+                                    default:
+                                        RxBus.getInstance().post(RX_TTS_SPEAK, "请求编号失败");
+                                        break;
+                                }
                                 break;
                             case "8403":
                                 HandMsgHelper.Class8403 class8403 = HandMsgHelper.getClass8403(messageBean.throughExpand.data);

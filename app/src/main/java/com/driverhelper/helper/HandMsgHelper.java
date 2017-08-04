@@ -2,6 +2,9 @@ package com.driverhelper.helper;
 
 import com.driverhelper.utils.ByteUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/7/25.
  */
@@ -35,12 +38,47 @@ public final class HandMsgHelper {
         return class8101;
     }
 
-    public static class Class8102 {
+    static class Class8103 {
+
+        static class Setting {
+            int id;
+            byte parameterLength;
+            String parameter;
+        }
+
+        int totleNumber;
+        int partNumber;
+        List<Setting> settingList = new ArrayList<>();
+    }
+
+    public static Class8103 getClass8103(byte[] data) {
+
+        Class8103 class8103 = new Class8103();
+        class8103.totleNumber = data[0];
+        class8103.partNumber = data[1];
+        byte[] data0 = new byte[data.length - 2];
+        System.arraycopy(data, 2, data0, 0, data0.length);
+        for (int i = 0; i < class8103.totleNumber; i++) {
+            Class8103.Setting setting = new Class8103.Setting();
+            byte[] data1 = new byte[2];
+            System.arraycopy(data0, i, data1, 0, data1.length);
+            setting.id = ByteUtil.byte2int(data1);
+            setting.parameterLength = data0[i + 1];
+            int length = ByteUtil.byte2int(setting.parameterLength);
+            byte[] data2 = new byte[length];
+            System.arraycopy(data0,i+3,data2,0,length);
+            setting.parameter = ByteUtil.getString(data2);
+            class8103.settingList.add(setting);
+        }
+        return class8103;
+    }
+
+    static class Class8102 {
         byte[] result = new byte[1];
         byte[] coachNum = new byte[16];
     }
 
-    public static Class8102 getClass8102(byte[] data) {
+    static Class8102 getClass8102(byte[] data) {
         Class8102 Class8102 = new Class8102();
         int index = 0;
         System.arraycopy(data, index, Class8102.result, 0, Class8102.result.length);
@@ -62,7 +100,7 @@ public final class HandMsgHelper {
         public String otherInfo;               //附加消息
     }
 
-    public static Class8201 getClass8201(byte[] data) {
+    static Class8201 getClass8201(byte[] data) {
         Class8201 class8201 = new Class8201();
         ByteUtil.printHexString(data);
         class8201.result = data[0];
@@ -106,13 +144,13 @@ public final class HandMsgHelper {
         return class8201;
     }
 
-    public static class Class8202 {
+    static class Class8202 {
         byte result;
         byte[] studentNum = new byte[16];
     }
 
 
-    public static Class8202 getClass8202(byte[] data) {
+    static Class8202 getClass8202(byte[] data) {
 
         Class8202 class8202 = new Class8202();
         class8202.result = data[0];
@@ -120,14 +158,14 @@ public final class HandMsgHelper {
         return class8202;
     }
 
-    public static class Class8205 {
+    static class Class8205 {
         byte findType;
         byte[] startTime = new byte[6];
         byte[] endTime = new byte[6];
         byte findNum;
     }
 
-    public static Class8205 getClass8205(byte[] data) {
+    static Class8205 getClass8205(byte[] data) {
 
         int index;
         Class8205 class8205 = new Class8205();
@@ -140,14 +178,14 @@ public final class HandMsgHelper {
         return class8205;
     }
 
-    public static class Class8301 {
+    static class Class8301 {
         byte updataType;
         byte cameraNum;
         byte size;
     }
 
 
-    public static Class8301 getClass8301(byte[] data) {
+    static Class8301 getClass8301(byte[] data) {
         Class8301 class8301 = new Class8301();
         class8301.updataType = data[0];
         class8301.cameraNum = data[1];
@@ -155,10 +193,10 @@ public final class HandMsgHelper {
         return class8301;
     }
 
-    public static class Class8302 {
+    static class Class8302 {
         public byte type;
-        public byte[] startTime = new byte[6];
-        public byte[] endTime = new byte[6];
+        byte[] startTime = new byte[6];
+        byte[] endTime = new byte[6];
     }
 
     public static Class8302 getClass8302(byte[] data) {
@@ -272,6 +310,7 @@ public final class HandMsgHelper {
         System.arraycopy(data, index, class8402.id, 0, class8402.id.length);
         index += class8402.id.length;
         class8402.result = data[index++];
+        if (class8402.result == 1) return class8402;
         System.arraycopy(data, index, class8402.num, 0, class8402.num.length);
         System.arraycopy(data, index, class8402.vehicleType, 0, class8402.vehicleType.length);
         return class8402;

@@ -258,6 +258,11 @@ public class TcpHelper {
         sendData(BodyHelper.makeAuthentication());
     }
 
+
+    public void send0104() {
+        BodyHelper.make0104(123, (byte) 0x01, null);
+    }
+
     /***
      * 发送位置信息
      */
@@ -372,6 +377,10 @@ public class TcpHelper {
 
     public void send0401() {
         sendData(BodyHelper.make0401((byte) 0x01, (byte) 0x01));
+    }
+
+    public void send0402(byte type, String id) {
+        sendData(BodyHelper.make0402(type, id));
     }
 
     public void send0403() {

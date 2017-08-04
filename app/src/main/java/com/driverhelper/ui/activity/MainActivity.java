@@ -71,7 +71,6 @@ import static com.driverhelper.config.ConstantInfo.qRbean;
 
 public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener,
-        Toolbar.OnMenuItemClickListener,
         SurfaceHolder.Callback, Camera.ErrorCallback, Camera.PreviewCallback {
 
     final String TAG = getClass().getName().toUpperCase();
@@ -218,6 +217,25 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         networksw.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 
+    Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+
+            switch (menuItem.getItemId()) {
+                case R.id.action_0402_1:
+                    TcpHelper.getInstance().send0402((byte) 0x01, "");
+                    break;
+                case R.id.action_0402_5:
+                    TcpHelper.getInstance().send0402((byte) 0x05, "");
+                    break;
+                case R.id.action_0402_7:
+                    TcpHelper.getInstance().send0402((byte) 0x07, "");
+                    break;
+            }
+            return false;
+        }
+    };
+
 
     void initToolBar() {
         StringBuilder localStringBuilder1 = new StringBuilder().append("EXSUNTerminal 终端系统 ").append(VersionUtil.getVersion(this)).append("  ( 科目");
@@ -227,6 +245,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 //        StringBuilder localStringBuilder5 = localStringBuilder4.append(MSG.ClientInfo.param0083).append(" ) : ");
         toolbar.setTitle(new String(localStringBuilder4));
         setSupportActionBar(this.toolbar);
+        toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
 
         DrawerLayout localDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle localActionBarDrawerToggle = new ActionBarDrawerToggle(this,
@@ -408,13 +427,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         return false;
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-
-        }
-        return false;
-    }
 
     @OnClick({R.id.JiaoLianButton, R.id.XueYuanButton, R.id.textViewThisTime, R.id.surfaceView})
     public void onClick(View view) {
