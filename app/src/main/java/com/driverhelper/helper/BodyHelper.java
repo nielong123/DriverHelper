@@ -26,8 +26,16 @@ import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
 import static com.driverhelper.config.TcpBody.MessageID.clientCommonResponse;
 import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
+import static com.driverhelper.config.TcpBody.MessageID.id0302;
+import static com.driverhelper.config.TcpBody.MessageID.id0303;
 import static com.driverhelper.config.TcpBody.MessageID.id0304;
 import static com.driverhelper.config.TcpBody.MessageID.id0305;
+import static com.driverhelper.config.TcpBody.MessageID.id0306;
+import static com.driverhelper.config.TcpBody.MessageID.id0401;
+import static com.driverhelper.config.TcpBody.MessageID.id0402;
+import static com.driverhelper.config.TcpBody.MessageID.id0403;
+import static com.driverhelper.config.TcpBody.MessageID.id0501;
+import static com.driverhelper.config.TcpBody.MessageID.id0503;
 import static com.driverhelper.config.TcpBody.MessageID.locationInfoUpdata;
 import static com.driverhelper.config.TcpBody.MessageID.register;
 import static com.driverhelper.config.TcpBody.MessageID.takePhotoNow;
@@ -105,8 +113,8 @@ public class BodyHelper {
         if (isDivision) { // 如果有分包就加这一项
             data = ByteUtil.add(data, getPackageItem(isDivision));
         }
-        System.out.println("hand = ");
-        ByteUtil.printHexString(data);
+//        System.out.println("hand = ");
+//        ByteUtil.printHexString(data);
         return data;
     }
 
@@ -473,14 +481,38 @@ public class BodyHelper {
         return sticky(resultHead, resultBody);
     }
 
+    public static byte[] make0302(byte doResult) {
+        byte[] resultBody = new byte[]{doResult};
+        resultBody = buildExMsg(id0302, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+    public static byte[] make0303(byte isUpdataEnd) {
+
+        byte[] resultBody = new byte[]{isUpdataEnd};
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(totle));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(1234567890));           //课堂id
+        resultBody = buildExMsg(id0303, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
     /****
      * B.4.2.3.9　照片上传初始化
      * @param
      * @return
      */
-    public static byte[] make0304(byte eventType) {
+    public static byte[] make0304(byte eventType, byte totlePhotoNum, byte num, List<String> photoIdList) {
 
         byte[] resultBody = new byte[]{eventType};            //照片编号
+        resultBody = ByteUtil.add(resultBody, totlePhotoNum);
+        resultBody = ByteUtil.add(resultBody, num);
+        for (String photoId : photoIdList) {
+            resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(photoId));
+        }
         resultBody = buildExMsg(id0304, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
@@ -492,14 +524,30 @@ public class BodyHelper {
      * @param
      * @return
      */
-    public static byte[] make0306() {
+    public static byte[] make0306(byte[] data) {
 
         byte[] resultBody = "1234567890".getBytes();
-        resultBody = ByteUtil.add(resultBody, ByteUtil.Bitmap2Bytes(AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123.jpg")));
-        resultBody = buildExMsg(id0304, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(resultBody, data);
+        resultBody = buildExMsg(id0306, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
         return sticky(resultHead, resultBody);
+    }
+
+    public static int getMake0306length() {
+        byte[] resultBody = "1234567890".getBytes();
+//        resultBody = ByteUtil.add(resultBody, ByteUtil.Bitmap2Bytes(AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123.png")));
+        resultBody = buildExMsg(id0306, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        return resultBody.length;
+    }
+
+    public static byte[] make0403(String vehicleId) {
+        vehicleId = "12345679012345678901234567890123456";
+        byte[] resultBody = vehicleId.getBytes();
+        resultBody = buildExMsg(id0403, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        return resultBody;
     }
 
 
@@ -622,6 +670,63 @@ public class BodyHelper {
     }
 
 
+    /****
+     * A.1.1.1.1　设置计时终端应用参数应答
+     * @param
+     * @return
+     */
+    public static byte[] make0501(byte type) {
+
+        byte[] resultBody = new byte[]{type};
+
+        resultBody = buildExMsg(id0501, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+    public static byte[] make0503() {
+        byte[] resultBody = new byte[]{(byte) 0x00};
+        resultBody = ByteUtil.add(resultBody, (byte) 0x0E);
+        resultBody = ByteUtil.add(resultBody, (byte) 0x00);
+        resultBody = ByteUtil.add(resultBody, (byte) 0x01);
+        resultBody = ByteUtil.add(resultBody, (byte) 0x10);       //是否报读附加消息
+        resultBody = ByteUtil.add(resultBody, (byte) 0x05);           //熄火后停止学时计时的延时时间
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(3600));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(150));                                        //熄火后教练自动登出的延时时间
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(30));
+        resultBody = ByteUtil.add(resultBody, (byte) 0x01);
+        resultBody = ByteUtil.add(resultBody, (byte) 0x01);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(30));
+
+        resultBody = buildExMsg(id0503, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+    public static byte[] make0401(byte infoType, byte personType) {
+        byte[] resultBody = new byte[20];
+        resultBody[0] = infoType;
+        resultBody[1] = personType;
+        resultBody = ByteUtil.add(resultBody, "420106198804290911".getBytes());
+        resultBody = buildExMsg(id0401, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+    public static byte[] make0402(byte infoType) {
+        byte[] resultBody = new byte[20];
+        resultBody[0] = infoType;
+        resultBody = ByteUtil.add(resultBody, "123456789012345678".getBytes());
+        resultBody = buildExMsg(id0402, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+
     /**
      * B.3.2.3.19　位置信息查询应答
      *
@@ -686,7 +791,7 @@ public class BodyHelper {
                     0);
             resultBody = ByteUtil.add(resultBody, jiami); // 校验码  时间戳用0
         }
-        ByteUtil.printHexString("加密最后的结果和前面", resultBody);
+//        ByteUtil.printHexString("加密最后的结果和前面", resultBody);
         return resultBody;
     }
 
@@ -873,7 +978,11 @@ public class BodyHelper {
                             case "8301":
                                 HandMsgHelper.Class8301 class8301 = HandMsgHelper.getClass8301(messageBean.throughExpand.data);
                                 TcpHelper.getInstance().sendTakePhotoNowInit(class8301.updataType);
-                                TcpHelper.getInstance().send0305(class8301.updataType);
+                                TcpHelper.getInstance().send0305();
+                                break;
+                            case "8302":
+                                HandMsgHelper.Class8302 class8302 = HandMsgHelper.getClass8302(messageBean.throughExpand.data);
+                                TcpHelper.getInstance().send0302();
                                 break;
                             case "8305":
                                 HandMsgHelper.Class8305 class8305 = HandMsgHelper.getClass8305(messageBean.throughExpand.data);
@@ -889,6 +998,23 @@ public class BodyHelper {
                                     case (byte) 0xff:
                                         break;
                                 }
+                                break;
+                            case "8501":           //设置计时终端应用参数应答
+                                HandMsgHelper.Class8501 class8501 = HandMsgHelper.getClass8501(messageBean.throughExpand.data);
+                                TcpHelper.getInstance().send0303();
+                                break;
+                            case "8503":            //A.1.1.1.1　查询计时终端应用参数
+                                TcpHelper.getInstance().send0503();
+                                break;
+                            case "8401":            //A.1.1.1.1　请求身份认证信息应答
+                                HandMsgHelper.Class8401 class8401 = HandMsgHelper.getClass8401(messageBean.throughExpand.data);
+                                TcpHelper.getInstance().send0401();
+                                break;
+                            case "8402":
+                                HandMsgHelper.Class8402 class8402 = HandMsgHelper.getClass8402(messageBean.throughExpand.data);
+                                break;
+                            case "8403":
+                                HandMsgHelper.Class8403 class8403 = HandMsgHelper.getClass8403(messageBean.throughExpand.data);
                                 break;
                             default:
                                 break;

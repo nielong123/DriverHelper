@@ -134,11 +134,11 @@ public class MyApplication extends BaseApplication {
                 MyApplication.getInstance().direction = amapLocation.getBearing();
                 MyApplication.getInstance().timeGPS = amapLocation.getTime();
                 MyApplication.getInstance().isLocation = true;
-                RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_OK, "");
+//                RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_OK, "");
             } else {
                 MyApplication.getInstance().isLocation = false;
                 Logger.e("AmapError", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
-                RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_FALINE, "");
+//                RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_FALINE, "");
             }
         }
     }

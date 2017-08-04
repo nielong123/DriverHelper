@@ -30,30 +30,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fab4f4b-9cb1-418e-b8dc-2558d50e4c35" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/123.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/AssetsHelper.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/freemarker_2_3_23.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/greendao_3_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/greendao_api_3_0_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/greendao_generator_3_0_0.xml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/123.png" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/123.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/app/MyApplication.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/app/MyApplication.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/TcpBody.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/TcpBody.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/HandMsgHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/HandMsgHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/TcpHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/TcpHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/utils/ByteUtil.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/utils/ByteUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/Encrypt.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/Encrypt.java" />
     </list>
     <ignored path="DriverHelper1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,13 +82,9 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="967">
-              <caret line="455" column="33" selection-start-line="455" selection-start-column="33" selection-end-line="455" selection-end-column="33" />
+            <state relative-caret-position="9875">
+              <caret line="471" column="34" selection-start-line="471" selection-start-column="34" selection-end-line="471" selection-end-column="34" />
               <folding>
-                <element signature="e#23194#23379#0" expanded="true" />
-                <element signature="e#23378#23379#0" expanded="true" />
-                <element signature="e#23463#23646#0" expanded="true" />
-                <element signature="e#23645#23646#0" expanded="true" />
                 <element signature="method#initCamera#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#initPreviewListener#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#onError#0;class#MainActivity#0" expanded="false" />
@@ -112,12 +100,18 @@
       <file leaf-file-name="TcpHelper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/TcpHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="340" column="18" selection-start-line="340" selection-start-column="18" selection-end-line="340" selection-end-column="18" />
+            <state relative-caret-position="259">
+              <caret line="305" column="7" selection-start-line="305" selection-start-column="7" selection-end-line="305" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#12107#12108#0" expanded="true" />
-                <element signature="e#12154#12155#0" expanded="true" />
+                <element signature="method#sendStudentLogin#0;class#TcpHelper#0" expanded="false" />
+                <element signature="method#sendStudyInfo#0;class#TcpHelper#0" expanded="false" />
+                <element signature="method#sendStudyInfoByCommand#0;class#TcpHelper#0" expanded="false" />
+                <element signature="method#sendTakePhotoNowInit#0;class#TcpHelper#0" expanded="false" />
+                <element signature="method#send0305#0;class#TcpHelper#0" expanded="false" />
+                <element signature="method#send0306#0;class#TcpHelper#0" expanded="false" />
+                <element signature="e#13143#13144#0" expanded="true" />
+                <element signature="e#13214#13215#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -126,8 +120,8 @@
       <file leaf-file-name="BodyHelper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="499" column="55" selection-start-line="499" selection-start-column="55" selection-end-line="499" selection-end-column="55" />
+            <state relative-caret-position="463">
+              <caret line="1013" column="127" selection-start-line="1013" selection-start-column="127" selection-end-line="1013" selection-end-column="127" />
               <folding />
             </state>
           </provider>
@@ -136,18 +130,18 @@
       <file leaf-file-name="HandMsgHelper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/HandMsgHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="149" column="34" selection-start-line="149" selection-start-column="34" selection-end-line="149" selection-end-column="34" />
+            <state relative-caret-position="558">
+              <caret line="295" column="62" selection-start-line="295" selection-start-column="62" selection-end-line="295" selection-end-column="62" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ByteUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/utils/ByteUtil.java">
+      <file leaf-file-name="TcpBody.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/TcpBody.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="540" column="37" selection-start-line="540" selection-start-column="25" selection-end-line="540" selection-end-column="37" />
+            <state relative-caret-position="783">
+              <caret line="44" column="6" selection-start-line="44" selection-start-column="6" selection-end-line="44" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -6527,7 +6521,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/Verify.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/ISign.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/Sign.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/Encrypt.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MessageBean.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/DialogHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/SerialPortFinder.java" />
@@ -6546,7 +6539,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/TimerHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/ConstantInfo.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/app/MyApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/Config.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/ExCodeHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/WriteSettingHelper.java" />
@@ -6556,16 +6548,18 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/AssetsHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/TcpBody.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/Encrypt.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/utils/ByteUtil.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/app/MyApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/HandMsgHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/TcpBody.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/TcpHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1358" />
+    <option name="x" value="-1928" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
@@ -6595,8 +6589,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -6733,10 +6726,71 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DriverHelper1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DriverHelper1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="driverhelper" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DriverHelper1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DriverHelper1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -6750,7 +6804,11 @@
     <property name="SearchEverywhereHistoryKey" value="ViewfinderView&#9;PSI&#9;JAVA://com.driverhelper.R.id#zxing_viewfinder_view&#10;initEvent&#9;PSI&#9;JAVA://com.jaydenxiao.common.base.BaseActivity#initEvent&#10;onActivityRes&#9;PSI&#9;JAVA://android.app.Activity#onActivityResult" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\src\main\assets" />
+      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\library" />
+      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\libs" />
+      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\src\main\java\com\driverhelper\other" />
       <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\jniLibs\armeabi" />
     </key>
     <key name="android.template.packageName">
@@ -6763,11 +6821,7 @@
       <recent name="com.driverhelper.other" />
       <recent name="com.jaydenxiao.common.commonutils" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\src\main\assets" />
-      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\library" />
-      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\libs" />
-      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\src\main\java\com\driverhelper\other" />
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\jniLibs\armeabi" />
     </key>
   </component>
@@ -7248,7 +7302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501756585116</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="添加了数据库">
+      <created>1501767994592</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1501767994592</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7261,7 +7322,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1358" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -7270,21 +7331,19 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53125" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.52008927" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3321918" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26279318" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18496802" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5848214" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5848214" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -7292,6 +7351,8 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -7368,7 +7429,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/TcpHelper.java</url>
-          <line>66</line>
+          <line>67</line>
           <properties />
           <option name="timeStamp" value="177" />
         </line-breakpoint>
@@ -7378,13 +7439,18 @@
           <properties />
           <option name="timeStamp" value="270" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java</url>
+          <line>1009</line>
+          <properties />
+          <option name="timeStamp" value="524" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="503" />
+      <option name="time" value="525" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/SerialPort.java" />
     <entry file="file://$PROJECT_DIR$/app/libs/SerialPortLibrary-release.aar" />
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
@@ -7415,13 +7481,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_usb_test.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/library/SerialPortLibrary/src/main/java/qingwei/kong/serialportlibrary/SerialPort.java">
@@ -7483,31 +7549,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/ReceiverOBDII.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="316">
           <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build/generated/source/r/debug/com/driverhelper/R.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="173">
           <caret line="5698" column="32" selection-start-line="5698" selection-start-column="32" selection-end-line="5698" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7520,20 +7584,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/SplashActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="205">
           <caret line="63" column="21" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7541,9 +7604,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
           <caret line="72" column="58" selection-start-line="72" selection-start-column="58" selection-end-line="72" selection-end-column="58" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -7576,7 +7636,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="546">
           <caret line="87" column="5" selection-start-line="87" selection-start-column="5" selection-end-line="87" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7588,14 +7647,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/library/common/src/main/java/com/jaydenxiao/common/baserx/RxBus.java">
@@ -7641,7 +7700,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="61">
           <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7658,48 +7716,19 @@
         <state relative-caret-position="-989">
           <caret line="149" column="0" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
           <folding>
-            <element signature="e#3782#3783#0" expanded="true" />
-            <element signature="e#3825#3826#0" expanded="true" />
+            <element signature="e#3782#3783#0" expanded="false" />
+            <element signature="e#3825#3826#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/app/MyApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="133" column="82" selection-start-line="133" selection-start-column="82" selection-end-line="133" selection-end-column="82" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="39" column="48" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="967">
-          <caret line="455" column="33" selection-start-line="455" selection-start-column="33" selection-end-line="455" selection-end-column="33" />
-          <folding>
-            <element signature="e#23194#23379#0" expanded="true" />
-            <element signature="e#23378#23379#0" expanded="true" />
-            <element signature="e#23463#23646#0" expanded="true" />
-            <element signature="e#23645#23646#0" expanded="true" />
-            <element signature="method#initCamera#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initPreviewListener#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#onError#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#onPreviewFrame#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#surfaceChanged#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#startPreview#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#stopPreview#0;class#MainActivity#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="292">
+          <caret line="39" column="48" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="48" />
         </state>
       </provider>
     </entry>
@@ -7707,7 +7736,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7715,7 +7743,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7732,51 +7759,89 @@
         <state relative-caret-position="358">
           <caret line="16" column="84" selection-start-line="16" selection-start-column="84" selection-end-line="16" selection-end-column="84" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/TcpBody.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/Encrypt.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="34" column="37" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
+        <state relative-caret-position="617">
+          <caret line="127" column="0" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/utils/ByteUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="540" column="37" selection-start-line="540" selection-start-column="25" selection-end-line="540" selection-end-column="37" />
+        <state relative-caret-position="167">
+          <caret line="541" column="65" selection-start-line="541" selection-start-column="65" selection-end-line="541" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/app/MyApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="458">
+          <caret line="136" column="83" selection-start-line="136" selection-start-column="83" selection-end-line="136" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9875">
+          <caret line="471" column="34" selection-start-line="471" selection-start-column="34" selection-end-line="471" selection-end-column="34" />
+          <folding>
+            <element signature="method#initCamera#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#initPreviewListener#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onError#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onPreviewFrame#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#surfaceChanged#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#startPreview#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#stopPreview#0;class#MainActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/TcpBody.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="783">
+          <caret line="44" column="6" selection-start-line="44" selection-start-column="6" selection-end-line="44" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/HandMsgHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="149" column="34" selection-start-line="149" selection-start-column="34" selection-end-line="149" selection-end-column="34" />
+        <state relative-caret-position="558">
+          <caret line="295" column="62" selection-start-line="295" selection-start-column="62" selection-end-line="295" selection-end-column="62" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/TcpHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="340" column="18" selection-start-line="340" selection-start-column="18" selection-end-line="340" selection-end-column="18" />
+        <state relative-caret-position="259">
+          <caret line="305" column="7" selection-start-line="305" selection-start-column="7" selection-end-line="305" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12107#12108#0" expanded="true" />
-            <element signature="e#12154#12155#0" expanded="true" />
+            <element signature="method#sendStudentLogin#0;class#TcpHelper#0" expanded="false" />
+            <element signature="method#sendStudyInfo#0;class#TcpHelper#0" expanded="false" />
+            <element signature="method#sendStudyInfoByCommand#0;class#TcpHelper#0" expanded="false" />
+            <element signature="method#sendTakePhotoNowInit#0;class#TcpHelper#0" expanded="false" />
+            <element signature="method#send0305#0;class#TcpHelper#0" expanded="false" />
+            <element signature="method#send0306#0;class#TcpHelper#0" expanded="false" />
+            <element signature="e#13143#13144#0" expanded="true" />
+            <element signature="e#13214#13215#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="499" column="55" selection-start-line="499" selection-start-column="55" selection-end-line="499" selection-end-column="55" />
+        <state relative-caret-position="463">
+          <caret line="1013" column="127" selection-start-line="1013" selection-start-column="127" selection-end-line="1013" selection-end-column="127" />
           <folding />
         </state>
       </provider>

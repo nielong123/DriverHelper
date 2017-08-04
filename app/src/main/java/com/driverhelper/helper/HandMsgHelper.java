@@ -155,6 +155,43 @@ public final class HandMsgHelper {
         return class8301;
     }
 
+    public static class Class8302 {
+        public byte type;
+        public byte[] startTime = new byte[6];
+        public byte[] endTime = new byte[6];
+    }
+
+    public static Class8302 getClass8302(byte[] data) {
+        Class8302 class8302 = new Class8302();
+        class8302.type = data[0];
+        int index = 1;
+        System.arraycopy(data, index, class8302.startTime, 0, class8302.startTime.length);
+        index += class8302.endTime.length;
+        System.arraycopy(data, index, class8302.endTime, 0, class8302.endTime.length);
+        return class8302;
+    }
+
+
+    public static class Class8303 {
+        byte code;
+    }
+
+    public static Class8303 getClass8303(byte[] data) {
+        Class8303 class8303 = new Class8303();
+        class8303.code = data[0];
+        return class8303;
+    }
+
+    public static class Class8304 {
+        byte[] photoId;
+    }
+
+    public static Class8304 getClass8304(byte[] data) {
+        Class8304 class8304 = new Class8304();
+        System.arraycopy(data, 0, class8304.photoId, 0, class8304.photoId.length);
+        return class8304;
+    }
+
     public static class Class8305 {
         byte code;
     }
@@ -163,6 +200,102 @@ public final class HandMsgHelper {
         Class8305 class8305 = new Class8305();
         class8305.code = data[0];
         return class8305;
+    }
+
+    public static class Class8501 {
+        byte parameterId;           //参数id
+        byte cameraInterval;        //定时拍照间隔
+        byte photoUpDataSetting;        //照片上传设置
+        byte isReadOther;         //是否报读附加消息
+        byte flameoutDelay;         //4	熄火后停止学时计时的延时时间	BYTE	单位：min
+        byte[] flameoutGNSSDelay = new byte[2];     //熄火后GNSS数据包上传间隔
+        byte[] flameoutCoachLogoutTime = new byte[2];       //熄火后教练自动登出的延时时间
+        byte[] reloadIdentityTime = new byte[2];                    //重新验证身份时间
+        byte isCoachJumpSchool;                     //教练跨校教学  1.允许  2.no
+        byte isStdentJumpSchool;            //学员跨校学习
+        byte[] onCallMessageTime = new byte[2];           //响应平台同类消息时间间隔
+    }
+
+    public static Class8501 getClass8501(byte[] data) {
+        int index = 0;
+        Class8501 class8501 = new Class8501();
+        class8501.parameterId = data[index++];
+        class8501.cameraInterval = data[index++];
+        class8501.photoUpDataSetting = data[index++];
+        class8501.isReadOther = data[index++];
+        class8501.flameoutDelay = data[index++];
+        System.arraycopy(data, index, class8501.flameoutGNSSDelay, 0, class8501.flameoutGNSSDelay.length);
+        index += class8501.flameoutGNSSDelay.length;
+        System.arraycopy(data, index, class8501.flameoutCoachLogoutTime, 0, class8501.flameoutCoachLogoutTime.length);
+        index += class8501.flameoutCoachLogoutTime.length;
+        System.arraycopy(data, index, class8501.reloadIdentityTime, 0, class8501.reloadIdentityTime.length);
+        index += class8501.reloadIdentityTime.length;
+        class8501.isCoachJumpSchool = data[index++];
+        class8501.isStdentJumpSchool = data[index++];
+        System.arraycopy(data, index, class8501.onCallMessageTime, 0, class8501.onCallMessageTime.length);
+        return class8501;
+    }
+
+
+    public static class Class8401 {
+        byte[] id = new byte[2];
+        byte result;
+        byte[] infoLength = new byte[4];
+        byte[] info;
+    }
+
+    public static Class8401 getClass8401(byte[] data) {
+        Class8401 class8401 = new Class8401();
+        int index = 0;
+        System.arraycopy(data, index, class8401.id, 0, class8401.id.length);
+        index += class8401.id.length;
+        class8401.result = data[index++];
+        System.arraycopy(data, index, class8401.infoLength, 0, class8401.infoLength.length);
+        int length = ByteUtil.byte2int(class8401.infoLength);
+        if (length != 0) {
+            class8401.info = new byte[length];
+            System.arraycopy(data, index, class8401.info, 0, class8401.info.length);
+        }
+        return class8401;
+    }
+
+    public static class Class8402 {
+        byte[] id = new byte[2];
+        byte result;
+        byte[] num = new byte[16];
+        byte[] vehicleType = new byte[2];
+    }
+
+    public static Class8402 getClass8402(byte[] data) {
+        Class8402 class8402 = new Class8402();
+        int index = 0;
+        System.arraycopy(data, index, class8402.id, 0, class8402.id.length);
+        index += class8402.id.length;
+        class8402.result = data[index++];
+        System.arraycopy(data, index, class8402.num, 0, class8402.num.length);
+        System.arraycopy(data, index, class8402.vehicleType, 0, class8402.vehicleType.length);
+        return class8402;
+    }
+
+
+    public static class Class8403 {
+        byte[] id = new byte[2];
+        byte result;
+        byte vehicleColor;
+        String vehicleMark;
+    }
+
+    public static Class8403 getClass8403(byte[] data) {
+        Class8403 class8403 = new Class8403();
+        int index = 0;
+        System.arraycopy(data, index, class8403.id, 0, class8403.id.length);
+        index += class8403.id.length;
+        class8403.result = data[index++];
+        class8403.vehicleColor = data[index++];
+        byte[] data1 = new byte[data.length - index];
+        System.arraycopy(data, index, data1, 0, data1.length);
+        class8403.vehicleMark = ByteUtil.getString(data1);
+        return class8403;
     }
 
 }

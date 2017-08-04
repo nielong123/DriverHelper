@@ -104,7 +104,7 @@ public class Encrypt {
                     Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
                     cipher.init(Cipher.ENCRYPT_MODE, key);
                     byte[] encrypted = cipher.doFinal(byteBuffer);
-                    ByteUtil.printHexString("11111加密结果为  ", encrypted);
+//                    ByteUtil.printHexString("11111加密结果为  ", encrypted);
                     return encrypted;
                 } catch (NoSuchPaddingException e) {
                     // TODO Auto-generated catch block
@@ -125,20 +125,5 @@ public class Encrypt {
         }
         return null;
     }
-
-    private boolean Decrypt(byte[] data, KeyStore keyStore,String alias) {
-//        X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);// X509Certificate֤˩הг
-//        // long timestamp = new Date().getTime();
-//        long timestamp = 1500433671;
-
-
-
-//        ISign sign = new Sign();
-//        IVerify verify = new Verify();
-//        boolean ok = verify.verify(data, timestamp, sign_hex, cert);
-//        System.out.println(ok);
-        return false;
-    }
-
 
 }

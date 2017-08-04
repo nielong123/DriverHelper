@@ -24,6 +24,7 @@ import com.vilyever.socketclient.util.CharsetUtil;
 
 import static com.driverhelper.config.ConstantInfo.StudentInfo.studentNum;
 import static com.driverhelper.config.ConstantInfo.coachNum;
+import static com.driverhelper.helper.BodyHelper.getMake0306length;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
 
@@ -299,6 +300,7 @@ public class TcpHelper {
         sendData(BodyHelper.makeCoachLogout(coachNum));
     }
 
+
     /******
      * 学员登录
      */
@@ -334,11 +336,45 @@ public class TcpHelper {
         sendData(BodyHelper.makeTakePhotoNowInit((byte) 0x01, updataType, (byte) 0x04, (byte) 0x02));
     }
 
-    public void send0305(byte updataType) {
+    public void send0305() {
         sendData(BodyHelper.make0305("1111", ConstantInfo.coachNum, (byte) 0x01, (byte) 0x00, 1, 9999));
     }
 
     public void send0306() {
-        sendData(BodyHelper.make0306());
+
+        byte[] data = ByteUtil.Bitmap2Bytes(AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123.png"));
+        int length1 = data.length;
+        int length2 = 1024 - getMake0306length();
+        int length3 = length1 % length2;
+        int index = 0;
+        for (int i = 0; i < length1 / length2; i++) {
+            byte[] data1 = new byte[length2];
+            System.arraycopy(data, index, data1, 0, data1.length);
+            index += length2;
+            sendData(BodyHelper.make0306(data));
+        }
+        byte[] data2 = new byte[length3];
+        System.arraycopy(data, length1 - length3, data2, 0, data2.length);
+        sendData(BodyHelper.make0306(data2));
+    }
+
+    public void send0302() {
+        sendData(BodyHelper.make0302((byte) 0x01));
+    }
+
+    public void send0303() {
+        sendData(BodyHelper.make0501((byte) 0x01));
+    }
+
+    public void send0503() {
+        sendData(BodyHelper.make0503());
+    }
+
+    public void send0401() {
+        sendData(BodyHelper.make0401((byte) 0x01, (byte) 0x01));
+    }
+
+    public void send0403() {
+        sendData(BodyHelper.make0403(""));
     }
 }
