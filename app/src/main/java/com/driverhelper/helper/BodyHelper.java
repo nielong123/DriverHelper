@@ -776,12 +776,23 @@ public class BodyHelper {
         return sticky(resultHead, resultBody);
     }
 
-    public static byte[] make0503() {
+    /***
+     *
+     * @param parameter1
+     * @param parameter2
+     * @param parameter3
+     * @param parameter4
+     * @return
+     */
+    public static byte[] make0503(byte parameter1,
+                                  byte parameter2,
+                                  byte parameter3,
+                                  byte parameter4) {
         byte[] resultBody = new byte[]{(byte) 0x00};
-        resultBody = ByteUtil.add(resultBody, (byte) 0x0E);
-        resultBody = ByteUtil.add(resultBody, (byte) 0x00);
-        resultBody = ByteUtil.add(resultBody, (byte) 0x01);
-        resultBody = ByteUtil.add(resultBody, (byte) 0x10);       //是否报读附加消息
+        resultBody = ByteUtil.add(resultBody, parameter1);
+        resultBody = ByteUtil.add(resultBody, parameter2);
+        resultBody = ByteUtil.add(resultBody, parameter3);
+        resultBody = ByteUtil.add(resultBody, parameter4);       //是否报读附加消息
         resultBody = ByteUtil.add(resultBody, (byte) 0x05);           //熄火后停止学时计时的延时时间
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(3600));
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(150));                                        //熄火后教练自动登出的延时时间
@@ -1128,9 +1139,6 @@ public class BodyHelper {
                                 HandMsgHelper.Class8502 class8502 = HandMsgHelper.getClass8502(messageBean.throughExpand.data);
                                 RxBus.getInstance().post(Config.Config_RxBus.RX_SETTING_EMBARGOSTATE, class8502);
                                 break;
-                            case "8503":            //A.1.1.1.1　查询计时终端应用参数
-                                TcpHelper.getInstance().send0503();
-                                break;
                             case "8401":            //A.1.1.1.1　请求身份认证信息应答
                                 HandMsgHelper.Class8401 class8401 = HandMsgHelper.getClass8401(messageBean.throughExpand.data);
                                 TcpHelper.getInstance().send0401();
@@ -1148,6 +1156,9 @@ public class BodyHelper {
                                 break;
                             case "8403":
                                 HandMsgHelper.Class8403 class8403 = HandMsgHelper.getClass8403(messageBean.throughExpand.data);
+                                break;
+                            case "8503":            //A.1.1.1.1　查询计时终端应用参数
+                                TcpHelper.getInstance().send0503();
                                 break;
                             default:
                                 break;
