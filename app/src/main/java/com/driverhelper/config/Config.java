@@ -46,7 +46,7 @@ public class Config {
         public final static String TERMINALPHONENUMBER = "TERMINALPHONENUMBER";         //终端手机号
         public final static String IMEI = "IMEI";
         public final static String VEHICLE_COLOR = "VEHICLE_COLOR";         //车辆颜色
-        public final static String WATER_CODE = "WATER_CODE";       //流水号
+        public final static String WATER_CODE = "WATER_CODE111";       //流水号
         public final static String EX_CODE = "EX_CODE";       //透传消息流水号
         public final static String STUDY_CODE = "STUDY_CODE";       //课堂ID
         public final static String EXAM_TYPE = "EXAM_TYPE";       //考试类型

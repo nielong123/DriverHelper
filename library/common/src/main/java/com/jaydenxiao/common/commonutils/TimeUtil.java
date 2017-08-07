@@ -144,6 +144,10 @@ public class TimeUtil {
         return date.getSeconds();
     }
 
+    /****
+     * 毫秒级
+     * @return
+     */
     public static long getTime() {
         return new Date().getTime();
     }

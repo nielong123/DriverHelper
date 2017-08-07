@@ -261,7 +261,7 @@ public class ByteUtil {
 
     /********
      *          4字节byte[] 转化成int
-     * @param res
+     * @param
      * @return
      */
 //    public static int byte2int(byte[] res) {
@@ -538,9 +538,11 @@ public class ByteUtil {
     }
 
 
-    public static byte[] Bitmap2Bytes(Bitmap bm) {
+    public static byte[] bitmap2Bytes(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bm.compress(Bitmap.CompressFormat.PNG, 20, baos);
+        bm.recycle();
+        bm = null;
         return baos.toByteArray();
     }
 

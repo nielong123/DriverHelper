@@ -116,12 +116,12 @@ public class WriteSettingHelper {
      * 获取消息流水号
      * @return
      */
-    public static String getWATER_CODE() {
-        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.WATER_CODE, "0000");
+    public static int getWATER_CODE() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.WATER_CODE, 0);
     }
 
-    public static void setWATER_CODE(String waterCode) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.WATER_CODE, waterCode);
+    public static void setWATER_CODE(int waterCode) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.WATER_CODE, waterCode);
     }
 
     /***

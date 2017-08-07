@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.Config;
-import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
@@ -22,9 +21,15 @@ import com.vilyever.socketclient.helper.SocketPacketHelper;
 import com.vilyever.socketclient.helper.SocketResponsePacket;
 import com.vilyever.socketclient.util.CharsetUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import static com.driverhelper.config.ConstantInfo.StudentInfo.studentNum;
 import static com.driverhelper.config.ConstantInfo.coachNum;
-import static com.driverhelper.helper.BodyHelper.getMake0306length;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
 
@@ -34,14 +39,15 @@ import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.A
 
 public class TcpHelper {
 
-    static TcpHelper self;
+    private static TcpHelper self;
     public boolean isConnected;
-
-    static SocketClient socketClient;
+    //    private static ScheduledExecutorService scheduledThreadPool;
+    private static SocketClient socketClient;
 
     static public TcpHelper getInstance() {
         if (self == null) {
             self = new TcpHelper();
+//            scheduledThreadPool = Executors.newScheduledThreadPool(5);
         }
         return self;
     }
@@ -142,7 +148,7 @@ public class TcpHelper {
 
             @Override
             public void onReceivingPacketInProgress(SocketClient client, SocketResponsePacket packet, float progress, int receivedLength) {
-                Logger.d("onReceive", "SocketClient: onReceivingPacketInProgress: " + packet.hashCode() + " : " + progress + " : " + receivedLength);
+//                Logger.d("onReceive", "SocketClient: onReceivingPacketInProgress: " + packet.hashCode() + " : " + progress + " : " + receivedLength);
             }
         });
     }
@@ -188,7 +194,6 @@ public class TcpHelper {
             @Override
             public void onResponse(final SocketClient client, @NonNull SocketResponsePacket responsePacket) {
                 byte[] data = responsePacket.getData(); // 获取接收的byte数组，不为null
-                ByteUtil.printRecvHexString(data);
                 if (data.length != 0) {
                     BodyHelper.handleReceiveInfo(ByteUtil.rebackData(data));
                 }
@@ -228,10 +233,23 @@ public class TcpHelper {
 
     String TAG = "TcpHelper";
 
-    private void sendData(byte[] data) {
-        if (socketClient != null && socketClient.isConnected()) {
-            Log.d(TAG, "sendData: ");
+    private void sendData(final byte[] data) {
+        if (socketClient.isConnected()) {
             socketClient.sendData(data);
+//            scheduledThreadPool.schedule(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Log.d(TAG, "sendData: ");
+//                    socketClient.sendData(data);
+//                }
+//            },2000, TimeUnit.MILLISECONDS);
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Log.d(TAG, "sendData: ");
+//                    socketClient.sendData(data);
+//                }
+//            }).start();
         } else {
             RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp连接已断开");
         }
@@ -337,30 +355,45 @@ public class TcpHelper {
         sendData(BodyHelper.makeSendStudyInfoByCommond((byte) 0x01, "", (byte) 0x01));
     }
 
-    public void sendTakePhotoNowInit(byte updataType) {
-        sendData(BodyHelper.makeTakePhotoNowInit((byte) 0x01, updataType, (byte) 0x04, (byte) 0x02));
+    public void send0301(byte updataType) {
+        sendData(BodyHelper.make0301((byte) 0x01, updataType, (byte) 0x04, (byte) 0x02));
     }
 
-    public void send0305() {
-        sendData(BodyHelper.make0305("1111", ConstantInfo.coachNum, (byte) 0x01, (byte) 0x00, 1, 9999));
+    /****
+     *
+     * @param photoId       照片id
+     * @param id            学员或者教练id
+     * @param updataType        上传类型
+     * @param carmerId          相机编号
+     * @param eventType                 发起图片的事件类型
+     * @param totle         总包数
+     * @param photoSize         照片总大小
+     */
+    public void send0305(String photoId, String id, byte updataType, byte carmerId, byte photoSizeXxX, byte eventType, int totle, int photoSize) {
+        sendData(BodyHelper.make0305(photoId, id, updataType, carmerId, photoSizeXxX, eventType, totle, photoSize));
     }
 
-    public void send0306() {
-
-        byte[] data = ByteUtil.Bitmap2Bytes(AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123.png"));
-        int length1 = data.length;
-        int length2 = 1024 - getMake0306length();
-        int length3 = length1 % length2;
-        int index = 0;
-        for (int i = 0; i < length1 / length2; i++) {
-            byte[] data1 = new byte[length2];
-            System.arraycopy(data, index, data1, 0, data1.length);
-            index += length2;
-            sendData(BodyHelper.make0306(data));
+    /*****
+     *
+     * @param photoId  照片id
+     * @param photoData     总的照片数据
+     */
+    public void send0306(String photoId, byte[] photoData) {
+        List<byte[]> list = BodyHelper.make0306Part(photoId, photoData);
+        List<byte[]> list1 = new ArrayList<>();
+        if (list.size() > 1) {
+            for (byte[] data : list) {
+                int index = list.indexOf(data) + 1;
+                list1.add(BodyHelper.make0306(data, list.size(), index, true));
+            }
         }
-        byte[] data2 = new byte[length3];
-        System.arraycopy(data, length1 - length3, data2, 0, data2.length);
-        sendData(BodyHelper.make0306(data2));
+        for (byte[] data : list1) {
+            sendData(data);
+        }
+
+//        else if (list.size() == 1) {
+//            sendData(BodyHelper.make0306(list.get(0), 0, 0, false));
+//        }
     }
 
     public void send0302() {

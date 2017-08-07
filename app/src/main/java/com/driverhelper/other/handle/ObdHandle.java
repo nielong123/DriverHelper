@@ -45,9 +45,9 @@ public class ObdHandle {
                 // "length = " + length);
                 // Log.d("", "data.length - i = " + (data.length - i));
                 // Log.d("", "length = " + length);
-                ByteUtil.printHexString("data0 1111= ", data0);
+      //          ByteUtil.printHexString("data0 1111= ", data0);
                 System.arraycopy(data, i + 3, data0, 3, data[i + 2] + 1); // 数据，效验
-                ByteUtil.printHexString("data0 2222= ", data0);
+     //           ByteUtil.printHexString("data0 2222= ", data0);
                 byte[] checkData = new byte[data0.length - 2];
                 System.arraycopy(data0, 1, checkData, 0, checkData.length);
                 if (ByteUtil.checkSum(checkData, data0[data0.length - 1])) { // 检查数据sum的结果

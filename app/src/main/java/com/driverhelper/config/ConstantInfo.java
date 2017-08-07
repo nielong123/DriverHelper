@@ -48,15 +48,19 @@ public class ConstantInfo {
     public static long studyDistanceThis = 0;             //学习的时间
     public static byte[] classId;             //课堂id
 
+    public static byte[] photoData;                           //照片的byte数据
+    public static int photoDataSize;                           //照片的byte数据大小
+    public static String photoId;                         //上传的照片编号
+    public static int totlePhotoNum;                        //上传照片包的总数
+    public static int photoIndex;                           //当前包的计数
 
-    public static class StudentInfo{
+    public static class StudentInfo {
         public static String studentNum;        //学员编号
         public static int totleTime;            //需要完成的总学时
         public static int finishedTime;               //已完成的学时
         public static int totleMileage;             //需要完成的总里程
         public static int finishedMileage;            //已完成的里程
     }
-
 
 
     public static QRbean qRbean;

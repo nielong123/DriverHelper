@@ -1,6 +1,7 @@
 package com.driverhelper.helper;
 
 
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,13 +22,16 @@ import java.util.List;
 
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.ConstantInfo.coachNum;
+import static com.driverhelper.config.ConstantInfo.photoData;
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
+import static com.driverhelper.config.ConstantInfo.totlePhotoNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
 import static com.driverhelper.config.TcpBody.MessageID.clientCommonResponse;
 import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
 import static com.driverhelper.config.TcpBody.MessageID.id0104;
+import static com.driverhelper.config.TcpBody.MessageID.id0301;
 import static com.driverhelper.config.TcpBody.MessageID.id0302;
 import static com.driverhelper.config.TcpBody.MessageID.id0303;
 import static com.driverhelper.config.TcpBody.MessageID.id0304;
@@ -40,7 +44,6 @@ import static com.driverhelper.config.TcpBody.MessageID.id0501;
 import static com.driverhelper.config.TcpBody.MessageID.id0503;
 import static com.driverhelper.config.TcpBody.MessageID.locationInfoUpdata;
 import static com.driverhelper.config.TcpBody.MessageID.register;
-import static com.driverhelper.config.TcpBody.MessageID.takePhotoNow;
 import static com.driverhelper.config.TcpBody.MessageID.transparentInfo;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogin;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogout;
@@ -50,6 +53,7 @@ import static com.driverhelper.config.TcpBody.MessageID.updataStudyInfo;
 import static com.driverhelper.config.TcpBody.TransformID.driving;
 import static com.driverhelper.config.TcpBody.VERSION_CODE;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
+import static com.driverhelper.utils.ByteUtil.printHexString;
 
 /**
  * Created by Administrator on 2017/6/7.
@@ -103,7 +107,11 @@ public class BodyHelper {
      * @return
      */
     static private byte[] makeHead(byte[] id,
-                                   boolean isDivision, int encryption, int length) {
+                                   boolean isDivision,
+                                   int encryption,
+                                   int totle,
+                                   int index,
+                                   int length) {
         byte[] data;
         data = ByteUtil.add(TcpBody.HEAD, VERSION_CODE);
         data = ByteUtil.add(data, id);
@@ -112,11 +120,11 @@ public class BodyHelper {
         data = ByteUtil.add(data, makePhone2BCD(ConstantInfo.terminalPhoneNumber));
         data = ByteUtil.add(data, getWaterCode());
         data = ByteUtil.add(data, getReserve());
-        if (isDivision) { // 如果有分包就加这一项
-            data = ByteUtil.add(data, getPackageItem(isDivision));
+        if (isDivision) { // 分包
+            data = ByteUtil.add(data, ByteUtil.int2WORD(totle));
+            data = ByteUtil.add(data, ByteUtil.int2WORD(index));
         }
-//        System.out.println("hand = ");
-//        ByteUtil.printHexString(data);
+        ByteUtil.printHexString("hand = ", data);
         return data;
     }
 
@@ -138,7 +146,7 @@ public class BodyHelper {
      * @return
      */
     public static byte[] getWaterCode() {
-        return ByteUtil.hexString2BCD(WaterCodeHelper.getWaterCode());
+        return ByteUtil.int2WORD(WaterCodeHelper.getWaterCode());
     }
 
     /******
@@ -158,19 +166,19 @@ public class BodyHelper {
         return new byte[]{(byte) 0x00};
     }
 
-    /****
-     * 是否有分包项，和前面的“是否分包”用相同的参数
-     *
-     * @param isPackage
-     * @return
-     */
-    public static byte[] getPackageItem(boolean isPackage) {
-        if (!isPackage) {
-            return new byte[0];
-        } else {
-            return new byte[]{(byte) 0x00, (byte) 0x01};
-        }
-    }
+//    /****
+//     * 是否有分包项，和前面的“是否分包”用相同的参数
+//     *
+//     * @param isPackage
+//     * @return
+//     */
+//    public static byte[] getPackageItem(boolean isPackage) {
+//        if (!isPackage) {
+//            return new byte[0];
+//        } else {
+//            return new byte[]{(byte) 0x00, (byte) 0x01};
+//        }
+//    }
 
     /*************************************************************************************/
     /***
@@ -188,13 +196,13 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(vehicleNum)); // 车牌号
         int bodyLength = resultBody.length;
         System.out.println("bodyLength = " + bodyLength);
-        byte[] resultHead = makeHead(register, false, 0, bodyLength); // 包头固定
+        byte[] resultHead = makeHead(register, false, 0, 0, 0, bodyLength); // 包头固定
 
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result); // 添加尾部
         result = ByteUtil.checkMark(result);
 
-        ByteUtil.printHexString(result);
+//        ByteUtil.printHexString(result);
         return result;
     }
 
@@ -205,11 +213,11 @@ public class BodyHelper {
      */
     public static byte[] makeUnRegist() {
         int bodyLength = 0;
-        byte[] result = makeHead(TcpBody.MessageID.unRegister, false, 0, bodyLength);
+        byte[] result = makeHead(TcpBody.MessageID.unRegister, false, 0, 0, 0, bodyLength);
         result = ByteUtil.addXor(result);
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
-        ByteUtil.printHexString(result);
+//        ByteUtil.printHexString(result);
         return result;
     }
 
@@ -232,11 +240,11 @@ public class BodyHelper {
             e.printStackTrace();
             Logger.e(e.getMessage());
         }
-        byte[] resultHead = makeHead(TcpBody.MessageID.authentication, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(TcpBody.MessageID.authentication, false, 0, 0, 0, resultBody.length);
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
-        ByteUtil.printHexString(result);
+//        ByteUtil.printHexString(result);
 
         return result;
     }
@@ -268,7 +276,7 @@ public class BodyHelper {
 
         resultBody = buildExMsg(updataCoachLogin, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -292,7 +300,7 @@ public class BodyHelper {
 
         resultBody = buildExMsg(updataCoachLogout, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -322,7 +330,7 @@ public class BodyHelper {
 
         resultBody = buildExMsg(updataStudentLogin, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -336,7 +344,7 @@ public class BodyHelper {
         long time = TimeUtil.getTime() / 1000;
         byte[] resultBody = ByteUtil.str2Word(studentNum);              //学员编号
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));     //登出时间
-        ByteUtil.printHexString("登出时间  =  ", ByteUtil.str2Bcd(TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));
+//        ByteUtil.printHexString("登出时间  =  ", ByteUtil.str2Bcd(TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));
 //        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(studyTime / 60 + ""));                //学员该次登录总时间   min
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word("01"));                //学员该次登录总时间   min
 //        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(studyDistance / 10 + ""));                //学员该次登录总时间   min
@@ -355,7 +363,7 @@ public class BodyHelper {
         Log.d("", " resultBody.length = " + resultBody.length);
         resultBody = buildExMsg(updataStudentLogiout, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -392,7 +400,7 @@ public class BodyHelper {
 
         resultBody = buildExMsg(updataStudyInfo, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -408,7 +416,7 @@ public class BodyHelper {
                 resultBody = ByteUtil.add(resultBody, setting.parameter.getBytes());
             }
         }
-        byte[] resultHead = makeHead(id0104, false, 0, resultBody.length); // 包头固定
+        byte[] resultHead = makeHead(id0104, false, 0, 0, 0, resultBody.length); // 包头固定
 
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result); // 添加尾部
@@ -451,7 +459,7 @@ public class BodyHelper {
 
         resultBody = buildExMsg(updataStudyInfo, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -461,28 +469,32 @@ public class BodyHelper {
      * @param updataType
      * @return
      */
-    public static byte[] makeTakePhotoNowInit(byte doResult, byte updataType, byte carmerNum, byte size) {
+    public static byte[] make0301(byte doResult, byte updataType, byte carmerNum, byte size) {
 
         byte[] resultBody = new byte[]{doResult, updataType, carmerNum, size};
-        resultBody = buildExMsg(takePhotoNow, 0, 1, 2, resultBody);
+        resultBody = buildExMsg(id0301, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
-    /****
-     * B.4.2.3.9　照片上传初始化
-     * @param
+    /*****
+     *
+     * @param photoId       照片id
+     * @param id                学员或者教练员编号
+     * @param updataType            上传模式
+     * @param eventType
+     * @param totle                         摄像头通道好
+     * @param photoSize             照片大小  xxx KB
      * @return
      */
-    public static byte[] make0305(String phoneId, String id, byte updataType, byte eventType, int totle, int photoSize) {
+    public static byte[] make0305(String photoId, String id, byte updataType, byte carmerId, byte photoSizeXxX, byte eventType, int totle, int photoSize) {
 
-        phoneId = "1234567890";
-        byte[] resultBody = phoneId.getBytes();            //照片编号
+        byte[] resultBody = photoId.getBytes();            //照片编号
         resultBody = ByteUtil.add(resultBody, id.getBytes());
         resultBody = ByteUtil.add(resultBody, updataType);
-        resultBody = ByteUtil.add(resultBody, (byte) 0x00);         //摄像头通道好
-        resultBody = ByteUtil.add(resultBody, (byte) 0x01);         //照片尺寸
+        resultBody = ByteUtil.add(resultBody, carmerId);         //摄像头通道好
+        resultBody = ByteUtil.add(resultBody, photoSizeXxX);         //照片尺寸
         resultBody = ByteUtil.add(resultBody, eventType);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(totle));
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(photoSize));
@@ -500,7 +512,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, (byte) 0x50);           //人脸识别程度
         resultBody = buildExMsg(id0305, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -508,7 +520,7 @@ public class BodyHelper {
         byte[] resultBody = new byte[]{doResult};
         resultBody = buildExMsg(id0302, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -519,7 +531,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(1234567890));           //课堂id
         resultBody = buildExMsg(id0303, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -538,7 +550,7 @@ public class BodyHelper {
         }
         resultBody = buildExMsg(id0304, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -547,19 +559,45 @@ public class BodyHelper {
      * @param
      * @return
      */
-    public static byte[] make0306(byte[] data) {
+    public static byte[] make0306(byte[] data, int totle, int index, boolean isPart) {
 
-        byte[] resultBody = "1234567890".getBytes();
-        resultBody = ByteUtil.add(resultBody, data);
-        resultBody = buildExMsg(id0306, 0, 1, 2, resultBody);
-        resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultBody = data;
+        byte[] resultHead = makeHead(transparentInfo, isPart, 0, totle, index, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
-    public static int getMake0306length() {
-        byte[] resultBody = "1234567890".getBytes();
-//        resultBody = ByteUtil.add(resultBody, ByteUtil.Bitmap2Bytes(AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123.png")));
+    public static List<byte[]> make0306Part(String photoId, byte[] data) {
+        List<byte[]> list = new ArrayList<>();
+        byte[] resultBody = photoId.getBytes();
+        resultBody = ByteUtil.add(resultBody, data);
+        resultBody = buildExMsg(id0306, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        int number = (resultBody.length / 1000);
+        if (number > 0) {
+            int index = 0;
+            for (int i = 0; i < number; i++) {
+                Log.w("", " i = " + i);
+                if (i != number) {
+                    byte[] data1 = new byte[1000];
+                    System.arraycopy(resultBody, index, data1, 0, data1.length);
+                    index += 1000;
+                    list.add(data1);
+                } else {
+                    int length = resultBody.length % 1000;
+                    byte[] data2 = new byte[length];
+                    System.arraycopy(resultBody, index, data2, 0, data2.length);
+                    list.add(data2);
+                }
+
+            }
+        } else {
+            list.add(resultBody);
+        }
+        return list;
+    }
+
+    public static int getMake0306length(String photoId) {
+        byte[] resultBody = photoId.getBytes();
         resultBody = buildExMsg(id0306, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         return resultBody.length;
@@ -576,7 +614,7 @@ public class BodyHelper {
 
     public static byte[] makeHeart() {
         int bodylength = 0;
-        byte[] result = makeHead(TcpBody.MessageID.heart, false, 0, bodylength);
+        byte[] result = makeHead(TcpBody.MessageID.heart, false, 0, 0, 0, bodylength);
         result = ByteUtil.addXor(result);
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
@@ -597,7 +635,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, int2Bytes(para2, 2));
         resultBody = ByteUtil.add(resultBody, int2Bytes(para3, 1));
 
-        byte[] resultHead = makeHead(clientCommonResponse, false, 0, resultBody.length); // 包头固定
+        byte[] resultHead = makeHead(clientCommonResponse, false, 0, 0, 0, resultBody.length); // 包头固定
 
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result); // 添加尾部
@@ -688,7 +726,7 @@ public class BodyHelper {
                 para10,
                 para11,
                 para12);
-        byte[] resultHead = makeHead(locationInfoUpdata, false, 0, resultBody.length); // 包头固定
+        byte[] resultHead = makeHead(locationInfoUpdata, false, 0, 0, 0, resultBody.length); // 包头固定
         return sticky(resultHead, resultBody);
     }
 
@@ -704,7 +742,7 @@ public class BodyHelper {
 
         resultBody = buildExMsg(id0501, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -724,7 +762,7 @@ public class BodyHelper {
 
         resultBody = buildExMsg(id0503, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -735,7 +773,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, "420106198804290911".getBytes());
         resultBody = buildExMsg(id0401, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -747,7 +785,7 @@ public class BodyHelper {
         }
         resultBody = buildExMsg(id0402, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
-        byte[] resultHead = makeHead(transparentInfo, false, 0, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 
@@ -768,7 +806,7 @@ public class BodyHelper {
     public static byte[] makeFindLocatInfoRequest(String para1, String para2, int para3, int para4, int para5, int para6, int para7, String para8) {
 
         byte[] resultBody = makeLocationInfoBody(para1, para2, para3, para4, para5, para6, para7, para8, -2000, -2000, -2000, -2000);
-        byte[] resultHead = makeHead(findLocatInfoRequest, false, 0, resultBody.length); // 包头固定
+        byte[] resultHead = makeHead(findLocatInfoRequest, false, 0, 0, 0, resultBody.length); // 包头固定
 
         byte[] result = sticky(resultHead, resultBody);
         ByteUtil.printHexString(result);
@@ -1018,8 +1056,18 @@ public class BodyHelper {
                                 break;
                             case "8301":
                                 HandMsgHelper.Class8301 class8301 = HandMsgHelper.getClass8301(messageBean.throughExpand.data);
-                                TcpHelper.getInstance().sendTakePhotoNowInit(class8301.updataType);
-                                TcpHelper.getInstance().send0305();
+                                TcpHelper.getInstance().send0301(class8301.updataType);         // 0301          ok
+                                Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123456.jpg");
+                                ConstantInfo.photoData = ByteUtil.bitmap2Bytes(bitmap);
+                                bitmap.recycle();
+                                if (ConstantInfo.photoData != null) {
+                                    ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
+//                                    ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
+//                                    totlePhotoNum = ConstantInfo.photoDataSize / (1024 - BodyHelper.getMake0306length(ConstantInfo.photoId)) + 1;
+//                                    Log.d("photo", "照片大小为 " + ConstantInfo.photoDataSize);
+//                                    Log.d("photo", "总包数为 " + totlePhotoNum);
+//                                    TcpHelper.getInstance().send0305(ConstantInfo.photoData.length);
+                                }
                                 break;
                             case "8302":
                                 HandMsgHelper.Class8302 class8302 = HandMsgHelper.getClass8302(messageBean.throughExpand.data);
@@ -1029,10 +1077,10 @@ public class BodyHelper {
                                 HandMsgHelper.Class8305 class8305 = HandMsgHelper.getClass8305(messageBean.throughExpand.data);
                                 switch (class8305.code) {
                                     case (byte) 0x00:
-                                        TcpHelper.getInstance().send0306();
+                                        TcpHelper.getInstance().send0306(ConstantInfo.photoId, photoData);
                                         break;
                                     case (byte) 0x01:
-                                        TcpHelper.getInstance().send0306();
+                                        TcpHelper.getInstance().send0306(ConstantInfo.photoId, photoData);
                                         break;
                                     case (byte) 0x09:
                                         break;

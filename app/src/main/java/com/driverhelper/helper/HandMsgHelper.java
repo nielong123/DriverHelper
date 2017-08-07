@@ -102,7 +102,7 @@ public final class HandMsgHelper {
 
     static Class8201 getClass8201(byte[] data) {
         Class8201 class8201 = new Class8201();
-        ByteUtil.printHexString(data);
+     //   ByteUtil.printHexString(data);
         class8201.result = data[0];
         int index = 1;
         System.arraycopy(data, index, class8201.studentNum, 0, class8201.studentNum.length);

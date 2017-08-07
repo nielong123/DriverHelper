@@ -4,6 +4,7 @@ package com.driverhelper.ui.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.Handler;
@@ -37,8 +38,10 @@ import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.QRbean;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
+import com.driverhelper.helper.AssetsHelper;
 import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.helper.TcpHelper;
+import com.driverhelper.helper.WaterCodeHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
@@ -199,6 +202,12 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         }
     };
 
+    void test() {
+//        for (int i = 0; i < 99999; i++) {
+//            ByteUtil.printHexString("code  =  ", ByteUtil.str2Bcd(WaterCodeHelper.getWaterCode()));
+//        }
+    }
+
 
     @Override
     public int getLayoutId() {
@@ -207,7 +216,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     @Override
     public void initPresenter() {
-
+        test();
     }
 
     @Override
@@ -222,6 +231,19 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         public boolean onMenuItemClick(MenuItem menuItem) {
 
             switch (menuItem.getItemId()) {
+                case R.id.NoSendConti:
+                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "ic_launcher.png");
+                    ConstantInfo.photoData = ByteUtil.bitmap2Bytes(bitmap);
+                    bitmap.recycle();
+                    ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
+                    ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
+                    Log.e("11111111111111111", "ConstantInfo.photoDataSize = " + ConstantInfo.photoDataSize + " ||| " + " ConstantInfo.photoId = " + ConstantInfo.photoId);
+                    TcpHelper.getInstance().send0305(ConstantInfo.photoId, ConstantInfo.coachNum, (byte) 129, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, ConstantInfo.photoDataSize);
+                    break;
+                case R.id.NoSendClear:
+                    break;
+                case R.id.NoSendReSend:
+                    break;
                 case R.id.action_0402_1:
                     TcpHelper.getInstance().send0402((byte) 0x01, "");
                     break;
