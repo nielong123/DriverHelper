@@ -53,6 +53,8 @@ public class ConstantInfo {
     public static String photoId;                         //上传的照片编号
     public static int totlePhotoNum;                        //上传照片包的总数
     public static int photoIndex;                           //当前包的计数
+    public static boolean isEmbargo;                     //禁运状态          true
+    public static String embargoStr;            //      禁运提示消息内容
 
     public static class StudentInfo {
         public static String studentNum;        //学员编号

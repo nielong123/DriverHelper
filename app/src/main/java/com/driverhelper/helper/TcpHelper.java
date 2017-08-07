@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.Config;
+import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
@@ -351,8 +352,16 @@ public class TcpHelper {
 //        }
     }
 
-    public void sendStudyInfoByCommand() {
-        sendData(BodyHelper.makeSendStudyInfoByCommond((byte) 0x01, "", (byte) 0x01));
+    void send0205(byte type) {
+        sendData(BodyHelper.make0205(type));
+    }
+
+    public void send0203(byte updataType, String time666, byte recordType) {
+        if (ConstantInfo.StudentInfo.studentNum != null) {
+            sendData(BodyHelper.make0203(updataType, time666, recordType));
+        } else {
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员未签到");
+        }
     }
 
     public void send0301(byte updataType) {
@@ -419,4 +428,10 @@ public class TcpHelper {
     public void send0403() {
         sendData(BodyHelper.make0403(""));
     }
+
+    public void send0502(byte result, byte state, byte length, String str) {
+        sendData(BodyHelper.make0502(result, state, length, str));
+    }
+
+
 }

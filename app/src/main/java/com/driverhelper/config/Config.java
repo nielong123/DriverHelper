@@ -33,6 +33,7 @@ public class Config {
         public final static String RX_COACH_LOGOUTOK = "RX_COACH_LOGOUTOK";           //教练员登出
         public final static String RX_STUDENT_LOGINOK = "RX_STUDENT_LOGINOK";           //学员员登录
         public final static String RX_STUDENT_LOGOUTOK = "RX_STUDENT_LOGOUTOK";           //学员登出
+        public final static String RX_SETTING_EMBARGOSTATE = "RX_SETTING_EMBARGOSTATE";           //设置禁运状态
     }
 
     public static class WriteSetting {
@@ -47,8 +48,8 @@ public class Config {
         public final static String IMEI = "IMEI";
         public final static String VEHICLE_COLOR = "VEHICLE_COLOR";         //车辆颜色
         public final static String WATER_CODE = "WATER_CODE111";       //流水号
-        public final static String EX_CODE = "EX_CODE";       //透传消息流水号
-        public final static String STUDY_CODE = "STUDY_CODE";       //课堂ID
+        public final static String EX_CODE = "EX_CODE11";       //透传消息流水号
+        public final static String STUDY_CODE = "STUDY_CODE11";       //课堂ID
         public final static String EXAM_TYPE = "EXAM_TYPE";       //考试类型
         public final static String PROVINCE = "PROVINCE";       //省
         public final static String CITY = "CITY";       //省
@@ -58,7 +59,8 @@ public class Config {
         public final static String CERTIFICATEPASSWORD = "certificatePassword";     //证书口令
         public final static String TERMINALCERTIFICATE = "terminalCertificate";     //终端证书
         public final static String COACHNUM = "COACHNUM";           //          教练员编号
-
+        public final static String EMBARGO = "EMBARGO";             //禁运状态
+        public final static String EMBARGODSTR = "EMBARGOSTR";             //禁运状态
     }
 
 

@@ -66,7 +66,7 @@ public final class HandMsgHelper {
             setting.parameterLength = data0[i + 1];
             int length = ByteUtil.byte2int(setting.parameterLength);
             byte[] data2 = new byte[length];
-            System.arraycopy(data0,i+3,data2,0,length);
+            System.arraycopy(data0, i + 3, data2, 0, length);
             setting.parameter = ByteUtil.getString(data2);
             class8103.settingList.add(setting);
         }
@@ -102,7 +102,7 @@ public final class HandMsgHelper {
 
     static Class8201 getClass8201(byte[] data) {
         Class8201 class8201 = new Class8201();
-     //   ByteUtil.printHexString(data);
+        //   ByteUtil.printHexString(data);
         class8201.result = data[0];
         int index = 1;
         System.arraycopy(data, index, class8201.studentNum, 0, class8201.studentNum.length);
@@ -274,6 +274,22 @@ public final class HandMsgHelper {
         return class8501;
     }
 
+    public static class Class8502 {
+        public byte state;
+        public byte dataLength;
+        public String data;
+    }
+
+    static Class8502 getClass8502(byte[] data) {
+        Class8502 class8502 = new Class8502();
+        class8502.state = data[0];
+        class8502.dataLength = data[1];
+        byte[] data1 = new byte[class8502.dataLength];
+        System.arraycopy(data, 2, data1, 0, data1.length);
+        class8502.data = ByteUtil.getString(data1);
+
+        return class8502;
+    }
 
     public static class Class8401 {
         byte[] id = new byte[2];

@@ -128,24 +128,24 @@ public class WriteSettingHelper {
      * 获取透传消息编号
      * @return
      */
-    public static String getEX_CODE() {
-        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.EX_CODE, "0000");
+    public static int getEX_CODE() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.EX_CODE, 0);
     }
 
-    public static void setEX_CODE(String waterCode) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EX_CODE, waterCode);
+    public static void setEX_CODE(int waterCode) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.EX_CODE, waterCode);
     }
 
     /***
      * 获取学时id
      * @return
      */
-    public static String getSTUDY_ID() {
-        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.STUDY_CODE, "0000");
+    public static int getSTUDY_ID() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.STUDY_CODE, 0);
     }
 
-    public static void setSTUDY_ID(String studyId) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.STUDY_CODE, studyId);
+    public static void setSTUDY_ID(int studyId) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.STUDY_CODE, studyId);
     }
 
     /***
@@ -248,6 +248,30 @@ public class WriteSettingHelper {
         PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.TERMINALCERTIFICATE, terminalCertificate);
     }
 
+    /***
+     *   是否禁训
+     * @return
+     */
+    public static boolean getEMBARGO() {
+        return PreferenceUtils.getInstance().getSettingBool(Config.WriteSetting.EMBARGO, false);
+    }
+
+    public static void setEMBARGO(boolean isEmbargo) {
+        PreferenceUtils.getInstance().setSettingBoolean(Config.WriteSetting.EMBARGO, isEmbargo);
+    }
+
+    /***
+     * 禁训内容
+     * @return
+     */
+    public static String getEMBARGOSTR() {
+        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.EMBARGODSTR, "");
+    }
+
+    public static void setEMBARGOSTR(String str) {
+        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EMBARGODSTR, str);
+    }
+
 
     /***
      * 保存终端注册后返回的信息
@@ -267,6 +291,8 @@ public class WriteSettingHelper {
         ConstantInfo.certificatePassword = WriteSettingHelper.getCERTIFICATEPASSWORD();
         ConstantInfo.terminalCertificate = WriteSettingHelper.getTERMINALCERTIFICATE();
         ConstantInfo.coachNum = WriteSettingHelper.getCOACHNUM();
+        ConstantInfo.isEmbargo = WriteSettingHelper.getEMBARGO();
+        ConstantInfo.embargoStr = WriteSettingHelper.getEMBARGOSTR();
     }
 
 

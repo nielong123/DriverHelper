@@ -25,12 +25,13 @@ import static com.driverhelper.config.ConstantInfo.coachNum;
 import static com.driverhelper.config.ConstantInfo.photoData;
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
-import static com.driverhelper.config.ConstantInfo.totlePhotoNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
 import static com.driverhelper.config.TcpBody.MessageID.clientCommonResponse;
 import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
 import static com.driverhelper.config.TcpBody.MessageID.id0104;
+import static com.driverhelper.config.TcpBody.MessageID.id0203;
+import static com.driverhelper.config.TcpBody.MessageID.id0205;
 import static com.driverhelper.config.TcpBody.MessageID.id0301;
 import static com.driverhelper.config.TcpBody.MessageID.id0302;
 import static com.driverhelper.config.TcpBody.MessageID.id0303;
@@ -41,6 +42,7 @@ import static com.driverhelper.config.TcpBody.MessageID.id0401;
 import static com.driverhelper.config.TcpBody.MessageID.id0402;
 import static com.driverhelper.config.TcpBody.MessageID.id0403;
 import static com.driverhelper.config.TcpBody.MessageID.id0501;
+import static com.driverhelper.config.TcpBody.MessageID.id0502;
 import static com.driverhelper.config.TcpBody.MessageID.id0503;
 import static com.driverhelper.config.TcpBody.MessageID.locationInfoUpdata;
 import static com.driverhelper.config.TcpBody.MessageID.register;
@@ -49,11 +51,9 @@ import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogin;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogout;
 import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogin;
 import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogiout;
-import static com.driverhelper.config.TcpBody.MessageID.updataStudyInfo;
 import static com.driverhelper.config.TcpBody.TransformID.driving;
 import static com.driverhelper.config.TcpBody.VERSION_CODE;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
-import static com.driverhelper.utils.ByteUtil.printHexString;
 
 /**
  * Created by Administrator on 2017/6/7.
@@ -146,7 +146,7 @@ public class BodyHelper {
      * @return
      */
     public static byte[] getWaterCode() {
-        return ByteUtil.int2WORD(WaterCodeHelper.getWaterCode());
+        return ByteUtil.int2WORD(IdHelper.getWaterCode());
     }
 
     /******
@@ -154,7 +154,7 @@ public class BodyHelper {
      * @return
      */
     public static byte[] getExCode() {
-        return ByteUtil.hexString2BCD(IdHelper.getExCode());
+        return ByteUtil.int2WORD(IdHelper.getExCode());
     }
 
     /***
@@ -398,7 +398,7 @@ public class BodyHelper {
                 20, -2000, -2000, 30)
         );
 
-        resultBody = buildExMsg(updataStudyInfo, 0, 1, 2, resultBody);
+        resultBody = buildExMsg(id0203, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
@@ -427,16 +427,14 @@ public class BodyHelper {
     }
 
     /****
-     * 命令上传学时信息
+     * 上传学时信息
      * @param updataType
      * @return
      */
-    public static byte[] makeSendStudyInfoByCommond(byte updataType, String time666, byte recordType) {
+    public static byte[] make0203(byte updataType, String time666, byte recordType) {
         String strTime = TimeUtil.formatData(TimeUtil.dataFormatYMD, TimeUtil.getTime() / 1000);
         strTime = strTime.substring(0, 6);
-        byte[] resultBody = ("0000000000000000" +
-                strTime +
-                IdHelper.getStudyCode()).getBytes();           //26        学时记录编号
+        byte[] resultBody = ByteUtil.add(("0000000000000000" + strTime).getBytes(), ByteUtil.int2DWORD(IdHelper.getStudyCode()));           //26        学时记录编号
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
         resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentNum.getBytes());       //学员编号
         resultBody = ByteUtil.add(resultBody, ConstantInfo.coachNum.getBytes());             //教练员编号
@@ -444,8 +442,8 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
         resultBody = ByteUtil.add(resultBody, recordType);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(10, 4));            //最大速度
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(11, 4));            //最大里程  10
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(10));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(11));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -457,7 +455,26 @@ public class BodyHelper {
                 20, -2000, -2000, 30)
         );
 
-        resultBody = buildExMsg(updataStudyInfo, 0, 1, 2, resultBody);
+        resultBody = buildExMsg(id0203, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
+    /****
+     * 上传学时信息
+     * @param type  1：查询的记录正在上传；
+    2：SD卡没有找到；
+    3：执行成功，但无指定记录；
+    4：执行成功，稍候上报查询结果
+    9：其他错误
+
+     * @return
+     */
+    public static byte[] make0205(byte type) {
+
+        byte[] resultBody = new byte[]{type};
+        resultBody = buildExMsg(id0205, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
         return sticky(resultHead, resultBody);
@@ -607,6 +624,19 @@ public class BodyHelper {
         vehicleId = "12345679012345678901234567890123456";
         byte[] resultBody = vehicleId.getBytes();
         resultBody = buildExMsg(id0403, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        return resultBody;
+    }
+
+    public static byte[] make0502(byte result, byte state, byte length, String str) {
+
+        byte[] resultBody = new byte[]{result};
+        resultBody = ByteUtil.add(resultBody, state);
+        resultBody = ByteUtil.add(resultBody, length);
+        if (length != 0) {
+            resultBody = ByteUtil.add(resultBody, str.getBytes());
+        }
+        resultBody = buildExMsg(id0502, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         return resultBody;
     }
@@ -1050,9 +1080,11 @@ public class BodyHelper {
                                         break;
                                 }
                                 break;
-                            case "8205":
+                            case "8205":            //先传0205-01  开始，然后传0205-
                                 HandMsgHelper.Class8205 class8205 = HandMsgHelper.getClass8205(messageBean.throughExpand.data);
-                                TcpHelper.getInstance().sendStudyInfoByCommand();
+                                TcpHelper.getInstance().send0205((byte) 0x01);
+                                TcpHelper.getInstance().send0205((byte) 0x04);
+                                TcpHelper.getInstance().send0203((byte) 0x02, TimeUtil.getTime() / 1000 + "", (byte) 0x01);
                                 break;
                             case "8301":
                                 HandMsgHelper.Class8301 class8301 = HandMsgHelper.getClass8301(messageBean.throughExpand.data);
@@ -1091,6 +1123,10 @@ public class BodyHelper {
                             case "8501":           //设置计时终端应用参数应答
                                 HandMsgHelper.Class8501 class8501 = HandMsgHelper.getClass8501(messageBean.throughExpand.data);
                                 TcpHelper.getInstance().send0303();
+                                break;
+                            case "8502":
+                                HandMsgHelper.Class8502 class8502 = HandMsgHelper.getClass8502(messageBean.throughExpand.data);
+                                RxBus.getInstance().post(Config.Config_RxBus.RX_SETTING_EMBARGOSTATE, class8502);
                                 break;
                             case "8503":            //A.1.1.1.1　查询计时终端应用参数
                                 TcpHelper.getInstance().send0503();

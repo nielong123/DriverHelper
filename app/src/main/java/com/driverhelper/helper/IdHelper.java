@@ -1,51 +1,56 @@
 package com.driverhelper.helper;
 
+import android.util.Log;
+
 /**
  * Created by Administrator on 2017/7/24.
  */
 
 public final class IdHelper {
 
+    /***
+     * 返回十进制的流水号，如果流水号大于0xffff，则流水号为0
+     * @return
+     */
+    public static int getWaterCode() {
+        int waterCode = WriteSettingHelper.getWATER_CODE();
+        if (waterCode > 0xffff) {
+            waterCode = 0;
+        } else {
+            waterCode += 1;
+        }
+        Log.e("water code", "get  strWaterCode = " + waterCode);
+        WriteSettingHelper.setWATER_CODE(waterCode);
+        return waterCode;
+    }
 
     /****
      * 透传消息流水号
      * @return
      */
-    public static String getExCode() {
-        String strExCode = WriteSettingHelper.getEX_CODE();
-        if (Integer.valueOf(strExCode) > 0xffff) {
-            strExCode = "0000";
+    public static int getExCode() {
+        int exCode = WriteSettingHelper.getEX_CODE();
+        if (Integer.valueOf(exCode) > 0xffff) {
+            exCode = 0;
         } else {
-            strExCode = Integer.valueOf(strExCode) + 1 + "";
+            exCode += 1;
         }
-        WriteSettingHelper.setEX_CODE(strExCode);
-        int index = strExCode.length();
-        if (strExCode.length() < 4) {
-            for (int i = 0; i < 4 - index; i++) {
-                strExCode = "0" + strExCode;
-            }
-        }
-        return strExCode;
+        WriteSettingHelper.setEX_CODE(exCode);
+        return exCode;
     }
 
     /****
      * 学时记录里的流水号
      * @return
      */
-    public static String getStudyCode() {
-        String strId = WriteSettingHelper.getSTUDY_ID();
-        if (Integer.valueOf(strId) > 0xffff) {
-            strId = "0001";
+    public static int getStudyCode() {
+        int id = WriteSettingHelper.getSTUDY_ID();
+        if (id > 0xffff) {
+            id = 1;
         } else {
-            strId = Integer.valueOf(strId) + 1 + "";
+            id = id + 1;
         }
-        WriteSettingHelper.setSTUDY_ID(strId);
-        int index = strId.length();
-        if (strId.length() < 4) {
-            for (int i = 0; i < 4 - index; i++) {
-                strId = "0" + strId;
-            }
-        }
-        return strId;
+        WriteSettingHelper.setSTUDY_ID(id);
+        return id;
     }
 }

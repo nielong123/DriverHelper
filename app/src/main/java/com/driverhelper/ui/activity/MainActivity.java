@@ -41,7 +41,6 @@ import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.AssetsHelper;
 import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.helper.TcpHelper;
-import com.driverhelper.helper.WaterCodeHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
@@ -70,6 +69,8 @@ import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
 import static com.driverhelper.config.Config.carmerId_HANGJING;
 import static com.driverhelper.config.Config.ip;
 import static com.driverhelper.config.Config.port;
+import static com.driverhelper.config.ConstantInfo.embargoStr;
+import static com.driverhelper.config.ConstantInfo.isEmbargo;
 import static com.driverhelper.config.ConstantInfo.qRbean;
 
 public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -370,6 +371,27 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 sendMessage(Config.TextInfoType.CLEARXUEYUAN);
             }
         });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_EMBARGOSTATE, new Action1<HandMsgHelper.Class8502>() {
+            @Override
+            public void call(HandMsgHelper.Class8502 class8502) {
+                if (!TextUtils.isEmpty(class8502.data)) {
+                    ttsClient.speak(class8502.data, 1, null);
+                }
+                switch (class8502.state) {
+                    case 1:
+                        isEmbargo = false;
+                        TcpHelper.getInstance().send0502((byte) 0x01, (byte) 0x01, class8502.dataLength, class8502.data);
+                        break;
+                    case 2:
+                        isEmbargo = true;
+                        TcpHelper.getInstance().send0502((byte) 0x01, (byte) 0x02, class8502.dataLength, class8502.data);
+                        break;
+                }
+                embargoStr = class8502.data;
+                WriteSettingHelper.setEMBARGO(isEmbargo);
+                WriteSettingHelper.setEMBARGOSTR(embargoStr);
+            }
+        });
     }
 
 
@@ -452,44 +474,48 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     @OnClick({R.id.JiaoLianButton, R.id.XueYuanButton, R.id.textViewThisTime, R.id.surfaceView})
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.JiaoLianButton:
-                if (!Config.isCoachLoginOK) {
-                    startScanActivity("教练员签到");
-                } else {
-                    new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("教练员登出提示").setIcon(R.drawable.main_img06).setMessage("教练员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
-                            coachLogout();
-                        }
-                    }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
-                            paramAnonymous2DialogInterface.dismiss();
-                        }
-                    }).show();
-                }
-                break;
-            case R.id.XueYuanButton:
-                if (!Config.isStudentLoginOK) {
-                    startScanActivity("学员签到");
-                } else {
-                    new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("学员登出提示").setIcon(R.drawable.main_img06).setMessage("学员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
-                            studentLogout();
-                        }
-                    }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
-                            paramAnonymous2DialogInterface.dismiss();
-                        }
-                    }).show();
-                }
-                break;
-            case R.id.textViewThisTime:
-                break;
-            case R.id.surfaceView:
-                getPhoto();
+        if (!ConstantInfo.isEmbargo) {
+            switch (view.getId()) {
+                case R.id.JiaoLianButton:
+                    if (!Config.isCoachLoginOK) {
+                        startScanActivity("教练员签到");
+                    } else {
+                        new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("教练员登出提示").setIcon(R.drawable.main_img06).setMessage("教练员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                                coachLogout();
+                            }
+                        }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                                paramAnonymous2DialogInterface.dismiss();
+                            }
+                        }).show();
+                    }
+                    break;
+                case R.id.XueYuanButton:
+                    if (!Config.isStudentLoginOK) {
+                        startScanActivity("学员签到");
+                    } else {
+                        new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("学员登出提示").setIcon(R.drawable.main_img06).setMessage("学员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                                studentLogout();
+                            }
+                        }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                                paramAnonymous2DialogInterface.dismiss();
+                            }
+                        }).show();
+                    }
+                    break;
+                case R.id.textViewThisTime:
+                    break;
+                case R.id.surfaceView:
+                    getPhoto();
 //                if (!CamStatOK)
 //                    resetCam();
-                break;
+                    break;
+            }
+        } else {
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, ConstantInfo.embargoStr);
         }
     }
 
