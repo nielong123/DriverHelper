@@ -286,7 +286,7 @@ public class WriteSettingHelper {
     }
 
     /***
-     * 定时拍照时间间隔
+     * 照片上传设置
      * @return
      */
     public static int getUPLOAD_GBN() {
@@ -298,11 +298,11 @@ public class WriteSettingHelper {
     }
 
     /***
-     * 是否自动报读
+     * 是否报读
      * @return
      */
-    public static boolean getADDMSG_YN() {
-        return PreferenceUtils.getInstance().getSettingBool(Config.WriteSetting.ADDMSG_YN, false);
+    public static int getADDMSG_YN() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.ADDMSG_YN, 1);
     }
 
     public static void setADDMSG_YN(byte ADDMSG_YN) {
@@ -322,11 +322,11 @@ public class WriteSettingHelper {
     }
 
     /****
-     * 熄火后停止学时计时的延时时间s
+     * 熄火后GNSS停止学时计时的延时时间s
      * @return
      */
     public static int getSTOP_GNSS_UPLOAD_INTV_sec() {
-        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.STOP_GNSS_UPLOAD_INTV_sec, 0);
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.STOP_GNSS_UPLOAD_INTV_sec, 3600);
     }
 
     public static void setSTOP_GNSS_UPLOAD_INTV_sec(int STOP_GNSS_UPLOAD_INTV_sec) {

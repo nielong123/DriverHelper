@@ -60,7 +60,7 @@ public class ConstantInfo {
     /***** 0502的设置  start ***************/
     public static int PIC_INTV_min;          //定时拍照间隔
     public static int UPLOAD_GBN;       //照片上传设置
-    public static boolean ADDMSG_YN;        //是否报读附加消息
+    public static int ADDMSG_YN;        //是否报读附加消息
     public static int STOP_DELAY_TIME_min;      //熄火后停止学时计时的延时时间, 单: min
     public static int STOP_GNSS_UPLOAD_INTV_sec;   //熄火后停止学时计时的延时时间, 单位: s
     public static int STOP_COACH_DELAY_TIME_min;    //熄火后教练自动登出的延时时间, 单位: min
