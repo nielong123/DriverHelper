@@ -34,6 +34,7 @@ public class Config {
         public final static String RX_STUDENT_LOGINOK = "RX_STUDENT_LOGINOK";           //学员员登录
         public final static String RX_STUDENT_LOGOUTOK = "RX_STUDENT_LOGOUTOK";           //学员登出
         public final static String RX_SETTING_EMBARGOSTATE = "RX_SETTING_EMBARGOSTATE";           //设置禁运状态
+        public final static String RX_SETTING_0501= "RX_SETTING_0501";           //
     }
 
     public static class WriteSetting {
@@ -61,6 +62,16 @@ public class Config {
         public final static String COACHNUM = "COACHNUM";           //          教练员编号
         public final static String EMBARGO = "EMBARGO";             //禁运状态
         public final static String EMBARGODSTR = "EMBARGOSTR";             //禁运状态
+        public final static String PIC_INTV_min = "PIC_INTV_min";           //定时拍照时间间隔
+        public final static String UPLOAD_GBN = "UPLOAD_GBN";           //照片上传设置
+        public final static String ADDMSG_YN = "ADDMSG_YN11";             //是否报读附加消息
+        public final static String STOP_DELAY_TIME_min = "STOP_DELAY_TIME_min";  //熄火后停止学时计时的延时时间  min
+        public final static String STOP_GNSS_UPLOAD_INTV_sec = "STOP_GNSS_UPLOAD_INTV_sec";     //熄火后停止学时计时的延时时间  s
+        public final static String STOP_COACH_DELAY_TIME_min = "STOP_COACH_DELAY_TIME_min";     //熄火后教练自动登出的延时时间
+        public final static String USER_CHK_TIME_min = "USER_CHK_TIME_min";  //重新验证身份时间
+        public final static String COACH_TRANS_YN = "COACH_TRANS_YN";           //教练跨校教学
+        public final static String STU_TRANS_YN = "STU_TRANS_YN";   //学员跨校学习
+        public final static String DUP_MSG_REJECT_INTV_sec = "DUP_MSG_REJECT_INTV_sec";     //响应平台同类消息时间间隔
     }
 
 

@@ -2,6 +2,7 @@ package com.driverhelper.helper;
 
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
+import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.commonutils.PreferenceUtils;
 
 import static com.driverhelper.config.ConstantInfo.institutionNumber;
@@ -272,6 +273,125 @@ public class WriteSettingHelper {
         PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EMBARGODSTR, str);
     }
 
+    /***
+     * 定时拍照时间间隔
+     * @return
+     */
+    public static int getPIC_INTV_min() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.PIC_INTV_min, 15);
+    }
+
+    public static void setPIC_INTV_min(int PIC_INTV_min) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.PIC_INTV_min, PIC_INTV_min);
+    }
+
+    /***
+     * 定时拍照时间间隔
+     * @return
+     */
+    public static int getUPLOAD_GBN() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.UPLOAD_GBN, 15);
+    }
+
+    public static void setUPLOAD_GBN(int UPLOAD_GBN) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.UPLOAD_GBN, UPLOAD_GBN);
+    }
+
+    /***
+     * 是否自动报读
+     * @return
+     */
+    public static boolean getADDMSG_YN() {
+        return PreferenceUtils.getInstance().getSettingBool(Config.WriteSetting.ADDMSG_YN, false);
+    }
+
+    public static void setADDMSG_YN(byte ADDMSG_YN) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.ADDMSG_YN, ADDMSG_YN);
+    }
+
+    /****
+     * 熄火后停止学时计时的延时时间min
+     * @return
+     */
+    public static int getSTOP_DELAY_TIME_min() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.STOP_DELAY_TIME_min, 0);
+    }
+
+    public static void setSTOP_DELAY_TIME_min(int STOP_DELAY_TIME_min) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.STOP_DELAY_TIME_min, STOP_DELAY_TIME_min);
+    }
+
+    /****
+     * 熄火后停止学时计时的延时时间s
+     * @return
+     */
+    public static int getSTOP_GNSS_UPLOAD_INTV_sec() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.STOP_GNSS_UPLOAD_INTV_sec, 0);
+    }
+
+    public static void setSTOP_GNSS_UPLOAD_INTV_sec(int STOP_GNSS_UPLOAD_INTV_sec) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.STOP_GNSS_UPLOAD_INTV_sec, STOP_GNSS_UPLOAD_INTV_sec);
+    }
+
+    /****
+     * 熄火后教练自动登出的延时时间
+     * @return
+     */
+    public static int getSTOP_COACH_DELAY_TIME_min() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.STOP_COACH_DELAY_TIME_min, 0);
+    }
+
+    public static void setSTOP_COACH_DELAY_TIME_min(int STOP_COACH_DELAY_TIME_min) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.STOP_COACH_DELAY_TIME_min, STOP_COACH_DELAY_TIME_min);
+    }
+
+    /****
+     * 重新验证身份时间
+     * @return
+     */
+    public static int getUSER_CHK_TIME_min() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.USER_CHK_TIME_min, 0);
+    }
+
+    public static void setUSER_CHK_TIME_min(int USER_CHK_TIME_min) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.USER_CHK_TIME_min, USER_CHK_TIME_min);
+    }
+
+    /***
+     * 教练跨校教学
+     * @return
+     */
+    public static int getCOACH_TRANS_YN() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.COACH_TRANS_YN, 2);
+    }
+
+    public static void setCOACH_TRANS_YN(int COACH_TRANS_YN) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.COACH_TRANS_YN, COACH_TRANS_YN);
+    }
+
+    /***
+     * 学员跨校学习
+     * @return
+     */
+    public static int getSTU_TRANS_YN() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.STU_TRANS_YN, 1);
+    }
+
+    public static void setSTU_TRANS_YN(int STU_TRANS_YN) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.STU_TRANS_YN, STU_TRANS_YN);
+    }
+
+    /****
+     * 响应平台同类消息时间间隔
+     * @return
+     */
+    public static int getDUP_MSG_REJECT_INTV_sec() {
+        return PreferenceUtils.getInstance().getSettingInt(Config.WriteSetting.DUP_MSG_REJECT_INTV_sec, 0);
+    }
+
+    public static void setDUP_MSG_REJECT_INTV_sec(int DUP_MSG_REJECT_INTV_sec) {
+        PreferenceUtils.getInstance().setSettingInt(Config.WriteSetting.DUP_MSG_REJECT_INTV_sec, DUP_MSG_REJECT_INTV_sec);
+    }
 
     /***
      * 保存终端注册后返回的信息
@@ -293,7 +413,29 @@ public class WriteSettingHelper {
         ConstantInfo.coachNum = WriteSettingHelper.getCOACHNUM();
         ConstantInfo.isEmbargo = WriteSettingHelper.getEMBARGO();
         ConstantInfo.embargoStr = WriteSettingHelper.getEMBARGOSTR();
+
+        ConstantInfo.PIC_INTV_min = WriteSettingHelper.getPIC_INTV_min();
+        ConstantInfo.UPLOAD_GBN = WriteSettingHelper.getUPLOAD_GBN();
+        ConstantInfo.ADDMSG_YN = WriteSettingHelper.getADDMSG_YN();
+        ConstantInfo.STOP_DELAY_TIME_min = WriteSettingHelper.getSTOP_DELAY_TIME_min();
+        ConstantInfo.STOP_GNSS_UPLOAD_INTV_sec = WriteSettingHelper.getSTOP_GNSS_UPLOAD_INTV_sec();   //熄火后停止学时计时的延时时间, 单位: s
+        ConstantInfo.STOP_COACH_DELAY_TIME_min = getSTOP_COACH_DELAY_TIME_min();    //熄火后教练自动登出的延时时间, 单位: min
+        ConstantInfo.USER_CHK_TIME_min = getUSER_CHK_TIME_min();            //重新验证身份时间, 单位: min
+        ConstantInfo.isCOACH_TRANS_YN = getCOACH_TRANS_YN();         //教练跨校教学
+        ConstantInfo.isSTU_TRANS_YN = getSTU_TRANS_YN();           //学员跨校学习
+        ConstantInfo.DUP_MSG_REJECT_INTV_sec = getDUP_MSG_REJECT_INTV_sec();      //响应平台同类消息时间间隔
     }
 
-
+    public static void set0501(HandMsgHelper.Class8501 class8501) {
+        WriteSettingHelper.setPIC_INTV_min(class8501.cameraInterval);       //定时拍照时间间隔
+        WriteSettingHelper.setUPLOAD_GBN(class8501.photoUpDataSetting);     //照片上传设置
+        WriteSettingHelper.setADDMSG_YN(class8501.isReadOther);                  //是否报读附加消息
+        WriteSettingHelper.setSTOP_DELAY_TIME_min(class8501.flameoutDelay);     //熄火后停止学时计时的延时时间
+        WriteSettingHelper.setSTOP_GNSS_UPLOAD_INTV_sec(ByteUtil.byte2int(class8501.flameoutGNSSDelay));            //熄火后GNSS数据包上传间隔
+        WriteSettingHelper.setSTOP_COACH_DELAY_TIME_min(ByteUtil.byte2int(class8501.flameoutCoachLogoutTime));      //熄火后教练自动登出的延时时间
+        WriteSettingHelper.setUSER_CHK_TIME_min(ByteUtil.byte2int(class8501.reloadIdentityTime));       //重新验证身份的时间
+        WriteSettingHelper.setCOACH_TRANS_YN(class8501.isCoachJumpSchool);          //教练
+        WriteSettingHelper.setSTU_TRANS_YN(class8501.isStdentJumpSchool);          //学员
+        WriteSettingHelper.setDUP_MSG_REJECT_INTV_sec(ByteUtil.byte2int(class8501.onCallMessageTime));
+    }
 }

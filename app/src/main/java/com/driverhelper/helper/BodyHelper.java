@@ -118,7 +118,9 @@ public class BodyHelper {
         data = ByteUtil.add(data,
                 makeHeadAttribute(isDivision, encryption, length));
         data = ByteUtil.add(data, makePhone2BCD(ConstantInfo.terminalPhoneNumber));
-        data = ByteUtil.add(data, getWaterCode());
+        byte[] watercode = getWaterCode();
+        data = ByteUtil.add(data, watercode);
+        ByteUtil.printHexString("water code ", watercode);
         data = ByteUtil.add(data, getReserve());
         if (isDivision) { // 分包
             data = ByteUtil.add(data, ByteUtil.int2WORD(totle));
@@ -776,30 +778,44 @@ public class BodyHelper {
         return sticky(resultHead, resultBody);
     }
 
-    /***
+    /****
      *
      * @param parameter1
-     * @param parameter2
-     * @param parameter3
-     * @param parameter4
+     * @param parameter2    定时拍照时间间隔
+     * @param parameter3    照片上传设置
+     * @param parameter4    是否报读附加消息
+     * @param parameter5        熄火后停止学时计时的延时时间
+     * @param parameter6       熄火后GNSS数据包上传间隔
+     * @param parameter7    熄火后教练自动登出的延时时间
+     * @param parameter8    重新验证身份时间
+     * @param parameter9       教练跨校教学
+     * @param parameter10       学员跨校学习
+     * @param parameter11 响应平台同类消息时间间隔
      * @return
      */
     public static byte[] make0503(byte parameter1,
                                   byte parameter2,
                                   byte parameter3,
-                                  byte parameter4) {
-        byte[] resultBody = new byte[]{(byte) 0x00};
-        resultBody = ByteUtil.add(resultBody, parameter1);
-        resultBody = ByteUtil.add(resultBody, parameter2);
-        resultBody = ByteUtil.add(resultBody, parameter3);
+                                  byte parameter4,
+                                  byte parameter5,
+                                  int parameter6,
+                                  int parameter7,
+                                  int parameter8,
+                                  byte parameter9,
+                                  byte parameter10,
+                                  int parameter11) {
+
+        byte[] resultBody = new byte[parameter1];            //定时拍照时间间隔
+        resultBody = ByteUtil.add(resultBody, parameter2);      //照片上传设置
+        resultBody = ByteUtil.add(resultBody, parameter3);      //是否报读附加消息
         resultBody = ByteUtil.add(resultBody, parameter4);       //是否报读附加消息
-        resultBody = ByteUtil.add(resultBody, (byte) 0x05);           //熄火后停止学时计时的延时时间
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(3600));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(150));                                        //熄火后教练自动登出的延时时间
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(30));
-        resultBody = ByteUtil.add(resultBody, (byte) 0x01);
-        resultBody = ByteUtil.add(resultBody, (byte) 0x01);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(30));
+        resultBody = ByteUtil.add(resultBody, parameter5);           //熄火后停止学时计时的延时时间
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(parameter6));     //5	熄火后GNSS数据包上传间隔	WORD	单位：s，默认值3600，0表示不上传
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(parameter7));       //熄火后教练自动登出的延时时间
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(parameter8));           //重新验证身份时间
+        resultBody = ByteUtil.add(resultBody, parameter9);           //重新验证身份时间
+        resultBody = ByteUtil.add(resultBody, parameter10);           //重新验证身份时间
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(parameter11));           //重新验证身份时间
 
         resultBody = buildExMsg(id0503, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
@@ -895,7 +911,7 @@ public class BodyHelper {
                     0);
             resultBody = ByteUtil.add(resultBody, jiami); // 校验码  时间戳用0
         }
-//        ByteUtil.printHexString("加密最后的结果和前面", resultBody);
+        ByteUtil.printHexString("加密最后的结果和前面", resultBody);
         return resultBody;
     }
 
@@ -1133,6 +1149,7 @@ public class BodyHelper {
                                 break;
                             case "8501":           //设置计时终端应用参数应答
                                 HandMsgHelper.Class8501 class8501 = HandMsgHelper.getClass8501(messageBean.throughExpand.data);
+                                RxBus.getInstance().post(Config.Config_RxBus.RX_SETTING_0501,class8501);
                                 TcpHelper.getInstance().send0303();
                                 break;
                             case "8502":
@@ -1158,7 +1175,9 @@ public class BodyHelper {
                                 HandMsgHelper.Class8403 class8403 = HandMsgHelper.getClass8403(messageBean.throughExpand.data);
                                 break;
                             case "8503":            //A.1.1.1.1　查询计时终端应用参数
-                                TcpHelper.getInstance().send0503();
+                                TcpHelper.getInstance().send0503((byte) 0x00, (byte) 0x15, (byte) 0x00, (byte) 0x02, (byte) 0x01,
+                                        3600, 150, 30, (byte) 0x01, (byte) 0x01,
+                                        10);
                                 break;
                             default:
                                 break;

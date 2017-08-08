@@ -392,6 +392,13 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 WriteSettingHelper.setEMBARGOSTR(embargoStr);
             }
         });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_0501, new Action1<HandMsgHelper.Class8501>() {
+            @Override
+            public void call(HandMsgHelper.Class8501 class8501) {
+                ttsClient.speak("收到设置请求", 1, null);
+                WriteSettingHelper.set0501(class8501);
+            }
+        });
     }
 
 

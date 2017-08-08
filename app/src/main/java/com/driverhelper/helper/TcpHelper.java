@@ -413,8 +413,28 @@ public class TcpHelper {
         sendData(BodyHelper.make0501((byte) 0x01));
     }
 
-    public void send0503() {
-        sendData(BodyHelper.make0503());
+    public void send0503(byte parameter1,
+                         byte parameter2,
+                         byte parameter3,
+                         byte parameter4,
+                         byte parameter5,
+                         int parameter6,
+                         int parameter7,
+                         int parameter8,
+                         byte parameter9,
+                         byte parameter10,
+                         int parameter11) {
+        sendData(BodyHelper.make0503(parameter1,
+                parameter2,
+                parameter3,
+                parameter4,
+                parameter5,
+                parameter6,
+                parameter7,
+                parameter8,
+                parameter9,
+                parameter10,
+                parameter11));
     }
 
     public void send0401() {

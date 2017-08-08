@@ -2,6 +2,8 @@ package com.driverhelper.helper;
 
 import android.util.Log;
 
+import com.driverhelper.utils.ByteUtil;
+
 /**
  * Created by Administrator on 2017/7/24.
  */
