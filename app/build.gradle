@@ -17,6 +17,7 @@ android {
         jackOptions {
             enabled false
         }
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -73,4 +74,6 @@ dependencies {
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.github.felHR85:UsbSerial:4.5'
     testCompile 'junit:junit:4.12'
+    compile'org.greenrobot:greendao:3.0.1'
+    compile'org.greenrobot:greendao-generator:3.0.0'
 }
