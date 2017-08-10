@@ -246,8 +246,6 @@ public class BodyHelper {
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
-//        ByteUtil.printHexString(result);
-
         return result;
     }
 

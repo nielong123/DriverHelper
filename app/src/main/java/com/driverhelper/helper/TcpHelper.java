@@ -160,6 +160,15 @@ public class TcpHelper {
                 if (client.getSocketPacketHelper().getReadStrategy() == SocketPacketHelper.ReadStrategy.Manually) {
                     client.readDataToLength(CharsetUtil.stringToData("Server accepted", CharsetUtil.UTF_8).length);
                 }
+                if (TextUtils.isEmpty(ConstantInfo.institutionNumber.toString()) ||
+                        TextUtils.isEmpty(ConstantInfo.platformNum.toString()) ||
+                        TextUtils.isEmpty(ConstantInfo.terminalNum.toString()) ||
+                        TextUtils.isEmpty(ConstantInfo.certificatePassword.toString()) ||
+                        TextUtils.isEmpty(ConstantInfo.terminalCertificate)) {
+                    RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
+                    return;
+                }
+                TcpHelper.getInstance().sendAuthentication();
                 startUpDataLocationInfo();
             }
 
