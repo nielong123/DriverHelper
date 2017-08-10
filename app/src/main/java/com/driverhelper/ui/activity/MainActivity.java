@@ -39,7 +39,9 @@ import com.driverhelper.beans.QRbean;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.AssetsHelper;
+import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
+import com.driverhelper.helper.PhotoHelper;
 import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.SerialPortActivity;
@@ -72,6 +74,7 @@ import static com.driverhelper.config.Config.port;
 import static com.driverhelper.config.ConstantInfo.embargoStr;
 import static com.driverhelper.config.ConstantInfo.isEmbargo;
 import static com.driverhelper.config.ConstantInfo.qRbean;
+import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 
 public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener,
@@ -153,6 +156,23 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     Timer studyTimer;
     Timer updataTimer;
+    Timer photoTimer;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopPreview();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     private void sendMessage(int what) {
         Message message = new Message();
@@ -239,7 +259,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                     ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
                     ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
                     Log.e("11111111111111111", "ConstantInfo.photoDataSize = " + ConstantInfo.photoDataSize + " ||| " + " ConstantInfo.photoId = " + ConstantInfo.photoId);
-                    TcpHelper.getInstance().send0305(ConstantInfo.photoId, ConstantInfo.coachNum, (byte) 129, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, ConstantInfo.photoDataSize);
+                    TcpHelper.getInstance().send0305(ConstantInfo.photoId, ConstantInfo.coachId, (byte) 129, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, ConstantInfo.photoDataSize);
                     break;
                 case R.id.NoSendClear:
                     break;
@@ -336,8 +356,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 ttsClient.speak(str, 1, null);
                 sendMessage(Config.TextInfoType.SETJIAOLIAN);
                 Config.isCoachLoginOK = true;
-                ConstantInfo.coachNum = qRbean.getNumber();
-                WriteSettingHelper.setCOACHNUM(ConstantInfo.coachNum);
+                ConstantInfo.coachId = qRbean.getNumber();
+                WriteSettingHelper.setCOACHNUM(ConstantInfo.coachId);
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_COACH_LOGOUTOK, new Action1<String>() {
@@ -355,7 +375,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 ttsClient.speak("学员登录成功", 1, null);
                 sendMessage(Config.TextInfoType.SETXUEYUAN);
                 Config.isStudentLoginOK = true;
-                ConstantInfo.StudentInfo.studentNum = ByteUtil.getString(class8201.studentNum);
+                ConstantInfo.StudentInfo.studentId = ByteUtil.getString(class8201.studentNum);
                 ConstantInfo.StudentInfo.totleMileage = class8201.totleMileage;
                 ConstantInfo.StudentInfo.finishedMileage = class8201.finishedMileage;
                 ConstantInfo.StudentInfo.totleTime = class8201.totleStudyTime;
@@ -436,22 +456,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 ToastUitl.show(ByteUtil.getString(buffer), Toast.LENGTH_SHORT);
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stopPreview();
     }
 
     public void onInit(int paramInt) {
@@ -630,12 +634,12 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     }
 
     private void studentLogin(String studentNum) {
-        if (TextUtils.isEmpty(ConstantInfo.coachNum)) {
+        if (TextUtils.isEmpty(ConstantInfo.coachId)) {
             RxBus.getInstance().post(RX_TTS_SPEAK, "教练员未签到");
             return;
         }
         RxBus.getInstance().post(RX_TTS_SPEAK, "学员扫描成功");
-        TcpHelper.getInstance().sendStudentLogin(ConstantInfo.coachNum, studentNum);
+        TcpHelper.getInstance().sendStudentLogin(ConstantInfo.coachId, studentNum);
     }
 
     private void studentLogout() {
@@ -664,6 +668,24 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息
             }
         }, 1000, 6 * 1000);
+
+        photoTimer = new Timer(true);
+        photoTimer.schedule(new TimerTask() {               //保存照片
+            @Override
+            public void run() {
+                if (mPreBuffer != null) {
+                    String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
+                    String str66666 = str.substring(str.length() - 6, str.length());
+                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MainActivity.this,"123456.jpg");
+                    byte[] data = ByteUtil.bitmap2Bytes(bitmap);
+                    PhotoHelper.saveBitmap(MainActivity.this, data);
+//                    DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
+//                            "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
+//                            TimeUtil.getTime());
+                }
+            }
+        }, 10, 15 * 1000);
+//        }, 10, 15 * 60 * 1000);
     }
 
     private void stopStudy() {
@@ -674,6 +696,10 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         if (updataTimer != null) {
             updataTimer.cancel();
             updataTimer = null;
+        }
+        if (photoTimer != null) {
+            photoTimer.cancel();
+            photoTimer = null;
         }
         Config.isStudentLoginOK = false;
         ConstantInfo.studyTimeThis = 0;

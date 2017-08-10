@@ -4,20 +4,20 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\abc_activity_chooser_view.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\release\\layout\\abc_search_view.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\abc_search_view.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\release\\layout\\select_dialog_item_material.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\select_dialog_item_material.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\release\\layout\\abc_list_menu_item_icon.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\abc_list_menu_item_icon.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\release\\layout\\abc_search_view.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\abc_search_view.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\release\\layout\\notification_template_part_chronometer.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\release\\layout\\abc_list_menu_item_icon.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\abc_list_menu_item_icon.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\release\\layout\\notification_template_media.xml",

@@ -42,11 +42,12 @@ public class ConstantInfo {
     public static byte[] terminalNum = new byte[16];       //计时终端编号
     public static byte[] certificatePassword = new byte[12];       //证书口令;
     public static String terminalCertificate = "";         //终端证书
-    public static String coachNum;      //教练员编号
+    public static String coachId;      //教练员编号
 
     public static long studyTimeThis = 0;             //学习的时间
-    public static long studyDistanceThis = 0;             //学习的时间
+    public static long studyDistanceThis = 0;             //学习的里程
     public static byte[] classId;             //课堂id
+    public static String classType = "1211110000";          //培训课程
 
     public static byte[] photoData;                           //照片的byte数据
     public static int photoDataSize;                           //照片的byte数据大小
@@ -71,11 +72,17 @@ public class ConstantInfo {
 
 
     public static class StudentInfo {
-        public static String studentNum;        //学员编号
+        public static String studentId;        //学员编号
         public static int totleTime;            //需要完成的总学时
         public static int finishedTime;               //已完成的学时
         public static int totleMileage;             //需要完成的总里程
         public static int finishedMileage;            //已完成的里程
+    }
+
+    public static class ObdInfo{
+        public static int vehiclSspeed = 10;     //车速
+        public static int speed = 20;        //发动机转速
+        public static int distance = 15;         //距离
     }
 
 

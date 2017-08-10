@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
-import static com.driverhelper.config.ConstantInfo.coachNum;
+import static com.driverhelper.config.ConstantInfo.classType;
+import static com.driverhelper.config.ConstantInfo.coachId;
 import static com.driverhelper.config.ConstantInfo.photoData;
 import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
@@ -381,14 +382,14 @@ public class BodyHelper {
                 strTime +
                 IdHelper.getStudyCode()).getBytes();           //26        学时记录编号
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentNum.getBytes());       //学员编号
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.coachNum.getBytes());             //教练员编号
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentId.getBytes());       //学员编号
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.coachId.getBytes());             //教练员编号
         resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(classType));                //培训课程
         resultBody = ByteUtil.add(resultBody, recordType);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(10, 4));            //最大速度
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(11, 4));            //最大里程  10
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.ObdInfo.vehiclSspeed));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.ObdInfo.distance, 4));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -438,8 +439,8 @@ public class BodyHelper {
         strTime = strTime.substring(0, 6);
         byte[] resultBody = ByteUtil.add(("0000000000000000" + strTime).getBytes(), ByteUtil.int2DWORD(IdHelper.getStudyCode()));           //26        学时记录编号
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentNum.getBytes());       //学员编号
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.coachNum.getBytes());             //教练员编号
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentId.getBytes());       //学员编号
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.coachId.getBytes());             //教练员编号
         resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
@@ -1036,7 +1037,7 @@ public class BodyHelper {
                                 switch (Integer.valueOf(ByteUtil.bcdByte2bcdString(class8101.result))) {
                                     case 1:
                                         RxBus.getInstance().post(Config.Config_RxBus.RX_COACH_LOGINOK, "教练员登录成功");
-                                        coachNum = ByteUtil.getString(class8101.coachNum);
+                                        coachId = ByteUtil.getString(class8101.coachNum);
                                         break;
                                     case 2:
                                         RxBus.getInstance().post(RX_TTS_SPEAK, "无效的教练员编号");

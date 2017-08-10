@@ -1,6 +1,7 @@
 package com.driverhelper.app;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
@@ -8,8 +9,10 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.driverhelper.beans.gen.DaoMaster;
+import com.driverhelper.beans.gen.DaoSession;
 import com.driverhelper.config.Config;
-import com.driverhelper.helper.WriteSettingHelper;
+import com.driverhelper.helper.DbHelper;
 import com.jaydenxiao.common.baseapp.BaseApplication;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.PreferenceUtils;
@@ -21,14 +24,16 @@ import java.security.InvalidParameterException;
 
 import qingwei.kong.serialportlibrary.SerialPort;
 
-import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
-import static com.driverhelper.config.Config.TextInfoType.ClearGPSINFO;
-
 /**
  * Created by Administrator on 2017/5/31.
  */
 
 public class MyApplication extends BaseApplication {
+
+    private DaoMaster.DevOpenHelper mHelper;
+    private SQLiteDatabase db;
+    private DaoMaster mDaoMaster;
+    private DaoSession mDaoSession;
 
     private AMapLocationListener locListener = new MyLocationListener();
     private OnLocationReceiveListener mOnLocationReceiveListener;
@@ -53,6 +58,7 @@ public class MyApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         initData();
+        setDatabase();
         initLog();
         initServer();
     }
@@ -62,6 +68,29 @@ public class MyApplication extends BaseApplication {
         mApplicationContext = getApplicationContext();
         PreferenceUtils.init(this);
         initLocation();
+    }
+
+    /**
+     * 设置greenDao
+     */
+    private void setDatabase() {
+        // 通过 DaoMaster 的内部类 DevOpenHelper，你可以得到一个便利的 SQLiteOpenHelper 对象。
+        // 可能你已经注意到了，你并不需要去编写「CREATE TABLE」这样的 SQL 语句，因为 greenDAO 已经帮你做了。
+        // 注意：默认的 DaoMaster.DevOpenHelper 会在数据库升级时，删除所有的表，意味着这将导致数据的丢失。
+        // 所以，在正式的项目中，你还应该做一层封装，来实现数据库的安全升级。
+        mHelper = new DaoMaster.DevOpenHelper(this, "notes-db", null);
+        db = mHelper.getWritableDatabase();
+        // 注意：该数据库连接属于 DaoMaster，所以多个 Session 指的是相同的数据库连接。
+        mDaoMaster = new DaoMaster(db);
+        mDaoSession = mDaoMaster.newSession();
+    }
+
+    public DaoSession getDaoSession() {
+        return mDaoSession;
+    }
+
+    public SQLiteDatabase getDb() {
+        return db;
     }
 
 
@@ -134,6 +163,9 @@ public class MyApplication extends BaseApplication {
                 MyApplication.getInstance().direction = amapLocation.getBearing();
                 MyApplication.getInstance().timeGPS = amapLocation.getTime();
                 MyApplication.getInstance().isLocation = true;
+                if(Config.isStudentLoginOK){
+                    DbHelper.getInstance().addGpsInfo(null, speedGPS, direction, lat, lon, timeGPS);
+                }
                 RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_OK, "");
             } else {
                 MyApplication.getInstance().isLocation = false;

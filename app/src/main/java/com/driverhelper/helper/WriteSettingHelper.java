@@ -410,7 +410,7 @@ public class WriteSettingHelper {
         ConstantInfo.terminalNum = WriteSettingHelper.getTERMINALNUM();
         ConstantInfo.certificatePassword = WriteSettingHelper.getCERTIFICATEPASSWORD();
         ConstantInfo.terminalCertificate = WriteSettingHelper.getTERMINALCERTIFICATE();
-        ConstantInfo.coachNum = WriteSettingHelper.getCOACHNUM();
+        ConstantInfo.coachId = WriteSettingHelper.getCOACHNUM();
         ConstantInfo.isEmbargo = WriteSettingHelper.getEMBARGO();
         ConstantInfo.embargoStr = WriteSettingHelper.getEMBARGOSTR();
 

@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
@@ -24,13 +23,9 @@ import com.vilyever.socketclient.util.CharsetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-import static com.driverhelper.config.ConstantInfo.StudentInfo.studentNum;
-import static com.driverhelper.config.ConstantInfo.coachNum;
+import static com.driverhelper.config.ConstantInfo.StudentInfo.studentId;
+import static com.driverhelper.config.ConstantInfo.coachId;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
 
@@ -321,7 +316,7 @@ public class TcpHelper {
      * 教练员登出
      */
     public void sendCoachLogout() {
-        sendData(BodyHelper.makeCoachLogout(coachNum));
+        sendData(BodyHelper.makeCoachLogout(coachId));
     }
 
 
@@ -336,7 +331,7 @@ public class TcpHelper {
      * 学员登出
      */
     public void sendStudentLogiout() {
-        sendData(BodyHelper.makeStudentLogiout(studentNum));
+        sendData(BodyHelper.makeStudentLogiout(studentId));
     }
 
     /*****
@@ -349,6 +344,9 @@ public class TcpHelper {
         int index = Integer.valueOf(str);
 //        if (index > 50 && index < 59) {
         sendData(BodyHelper.makeSendStudyInfo(updataType, str66666, (byte) 0x00));
+        DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
+                "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
+                TimeUtil.getTime());
 //        }
     }
 
@@ -357,7 +355,7 @@ public class TcpHelper {
     }
 
     public void send0203(byte updataType, String time666, byte recordType) {
-        if (ConstantInfo.StudentInfo.studentNum != null) {
+        if (ConstantInfo.StudentInfo.studentId != null) {
             sendData(BodyHelper.make0203(updataType, time666, recordType));
         } else {
             RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员未签到");
