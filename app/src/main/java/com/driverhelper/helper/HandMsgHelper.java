@@ -3,6 +3,7 @@ package com.driverhelper.helper;
 import com.driverhelper.utils.ByteUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -89,6 +90,21 @@ public final class HandMsgHelper {
 
 
     public static class Class8201 {
+        @Override
+        public String toString() {
+            return "Class8201{" +
+                    "result=" + result +
+                    ", studentNum=" + Arrays.toString(studentNum) +
+                    ", totleStudyTime=" + totleStudyTime +
+                    ", finishedStudyTime=" + finishedStudyTime +
+                    ", totleMileage=" + totleMileage +
+                    ", finishedMileage=" + finishedMileage +
+                    ", isUpdataOtherInfo=" + isUpdataOtherInfo +
+                    ", otherInfoLength=" + otherInfoLength +
+                    ", otherInfo='" + otherInfo + '\'' +
+                    '}';
+        }
+
         public byte result;
         public byte[] studentNum = new byte[16];
         public int totleStudyTime;         //总学时

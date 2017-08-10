@@ -16,12 +16,12 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\notification_template_big_media.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\abc_search_view.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_radio.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\abc_list_menu_item_radio.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\layout\\abc_search_view.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\debug\\layout\\abc_dialog_title_material.xml",

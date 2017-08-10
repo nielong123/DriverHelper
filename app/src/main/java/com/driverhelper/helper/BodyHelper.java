@@ -24,7 +24,7 @@ import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.ConstantInfo.classType;
 import static com.driverhelper.config.ConstantInfo.coachId;
 import static com.driverhelper.config.ConstantInfo.photoData;
-import static com.driverhelper.config.ConstantInfo.strTerminalSerial;
+import static com.driverhelper.config.ConstantInfo.SN;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
@@ -191,11 +191,10 @@ public class BodyHelper {
         byte[] resultBody = ConstantInfo.province;
         resultBody = ByteUtil.add(resultBody, ConstantInfo.city); // 城市
         resultBody = ByteUtil.add(resultBody, ConstantInfo.makerID); // 制造商id
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(ByteUtil
-                .autoAddZeroByLengthOnRight(ConstantInfo.strTerminalTYPE, 40))); // 终端型号
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(strTerminalSerial)); // 终端编号
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(ConstantInfo.strIMEI)); // IMEI
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(vehicleColor)); // 车身颜色
+        resultBody = ByteUtil.add(resultBody, ByteUtil.autoAddZeroByLengthOnRight(ConstantInfo.MODEL, 20).getBytes()); // 终端型号
+        resultBody = ByteUtil.add(resultBody, SN.getBytes()); // 终端编号
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(ConstantInfo.IMEI)); // IMEI
+        resultBody = ByteUtil.add(resultBody, vehicleColor.getBytes()); // 车身颜色
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(vehicleNum)); // 车牌号
         int bodyLength = resultBody.length;
         System.out.println("bodyLength = " + bodyLength);
@@ -1071,6 +1070,7 @@ public class BodyHelper {
                                 break;
                             case "8201":
                                 HandMsgHelper.Class8201 class8201 = HandMsgHelper.getClass8201(messageBean.throughExpand.data);
+                                Logger.d(class8201.toString());
                                 switch (class8201.result) {
                                     case 1:
                                         RxBus.getInstance().post(Config.Config_RxBus.RX_STUDENT_LOGINOK, class8201);

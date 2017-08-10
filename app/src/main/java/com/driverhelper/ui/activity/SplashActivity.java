@@ -11,7 +11,6 @@ import com.jaydenxiao.common.commonutils.VersionUtil;
 
 import butterknife.Bind;
 
-import static com.driverhelper.config.ConstantInfo.reloadInfo;
 
 /**
  * Created by Administrator on 2017/5/31.
@@ -45,7 +44,6 @@ public final class SplashActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        reloadInfo();
     }
 
 

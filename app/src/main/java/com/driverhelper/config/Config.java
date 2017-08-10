@@ -46,7 +46,9 @@ public class Config {
         public final static String HTTP_URL = "HTTP_URL";               //http 地址
         public final static String VEHICLE_NUMBER = "VEHICLE_NUMBER";       //车牌号
         public final static String TERMINALPHONENUMBER = "TERMINALPHONENUMBER";         //终端手机号
+        public final static String SN = "SN";           //终端出厂编号
         public final static String IMEI = "IMEI";
+        public final static String MODEL = "MODEL";                 //终端型号
         public final static String VEHICLE_COLOR = "VEHICLE_COLOR";         //车辆颜色
         public final static String WATER_CODE = "WATER_CODE111";       //流水号
         public final static String EX_CODE = "EX_CODE11";       //透传消息流水号

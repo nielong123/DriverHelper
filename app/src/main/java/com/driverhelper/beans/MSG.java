@@ -9,6 +9,8 @@ import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.ui.activity.MainActivity;
 import com.driverhelper.utils.ByteUtil;
 
+import static com.driverhelper.config.Config.WriteSetting.VEHICLE_COLOR;
+
 /**
  * Created by Administrator on 2017/7/11.
  */
@@ -70,6 +72,10 @@ public final class MSG {
         ConstantInfo.city[1] = ByteUtil.hexString2BCD(sharePreferences.getString(Config.WriteSetting.CITY, "00"))[0];
     }
 
+    public void loadMODEL() {
+        ConstantInfo.MODEL = sharePreferences.getString(Config.WriteSetting.MODEL, "YX/4G 528G");
+    }
+
     public void loadVehicle_number() {
         ConstantInfo.vehicleNum = sharePreferences.getString(Config.WriteSetting.VEHICLE_NUMBER, "00");
     }
@@ -78,11 +84,32 @@ public final class MSG {
         ConstantInfo.terminalPhoneNumber = sharePreferences.getString(Config.WriteSetting.TERMINALPHONENUMBER, "13469986047");
     }
 
+    public void loadSN() {
+        ConstantInfo.SN = sharePreferences.getString(Config.WriteSetting.SN, "");
+    }
+
+    public void loadVehicleColor() {
+        ConstantInfo.vehicleColor = sharePreferences.getString(VEHICLE_COLOR, "2");
+    }
+
+    /***
+     *   IMEI
+     * @return
+     */
+    public void loadIMEI() {
+        ConstantInfo.IMEI = sharePreferences.getString(Config.WriteSetting.IMEI, "");
+    }
+
+
     public void loadSetting() {
+        loadSN();
         loadProvince();
+        loadMODEL();
         loadCity();
         loadVehicle_number();
         loadTcpSetting();
+        loadIMEI();
+        loadVehicleColor();
         loadTerminalPhoneNumber();
     }
 

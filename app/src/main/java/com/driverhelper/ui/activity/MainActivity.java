@@ -144,7 +144,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     private TextToSpeech ttsClient;
     private Camera camera;
     private SurfaceHolder holder;
-    public static Context context;
+    Context context;
 
     private final static int width = 320;
     private final static int height = 240;
@@ -206,8 +206,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 case Config.TextInfoType.SETXUEYUAN:
                     XueYuanTEXT.setText(qRbean.getName());
                     STUNUMtext.setText(qRbean.getNumber());
-                    textViewStat.setText("总里程:" + ConstantInfo.StudentInfo.totleMileage / 10 + "km  已完成里程" + ConstantInfo.StudentInfo.finishedMileage / 10 + "分钟\n"
-                            + "总培训时间:" + ConstantInfo.StudentInfo.totleTime + "分  已完成培训时间" + ConstantInfo.StudentInfo.finishedTime + "分");
+                    textViewStat.setText("培训学时:" + ConstantInfo.StudentInfo.totleTime / 10 + " / " + ConstantInfo.StudentInfo.finishedTime / 10 + "分\n"
+                            + "培训里程:" + ConstantInfo.StudentInfo.totleMileage + "km / " + ConstantInfo.StudentInfo.finishedMileage + "km");
                     break;
                 case Config.TextInfoType.CLEARJIAOLIAN:
                     COACHNUMtext.setText("");
@@ -224,9 +224,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     };
 
     void test() {
-//        for (int i = 0; i < 99999; i++) {
-//            ByteUtil.printHexString("code  =  ", ByteUtil.str2Bcd(WaterCodeHelper.getWaterCode()));
-//        }
     }
 
 
@@ -619,6 +616,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         switch (requestCode) {
             case REQUEST_SETTING:
                 MSG.getInstance(this).loadSetting();
+                WriteSettingHelper.loadRegistInfo();
                 break;
         }
     }
@@ -676,7 +674,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 if (mPreBuffer != null) {
                     String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
                     String str66666 = str.substring(str.length() - 6, str.length());
-                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MainActivity.this,"123456.jpg");
+                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MainActivity.this, "123456.jpg");
                     byte[] data = ByteUtil.bitmap2Bytes(bitmap);
                     PhotoHelper.saveBitmap(MainActivity.this, data);
 //                    DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),

@@ -90,18 +90,6 @@ public class WriteSettingHelper {
     }
 
     /***
-     * 获取车辆颜色
-     * @return
-     */
-    public static String getVEHICLE_COLOR() {
-        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.VEHICLE_COLOR, "");
-    }
-
-    public static void setVEHICLE_COLOR(String vehicle_color) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.VEHICLE_COLOR, vehicle_color);
-    }
-
-    /***
      * 获取链接的超时时间
      * @return
      */
@@ -169,9 +157,9 @@ public class WriteSettingHelper {
         return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.EXAM_TYPE, "科目2");
     }
 
-    public static void setEXAM_SUBJECTS(String examSubjects) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EXAM_TYPE, examSubjects);
-    }
+//    public static void setEXAM_SUBJECTS(String examSubjects) {
+//        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EXAM_TYPE, examSubjects);
+//    }
 
     /***
      * 获取平台编号

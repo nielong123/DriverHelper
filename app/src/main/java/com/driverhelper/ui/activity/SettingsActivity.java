@@ -27,7 +27,10 @@ import static com.driverhelper.config.Config.WriteSetting.IMEI;
 import static com.driverhelper.config.Config.WriteSetting.TCP_IP;
 import static com.driverhelper.config.Config.WriteSetting.TCP_PORT;
 import static com.driverhelper.config.Config.WriteSetting.TERMINALPHONENUMBER;
+import static com.driverhelper.config.Config.WriteSetting.VEHICLE_COLOR;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_NUMBER;
+import static com.driverhelper.config.ConstantInfo.MODEL;
+import static com.driverhelper.config.ConstantInfo.SN;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
@@ -126,10 +129,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(Config.WriteSetting.PROVINCE));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(Config.WriteSetting.CITY));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("VENDER_ID"));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("MODEL"));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("SN"));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(MODEL));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(SN));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(IMEI));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0084"));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(VEHICLE_COLOR));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(VEHICLE_NUMBER));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(TCP_IP));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(TCP_PORT));
@@ -366,7 +369,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0081"));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(CITY));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference(VEHICLE_NUMBER));
-            SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0084"));
+            SettingsActivity.bindPreferenceSummaryToValue(findPreference(VEHICLE_COLOR));
             SettingsActivity.bindPreferenceSummaryToValue(findPreference("param0085"));
         }
 

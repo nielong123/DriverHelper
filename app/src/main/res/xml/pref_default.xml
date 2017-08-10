@@ -64,7 +64,7 @@
         android:capitalize="words"
         android:defaultValue="1"
         android:inputType="number"
-        android:key="param0084"
+        android:key="VEHICLE_COLOR"
         android:maxLength="3"
         android:maxLines="1"
         android:selectAllOnFocus="true"
@@ -128,7 +128,7 @@
         android:title="@string/pref_default_PERDRITYPE" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="9"
+        android:defaultValue="4"
         android:inputType="number"
         android:key="CameraID"
         android:maxLength="1"
@@ -138,7 +138,6 @@
         android:title="摄像头设备编号(9:auto)" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue=""
         android:inputType="number"
         android:key="Car_ID"
         android:maxLength="16"
