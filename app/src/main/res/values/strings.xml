@@ -82,9 +82,9 @@
     <string name="path_password_eye_mask_visible">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through">M3.27,4.27 L19.74,20.74</string>
     <string name="pref_default_DIAL_NO">终端电话号码</string>
-    <string name="pref_default_DIAL_NO_d">13469986047</string>
+    <string name="pref_default_DIAL_NO_d">15070000001</string>
     <string name="pref_default_IMEI">IMEI</string>
-    <string name="pref_default_IMEI_d">100132001014011</string>
+    <string name="pref_default_IMEI_d">100221235053037</string>
     <string name="pref_default_KEMU">培训部分码</string>
     <string name="pref_default_KEMU_d">2</string>
     <string name="pref_default_MODEL">终端型号</string>
@@ -92,9 +92,9 @@
     <string name="pref_default_PERDRITYPE">准教车型</string>
     <string name="pref_default_PERDRITYPE_d">C1</string>
     <string name="pref_default_SN">终端出厂序列号</string>
-    <string name="pref_default_SN_d">1010486</string>
+    <string name="pref_default_SN_d">1001001</string>
     <string name="pref_default_VENDER_ID">制造商ID</string>
-    <string name="pref_default_VENDER_ID_d">ssung</string>
+    <string name="pref_default_VENDER_ID_d">ex-sun</string>
     <string name="pref_default_param0013">0x0013 主服务器地址，IP或域名</string>
     <string name="pref_default_param0013_d">221.235.53.37</string>
     <string name="pref_default_param0018">0x0018 服务器TCP端口</string>
@@ -104,7 +104,7 @@
     <string name="pref_default_param0082">0x0082 市县域ID</string>
     <string name="pref_default_param0082_d">00</string>
     <string name="pref_default_param0083">0x0083 车辆标识</string>
-    <string name="pref_default_param0083_d">京ARS35学</string>
+    <string name="pref_default_param0083_d">京A0031学</string>
     <string name="pref_header_EDUparam">计时终端应用参数设置</string>
     <string name="pref_header_OBDII">OBDII信息</string>
     <string name="pref_header_default">设备基本登录信息</string>

@@ -284,16 +284,7 @@ public class WriteSettingHelper {
         ConstantInfo.isEmbargo = WriteSettingHelper.getEMBARGO();
         ConstantInfo.embargoStr = WriteSettingHelper.getEMBARGOSTR();
 
-//        ConstantInfo.PIC_INTV_min = WriteSettingHelper.getPIC_INTV_min();
-//        ConstantInfo.UPLOAD_GBN = WriteSettingHelper.getUPLOAD_GBN();
-//        ConstantInfo.ADDMSG_YN = WriteSettingHelper.getADDMSG_YN();
-//        ConstantInfo.STOP_DELAY_TIME_min = WriteSettingHelper.getSTOP_DELAY_TIME_min();
-//        ConstantInfo.STOP_GNSS_UPLOAD_INTV_sec = WriteSettingHelper.getSTOP_GNSS_UPLOAD_INTV_sec();   //熄火后停止学时计时的延时时间, 单位: s
-//        ConstantInfo.STOP_COACH_DELAY_TIME_min = getSTOP_COACH_DELAY_TIME_min();    //熄火后教练自动登出的延时时间, 单位: min
-//        ConstantInfo.USER_CHK_TIME_min = getUSER_CHK_TIME_min();            //重新验证身份时间, 单位: min
-//        ConstantInfo.isCOACH_TRANS_YN = getCOACH_TRANS_YN();         //教练跨校教学
-//        ConstantInfo.isSTU_TRANS_YN = getSTU_TRANS_YN();           //学员跨校学习
-//        ConstantInfo.DUP_MSG_REJECT_INTV_sec = getDUP_MSG_REJECT_INTV_sec();      //响应平台同类消息时间间隔
+        MSG.getInstance().loadSetting1();
     }
 
     public static void set0501(HandMsgHelper.Class8501 class8501) {
@@ -311,18 +302,25 @@ public class WriteSettingHelper {
         } else {
             switch (class8501.parameterId) {
                 case 1:
+                    MSG.getInstance().setPIC_INTV_min(class8501.PIC_INTV_min);
                     break;
                 case 2:
+                    MSG.getInstance().setUPLOAD_GBN(class8501.UPLOAD_GBN);     //照片上传设置
                     break;
                 case 3:
+                    MSG.getInstance().setADDMSG_YN(class8501.ADDMSG_YN);                  //是否报读附加消息
                     break;
                 case 4:
+                    MSG.getInstance().setSTOP_DELAY_TIME_min(class8501.STOP_DELAY_TIME_min);     //熄火后停止学时计时的延时时间
                     break;
                 case 5:
+                    MSG.getInstance().setSTOP_GNSS_UPLOAD_INTV_sec(ByteUtil.byte2int(class8501.STOP_GNSS_UPLOAD_INTV_sec));            //熄火后GNSS数据包上传间隔
                     break;
                 case 6:
+                    MSG.getInstance().setSTOP_COACH_DELAY_TIME_min(ByteUtil.byte2int(class8501.STOP_COACH_DELAY_TIME_min));      //熄火后教练自动登出的延时时间
                     break;
                 case 7:
+                    MSG.getInstance().setUSER_CHK_TIME_min(ByteUtil.byte2int(class8501.USER_CHK_TIME_min));       //重新验证身份的时间
                     break;
             }
         }

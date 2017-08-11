@@ -67,8 +67,7 @@ public class TcpHelper {
         if (socketClient == null) {
             socketClient = new SocketClient();
         }
-//        __i__setupAddress(socketClient, ip, port, timeOut);
-        __i__setupAddress(socketClient, "221.235.53.37", "2346", timeOut);
+        __i__setupAddress(socketClient, ip, port, timeOut);
         __i__setupEncoding(socketClient);
         __i__setupConstantHeartBeat(socketClient);
         __i__setupVariableHeartBeat(socketClient);
@@ -419,16 +418,16 @@ public class TcpHelper {
         sendData(BodyHelper.make0501((byte) 0x01));
     }
 
-    public void send0503(byte parameter1,
-                         byte parameter2,
-                         byte parameter3,
-                         byte parameter4,
-                         byte parameter5,
+    public void send0503(int parameter1,
+                         int parameter2,
+                         int parameter3,
+                         int parameter4,
+                         int parameter5,
                          int parameter6,
                          int parameter7,
                          int parameter8,
-                         byte parameter9,
-                         byte parameter10,
+                         int parameter9,
+                         int parameter10,
                          int parameter11) {
         sendData(BodyHelper.make0503(parameter1,
                 parameter2,

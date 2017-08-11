@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
+import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.MessageBean;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
@@ -791,28 +792,28 @@ public class BodyHelper {
      * @param parameter11 响应平台同类消息时间间隔
      * @return
      */
-    public static byte[] make0503(byte parameter1,
-                                  byte parameter2,
-                                  byte parameter3,
-                                  byte parameter4,
-                                  byte parameter5,
+    public static byte[] make0503(int parameter1,
+                                  int parameter2,
+                                  int parameter3,
+                                  int parameter4,
+                                  int parameter5,
                                   int parameter6,
                                   int parameter7,
                                   int parameter8,
-                                  byte parameter9,
-                                  byte parameter10,
+                                  int parameter9,
+                                  int parameter10,
                                   int parameter11) {
 
-        byte[] resultBody = new byte[]{parameter1};            //定时拍照时间间隔
-        resultBody = ByteUtil.add(resultBody, parameter2);      //照片上传设置
-        resultBody = ByteUtil.add(resultBody, parameter3);      //是否报读附加消息
-        resultBody = ByteUtil.add(resultBody, parameter4);       //是否报读附加消息
-        resultBody = ByteUtil.add(resultBody, parameter5);           //熄火后停止学时计时的延时时间
+        byte[] resultBody = new byte[]{(byte) parameter1};            //定时拍照时间间隔
+        resultBody = ByteUtil.add(resultBody, (byte) parameter2);      //照片上传设置
+        resultBody = ByteUtil.add(resultBody, (byte) parameter3);      //是否报读附加消息
+        resultBody = ByteUtil.add(resultBody, (byte) parameter4);       //是否报读附加消息
+        resultBody = ByteUtil.add(resultBody, (byte) parameter5);           //熄火后停止学时计时的延时时间
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(parameter6));     //5	熄火后GNSS数据包上传间隔	WORD	单位：s，默认值3600，0表示不上传
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(parameter7));       //熄火后教练自动登出的延时时间
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(parameter8));           //重新验证身份时间
-        resultBody = ByteUtil.add(resultBody, parameter9);           //重新验证身份时间
-        resultBody = ByteUtil.add(resultBody, parameter10);           //重新验证身份时间
+        resultBody = ByteUtil.add(resultBody, (byte) parameter9);           //重新验证身份时间
+        resultBody = ByteUtil.add(resultBody, (byte) parameter10);           //重新验证身份时间
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(parameter11));           //重新验证身份时间
 
         resultBody = buildExMsg(id0503, 0, 1, 2, resultBody);
@@ -1050,7 +1051,7 @@ public class BodyHelper {
                                         break;
                                 }
                                 break;
-                            case "8102":
+                            case "8102":                //教练员登出
                                 HandMsgHelper.Class8102 class8102 = HandMsgHelper.getClass8102(messageBean.throughExpand.data);
                                 switch (Integer.valueOf(ByteUtil.bcdByte2bcdString(class8102.result))) {
                                     case 1:
@@ -1066,7 +1067,7 @@ public class BodyHelper {
                                         break;
                                 }
                                 break;
-                            case "8201":
+                            case "8201":                    //学员登录
                                 HandMsgHelper.Class8201 class8201 = HandMsgHelper.getClass8201(messageBean.throughExpand.data);
                                 Logger.d(class8201.toString());
                                 switch (class8201.result) {
@@ -1090,7 +1091,7 @@ public class BodyHelper {
                                         break;
                                 }
                                 break;
-                            case "8202":
+                            case "8202":                //学员登出
                                 HandMsgHelper.Class8202 class8202 = HandMsgHelper.getClass8202(messageBean.throughExpand.data);
                                 switch (class8202.result) {
                                     case 1:
@@ -1175,17 +1176,18 @@ public class BodyHelper {
                                 HandMsgHelper.Class8403 class8403 = HandMsgHelper.getClass8403(messageBean.throughExpand.data);
                                 break;
                             case "8503":            //A.1.1.1.1　查询计时终端应用参数
-//                                TcpHelper.getInstance().send0503((byte) 0x00,
-//                                        (byte) WriteSettingHelper.getPIC_INTV_min(),        //定时拍照时间间隔
-//                                        (byte) WriteSettingHelper.getUPLOAD_GBN(),      //照片上传设置
-//                                        (byte) WriteSettingHelper.getADDMSG_YN(),       //是否报读附加消息
-//                                        (byte) WriteSettingHelper.getSTOP_DELAY_TIME_min(),
-//                                        WriteSettingHelper.getSTOP_GNSS_UPLOAD_INTV_sec(),
-//                                        WriteSettingHelper.getSTOP_COACH_DELAY_TIME_min(),
-//                                        WriteSettingHelper.getUSER_CHK_TIME_min(),
-//                                        (byte) WriteSettingHelper.getCOACH_TRANS_YN(),
-//                                        (byte) WriteSettingHelper.getSTU_TRANS_YN(),
-//                                        WriteSettingHelper.getDUP_MSG_REJECT_INTV_sec());
+                                MSG.getInstance().loadSetting1();
+                                TcpHelper.getInstance().send0503((byte) 0x00,
+                                        ConstantInfo.PIC_INTV_min,        //定时拍照时间间隔
+                                        ConstantInfo.UPLOAD_GBN,      //照片上传设置
+                                        ConstantInfo.ADDMSG_YN,       //是否报读附加消息
+                                        ConstantInfo.STOP_DELAY_TIME_min,
+                                        ConstantInfo.STOP_GNSS_UPLOAD_INTV_sec,
+                                        ConstantInfo.STOP_COACH_DELAY_TIME_min,
+                                        ConstantInfo.USER_CHK_TIME_min,
+                                        ConstantInfo.COACH_TRANS_YN,
+                                        ConstantInfo.STU_TRANS_YN,
+                                        ConstantInfo.DUP_MSG_REJECT_INTV_sec);
                                 break;
                             default:
                                 break;

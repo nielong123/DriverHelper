@@ -55,6 +55,7 @@ public class Config {
         public final static String STUDY_CODE = "STUDY_CODE11";       //课堂ID
         public final static String EXAM_TYPE = "EXAM_TYPE";       //考试类型
         public final static String PROVINCE = "PROVINCE";       //省
+        public final static String DISTANCE = "DISTANCE";       //里程
         public final static String CITY = "CITY";       //省
         public final static String PLATFORMNUM = "platformNum";     //平台编号
         public final static String INSTITUTIONNUMBER = "institutionNumber";     //培训机构编号

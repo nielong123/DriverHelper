@@ -4,7 +4,7 @@
         android:capitalize="words"
         android:defaultValue="3"
         android:inputType="number"
-        android:key="param0080"
+        android:key="DISTANCE"
         android:maxLength="5"
         android:maxLines="1"
         android:selectAllOnFocus="true"
@@ -50,14 +50,14 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="0x0084 车牌颜色" />
-    <EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="1000"
-        android:inputType="number"
-        android:key="param0085"
-        android:maxLength="6"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="0x0085 车辆脉冲系数，车辆行驶1km距离过程中产生的脉冲信号个数" />
+    <!--<EditTextPreference-->
+        <!--android:capitalize="words"-->
+        <!--android:defaultValue="1000"-->
+        <!--android:inputType="number"-->
+        <!--android:key="param0085"-->
+        <!--android:maxLength="6"-->
+        <!--android:maxLines="1"-->
+        <!--android:selectAllOnFocus="true"-->
+        <!--android:singleLine="true"-->
+        <!--android:title="0x0085 车辆脉冲系数，车辆行驶1km距离过程中产生的脉冲信号个数" />-->
 </PreferenceScreen>

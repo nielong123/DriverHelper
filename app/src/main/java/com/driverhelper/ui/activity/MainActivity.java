@@ -240,7 +240,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     @Override
     public void initView() {
         initToolBar();
-        initCamera();
+//        initCamera();
         networksw.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 
