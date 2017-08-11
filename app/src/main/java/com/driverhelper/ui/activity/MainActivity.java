@@ -308,7 +308,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     public void initData() {
         context = this;
         this.ttsClient = new TextToSpeech(getApplicationContext(), this);
-        MSG.getInstance(this).loadSetting();
+        MSG.getInstance().loadSetting();
         WriteSettingHelper.loadRegistInfo();
     }
 
@@ -615,7 +615,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         }
         switch (requestCode) {
             case REQUEST_SETTING:
-                MSG.getInstance(this).loadSetting();
+                MSG.getInstance().loadSetting();
                 WriteSettingHelper.loadRegistInfo();
                 break;
         }

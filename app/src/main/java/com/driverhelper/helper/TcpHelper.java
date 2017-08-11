@@ -64,18 +64,17 @@ public class TcpHelper {
     }
 
     public SocketClient getLocalSocketClient(String ip, String port, int timeOut) {
-        if (this.socketClient == null) {
-            this.socketClient = new SocketClient();
+        if (socketClient == null) {
+            socketClient = new SocketClient();
         }
 //        __i__setupAddress(socketClient, ip, port, timeOut);
         __i__setupAddress(socketClient, "221.235.53.37", "2346", timeOut);
-//        __i__setupAddress(socketClient, "192.168.1.103", "2346", timeOut);
         __i__setupEncoding(socketClient);
         __i__setupConstantHeartBeat(socketClient);
         __i__setupVariableHeartBeat(socketClient);
         __i__setConnectStateCallBack(socketClient);
         __i__setReceiverCallBack(socketClient);
-        return this.socketClient;
+        return socketClient;
     }
 
     /* Private Methods */

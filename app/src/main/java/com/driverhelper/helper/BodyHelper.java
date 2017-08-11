@@ -1148,6 +1148,7 @@ public class BodyHelper {
                                 break;
                             case "8501":           //设置计时终端应用参数应答
                                 HandMsgHelper.Class8501 class8501 = HandMsgHelper.getClass8501(messageBean.throughExpand.data);
+                                Logger.w(class8501.toString());
                                 RxBus.getInstance().post(Config.Config_RxBus.RX_SETTING_0501, class8501);
                                 TcpHelper.getInstance().send0303();
                                 break;
@@ -1174,17 +1175,17 @@ public class BodyHelper {
                                 HandMsgHelper.Class8403 class8403 = HandMsgHelper.getClass8403(messageBean.throughExpand.data);
                                 break;
                             case "8503":            //A.1.1.1.1　查询计时终端应用参数
-                                TcpHelper.getInstance().send0503((byte) 0x00,
-                                        (byte) WriteSettingHelper.getPIC_INTV_min(),        //定时拍照时间间隔
-                                        (byte) WriteSettingHelper.getUPLOAD_GBN(),      //照片上传设置
-                                        (byte) WriteSettingHelper.getADDMSG_YN(),       //是否报读附加消息
-                                        (byte) WriteSettingHelper.getSTOP_DELAY_TIME_min(),
-                                        WriteSettingHelper.getSTOP_GNSS_UPLOAD_INTV_sec(),
-                                        WriteSettingHelper.getSTOP_COACH_DELAY_TIME_min(),
-                                        WriteSettingHelper.getUSER_CHK_TIME_min(),
-                                        (byte) WriteSettingHelper.getCOACH_TRANS_YN(),
-                                        (byte) WriteSettingHelper.getSTU_TRANS_YN(),
-                                        WriteSettingHelper.getDUP_MSG_REJECT_INTV_sec());
+//                                TcpHelper.getInstance().send0503((byte) 0x00,
+//                                        (byte) WriteSettingHelper.getPIC_INTV_min(),        //定时拍照时间间隔
+//                                        (byte) WriteSettingHelper.getUPLOAD_GBN(),      //照片上传设置
+//                                        (byte) WriteSettingHelper.getADDMSG_YN(),       //是否报读附加消息
+//                                        (byte) WriteSettingHelper.getSTOP_DELAY_TIME_min(),
+//                                        WriteSettingHelper.getSTOP_GNSS_UPLOAD_INTV_sec(),
+//                                        WriteSettingHelper.getSTOP_COACH_DELAY_TIME_min(),
+//                                        WriteSettingHelper.getUSER_CHK_TIME_min(),
+//                                        (byte) WriteSettingHelper.getCOACH_TRANS_YN(),
+//                                        (byte) WriteSettingHelper.getSTU_TRANS_YN(),
+//                                        WriteSettingHelper.getDUP_MSG_REJECT_INTV_sec());
                                 break;
                             default:
                                 break;

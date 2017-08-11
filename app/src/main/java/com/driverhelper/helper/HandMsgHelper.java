@@ -257,36 +257,55 @@ public final class HandMsgHelper {
     }
 
     public static class Class8501 {
+
         byte parameterId;           //参数id
-        byte cameraInterval;        //定时拍照间隔
-        byte photoUpDataSetting;        //照片上传设置
-        byte isReadOther;         //是否报读附加消息
-        byte flameoutDelay;         //4	熄火后停止学时计时的延时时间	BYTE	单位：min
-        byte[] flameoutGNSSDelay = new byte[2];     //熄火后GNSS数据包上传间隔
-        byte[] flameoutCoachLogoutTime = new byte[2];       //熄火后教练自动登出的延时时间
-        byte[] reloadIdentityTime = new byte[2];                    //重新验证身份时间
-        byte isCoachJumpSchool;                     //教练跨校教学  1.允许  2.no
-        byte isStdentJumpSchool;            //学员跨校学习
-        byte[] onCallMessageTime = new byte[2];           //响应平台同类消息时间间隔
+        byte PIC_INTV_min;        //定时拍照间隔
+        byte UPLOAD_GBN;        //照片上传设置
+        byte ADDMSG_YN;         //是否报读附加消息
+        byte STOP_DELAY_TIME_min;         //4	熄火后停止学时计时的延时时间	BYTE	单位：min
+        byte[] STOP_GNSS_UPLOAD_INTV_sec = new byte[2];     //熄火后GNSS数据包上传间隔
+        byte[] STOP_COACH_DELAY_TIME_min = new byte[2];       //熄火后教练自动登出的延时时间
+        byte[] USER_CHK_TIME_min = new byte[2];                    //重新验证身份时间
+        byte COACH_TRANS_YN;                     //教练跨校教学  1.允许  2.no
+        byte STU_TRANS_YN;            //学员跨校学习
+        byte[] DUP_MSG_REJECT_INTV_sec = new byte[2];           //响应平台同类消息时间间隔
+
+        @Override
+        public String toString() {
+            return "Class8501{" +
+                    "parameterId=" + parameterId +
+                    ", PIC_INTV_min=" + PIC_INTV_min +
+                    ", UPLOAD_GBN=" + UPLOAD_GBN +
+                    ", ADDMSG_YN=" + ADDMSG_YN +
+                    ", STOP_DELAY_TIME_min=" + STOP_DELAY_TIME_min +
+                    ", STOP_GNSS_UPLOAD_INTV_sec=" + Arrays.toString(STOP_GNSS_UPLOAD_INTV_sec) +
+                    ", STOP_COACH_DELAY_TIME_min=" + Arrays.toString(STOP_COACH_DELAY_TIME_min) +
+                    ", USER_CHK_TIME_min=" + Arrays.toString(USER_CHK_TIME_min) +
+                    ", COACH_TRANS_YN=" + COACH_TRANS_YN +
+                    ", STU_TRANS_YN=" + STU_TRANS_YN +
+                    ", DUP_MSG_REJECT_INTV_sec=" + Arrays.toString(DUP_MSG_REJECT_INTV_sec) +
+                    '}';
+        }
+
     }
 
     public static Class8501 getClass8501(byte[] data) {
         int index = 0;
         Class8501 class8501 = new Class8501();
         class8501.parameterId = data[index++];
-        class8501.cameraInterval = data[index++];
-        class8501.photoUpDataSetting = data[index++];
-        class8501.isReadOther = data[index++];
-        class8501.flameoutDelay = data[index++];
-        System.arraycopy(data, index, class8501.flameoutGNSSDelay, 0, class8501.flameoutGNSSDelay.length);
-        index += class8501.flameoutGNSSDelay.length;
-        System.arraycopy(data, index, class8501.flameoutCoachLogoutTime, 0, class8501.flameoutCoachLogoutTime.length);
-        index += class8501.flameoutCoachLogoutTime.length;
-        System.arraycopy(data, index, class8501.reloadIdentityTime, 0, class8501.reloadIdentityTime.length);
-        index += class8501.reloadIdentityTime.length;
-        class8501.isCoachJumpSchool = data[index++];
-        class8501.isStdentJumpSchool = data[index++];
-        System.arraycopy(data, index, class8501.onCallMessageTime, 0, class8501.onCallMessageTime.length);
+        class8501.PIC_INTV_min = data[index++];
+        class8501.UPLOAD_GBN = data[index++];
+        class8501.ADDMSG_YN = data[index++];
+        class8501.STOP_DELAY_TIME_min = data[index++];
+        System.arraycopy(data, index, class8501.STOP_GNSS_UPLOAD_INTV_sec, 0, class8501.STOP_GNSS_UPLOAD_INTV_sec.length);
+        index += class8501.STOP_GNSS_UPLOAD_INTV_sec.length;
+        System.arraycopy(data, index, class8501.STOP_COACH_DELAY_TIME_min, 0, class8501.STOP_COACH_DELAY_TIME_min.length);
+        index += class8501.STOP_COACH_DELAY_TIME_min.length;
+        System.arraycopy(data, index, class8501.USER_CHK_TIME_min, 0, class8501.USER_CHK_TIME_min.length);
+        index += class8501.USER_CHK_TIME_min.length;
+        class8501.COACH_TRANS_YN = data[index++];
+        class8501.STU_TRANS_YN = data[index++];
+        System.arraycopy(data, index, class8501.DUP_MSG_REJECT_INTV_sec, 0, class8501.DUP_MSG_REJECT_INTV_sec.length);
         return class8501;
     }
 

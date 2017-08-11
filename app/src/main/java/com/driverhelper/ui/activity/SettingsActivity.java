@@ -24,13 +24,13 @@ import java.util.List;
 
 import static com.driverhelper.config.Config.WriteSetting.CITY;
 import static com.driverhelper.config.Config.WriteSetting.IMEI;
+import static com.driverhelper.config.Config.WriteSetting.MODEL;
 import static com.driverhelper.config.Config.WriteSetting.TCP_IP;
 import static com.driverhelper.config.Config.WriteSetting.TCP_PORT;
 import static com.driverhelper.config.Config.WriteSetting.TERMINALPHONENUMBER;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_COLOR;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_NUMBER;
-import static com.driverhelper.config.ConstantInfo.MODEL;
-import static com.driverhelper.config.ConstantInfo.SN;
+import static com.driverhelper.config.Config.WriteSetting.SN;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 

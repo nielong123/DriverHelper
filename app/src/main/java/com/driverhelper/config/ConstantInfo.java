@@ -5,6 +5,8 @@ import com.driverhelper.helper.WriteSettingHelper;
 
 /**
  * Created by Administrator on 2017/6/6.
+ *
+ * 放的都是变量
  */
 
 public class ConstantInfo {
@@ -23,13 +25,13 @@ public class ConstantInfo {
      */
     public static byte[] makerID = {(byte) 0x48, (byte) 0x5a, (byte) 0x4C, (byte) 0x59, (byte) 0x54};
 
-    public static String SN ;
+    public static String SN;
 
     public static String IMEI = "100221235053037";
     public static String terminalPhoneNumber = "15070000001";    //终端手机号
     public static String vehicleColor;           //车辆颜色
     public static String vehicleNum;            //车牌号
-    public static String MODEL = "";            //终端型号
+    public static String MODEL ;            //终端型号
 
     public static byte[] requestWaterCode = new byte[2];      //应答流水号
     public static byte[] result = new byte[1];                  //结果
@@ -62,7 +64,7 @@ public class ConstantInfo {
     public static int STOP_GNSS_UPLOAD_INTV_sec;   //熄火后停止学时计时的延时时间, 单位: s
     public static int STOP_COACH_DELAY_TIME_min;    //熄火后教练自动登出的延时时间, 单位: min
     public static int USER_CHK_TIME_min;            //重新验证身份时间, 单位: min
-    public static int isCOACH_TRANS_YN;         //教练跨校教学
+    public static int COACH_TRANS_YN;         //教练跨校教学
     public static int isSTU_TRANS_YN;           //学员跨校学习
     public static int DUP_MSG_REJECT_INTV_sec;      //响应平台同类消息时间间隔
 
@@ -75,7 +77,7 @@ public class ConstantInfo {
         public static int finishedMileage;            //已完成的里程
     }
 
-    public static class ObdInfo{
+    public static class ObdInfo {
         public static int vehiclSspeed = 10;     //车速
         public static int speed = 20;        //发动机转速
         public static int distance = 15;         //距离
