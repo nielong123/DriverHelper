@@ -39,37 +39,132 @@ public final class HandMsgHelper {
         return class8101;
     }
 
-    static class Class8103 {
+    static public class Class8103 {
 
-        static class Setting {
+        public List<Setting> getSettingList() {
+            return settingList;
+        }
+
+        public void setSettingList(List<Setting> settingList) {
+            this.settingList = settingList;
+        }
+
+        public static class Setting {
             int id;
             byte parameterLength;
-            String parameter;
+            String strParameter;
+            byte[] byteParameter;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getStrParameter() {
+                return strParameter;
+            }
+
+            public void setStrParameter(String strParameter) {
+                this.strParameter = strParameter;
+            }
+
+            public byte[] getByteParameter() {
+                return byteParameter;
+            }
+
+            public void setByteParameter(byte[] byteParameter) {
+                this.byteParameter = byteParameter;
+            }
+
+            @Override
+            public String toString() {
+                return "Setting{" +
+                        "id=" + id +
+                        ", parameterLength=" + parameterLength +
+                        ", strParameter='" + strParameter + '\'' +
+                        ", byteParameter=" + Arrays.toString(byteParameter) +
+                        '}';
+            }
         }
 
         int totleNumber;
+
+        @Override
+        public String toString() {
+            return "Class8103{" +
+                    "totleNumber=" + totleNumber +
+                    ", partNumber=" + partNumber +
+                    ", settingList=" + settingList +
+                    '}';
+        }
+
         int partNumber;
         List<Setting> settingList = new ArrayList<>();
     }
 
     public static Class8103 getClass8103(byte[] data) {
 
+        ByteUtil.printHexString("data = ", data);
         Class8103 class8103 = new Class8103();
         class8103.totleNumber = data[0];
         class8103.partNumber = data[1];
-        byte[] data0 = new byte[data.length - 2];
-        System.arraycopy(data, 2, data0, 0, data0.length);
+        int index = 2;
         for (int i = 0; i < class8103.totleNumber; i++) {
             Class8103.Setting setting = new Class8103.Setting();
-            byte[] data1 = new byte[2];
-            System.arraycopy(data0, i, data1, 0, data1.length);
-            setting.id = ByteUtil.byte2int(data1);
-            setting.parameterLength = data0[i + 1];
-            int length = ByteUtil.byte2int(setting.parameterLength);
-            byte[] data2 = new byte[length];
-            System.arraycopy(data0, i + 3, data2, 0, length);
-            setting.parameter = ByteUtil.getString(data2);
+            byte[] data0 = new byte[4];
+            System.arraycopy(data, index, data0, 0, data0.length);
+            index += data0.length;
+            setting.id = ByteUtil.byte2int(data0);
+            ByteUtil.printHexString("data0 = ", data0);
+
+            setting.parameterLength = data[index++];
+            System.out.println("index1 = " + index);
+            System.out.println("setting.parameterLength = "
+                    + setting.parameterLength);
+            byte[] data1 = new byte[setting.parameterLength];
+            System.arraycopy(data, index, data1, 0, data1.length);
+            ByteUtil.printHexString("data1 = ", data1);
+            index += data1.length;
+            if (setting.id == (byte) 0x01 || setting.id == (byte) 0x02
+                    || setting.id == (byte) 0x03 || setting.id == (byte) 0x04
+                    || setting.id == (byte) 0x05 || setting.id == (byte) 0x06
+                    || setting.id == (byte) 0x07 || setting.id == (byte) 0x18
+                    || setting.id == (byte) 0x19 || setting.id == (byte) 0x20
+                    || setting.id == (byte) 0x21 || setting.id == (byte) 0x22
+                    || setting.id == (byte) 0x27 || setting.id == (byte) 0x28
+                    || setting.id == (byte) 0x29 || setting.id == (byte) 0x2C
+                    || setting.id == (byte) 0x2d || setting.id == (byte) 0x2E
+                    || setting.id == (byte) 0x2F || setting.id == (byte) 0x30
+                    || setting.id == (byte) 0x45 || setting.id == (byte) 0x46
+                    || setting.id == (byte) 0x47 || setting.id == (byte) 0x50
+                    || setting.id == (byte) 0x51 || setting.id == (byte) 0x52
+                    || setting.id == (byte) 0x53 || setting.id == (byte) 0x54
+                    || setting.id == (byte) 0x55 || setting.id == (byte) 0x56
+                    || setting.id == (byte) 0x57 || setting.id == (byte) 0x58
+                    || setting.id == (byte) 0x59 || setting.id == (byte) 0x5A
+                    || setting.id == (byte) 0x70 || setting.id == (byte) 0x71
+                    || setting.id == (byte) 0x72 || setting.id == (byte) 0x73
+                    || setting.id == (byte) 0x74 || setting.id == (byte) 0x80
+                    || setting.id == (byte) 0x81 || setting.id == (byte) 0x82
+                    || setting.id == (byte) 0x84) {
+                setting.byteParameter = data1;
+            }
+            if (setting.id == (byte) 0x010 || setting.id == (byte) 0x11
+                    || setting.id == (byte) 0x12 || setting.id == (byte) 0x13
+                    || setting.id == (byte) 0x14 || setting.id == (byte) 0x15
+                    || setting.id == (byte) 0x16 || setting.id == (byte) 0x17
+                    || setting.id == (byte) 0x40 || setting.id == (byte) 0x41
+                    || setting.id == (byte) 0x42 || setting.id == (byte) 0x43
+                    || setting.id == (byte) 0x44 || setting.id == (byte) 0x48
+                    || setting.id == (byte) 0x49 || setting.id == (byte) 0x83) {
+                setting.strParameter = ByteUtil.getString(data1);
+            }
+
             class8103.settingList.add(setting);
+            System.out.println("/*******************************/");
         }
         return class8103;
     }

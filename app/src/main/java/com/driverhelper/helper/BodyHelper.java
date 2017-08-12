@@ -414,7 +414,7 @@ public class BodyHelper {
             for (HandMsgHelper.Class8103.Setting setting : settingList) {
                 resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(setting.id));
                 resultBody = ByteUtil.add(resultBody, setting.parameterLength);
-                resultBody = ByteUtil.add(resultBody, setting.parameter.getBytes());
+//                resultBody = ByteUtil.add(resultBody, setting.parameter.getBytes());
             }
         }
         byte[] resultHead = makeHead(id0104, false, 0, 0, 0, resultBody.length); // 包头固定
@@ -1008,9 +1008,8 @@ public class BodyHelper {
 
                 case "8103":            //设置终端参数
                     HandMsgHelper.Class8103 class8103 = HandMsgHelper.getClass8103(messageBean.bodyBean);
-                    /*****
-                     *          设置
-                     */
+                    RxBus.getInstance().post(Config.Config_RxBus.RX_SETTING_8103, class8103);
+                    Log.w("class8103", class8103.toString());
                     break;
                 case "8104":
                     TcpHelper.getInstance().send0104();

@@ -388,6 +388,15 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 sendMessage(Config.TextInfoType.CLEARXUEYUAN);
             }
         });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8103, new Action1<HandMsgHelper.Class8103>() {
+            @Override
+            public void call(HandMsgHelper.Class8103 class8103) {
+                ttsClient.speak("收到设置终端参数请求", 1, null);
+                if (class8103.getSettingList() != null) {
+                    MSG.getInstance().setSettings(class8103.getSettingList());
+                }
+            }
+        });
         mRxManager.on(Config.Config_RxBus.RX_SETTING_EMBARGOSTATE, new Action1<HandMsgHelper.Class8502>() {
             @Override
             public void call(HandMsgHelper.Class8502 class8502) {

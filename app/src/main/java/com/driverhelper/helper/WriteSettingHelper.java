@@ -18,18 +18,6 @@ import static com.driverhelper.config.ConstantInfo.platformNum;
  */
 public class WriteSettingHelper {
 
-    /***
-     * 获取TCP的ip
-     * @return
-     */
-    public static String getTCP_IP() {
-        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.TCP_IP, null);
-    }
-
-    public static void setTCP_IP(String ip) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.TCP_IP, ip);
-    }
-
     /*****
      * 教练员编号
      * @return
@@ -40,42 +28,6 @@ public class WriteSettingHelper {
 
     public static void setCOACHNUM(String coachnum) {
         PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.COACHNUM, coachnum);
-    }
-
-    /***
-     * 获取TCP的端口信息
-     * @return
-     */
-    public static String getTCP_PORT() {
-        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.TCP_PORT, null);
-    }
-
-    public static void setTCP_PORT(String ip) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.TCP_PORT, ip);
-    }
-
-    /***
-     * 获取心跳包的间隔
-     * @return
-     */
-    public static String getHEART_SPACE() {
-        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.HEART_SPACE, null);
-    }
-
-    public static void setHEART_SPACE(String heartSpace) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.HEART_SPACE, heartSpace);
-    }
-
-    /*****
-     * 获取服务的URL
-     * @return
-     */
-    public static String getHTTP_URL() {
-        return PreferenceUtils.getInstance().getSettingStr(Config.WriteSetting.HTTP_URL, null);
-    }
-
-    public static void setHTTP_URL(String httpUrl) {
-        PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.HTTP_URL, httpUrl);
     }
 
     /***
@@ -261,6 +213,7 @@ public class WriteSettingHelper {
     public static void setEMBARGOSTR(String str) {
         PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EMBARGODSTR, str);
     }
+
 
 
     /***

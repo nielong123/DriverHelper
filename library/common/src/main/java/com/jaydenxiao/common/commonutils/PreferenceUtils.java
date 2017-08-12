@@ -10,10 +10,6 @@ import com.google.gson.Gson;
  */
 public class PreferenceUtils {
 
-    public static final String USERINFO = "userinfo";
-    public static final String REMEMBER = "REMEMBER";
-    public static final String AUTOLOGIN = "autoLogin";
-
     private static final String SettingFileName = "base_configPost";
     private SharedPreferences settings;
     private static PreferenceUtils mInstance;
