@@ -474,6 +474,38 @@ public final class MSG {
         sharePreferences.edit().putString(Config.WriteSetting.param0029, str).apply();
     }
 
+    public void getPARAM002C() {
+        ConstantInfo.param002C = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param002C, "25"));
+    }
+
+    public void setPARAM002C(String str) {
+        sharePreferences.edit().putString(Config.WriteSetting.param002C, str).apply();
+    }
+
+    public void getPARAM002D() {
+        ConstantInfo.param002D = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param002D, "25"));
+    }
+
+    public void setPARAM002D(String str) {
+        sharePreferences.edit().putString(Config.WriteSetting.param002D, str).apply();
+    }
+
+    public void getPARAM002E() {
+        ConstantInfo.param002E = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param002E, "25"));
+    }
+
+    public void setPARAM002E(String str) {
+        sharePreferences.edit().putString(Config.WriteSetting.param002E, str).apply();
+    }
+
+    public void getPARAM002F() {
+        ConstantInfo.param002F = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param002F, "25"));
+    }
+
+    public void setPARAM002F(String str) {
+        sharePreferences.edit().putString(Config.WriteSetting.param002F, str).apply();
+    }
+
 
     public void getPARAM0030() {
         ConstantInfo.param0030 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0030, "25"));

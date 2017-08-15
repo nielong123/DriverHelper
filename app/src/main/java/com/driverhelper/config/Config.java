@@ -34,7 +34,9 @@ public class Config {
         public final static String RX_STUDENT_LOGINOK = "RX_STUDENT_LOGINOK";           //学员员登录
         public final static String RX_STUDENT_LOGOUTOK = "RX_STUDENT_LOGOUTOK";           //学员登出
         public final static String RX_SETTING_EMBARGOSTATE = "RX_SETTING_EMBARGOSTATE";           //设置禁运状态
-        public final static String RX_SETTING_8103 = "RX_SETTING_8103";           //设置禁运状态
+        public final static String RX_SETTING_8103 = "RX_SETTING_8103";
+        public final static String RX_SETTING_8104 = "RX_SETTING_8104";
+        public final static String RX_SETTING_8106 = "RX_SETTING_8106";
         public final static String RX_SETTING_0501 = "RX_SETTING_0501";           //
     }
 
@@ -105,6 +107,10 @@ public class Config {
         public static final String param0027 = "param0027";
         public static final String param0028 = "param0028";
         public static final String param0029 = "param0029";
+        public static final String param002C = "param002C";
+        public static final String param002D = "param002D";
+        public static final String param002E = "param002E";
+        public static final String param002F = "param002F";
 
         public static final String param0030 = "param0030";
 

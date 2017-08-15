@@ -184,6 +184,25 @@ public final class HandMsgHelper {
     }
 
 
+    public static class Class8106 {
+        public byte totleNum;
+        public int waterCode;
+        public List<byte[]> idList = new ArrayList<>();
+    }
+
+
+    public static Class8106 getClass8106(byte[] data) {
+        Class8106 class8106 = new Class8106();
+        class8106.totleNum = data[0];
+        for (int i = 0; i < class8106.totleNum; i++) {
+            byte[] id = new byte[4];
+            System.arraycopy(data, i * 4 + 1, id, 0, id.length);
+            class8106.idList.add(id);
+        }
+        return class8106;
+    }
+
+
     public static class Class8201 {
         @Override
         public String toString() {

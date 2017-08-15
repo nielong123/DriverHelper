@@ -280,8 +280,22 @@ public class TcpHelper {
     }
 
 
-    public void send0104() {
-        BodyHelper.make0104(123, (byte) 0x01, null);
+    /****
+     * 终端消息查询
+     * @param id        对应查询的消息id'
+     * @param idList
+     */
+    public void send0104(int id, List<byte[]> idList) {
+        BodyHelper.make0104(id, idList);
+    }
+
+    /****
+     * 终端消息查询
+     * @param id        对应查询的消息id'
+     * @param idList
+     */
+    public void sendAll0104(int id) {
+        BodyHelper.makeAll0104(id);
     }
 
     /***

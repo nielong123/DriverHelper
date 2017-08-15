@@ -97,6 +97,10 @@ public class ConstantInfo {
     public static int param0027;
     public static int param0028;
     public static int param0029;
+    public static int param002C;
+    public static int param002D;
+    public static int param002E;
+    public static int param002F;
 
     public static int param0030;
 

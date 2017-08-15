@@ -27,7 +27,7 @@ public class MessageBean {
         public String messageAttribute;         //消息属性
         public String benAttribute;             // * 二进制的消息属性
         public String phoneNumber;          //电话号码
-        public String waterCode;            // * 流水号
+        public int waterCode;            // * 流水号
         public int isPart;              // * 是否分包
         public EncapsulationInfo encapsulationInfo = new EncapsulationInfo();     //有分包的时候才有这个
         public int bodyLength;              // * 消息体长度

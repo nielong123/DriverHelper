@@ -58,6 +58,7 @@ import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -416,6 +417,20 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 embargoStr = class8502.data;
                 WriteSettingHelper.setEMBARGO(isEmbargo);
                 WriteSettingHelper.setEMBARGOSTR(embargoStr);
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8106, new Action1<HandMsgHelper.Class8106>() {
+            @Override
+            public void call(HandMsgHelper.Class8106 class8106) {
+                ttsClient.speak("收到终端查询请求", 1, null);
+                TcpHelper.getInstance().send0104(class8106.waterCode, class8106.idList);            //8106和8104都是返回0104,区别在于8106返回所有，8104返回查询指定的
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8104, new Action1<Integer>() {
+            @Override
+            public void call(Integer waterId) {
+                ttsClient.speak("收到查询终端所有参数请求", 1, null);
+                TcpHelper.getInstance().sendAll0104(waterId);            //8106和8104都是返回0104,区别在于8106返回所有，8104返回查询指定的
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_SETTING_0501, new Action1<HandMsgHelper.Class8501>() {

@@ -640,6 +640,11 @@ public class ByteUtil {
         byte[] data1 = new byte[2];         //消息体属性
         System.arraycopy(data, 3, data1, 0, 2);
         messageBean.headBean.messageAttribute = ByteUtil.bcdByte2bcdString(data1);
+        byte[] data2 = new byte[8];
+        byte[] data3 = new byte[2];
+        System.arraycopy(data, 13, data3, 0, data3.length);
+        messageBean.headBean.waterCode = ByteUtil.byte2int(data3);
+        Log.e("messageBean", "messageBean.headBean.waterCode = " + messageBean.headBean.waterCode);
         messageBean.headBean.benAttribute = autoAddZeroByLength(hexStringToBinary(messageBean.headBean.messageAttribute), 10);      //由消息体得到二进制的消息体
         messageBean.headBean.bodyLength = Integer.valueOf(binString2DexString(messageBean.headBean.benAttribute.substring(6, messageBean.headBean.benAttribute.length())));
         messageBean.headBean.isPart = Integer.valueOf(messageBean.headBean.benAttribute.substring(2, 3));
