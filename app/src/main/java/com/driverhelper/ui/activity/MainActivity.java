@@ -224,9 +224,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         }
     };
 
-    void test() {
-    }
-
 
     @Override
     public int getLayoutId() {
@@ -309,8 +306,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     public void initData() {
         context = this;
         this.ttsClient = new TextToSpeech(getApplicationContext(), this);
-        MSG.getInstance().loadSetting();
-        WriteSettingHelper.loadRegistInfo();
     }
 
     @Override
@@ -541,9 +536,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 case R.id.textViewThisTime:
                     break;
                 case R.id.surfaceView:
-                    getPhoto();
-//                if (!CamStatOK)
-//                    resetCam();
+                    test();
                     break;
             }
         } else {
@@ -825,8 +818,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     }
 
 
-    private void getPhoto() {
-
+    private void test() {
+        MSG.getInstance().getPARAM0001();
     }
 }
 

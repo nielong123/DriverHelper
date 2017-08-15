@@ -76,7 +76,7 @@ public class ConstantInfo {
     public static int param0006;
     public static int param0007;
 
-    public static int param0010;
+    public static String param0010;
     public static int param0011;
     public static int param0012;
     public static int param0013;

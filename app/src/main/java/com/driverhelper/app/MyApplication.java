@@ -10,6 +10,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.gen.DaoMaster;
 import com.driverhelper.beans.gen.DaoSession;
 import com.driverhelper.config.Config;
@@ -62,6 +63,7 @@ public class MyApplication extends BaseApplication {
         setDatabase();
         initLog();
         initServer();
+        initSetting();
     }
 
     void initData() {
@@ -114,6 +116,11 @@ public class MyApplication extends BaseApplication {
         Logger.init("Server");
     }
 
+    void initSetting() {
+        MSG.getInstance().loadSetting();
+        MSG.getInstance().loadSetting1();
+    }
+
     @Override
     public void onTerminate() {
         super.onTerminate();
@@ -164,7 +171,7 @@ public class MyApplication extends BaseApplication {
                 MyApplication.getInstance().direction = amapLocation.getBearing();
                 MyApplication.getInstance().timeGPS = amapLocation.getTime();
                 MyApplication.getInstance().isLocation = true;
-                if(Config.isStudentLoginOK){
+                if (Config.isStudentLoginOK) {
                     DbHelper.getInstance().addGpsInfo(null, speedGPS, direction, lat, lon, timeGPS);
                 }
                 RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_OK, "");

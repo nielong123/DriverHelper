@@ -292,7 +292,6 @@ public class TcpHelper {
     /****
      * 终端消息查询
      * @param id        对应查询的消息id'
-     * @param idList
      */
     public void sendAll0104(int id) {
         BodyHelper.makeAll0104(id);

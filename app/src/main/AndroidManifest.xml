@@ -93,7 +93,7 @@
             android:name="com.amap.api.v2.apikey"
             android:value="dae401cacbd86ebf0871ce5d43e8461f" />
 
-        <activity android:name=".ui.activity.UsbTestActivity"></activity>
+        <activity android:name=".ui.activity.UsbTestActivity"/>
     </application>
 
 </manifest>

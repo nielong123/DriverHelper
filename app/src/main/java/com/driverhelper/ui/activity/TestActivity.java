@@ -1,5 +1,6 @@
 package com.driverhelper.ui.activity;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -10,8 +11,10 @@ import android.widget.Toast;
 
 import com.driverhelper.R;
 import com.driverhelper.app.MyApplication;
+import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.db.GpsInfo;
 import com.driverhelper.beans.db.StudyInfo;
+import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.AssetsHelper;
 import com.driverhelper.helper.DbHelper;
@@ -115,11 +118,16 @@ public class TestActivity extends SerialPortActivity {
 
     @OnClick(R.id.load)
     public void onClick() {
-        Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(this, "123456.jpg");
-        byte[] data = ByteUtil.bitmap2Bytes(bitmap);
-//        bitmap.recycle();
-        String path = PhotoHelper.saveBitmap(this, data);
-        Bitmap bt = PhotoHelper.loadBitmap(path);
-        imageView1.setImageBitmap(bt);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.driverhelper1_preferences",MODE_PRIVATE);
+        Log.e("123",sharedPreferences.getString(Config.WriteSetting.PROVINCE,""));
+//        MSG.getInstance().setPARAM0001("1111");
+//        MSG.getInstance().getPARAM0001();
+//        Log.d("123",ConstantInfo.param0001 + "");
+//        Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(this, "123456.jpg");
+//        byte[] data = ByteUtil.bitmap2Bytes(bitmap);
+////        bitmap.recycle();
+//        String path = PhotoHelper.saveBitmap(this, data);
+//        Bitmap bt = PhotoHelper.loadBitmap(path);
+//        imageView1.setImageBitmap(bt);
     }
 }

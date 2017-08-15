@@ -172,12 +172,12 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\drawable-xxhdpi-v4\\abc_ic_star_half_black_36dp.png"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\drawable-xxhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\abc_list_divider_mtrl_alpha.9.png",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\drawable-xxhdpi-v4\\abc_list_divider_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\drawable-xxhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\abc_cab_background_top_mtrl_alpha.9.png",

@@ -2,6 +2,7 @@ package com.driverhelper.ui.activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.driverhelper.R;
@@ -90,7 +92,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     protected boolean isValidFragment(String paramString) {
-        return (PreferenceFragment.class.getName().equals(paramString)) || (DefaultPreferenceFragment.class.getName().equals(paramString)) || (EDUParamPreferenceFragment.class.getName().equals(paramString)) || (Param1PreferenceFragment.class.getName().equals(paramString)) || (Param2PreferenceFragment.class.getName().equals(paramString)) || (Param3PreferenceFragment.class.getName().equals(paramString)) || (Param4PreferenceFragment.class.getName().equals(paramString)) || (Param5PreferenceFragment.class.getName().equals(paramString)) || (Param6PreferenceFragment.class.getName().equals(paramString)) || (Param7PreferenceFragment.class.getName().equals(paramString));
+        return ((DefaultPreferenceFragment.class.getName().equals(paramString)) || (Param1PreferenceFragment.class.getName().equals(paramString)));
+//        return (PreferenceFragment.class.getName().equals(paramString)) || (DefaultPreferenceFragment.class.getName().equals(paramString)) || (EDUParamPreferenceFragment.class.getName().equals(paramString)) || (Param1PreferenceFragment.class.getName().equals(paramString)) || (Param2PreferenceFragment.class.getName().equals(paramString)) || (Param3PreferenceFragment.class.getName().equals(paramString)) || (Param4PreferenceFragment.class.getName().equals(paramString)) || (Param5PreferenceFragment.class.getName().equals(paramString)) || (Param6PreferenceFragment.class.getName().equals(paramString)) || (Param7PreferenceFragment.class.getName().equals(paramString));
     }
 
     @Override
@@ -156,24 +159,25 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
+    //
     @TargetApi(11)
-    public static class EDUParamPreferenceFragment extends PreferenceFragment {
+    public static class EDUParamPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         @Override
         public void onCreate(Bundle paramBundle) {
             super.onCreate(paramBundle);
             addPreferencesFromResource(R.xml.pref_eduparam);
             setHasOptionsMenu(true);
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("PIC_INTV_min"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("UPLOAD_GBN"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("ADDMSG_YN"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("STOP_DELAY_TIME_min"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("STOP_GNSS_UPLOAD_INTV_sec"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("STOP_COACH_DELAY_TIME_min"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("USER_CHK_TIME_min"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("COACH_TRANS_YN"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("STU_TRANS_YN"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("DUP_MSG_REJECT_INTV_sec"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("PIC_INTV_min"));
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("UPLOAD_GBN"));
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("ADDMSG_YN"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("STOP_DELAY_TIME_min"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("STOP_GNSS_UPLOAD_INTV_sec"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("STOP_COACH_DELAY_TIME_min"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("USER_CHK_TIME_min"));
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("COACH_TRANS_YN"));
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("STU_TRANS_YN"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("DUP_MSG_REJECT_INTV_sec"));
         }
 
         public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
@@ -182,6 +186,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(paramMenuItem);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+//if(sharedPreferences.){
+//
+//}
         }
     }
 
@@ -211,154 +222,154 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(paramMenuItem);
         }
     }
-
-    @TargetApi(11)
-    public static class Param2PreferenceFragment extends PreferenceFragment {
-
-        @Override
-        public void onCreate(Bundle paramBundle) {
-            super.onCreate(paramBundle);
-            addPreferencesFromResource(R.xml.pref_param2);
-            setHasOptionsMenu(true);
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0010"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0011"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0012"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TCP_IP));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0014"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0015"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0016"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0017"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TCP_PORT));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0019"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
-            if (paramMenuItem.getItemId() == 16908332) {
-                getActivity().onBackPressed();
-                return true;
-            }
-            return super.onOptionsItemSelected(paramMenuItem);
-        }
-    }
-
-    @TargetApi(11)
-    public static class Param3PreferenceFragment extends PreferenceFragment {
-
-        @Override
-        public void onCreate(Bundle paramBundle) {
-            super.onCreate(paramBundle);
-            addPreferencesFromResource(R.xml.pref_param3);
-            setHasOptionsMenu(true);
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0020"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0021"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0022"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0027"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0028"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0029"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param002c"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param002d"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param002e"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param002f"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0030"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
-            if (paramMenuItem.getItemId() == 16908332) {
-                getActivity().onBackPressed();
-                return true;
-            }
-            return super.onOptionsItemSelected(paramMenuItem);
-        }
-    }
-
-    @TargetApi(11)
-    public static class Param4PreferenceFragment extends PreferenceFragment {
-
-        @Override
-        public void onCreate(Bundle paramBundle) {
-            super.onCreate(paramBundle);
-            addPreferencesFromResource(R.xml.pref_param4);
-            setHasOptionsMenu(true);
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0040"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0041"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0042"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0043"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0044"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0045"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0046"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0047"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0048"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0049"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
-            if (paramMenuItem.getItemId() == 16908332) {
-                getActivity().onBackPressed();
-                return true;
-            }
-            return super.onOptionsItemSelected(paramMenuItem);
-        }
-    }
-
-    @TargetApi(11)
-    public static class Param5PreferenceFragment extends PreferenceFragment {
-
-        @Override
-        public void onCreate(Bundle paramBundle) {
-            super.onCreate(paramBundle);
-            addPreferencesFromResource(R.xml.pref_param5);
-            setHasOptionsMenu(true);
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0050"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0051"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0052"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0053"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0054"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0055"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0056"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0057"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0058"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0059"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param005a"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
-            if (paramMenuItem.getItemId() == 16908332) {
-                getActivity().onBackPressed();
-                return true;
-            }
-            return super.onOptionsItemSelected(paramMenuItem);
-        }
-    }
-
-    @TargetApi(11)
-    public static class Param6PreferenceFragment extends PreferenceFragment {
-
-        @Override
-        public void onCreate(Bundle paramBundle) {
-            super.onCreate(paramBundle);
-            addPreferencesFromResource(R.xml.pref_param6);
-            setHasOptionsMenu(true);
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0070"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0071"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0072"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0073"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0074"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
-            if (paramMenuItem.getItemId() == 16908332) {
-                getActivity().onBackPressed();
-                return true;
-            }
-            return super.onOptionsItemSelected(paramMenuItem);
-        }
-    }
-
+//
+//    @TargetApi(11)
+//    public static class Param2PreferenceFragment extends PreferenceFragment {
+//
+//        @Override
+//        public void onCreate(Bundle paramBundle) {
+//            super.onCreate(paramBundle);
+//            addPreferencesFromResource(R.xml.pref_param2);
+//            setHasOptionsMenu(true);
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0010"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0011"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0012"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TCP_IP));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0014"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0015"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0016"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0017"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TCP_PORT));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0019"));
+//        }
+//
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
+//            if (paramMenuItem.getItemId() == 16908332) {
+//                getActivity().onBackPressed();
+//                return true;
+//            }
+//            return super.onOptionsItemSelected(paramMenuItem);
+//        }
+//    }
+//
+//    @TargetApi(11)
+//    public static class Param3PreferenceFragment extends PreferenceFragment {
+//
+//        @Override
+//        public void onCreate(Bundle paramBundle) {
+//            super.onCreate(paramBundle);
+//            addPreferencesFromResource(R.xml.pref_param3);
+//            setHasOptionsMenu(true);
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0020"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0021"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0022"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0027"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0028"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0029"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param002c"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param002d"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param002e"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param002f"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0030"));
+//        }
+//
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
+//            if (paramMenuItem.getItemId() == 16908332) {
+//                getActivity().onBackPressed();
+//                return true;
+//            }
+//            return super.onOptionsItemSelected(paramMenuItem);
+//        }
+//    }
+//
+//    @TargetApi(11)
+//    public static class Param4PreferenceFragment extends PreferenceFragment {
+//
+//        @Override
+//        public void onCreate(Bundle paramBundle) {
+//            super.onCreate(paramBundle);
+//            addPreferencesFromResource(R.xml.pref_param4);
+//            setHasOptionsMenu(true);
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0040"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0041"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0042"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0043"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0044"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0045"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0046"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0047"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0048"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0049"));
+//        }
+//
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
+//            if (paramMenuItem.getItemId() == 16908332) {
+//                getActivity().onBackPressed();
+//                return true;
+//            }
+//            return super.onOptionsItemSelected(paramMenuItem);
+//        }
+//    }
+//
+//    @TargetApi(11)
+//    public static class Param5PreferenceFragment extends PreferenceFragment {
+//
+//        @Override
+//        public void onCreate(Bundle paramBundle) {
+//            super.onCreate(paramBundle);
+//            addPreferencesFromResource(R.xml.pref_param5);
+//            setHasOptionsMenu(true);
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0050"));
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0051"));
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0052"));
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0053"));
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("param0054"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0055"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0056"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0057"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0058"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0059"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param005a"));
+//        }
+//
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
+//            if (paramMenuItem.getItemId() == 16908332) {
+//                getActivity().onBackPressed();
+//                return true;
+//            }
+//            return super.onOptionsItemSelected(paramMenuItem);
+//        }
+//    }
+//
+//    @TargetApi(11)
+//    public static class Param6PreferenceFragment extends PreferenceFragment {
+//
+//        @Override
+//        public void onCreate(Bundle paramBundle) {
+//            super.onCreate(paramBundle);
+//            addPreferencesFromResource(R.xml.pref_param6);
+//            setHasOptionsMenu(true);
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0070"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0071"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0072"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0073"));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0074"));
+//        }
+//
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
+//            if (paramMenuItem.getItemId() == 16908332) {
+//                getActivity().onBackPressed();
+//                return true;
+//            }
+//            return super.onOptionsItemSelected(paramMenuItem);
+//        }
+//    }
+//
     @TargetApi(11)
     public static class Param7PreferenceFragment extends PreferenceFragment {
 

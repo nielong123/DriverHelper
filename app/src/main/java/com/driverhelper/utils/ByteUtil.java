@@ -67,7 +67,7 @@ public class ByteUtil {
                 }
                 printResult = printResult + hex.toUpperCase() + " ";
             }
-            Log.d(TAG, "recrive data = " + printResult);
+            Log.e(TAG, "recrive data = " + printResult);
         }
     }
 

@@ -1,8 +1,11 @@
 package com.driverhelper.beans;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.Config;
@@ -15,6 +18,7 @@ import com.jaydenxiao.common.commonutils.PreferenceUtils;
 
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_COLOR;
 
 /**
@@ -31,7 +35,8 @@ public final class MSG {
 
 
     public MSG() {
-        this.sharePreferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+//        this.sharePreferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+        this.sharePreferences = MyApplication.getInstance().getSharedPreferences("com.driverhelper1_preferences", MODE_PRIVATE);
     }
 
     public static MSG getInstance() {
@@ -264,6 +269,8 @@ public final class MSG {
 
     public void setPARAM0001(String str) {
         sharePreferences.edit().putString(Config.WriteSetting.PARAM0001, str).apply();
+        getPARAM0001();
+        Log.e("getPARAM0001", "getPARAM0001 = " + ConstantInfo.param0001);
     }
 
     public void getPARAM0002() {
@@ -315,7 +322,7 @@ public final class MSG {
     }
 
     public void getPARAM0010() {
-        ConstantInfo.param0010 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0010, "15"));
+        ConstantInfo.param0010 = sharePreferences.getString(Config.WriteSetting.param0010, "hello");
     }
 
     public void setPARAM0010(String str) {
@@ -797,6 +804,77 @@ public final class MSG {
         getCOACH_TRANS_YN();         //教练跨校教学
         getSTU_TRANS_YN();           //学员跨校学习
         getDUP_MSG_REJECT_INTV_sec();      //响应平台同类消息时间间隔
+        getPARAM0001();
+        getPARAM0002();
+        getPARAM0003();
+        getPARAM0004();
+        getPARAM0005();
+        getPARAM0006();
+        getPARAM0007();
+
+        getPARAM0010();
+        getPARAM0011();
+        getPARAM0012();
+        getPARAM0013();
+        getPARAM0014();
+        getPARAM0015();
+        getPARAM0016();
+        getPARAM0017();
+        getPARAM0018();
+        getPARAM0019();
+
+        getPARAM0020();
+        getPARAM0021();
+        getPARAM0022();
+        getPARAM0023();
+        getPARAM0024();
+        getPARAM0025();
+        getPARAM0026();
+        getPARAM0027();
+        getPARAM0028();
+        getPARAM0029();
+        getPARAM002C();
+        getPARAM002D();
+        getPARAM002E();
+        getPARAM002F();
+
+        getPARAM0030();
+
+        getPARAM0040();
+        getPARAM0041();
+        getPARAM0042();
+        getPARAM0043();
+        getPARAM0044();
+        getPARAM0045();
+        getPARAM0046();
+        getPARAM0047();
+        getPARAM0048();
+        getPARAM0049();
+
+        getPARAM0050();
+        getPARAM0051();
+        getPARAM0052();
+        getPARAM0053();
+        getPARAM0054();
+        getPARAM0055();
+        getPARAM0056();
+        getPARAM0057();
+        getPARAM0058();
+        getPARAM0059();
+        getPARAM005A();
+
+        getPARAM0070();
+        getPARAM0071();
+        getPARAM0072();
+        getPARAM0073();
+        getPARAM0074();
+
+        getPARAM0080();
+        getPARAM0081();
+        getPARAM0082();
+        getPARAM0083();
+        getPARAM0084();
+        getPARAM0085();
     }
 
     public void setSettings(List<HandMsgHelper.Class8103.Setting> settings) {

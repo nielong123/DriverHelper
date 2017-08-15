@@ -171,20 +171,6 @@ public class BodyHelper {
         return new byte[]{(byte) 0x00};
     }
 
-//    /****
-//     * 是否有分包项，和前面的“是否分包”用相同的参数
-//     *
-//     * @param isPackage
-//     * @return
-//     */
-//    public static byte[] getPackageItem(boolean isPackage) {
-//        if (!isPackage) {
-//            return new byte[0];
-//        } else {
-//            return new byte[]{(byte) 0x00, (byte) 0x01};
-//        }
-//    }
-
     /*************************************************************************************/
     /***
      * 各功能的组包,终端注册
@@ -724,6 +710,12 @@ public class BodyHelper {
                     break;
 
 
+                case (byte) 0x10:
+                    MSG.getInstance().getPARAM0010();
+                    resultBody = ByteUtil.add(resultBody, id);
+                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0010.getBytes().length, 1));
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.param0010.getBytes());
+                    break;
                 case (byte) 0x11:
                     MSG.getInstance().getPARAM0011();
                     resultBody = ByteUtil.add(resultBody, id);
@@ -1062,7 +1054,7 @@ public class BodyHelper {
         result = ByteUtil.addEND(result); // 添加尾部
         result = ByteUtil.checkMark(result);
 
-        ByteUtil.printHexString(result);
+        ByteUtil.printHexString("0104 = ",result);
         return result;
     }
 
