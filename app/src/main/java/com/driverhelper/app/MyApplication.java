@@ -15,6 +15,7 @@ import com.driverhelper.beans.gen.DaoMaster;
 import com.driverhelper.beans.gen.DaoSession;
 import com.driverhelper.config.Config;
 import com.driverhelper.helper.DbHelper;
+import com.driverhelper.helper.WriteSettingHelper;
 import com.jaydenxiao.common.baseapp.BaseApplication;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.PreferenceUtils;
@@ -70,6 +71,7 @@ public class MyApplication extends BaseApplication {
         myApp = this;
         mApplicationContext = getApplicationContext();
         PreferenceUtils.init(this);
+        getIsFirst();
         initLocation();
     }
 
@@ -119,6 +121,13 @@ public class MyApplication extends BaseApplication {
     void initSetting() {
         MSG.getInstance().loadSetting();
         MSG.getInstance().loadSetting1();
+        WriteSettingHelper.loadRegistInfo();
+    }
+
+    void getIsFirst() {
+        if (WriteSettingHelper.getISFIRST()) {
+            WriteSettingHelper.setISFIRST(false);
+        }
     }
 
     @Override

@@ -633,6 +633,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         switch (requestCode) {
             case REQUEST_SETTING:
                 MSG.getInstance().loadSetting();
+                MSG.getInstance().loadSetting1();
                 WriteSettingHelper.loadRegistInfo();
                 break;
         }

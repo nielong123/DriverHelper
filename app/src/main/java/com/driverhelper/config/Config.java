@@ -78,13 +78,13 @@ public class Config {
         public final static String STU_TRANS_YN = "STU_TRANS_YN";   //学员跨校学习
         public final static String DUP_MSG_REJECT_INTV_sec = "DUP_MSG_REJECT_INTV_sec";     //响应平台同类消息时间间隔
 
-        public final static String PARAM0001 = "PARAM0001";
-        public final static String PARAM0002 = "PARAM0002";
-        public final static String PARAM0003 = "PARAM0003";
-        public final static String PARAM0004 = "PARAM0004";
-        public final static String PARAM0005 = "PARAM0005";
-        public final static String PARAM0006 = "PARAM0006";
-        public final static String PARAM0007 = "PARAM0007";
+        public final static String PARAM0001 = "param0001";
+        public final static String PARAM0002 = "param0002";
+        public final static String PARAM0003 = "param0003";
+        public final static String PARAM0004 = "param0004";
+        public final static String PARAM0005 = "param0005";
+        public final static String PARAM0006 = "param0006";
+        public final static String PARAM0007 = "param0007";
 
         public final static String param0010 = "param0010";
         public final static String param0011 = "param0011";

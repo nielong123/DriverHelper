@@ -35,8 +35,8 @@ public final class MSG {
 
 
     public MSG() {
-//        this.sharePreferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
-        this.sharePreferences = MyApplication.getInstance().getSharedPreferences("com.driverhelper1_preferences", MODE_PRIVATE);
+        this.sharePreferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+//        this.sharePreferences = MyApplication.getInstance().getSharedPreferences("com.driverhelper1_preferences", MODE_PRIVATE);
     }
 
     public static MSG getInstance() {

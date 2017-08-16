@@ -18,6 +18,15 @@ import static com.driverhelper.config.ConstantInfo.platformNum;
  */
 public class WriteSettingHelper {
 
+
+    public static boolean getISFIRST() {
+        return PreferenceUtils.getInstance().getSettingBool(Config.WriteSetting.ISFIRST, true);
+    }
+
+    public static void setISFIRST(Boolean ISFIRST) {
+        PreferenceUtils.getInstance().setSettingBoolean(Config.WriteSetting.ISFIRST, ISFIRST);
+    }
+
     /*****
      * 教练员编号
      * @return
@@ -213,7 +222,6 @@ public class WriteSettingHelper {
     public static void setEMBARGOSTR(String str) {
         PreferenceUtils.getInstance().setSettingString(Config.WriteSetting.EMBARGODSTR, str);
     }
-
 
 
     /***
