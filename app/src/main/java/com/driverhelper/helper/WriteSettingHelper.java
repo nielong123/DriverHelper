@@ -128,11 +128,8 @@ public class WriteSettingHelper {
      * @return
      */
     public static byte[] getPLATFORMNUM() {
-        byte[] data = PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.PLATFORMNUM);
-        if (data == null) {
-            return new byte[platformNum.length];
-        }
-        return data;
+
+        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.PLATFORMNUM);
     }
 
     public static void setPLATFORMNUM(byte[] examSubjects) {
@@ -144,11 +141,7 @@ public class WriteSettingHelper {
      * @return
      */
     public static byte[] getINSTITUTIONNUMBER() {
-        byte[] data = PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.INSTITUTIONNUMBER);
-        if (data == null) {
-            return new byte[ConstantInfo.institutionNumber.length];
-        }
-        return data;
+        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.INSTITUTIONNUMBER);
     }
 
     public static void setINSTITUTIONNUMBER(byte[] institutionnumber) {
@@ -160,11 +153,7 @@ public class WriteSettingHelper {
      * @return
      */
     public static byte[] getTERMINALNUM() {
-        byte[] data = PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.TERMINALNUM);
-        if (data == null) {
-            return new byte[ConstantInfo.terminalNum.length];
-        }
-        return data;
+        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.TERMINALNUM);
     }
 
     public static void setTERMINALNUM(byte[] terminalnum) {
@@ -176,11 +165,7 @@ public class WriteSettingHelper {
      * @return
      */
     public static byte[] getCERTIFICATEPASSWORD() {
-        byte[] data = PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.CERTIFICATEPASSWORD);
-        if (data == null) {
-            return new byte[ConstantInfo.certificatePassword.length];
-        }
-        return data;
+        return PreferenceUtils.getInstance().getSettingBytes(Config.WriteSetting.CERTIFICATEPASSWORD);
     }
 
     public static void setCERTIFICATEPASSWORD(byte[] certificatePassword) {
@@ -244,8 +229,6 @@ public class WriteSettingHelper {
         ConstantInfo.coachId = WriteSettingHelper.getCOACHNUM();
         ConstantInfo.isEmbargo = WriteSettingHelper.getEMBARGO();
         ConstantInfo.embargoStr = WriteSettingHelper.getEMBARGOSTR();
-
-        MSG.getInstance().loadSetting1();
     }
 
     public static void set0501(HandMsgHelper.Class8501 class8501) {

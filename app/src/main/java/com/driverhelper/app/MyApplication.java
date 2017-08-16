@@ -65,7 +65,6 @@ public class MyApplication extends BaseApplication {
         setDatabase();
         initLog();
         initServer();
-        initSetting();
     }
 
     void initData() {
@@ -119,14 +118,9 @@ public class MyApplication extends BaseApplication {
         Logger.init("Server");
     }
 
-    void initSetting() {
-        MSG.getInstance().loadSetting();
-        MSG.getInstance().loadSetting1();
-        WriteSettingHelper.loadRegistInfo();
-    }
-
     void getIsFirst() {
         if (WriteSettingHelper.getISFIRST()) {
+            MSG.getInstance().initSetting();
             isFirst = true;
             WriteSettingHelper.setISFIRST(false);
         }

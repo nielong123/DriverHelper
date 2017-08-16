@@ -425,37 +425,37 @@ public final class MSG {
         sharePreferences.edit().putString(Config.WriteSetting.param0022, str).apply();
     }
 
-    public void getPARAM0023() {
-        ConstantInfo.param0023 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0023, "25"));
-    }
-
-    public void setPARAM0023(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0023, str).apply();
-    }
-
-    public void getPARAM0024() {
-        ConstantInfo.param0024 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0024, "25"));
-    }
-
-    public void setPARAM0024(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0024, str).apply();
-    }
-
-    public void getPARAM0025() {
-        ConstantInfo.param0025 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0025, "25"));
-    }
-
-    public void setPARAM0025(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0025, str).apply();
-    }
-
-    public void getPARAM0026() {
-        ConstantInfo.param0026 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0026, "25"));
-    }
-
-    public void setPARAM0026(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0026, str).apply();
-    }
+//    public void getPARAM0023() {
+//        ConstantInfo.param0023 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0023, "25"));
+//    }
+//
+//    public void setPARAM0023(String str) {
+//        sharePreferences.edit().putString(Config.WriteSetting.param0023, str).apply();
+//    }
+//
+//    public void getPARAM0024() {
+//        ConstantInfo.param0024 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0024, "25"));
+//    }
+//
+//    public void setPARAM0024(String str) {
+//        sharePreferences.edit().putString(Config.WriteSetting.param0024, str).apply();
+//    }
+//
+//    public void getPARAM0025() {
+//        ConstantInfo.param0025 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0025, "25"));
+//    }
+//
+//    public void setPARAM0025(String str) {
+//        sharePreferences.edit().putString(Config.WriteSetting.param0025, str).apply();
+//    }
+//
+//    public void getPARAM0026() {
+//        ConstantInfo.param0026 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0026, "25"));
+//    }
+//
+//    public void setPARAM0026(String str) {
+//        sharePreferences.edit().putString(Config.WriteSetting.param0026, str).apply();
+//    }
 
     public void getPARAM0027() {
         ConstantInfo.param0027 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0027, "25"));
@@ -524,7 +524,7 @@ public final class MSG {
 
 
     public void getPARAM0040() {
-        ConstantInfo.param0040 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0040, "45"));
+        ConstantInfo.param0040 = sharePreferences.getString(Config.WriteSetting.param0040, "hello");
     }
 
     public void setPARAM0040(String str) {
@@ -532,7 +532,7 @@ public final class MSG {
     }
 
     public void getPARAM0041() {
-        ConstantInfo.param0041 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0041, "45"));
+        ConstantInfo.param0041 = sharePreferences.getString(Config.WriteSetting.param0041, "hello");
     }
 
     public void setPARAM0041(String str) {
@@ -540,7 +540,7 @@ public final class MSG {
     }
 
     public void getPARAM0042() {
-        ConstantInfo.param0042 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0042, "45"));
+        ConstantInfo.param0042 = sharePreferences.getString(Config.WriteSetting.param0042, "hello");
     }
 
     public void setPARAM0042(String str) {
@@ -548,7 +548,7 @@ public final class MSG {
     }
 
     public void getPARAM0043() {
-        ConstantInfo.param0043 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0043, "45"));
+        ConstantInfo.param0043 = sharePreferences.getString(Config.WriteSetting.param0043, "hello");
     }
 
     public void setPARAM0043(String str) {
@@ -556,7 +556,7 @@ public final class MSG {
     }
 
     public void getPARAM0044() {
-        ConstantInfo.param0044 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0044, "45"));
+        ConstantInfo.param0044 = sharePreferences.getString(Config.WriteSetting.param0044, "hello");
     }
 
     public void setPARAM0044(String str) {
@@ -588,7 +588,7 @@ public final class MSG {
     }
 
     public void getPARAM0048() {
-        ConstantInfo.param0048 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0048, "45"));
+        ConstantInfo.param0048 = sharePreferences.getString(Config.WriteSetting.param0048, "hello");
     }
 
     public void setPARAM0048(String str) {
@@ -596,7 +596,7 @@ public final class MSG {
     }
 
     public void getPARAM0049() {
-        ConstantInfo.param0049 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0049, "45"));
+        ConstantInfo.param0049 = sharePreferences.getString(Config.WriteSetting.param0049, "hello");
     }
 
     public void setPARAM0049(String str) {
@@ -757,7 +757,7 @@ public final class MSG {
     }
 
     public void getPARAM0083() {
-        ConstantInfo.param0083 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0083, "88"));
+        ConstantInfo.param0083 = sharePreferences.getString(Config.WriteSetting.param0083, "hello");
     }
 
     public void setPARAM0083(String str) {
@@ -826,10 +826,10 @@ public final class MSG {
         getPARAM0020();
         getPARAM0021();
         getPARAM0022();
-        getPARAM0023();
-        getPARAM0024();
-        getPARAM0025();
-        getPARAM0026();
+//        getPARAM0023();
+//        getPARAM0024();
+//        getPARAM0025();
+//        getPARAM0026();
         getPARAM0027();
         getPARAM0028();
         getPARAM0029();
@@ -875,6 +875,80 @@ public final class MSG {
         getPARAM0083();
         getPARAM0084();
         getPARAM0085();
+    }
+
+    public void initSetting() {
+        setPARAM0001("1");
+        setPARAM0002("1");
+        setPARAM0003("1");
+        setPARAM0004("1");
+        setPARAM0005("1");
+        setPARAM0006("1");
+        setPARAM0007("1");
+
+        setPARAM0010("1");
+        setPARAM0011("1");
+        setPARAM0012("1");
+        setPARAM0013("1");
+        setPARAM0014("1");
+        setPARAM0015("1");
+        setPARAM0016("1");
+        setPARAM0017("1");
+        setPARAM0018("1");
+        setPARAM0019("1");
+
+        setPARAM0020("1");
+        setPARAM0021("1");
+        setPARAM0022("1");
+//        setPARAM0023("1");
+//        setPARAM0024("1");
+//        setPARAM0025("1");
+//        setPARAM0026("1");
+        setPARAM0027("1");
+        setPARAM0028("1");
+        setPARAM0029("1");
+        setPARAM002C("1");
+        setPARAM002D("1");
+        setPARAM002E("1");
+        setPARAM002F("1");
+
+        setPARAM0030("1");
+
+        setPARAM0040("1");
+        setPARAM0041("1");
+        setPARAM0042("1");
+        setPARAM0043("1");
+        setPARAM0044("1");
+        setPARAM0045("1");
+        setPARAM0046("1");
+        setPARAM0047("1");
+        setPARAM0048("1");
+        setPARAM0049("1");
+
+        setPARAM0050("1");
+        setPARAM0051("1");
+        setPARAM0052("1");
+        setPARAM0053("1");
+        setPARAM0054("1");
+        setPARAM0055("1");
+        setPARAM0056("1");
+        setPARAM0057("1");
+        setPARAM0058("1");
+        setPARAM0059("1");
+        setPARAM005A("1");
+
+        setPARAM0070("1");
+        setPARAM0071("1");
+        setPARAM0072("1");
+        setPARAM0073("1");
+        setPARAM0074("1");
+
+        setPARAM0080("1");
+        setPARAM0081("1");
+        setPARAM0082("1");
+        setPARAM0083("1");
+        setPARAM0084("1");
+        setPARAM0085("1");
     }
 
     public void setSettings(List<HandMsgHelper.Class8103.Setting> settings) {
@@ -932,35 +1006,36 @@ public final class MSG {
                 case (byte) 0x22:
                     setPARAM0022(ByteUtil.byte2int(setting.getByteParameter()) + "");
                     break;
-                case (byte) 0x23:
-                    setPARAM0023(ByteUtil.byte2int(setting.getByteParameter()) + "");
-                    break;
-                case (byte) 0x24:
-                    setPARAM0024(ByteUtil.byte2int(setting.getByteParameter()) + "");
-                    break;
-                case (byte) 0x25:
-                    setPARAM0025(ByteUtil.byte2int(setting.getByteParameter()) + "");
-                    break;
-                case (byte) 0x26:
-                    setPARAM0026(ByteUtil.byte2int(setting.getByteParameter()) + "");
-                    break;
+//                case (byte) 0x23:
+//                    setPARAM0023(ByteUtil.byte2int(setting.getByteParameter()) + "");
+//                    break;
+//                case (byte) 0x24:
+//                    setPARAM0024(ByteUtil.byte2int(setting.getByteParameter()) + "");
+//                    break;
+//                case (byte) 0x25:
+//                    setPARAM0025(ByteUtil.byte2int(setting.getByteParameter()) + "");
+//                    break;
+//                case (byte) 0x26:
+//                    setPARAM0026(ByteUtil.byte2int(setting.getByteParameter()) + "");
+//                    break;
                 case (byte) 0x27:
                     setPARAM0027(ByteUtil.byte2int(setting.getByteParameter()) + "");
                     break;
+
                 case (byte) 0x30:
-                    setPARAM0030(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0030(setting.getStrParameter());
                     break;
                 case (byte) 0x41:
-                    setPARAM0041(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0041(setting.getStrParameter());
                     break;
                 case (byte) 0x42:
-                    setPARAM0042(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0042(setting.getStrParameter());
                     break;
                 case (byte) 0x43:
-                    setPARAM0043(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0043(setting.getStrParameter());
                     break;
                 case (byte) 0x44:
-                    setPARAM0044(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0044(setting.getStrParameter());
                     break;
                 case (byte) 0x45:
                     setPARAM0045(ByteUtil.byte2int(setting.getByteParameter()) + "");
@@ -970,6 +1045,12 @@ public final class MSG {
                     break;
                 case (byte) 0x47:
                     setPARAM0047(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    break;
+                case (byte) 0x48:
+                    setPARAM0048(setting.getStrParameter());
+                    break;
+                case (byte) 0x49:
+                    setPARAM0049(setting.getStrParameter());
                     break;
                 case (byte) 0x51:
                     setPARAM0051(ByteUtil.byte2int(setting.getByteParameter()) + "");

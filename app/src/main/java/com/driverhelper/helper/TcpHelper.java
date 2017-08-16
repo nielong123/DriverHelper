@@ -158,10 +158,10 @@ public class TcpHelper {
                 if (client.getSocketPacketHelper().getReadStrategy() == SocketPacketHelper.ReadStrategy.Manually) {
                     client.readDataToLength(CharsetUtil.stringToData("Server accepted", CharsetUtil.UTF_8).length);
                 }
-                if (TextUtils.isEmpty(ConstantInfo.institutionNumber.toString()) ||
-                        TextUtils.isEmpty(ConstantInfo.platformNum.toString()) ||
-                        TextUtils.isEmpty(ConstantInfo.terminalNum.toString()) ||
-                        TextUtils.isEmpty(ConstantInfo.certificatePassword.toString()) ||
+                if (TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.institutionNumber)) ||
+                        TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.platformNum)) ||
+                        TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.terminalNum)) ||
+                        TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.certificatePassword)) ||
                         TextUtils.isEmpty(ConstantInfo.terminalCertificate)) {
                     RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
                     return;
@@ -237,25 +237,15 @@ public class TcpHelper {
     String TAG = "TcpHelper";
 
     private void sendData(final byte[] data) {
-        if (socketClient.isConnected()) {
-            socketClient.sendData(data);
-//            scheduledThreadPool.schedule(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Log.d(TAG, "sendData: ");
-//                    socketClient.sendData(data);
-//                }
-//            },2000, TimeUnit.MILLISECONDS);
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Log.d(TAG, "sendData: ");
-//                    socketClient.sendData(data);
-//                }
-//            }).start();
-        } else {
-            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp连接已断开");
+        if (socketClient == null || !socketClient.isConnected()) {
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "网络未连接");
+            return;
         }
+//        if () {
+//            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "网络未连接");
+//            return;
+//        }
+        socketClient.sendData(data);
     }
 
     /***

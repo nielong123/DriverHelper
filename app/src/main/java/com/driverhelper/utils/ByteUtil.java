@@ -88,6 +88,9 @@ public class ByteUtil {
     }
 
     public static String getString(byte[] bytes) {
+        if(bytes == null){
+            return null;
+        }
         return getString(bytes, "GBK");
     }
 

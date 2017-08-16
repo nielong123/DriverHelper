@@ -33,13 +33,21 @@ public class ConstantInfo {
     public static String vehicleNum;            //车牌号
     public static String MODEL;            //终端型号
 
-    public static byte[] requestWaterCode = new byte[2];      //应答流水号
-    public static byte[] result = new byte[1];                  //结果
-    public static byte[] platformNum = new byte[5];                        //平台编号
-    public static byte[] institutionNumber = new byte[16];        //培训机构编号
-    public static byte[] terminalNum = new byte[16];       //计时终端编号
-    public static byte[] certificatePassword = new byte[12];       //证书口令;
-    public static String terminalCertificate = "";         //终端证书
+//    public static byte[] requestWaterCode = new byte[2];      //应答流水号
+//    public static byte[] result = new byte[1];                  //结果
+//    public static byte[] platformNum = new byte[5];                        //平台编号
+//    public static byte[] institutionNumber = new byte[16];        //培训机构编号
+//    public static byte[] terminalNum = new byte[16];       //计时终端编号
+//    public static byte[] certificatePassword = new byte[12];       //证书口令;
+//    public static String terminalCertificate = "";         //终端证书
+
+    public static byte[] requestWaterCode;      //应答流水号
+    public static byte[] result;                  //结果
+    public static byte[] platformNum ;                        //平台编号
+    public static byte[] institutionNumber ;        //培训机构编号
+    public static byte[] terminalNum;       //计时终端编号
+    public static byte[] certificatePassword;       //证书口令;
+    public static String terminalCertificate = null;         //终端证书
     public static String coachId;      //教练员编号
 
     public static long studyTimeThis = 0;             //学习的时间
@@ -104,16 +112,16 @@ public class ConstantInfo {
 
     public static int param0030;
 
-    public static int param0040;
-    public static int param0041;
-    public static int param0042;
-    public static int param0043;
-    public static int param0044;
+    public static String param0040;
+    public static String param0041;
+    public static String param0042;
+    public static String param0043;
+    public static String param0044;
     public static int param0045;
     public static int param0046;
     public static int param0047;
-    public static int param0048;
-    public static int param0049;
+    public static String param0048;
+    public static String param0049;
 
     public static int param0050;
     public static int param0051;
@@ -136,7 +144,7 @@ public class ConstantInfo {
     public static int param0080;
     public static int param0081;
     public static int param0082;
-    public static int param0083;
+    public static String param0083;
     public static int param0084;
     public static int param0085;
 
