@@ -330,7 +330,7 @@ public final class MSG {
     }
 
     public void getPARAM0011() {
-        ConstantInfo.param0011 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0011, "15"));
+        ConstantInfo.param0011 = sharePreferences.getString(Config.WriteSetting.param0011, "hello");
     }
 
     public void setPARAM0011(String str) {
@@ -338,7 +338,7 @@ public final class MSG {
     }
 
     public void getPARAM0012() {
-        ConstantInfo.param0012 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0012, "15"));
+        ConstantInfo.param0012 = sharePreferences.getString(Config.WriteSetting.param0012, "hello");
     }
 
     public void setPARAM0012(String str) {
@@ -346,7 +346,7 @@ public final class MSG {
     }
 
     public void getPARAM0013() {
-        ConstantInfo.param0013 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0013, "15"));
+        ConstantInfo.param0013 = sharePreferences.getString(Config.WriteSetting.param0013, "hello");
     }
 
     public void setPARAM0013(String str) {
@@ -354,7 +354,7 @@ public final class MSG {
     }
 
     public void getPARAM0014() {
-        ConstantInfo.param0014 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0014, "15"));
+        ConstantInfo.param0014 = sharePreferences.getString(Config.WriteSetting.param0014, "hello");
     }
 
     public void setPARAM0014(String str) {
@@ -362,7 +362,7 @@ public final class MSG {
     }
 
     public void getPARAM0015() {
-        ConstantInfo.param0015 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0015, "15"));
+        ConstantInfo.param0015 = sharePreferences.getString(Config.WriteSetting.param0015, "hello");
     }
 
     public void setPARAM0015(String str) {
@@ -370,7 +370,7 @@ public final class MSG {
     }
 
     public void getPARAM0016() {
-        ConstantInfo.param0016 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0016, "15"));
+        ConstantInfo.param0016 = sharePreferences.getString(Config.WriteSetting.param0016, "hello");
     }
 
     public void setPARAM0016(String str) {
@@ -378,7 +378,7 @@ public final class MSG {
     }
 
     public void getPARAM0017() {
-        ConstantInfo.param0017 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0017, "15"));
+        ConstantInfo.param0017 = sharePreferences.getString(Config.WriteSetting.param0017, "hello");
     }
 
     public void setPARAM0017(String str) {
@@ -901,26 +901,30 @@ public final class MSG {
                 case (byte) 0x07:
                     setPARAM0007(ByteUtil.byte2int(setting.getByteParameter()) + "");
                     break;
+
+                case (byte) 0x10:
+                    setPARAM0010(setting.getStrParameter());
+                    break;
                 case (byte) 0x11:
-                    setPARAM0011(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0011(setting.getStrParameter());
                     break;
                 case (byte) 0x12:
-                    setPARAM0012(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0012(setting.getStrParameter());
                     break;
                 case (byte) 0x13:
-                    setPARAM0013(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0013(setting.getStrParameter());
                     break;
                 case (byte) 0x14:
-                    setPARAM0014(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0014(setting.getStrParameter());
                     break;
                 case (byte) 0x15:
-                    setPARAM0015(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0015(setting.getStrParameter());
                     break;
                 case (byte) 0x16:
-                    setPARAM0016(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0016(setting.getStrParameter());
                     break;
                 case (byte) 0x17:
-                    setPARAM0017(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0017(setting.getStrParameter());
                     break;
                 case (byte) 0x21:
                     setPARAM0021(ByteUtil.byte2int(setting.getByteParameter()) + "");

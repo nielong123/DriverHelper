@@ -77,13 +77,13 @@ public class ConstantInfo {
     public static int param0007;
 
     public static String param0010;
-    public static int param0011;
-    public static int param0012;
-    public static int param0013;
-    public static int param0014;
-    public static int param0015;
-    public static int param0016;
-    public static int param0017;
+    public static String param0011;
+    public static String param0012;
+    public static String param0013;
+    public static String param0014;
+    public static String param0015;
+    public static String param0016;
+    public static String param0017;
     public static int param0018;
     public static int param0019;
 

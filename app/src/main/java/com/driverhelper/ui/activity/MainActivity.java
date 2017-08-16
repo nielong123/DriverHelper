@@ -306,6 +306,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     public void initData() {
         context = this;
         this.ttsClient = new TextToSpeech(getApplicationContext(), this);
+        if (MyApplication.getInstance().isFirst)
+            this.ttsClient.speak("首次登陆，请设置终端参数", 1, null);
     }
 
     @Override

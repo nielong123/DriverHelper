@@ -286,7 +286,7 @@ public class TcpHelper {
      * @param idList
      */
     public void send0104(int id, List<byte[]> idList) {
-        BodyHelper.make0104(id, idList);
+        sendData(BodyHelper.make0104(id, idList));
     }
 
     /****
@@ -294,7 +294,7 @@ public class TcpHelper {
      * @param id        对应查询的消息id'
      */
     public void sendAll0104(int id) {
-        BodyHelper.makeAll0104(id);
+        sendData(BodyHelper.makeAll0104(id));
     }
 
     /***

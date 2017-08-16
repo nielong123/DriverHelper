@@ -426,35 +426,38 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0007, 1));
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0007));
 
-
+        MSG.getInstance().getPARAM0010();
+        resultBody = ByteUtil.add(resultBody, (byte) 0x10);
+        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0010.getBytes().length);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.param0010.getBytes());
         MSG.getInstance().getPARAM0011();
-        resultBody = ByteUtil.add(resultBody, (byte) 0x11);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0011, 1));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0011));
+        resultBody = ByteUtil.add(resultBody, (byte)0x11);
+        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0011.getBytes().length);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.param0011.getBytes());
         MSG.getInstance().getPARAM0012();
         resultBody = ByteUtil.add(resultBody, (byte) 0x12);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0012, 1));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0012));
+        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0012.getBytes().length);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.param0012.getBytes());
         MSG.getInstance().getPARAM0013();
         resultBody = ByteUtil.add(resultBody, (byte) 0x13);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0013, 1));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0013));
+        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0013.getBytes().length);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.param0013.getBytes());
         MSG.getInstance().getPARAM0014();
         resultBody = ByteUtil.add(resultBody, (byte) 0x14);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0014, 1));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0014));
+        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0014.getBytes().length);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.param0014.getBytes());
         MSG.getInstance().getPARAM0015();
         resultBody = ByteUtil.add(resultBody, (byte) 0x15);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0015, 1));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0015));
+        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0015.getBytes().length);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.param0015.getBytes());
         MSG.getInstance().getPARAM0016();
         resultBody = ByteUtil.add(resultBody, (byte) 0x16);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0016, 1));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0016));
+        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0016.getBytes().length);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.param0016.getBytes());
         MSG.getInstance().getPARAM0017();
         resultBody = ByteUtil.add(resultBody, (byte) 0x17);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0017, 1));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0017));
+        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0017.getBytes().length);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.param0017.getBytes());
         MSG.getInstance().getPARAM0018();
         resultBody = ByteUtil.add(resultBody, (byte) 0x18);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0018, 1));
@@ -669,43 +672,43 @@ public class BodyHelper {
                 case (byte) 0x01:
                     MSG.getInstance().getPARAM0001();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0001, 1));
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0001));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
+                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.param0001));
                     break;
                 case (byte) 0x02:
                     MSG.getInstance().getPARAM0002();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0002, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0002));
                     break;
                 case (byte) 0x03:
                     MSG.getInstance().getPARAM0003();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0003, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0003));
                     break;
                 case (byte) 0x04:
                     MSG.getInstance().getPARAM0004();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0004, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0004));
                     break;
                 case (byte) 0x05:
                     MSG.getInstance().getPARAM0005();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0005, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0005));
                     break;
                 case (byte) 0x06:
                     MSG.getInstance().getPARAM0006();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0006, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0006));
                     break;
                 case (byte) 0x07:
                     MSG.getInstance().getPARAM0007();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0007, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0007));
                     break;
 
@@ -713,153 +716,153 @@ public class BodyHelper {
                 case (byte) 0x10:
                     MSG.getInstance().getPARAM0010();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0010.getBytes().length, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0010.getBytes().length);
                     resultBody = ByteUtil.add(resultBody, ConstantInfo.param0010.getBytes());
                     break;
                 case (byte) 0x11:
                     MSG.getInstance().getPARAM0011();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0011, 1));
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0011));
+                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0011.getBytes().length);
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.param0011.getBytes());
                     break;
                 case (byte) 0x12:
                     MSG.getInstance().getPARAM0012();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0012, 1));
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0012));
+                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0012.getBytes().length);
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.param0012.getBytes());
                     break;
                 case (byte) 0x13:
                     MSG.getInstance().getPARAM0013();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0013, 1));
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0013));
+                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0013.getBytes().length);
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.param0013.getBytes());
                     break;
                 case (byte) 0x14:
                     MSG.getInstance().getPARAM0014();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0014, 1));
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0014));
+                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0014.getBytes().length);
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.param0014.getBytes());
                     break;
                 case (byte) 0x15:
                     MSG.getInstance().getPARAM0015();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0015, 1));
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0015));
+                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0015.getBytes().length);
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.param0015.getBytes());
                     break;
                 case (byte) 0x16:
                     MSG.getInstance().getPARAM0016();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0016, 1));
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0016));
+                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0016.getBytes().length);
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.param0016.getBytes());
                     break;
                 case (byte) 0x17:
                     MSG.getInstance().getPARAM0017();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0017, 1));
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0017));
+                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0017.getBytes().length);
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.param0017.getBytes());
                     break;
                 case (byte) 0x18:
                     MSG.getInstance().getPARAM0018();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0018, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0018));
                     break;
                 case (byte) 0x19:
                     MSG.getInstance().getPARAM0019();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0019, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0019));
                     break;
 
                 case (byte) 0x20:
                     MSG.getInstance().getPARAM0020();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0020, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0020));
                     break;
                 case (byte) 0x21:
                     MSG.getInstance().getPARAM0021();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0021, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0021));
                     break;
                 case (byte) 0x22:
                     MSG.getInstance().getPARAM0022();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0022, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0022));
                     break;
                 case (byte) 0x23:
                     MSG.getInstance().getPARAM0023();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0023, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0023));
                     break;
                 case (byte) 0x24:
                     MSG.getInstance().getPARAM0024();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0024, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0024));
                     break;
                 case (byte) 0x25:
                     MSG.getInstance().getPARAM0025();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0025, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0025));
                     break;
                 case (byte) 0x26:
                     MSG.getInstance().getPARAM0026();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0026, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0026));
                     break;
                 case (byte) 0x27:
                     MSG.getInstance().getPARAM0027();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0027, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0027));
                     break;
                 case (byte) 0x28:
                     MSG.getInstance().getPARAM0028();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0028, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0028));
                     break;
                 case (byte) 0x29:
                     MSG.getInstance().getPARAM0029();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0029, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0029));
                     break;
                 case (byte) 0x2C:
                     MSG.getInstance().getPARAM002C();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param002C, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param002C));
                     break;
                 case (byte) 0x2D:
                     MSG.getInstance().getPARAM002D();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param002D, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param002D));
                     break;
                 case (byte) 0x2E:
                     MSG.getInstance().getPARAM002E();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param002E, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param002E));
                     break;
                 case (byte) 0x2F:
                     MSG.getInstance().getPARAM002F();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param002F, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param002F));
                     break;
 
                 case (byte) 0x30:
                     MSG.getInstance().getPARAM0030();
                     resultBody = ByteUtil.add(resultBody, id);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.param0030, 1));
+                    resultBody = ByteUtil.add(resultBody, (byte) 0x04);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0030));
                     break;
 
@@ -1054,7 +1057,7 @@ public class BodyHelper {
         result = ByteUtil.addEND(result); // 添加尾部
         result = ByteUtil.checkMark(result);
 
-        ByteUtil.printHexString("0104 = ",result);
+        ByteUtil.printHexString("0104 = ", result);
         return result;
     }
 

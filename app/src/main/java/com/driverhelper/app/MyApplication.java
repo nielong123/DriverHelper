@@ -47,6 +47,7 @@ public class MyApplication extends BaseApplication {
     public double lat, lon;
     public long timeGPS, timeSYS;
     public boolean isLocation;
+    public boolean isFirst = false;         //是否是第一次登陆
 
     public static Context mApplicationContext;
     public static MyApplication myApp;
@@ -126,6 +127,7 @@ public class MyApplication extends BaseApplication {
 
     void getIsFirst() {
         if (WriteSettingHelper.getISFIRST()) {
+            isFirst = true;
             WriteSettingHelper.setISFIRST(false);
         }
     }
