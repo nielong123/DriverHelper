@@ -248,6 +248,10 @@ public class TcpHelper {
         socketClient.sendData(data);
     }
 
+    public void sendCommonResponse(int id, int state) {
+        sendData(BodyHelper.makeClientCommonResponse(id, state));
+    }
+
     /***
      * 终端注册
      */

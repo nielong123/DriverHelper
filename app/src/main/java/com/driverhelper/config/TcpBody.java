@@ -16,7 +16,7 @@ public final class TcpBody {
         public static byte[] authentication = {(byte) 0x01, (byte) 0x02}; // 终端鉴权
         public static byte[] id0104 = {(byte)0x01,(byte)0x04};
         public static byte[] heart = {(byte) 0x00, (byte) 0x02};        //心跳包
-        public static byte[] clientCommonResponse = {(byte) 0x00, (byte) 0x01};         //客户端通用应答
+        public static byte[] id0001 = {(byte) 0x00, (byte) 0x01};         //客户端通用应答
         public static byte[] locationInfoUpdata = {(byte) 0x02, (byte) 0x00};       //B.3.2.3.16　位置信息汇报
         public static byte[] findLocatInfoRequest = {(byte) 0x02, (byte) 0x01};     //查询位置信息应答
         public static byte[] updataCoachLogin = {(byte) 0x01, (byte) 0x01};             //上传教练员登录

@@ -287,6 +287,30 @@ public final class HandMsgHelper {
         return class8201;
     }
 
+    /***
+     * 零食位置跟踪
+     */
+    static class Class8202_ {
+        public int waterCode;
+        public int timeInterval;
+        public long term;
+    }
+
+    static Class8202_ getClass8202_(byte[] data) {
+        Class8202_ class8202_ = new Class8202_();
+        byte[] data0 = new byte[2];
+        System.arraycopy(data, 0, data0, 0, data0.length);
+        class8202_.term = ByteUtil.byte2int(data0);
+        byte[] data1 = new byte[4];
+        System.arraycopy(data, 2, data1, 0, data1.length);
+        class8202_.timeInterval = ByteUtil.byte2int(data1);
+        return class8202_;
+    }
+
+
+    /***
+     * 透传的8202
+     */
     static class Class8202 {
         byte result;
         byte[] studentNum = new byte[16];

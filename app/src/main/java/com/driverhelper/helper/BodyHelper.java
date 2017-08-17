@@ -3,7 +3,6 @@ package com.driverhelper.helper;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -31,8 +30,8 @@ import static com.driverhelper.config.ConstantInfo.photoData;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
-import static com.driverhelper.config.TcpBody.MessageID.clientCommonResponse;
 import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
+import static com.driverhelper.config.TcpBody.MessageID.id0001;
 import static com.driverhelper.config.TcpBody.MessageID.id0104;
 import static com.driverhelper.config.TcpBody.MessageID.id0203;
 import static com.driverhelper.config.TcpBody.MessageID.id0205;
@@ -58,6 +57,7 @@ import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogiout;
 import static com.driverhelper.config.TcpBody.TransformID.driving;
 import static com.driverhelper.config.TcpBody.VERSION_CODE;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
+import static com.driverhelper.utils.ByteUtil.int2WORD;
 
 /**
  * Created by Administrator on 2017/6/7.
@@ -1244,15 +1244,14 @@ public class BodyHelper {
      * 客户端通用应答
      * @param para1
      * @param para2
-     * @param para3
      * @return
      */
-    public static byte[] makeClientCommonResponse(int para1, int para2, int para3) {
-        byte[] resultBody = int2Bytes(para1, 2);
-        resultBody = ByteUtil.add(resultBody, int2Bytes(para2, 2));
-        resultBody = ByteUtil.add(resultBody, int2Bytes(para3, 1));
+    public static byte[] makeClientCommonResponse(int para1, int para2) {
+        byte[] resultBody = int2WORD(IdHelper.getWaterCode());
+        resultBody = ByteUtil.add(resultBody, int2WORD(para1));
+        resultBody = ByteUtil.add(resultBody, (byte) para2);
 
-        byte[] resultHead = makeHead(clientCommonResponse, false, 0, 0, 0, resultBody.length); // 包头固定
+        byte[] resultHead = makeHead(id0001, false, 0, 0, 0, resultBody.length); // 包头固定
 
         byte[] result = ByteUtil.addXor(ByteUtil.add(resultHead, resultBody));
         result = ByteUtil.addEND(result); // 添加尾部
@@ -1638,6 +1637,13 @@ public class BodyHelper {
 
                 case "8201":            //位置信息查询
                     TcpHelper.getInstance().sendLocationInfo();
+                    break;
+
+                case "8202":        //临时位置追踪控制
+                    HandMsgHelper.Class8202_ class8202_ = HandMsgHelper.getClass8202_(messageBean.bodyBean);
+                    TcpHelper.getInstance().sendCommonResponse(messageBean.headBean.waterCode, 0);
+
+
                     break;
                 case "8900":            //透传消息应答
                     messageBean.getThroughExpand(messageBean.bodyBean);
