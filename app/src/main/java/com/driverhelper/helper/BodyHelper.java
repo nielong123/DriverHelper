@@ -3,6 +3,7 @@ package com.driverhelper.helper;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -1605,6 +1606,30 @@ public class BodyHelper {
                 case "8104":           //查询所有终端参数
                     RxBus.getInstance().post(Config.Config_RxBus.RX_SETTING_8104, messageBean.headBean.waterCode);
                     break;
+                case "8105":
+                    HandMsgHelper.Class8105 class8105 = HandMsgHelper.getClass8105(messageBean.bodyBean);
+                    switch (class8105.commandId) {
+                        case 1:
+                            if (class8105.commandInfo != null) {
+                                String info = ByteUtil.getString(class8105.commandInfo);
+                                String url = info.substring(0, info.indexOf(";", 1));
+                                Log.e("download", url);
+                            }
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            break;
+                        case 7:
+                            break;
+                    }
+                    break;
                 case "8106":           //8106和8104都应答0104
                     HandMsgHelper.Class8106 class8106 = HandMsgHelper.getClass8106(messageBean.bodyBean);
                     class8106.waterCode = messageBean.headBean.waterCode;
@@ -1612,7 +1637,7 @@ public class BodyHelper {
                     break;
 
                 case "8201":            //位置信息查询
-//                    TcpHelper.getInstance().makeFindLocatInfoRequest();
+                    TcpHelper.getInstance().sendLocationInfo();
                     break;
                 case "8900":            //透传消息应答
                     messageBean.getThroughExpand(messageBean.bodyBean);

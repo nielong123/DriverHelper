@@ -183,6 +183,19 @@ public final class HandMsgHelper {
         return Class8102;
     }
 
+    static class Class8105 {
+        byte commandId;
+        byte[] commandInfo;
+    }
+
+    static Class8105 getClass8105(byte[] data) {
+        Class8105 class8105 = new Class8105();
+        class8105.commandId = data[0];
+        class8105.commandInfo = new byte[data.length - 1];
+        System.arraycopy(data, 1, class8105.commandInfo, 0, class8105.commandInfo.length);
+        return class8105;
+    }
+
 
     public static class Class8106 {
         public byte totleNum;

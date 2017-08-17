@@ -461,5 +461,17 @@ public class TcpHelper {
         sendData(BodyHelper.make0502(result, state, length, str));
     }
 
+    public void sendLocationInfo() {
+        long time = TimeUtil.getTime() / 1000;
+        sendData(BodyHelper.makeFindLocatInfoRequest("00000000",
+                "40080000",
+                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
+                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                10,
+                (int) MyApplication.getInstance().speedGPS,
+                (int) MyApplication.getInstance().direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));
+    }
+
 
 }
