@@ -17,6 +17,7 @@ import com.orhanobut.logger.Logger;
 import com.vilyever.socketclient.SocketClient;
 import com.vilyever.socketclient.helper.SocketClientDelegate;
 import com.vilyever.socketclient.helper.SocketClientReceivingDelegate;
+import com.vilyever.socketclient.helper.SocketHeartBeatHelper;
 import com.vilyever.socketclient.helper.SocketPacketHelper;
 import com.vilyever.socketclient.helper.SocketResponsePacket;
 import com.vilyever.socketclient.util.CharsetUtil;
@@ -108,12 +109,12 @@ public class TcpHelper {
          *
          * 每次发送心跳包时自动调用
          */
-//        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
-//            @Override
-//            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
-//                return BodyHelper.makeHeart();              //心跳
-//            }
-//        });
+        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
+            @Override
+            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
+                return BodyHelper.makeHeart();              //心跳
+            }
+        });
     }
 
     private void __i__setReceiverCallBack(SocketClient socketClient) {
@@ -241,10 +242,6 @@ public class TcpHelper {
             RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "网络未连接");
             return;
         }
-//        if () {
-//            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "网络未连接");
-//            return;
-//        }
         socketClient.sendData(data);
     }
 

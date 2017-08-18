@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
-import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
@@ -19,8 +17,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -39,7 +35,6 @@ import com.driverhelper.beans.QRbean;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.AssetsHelper;
-import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.helper.PhotoHelper;
 import com.driverhelper.helper.TcpHelper;
@@ -47,6 +42,7 @@ import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
 import com.driverhelper.utils.ByteUtil;
+import com.driverhelper.widget.LiveSurfaceView;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -54,11 +50,8 @@ import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
-import com.orhanobut.logger.Logger;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -69,7 +62,6 @@ import rx.functions.Action1;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
-import static com.driverhelper.config.Config.carmerId_HANGJING;
 import static com.driverhelper.config.Config.ip;
 import static com.driverhelper.config.Config.port;
 import static com.driverhelper.config.ConstantInfo.embargoStr;
@@ -78,8 +70,7 @@ import static com.driverhelper.config.ConstantInfo.qRbean;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 
 public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
-        TextToSpeech.OnInitListener,
-        SurfaceHolder.Callback, Camera.ErrorCallback, Camera.PreviewCallback {
+        TextToSpeech.OnInitListener {
 
     final String TAG = getClass().getName().toUpperCase();
 
@@ -88,7 +79,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     @Bind(R.id.networksw)
     Switch networksw;
     @Bind(R.id.surfaceView)
-    SurfaceView surfaceView;
+    LiveSurfaceView surfaceView;
     @Bind(R.id.layout)
     FrameLayout layout;
     @Bind(R.id.LLcamera)
@@ -143,8 +134,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     DrawerLayout drawerLayout;
 
     private TextToSpeech ttsClient;
-    private Camera camera;
-    private SurfaceHolder holder;
     Context context;
 
     private final static int width = 320;
@@ -167,7 +156,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     @Override
     protected void onPause() {
         super.onPause();
-        stopPreview();
     }
 
     @Override
@@ -238,7 +226,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     @Override
     public void initView() {
         initToolBar();
-//        initCamera();
         networksw.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 
@@ -595,14 +582,14 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
 
                 /********************************************************************************/
-//                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
-                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";//为了调试把逻辑写反了
-//                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
-                qRbean = new Gson().fromJson(str, QRbean.class);
-//                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
-//                qRbean = new Gson().fromJson(result.getContents(), QRbean.class);
-//                    coachLogin();                       //教练登录
-                studentLogin(qRbean.getNumber());                 //学员登录
+////                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
+//                String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";//为了调试把逻辑写反了
+////                String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
+//                qRbean = new Gson().fromJson(str, QRbean.class);
+////                ToastUitl.show(result.getContents(), Toast.LENGTH_SHORT);
+////                qRbean = new Gson().fromJson(result.getContents(), QRbean.class);
+////                    coachLogin();                       //教练登录
+//                studentLogin(qRbean.getNumber());                 //学员登录
                 /********************************************************************************/
 
 
@@ -690,22 +677,22 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             }
         }, 1000, 6 * 1000);
 
-        photoTimer = new Timer(true);
-        photoTimer.schedule(new TimerTask() {               //保存照片
-            @Override
-            public void run() {
-                if (mPreBuffer != null) {
-                    String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
-                    String str66666 = str.substring(str.length() - 6, str.length());
-                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MainActivity.this, "123456.jpg");
-                    byte[] data = ByteUtil.bitmap2Bytes(bitmap);
-                    PhotoHelper.saveBitmap(MainActivity.this, data);
-//                    DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
-//                            "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
-//                            TimeUtil.getTime());
-                }
-            }
-        }, 10, 15 * 1000);
+//        photoTimer = new Timer(true);
+//        photoTimer.schedule(new TimerTask() {               //保存照片
+//            @Override
+//            public void run() {
+//                if (mPreBuffer != null) {
+//                    String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
+//                    String str66666 = str.substring(str.length() - 6, str.length());
+//                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MainActivity.this, "123456.jpg");
+//                    byte[] data = ByteUtil.bitmap2Bytes(bitmap);
+//                    PhotoHelper.saveBitmap(MainActivity.this, data);
+////                    DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
+////                            "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
+////                            TimeUtil.getTime());
+//                }
+//            }
+//        }, 10, 15 * 1000);
 //        }, 10, 15 * 60 * 1000);
     }
 
@@ -727,105 +714,11 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         ConstantInfo.studyDistanceThis = 0;
     }
 
-    private void initCamera() {
-        holder = surfaceView.getHolder();
-        initPreviewListener(this);
-    }
 
-    private void initPreviewListener(SurfaceHolder.Callback callback) {
-        holder.addCallback(callback);
-    }
-
-    @Override
-    public void onError(int i, Camera camera) {
-
-    }
-
-    @Override
-    public void onPreviewFrame(byte[] bytes, Camera camera) {
-        if (bytes == null) {
-            Logger.d("################ bytes == null ");
-            return;
-        } else if (bytes.length != width * height * 3 / 2) {
-            Logger.d("################ bytes.length != width * height * 3 / 2 ");
-            return;
-        } else {
-//            Log.d(TAG, "################ onPreviewFrame success  bytes.length = " + bytes.length);
-//            Log.d(TAG, " " + bytes[0] + " " + bytes[1] + " " + bytes[2] + " " + bytes[3] + " " + bytes[4] + " " + bytes[5] + " " + bytes[6] + " " + bytes[7] + " " + bytes[8] + " " + bytes[9]);
-//            Log.d(TAG, " " + bytes[1000] + " " + bytes[1001] + " " + bytes[1002] + " " + bytes[1003] + " " + bytes[1004] + " " + bytes[1005] + " " + bytes[1006] + " " + bytes[1007] + " " + bytes[1008] + " " + bytes[1009]);
-//            Log.d(TAG, " " + bytes[10000] + " " + bytes[10001] + " " + bytes[10002] + " " + bytes[10003] + " " + bytes[10004] + " " + bytes[10005] + " " + bytes[10006] + " " + bytes[10007] + " " + bytes[10008] + " " + bytes[10009]);
-        }
-        if (mPreBuffer == null) {
-            int size = width * height * 3 / 2;
-            mPreBuffer = new byte[size];
-        }
-        camera.addCallbackBuffer(mPreBuffer);
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        startPreview();
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        stopPreview();
-    }
-
-    private void startPreview() {
-        try {
-//            Log.d(TAG, "startPreview      &&&&&&      start      isPreview :  " + isPreview + "      camera : " + camera);
-            if (!isPreview) {
-                Log.d("", Camera.getNumberOfCameras() + "");
-                if (null == camera) camera = Camera.open(carmerId_HANGJING);
-                Camera.Parameters parameters = camera.getParameters();
-                parameters.setPictureFormat(PixelFormat.JPEG);
-                parameters.set("jpeg-quality", 85);
-                Log.d(TAG, "width, height ==   " + width + " , " + height);
-                parameters.setPreviewSize(width, height);
-                parameters.setPictureSize(width, height);
-                parameters.setExposureCompensation(0);
-                int size = width * height * 3 / 2;
-                if (mPreBuffer == null) {
-                    mPreBuffer = new byte[size];
-                }
-                camera.addCallbackBuffer(mPreBuffer);
-                camera.setPreviewCallbackWithBuffer(this);
-                camera.setParameters(parameters);
-                camera.setPreviewDisplay(holder);
-                camera.startPreview();
-                isPreview = true;
-                camera.setErrorCallback(this);
-            }
-//            Log.d(TAG, "startPreview      &&&&&&      end      isPreview :  " + isPreview + "      camera : " + camera);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void stopPreview() {
-//        Logger.d("stopPreview      &&&&&&      start      isPreview :  " + isPreview + "      camera : " + camera);
-        if (null != camera) {
-            if (isPreview) {
-                camera.stopPreview();
-                camera.setErrorCallback(null);
-                isPreview = false;
-            }
-            camera.release();
-            camera = null;
-//            Logger.d("stopPreview      &&&&&&      camera :  " + camera);
-        }
-//        Logger.d("stopPreview      &&&&&&      end      isPreview :  " + isPreview);
-    }
 
 
     private void test() {
-        MSG.getInstance().getPARAM0001();
+
     }
 }
 

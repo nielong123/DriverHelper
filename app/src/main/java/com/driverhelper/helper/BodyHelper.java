@@ -1230,8 +1230,7 @@ public class BodyHelper {
 
 
     public static byte[] makeHeart() {
-        int bodylength = 0;
-        byte[] result = makeHead(TcpBody.MessageID.heart, false, 0, 0, 0, bodylength);
+        byte[] result = makeHead(TcpBody.MessageID.heart, false, 0, 0, 0, 0);
         result = ByteUtil.addXor(result);
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
