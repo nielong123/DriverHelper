@@ -499,8 +499,7 @@ public class ByteUtil {
     public static byte[] addXor(byte[] data) {
         byte[] xorValue = new byte[data.length - 1];
         System.arraycopy(data, 1, xorValue, 0, data.length - 1);
-        Log.d(TAG, "addXor: xorValue");
-        printHexString(xorValue);
+//        printHexString(xorValue);
         byte[] res = add(data, getXor(xorValue));
         return res;
     }

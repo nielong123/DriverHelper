@@ -434,11 +434,12 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             @Override
             public void call(HandMsgHelper.Class8301 class8301) {
                 String photoId = TimeUtil.getTime() / 1000 + "";
-                surfaceView.doTakePicture(photoId);
-                byte[] data = FileUtils.loadBitmap(MainActivity.this, photoId);
+//                surfaceView.doTakePicture(photoId);
+//                byte[] data = FileUtils.loadBitmap(MainActivity.this, photoId);
+                byte[] data = ByteUtil.bitmap2Bytes(AssetsHelper.getImageFromAssetsFile(MainActivity.this, "ic_launcher.png"));
                 if (data != null) {
-//                    TcpHelper.getInstance().send0301(class8301.updataType);
-//                    TcpHelper.getInstance().send0305(photoId, ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
+                    TcpHelper.getInstance().send0301(class8301.updataType);
+                    TcpHelper.getInstance().send0305(photoId, ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
                     TcpHelper.getInstance().send0306(photoId, data);
                 }
             }

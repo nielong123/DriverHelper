@@ -1180,8 +1180,8 @@ public class BodyHelper {
         int number = (resultBody.length / 1000);
         if (number > 0) {
             int index = 0;
-            for (int i = 0; i < number; i++) {
-                Log.w("123", " i = " + i);
+            for (int i = 0; i <= number; i++) {
+//                Log.w("123", " i = " + i);
                 if (i != number) {
                     byte[] data1 = new byte[1000];
                     System.arraycopy(resultBody, index, data1, 0, data1.length);
@@ -1463,8 +1463,6 @@ public class BodyHelper {
         byte[] result = ByteUtil.addXor(ByteUtil.add(head, body));
         result = ByteUtil.addEND(result); // 添加尾部
         result = ByteUtil.checkMark(result);
-
-        ByteUtil.printHexString(result);
         return result;
     }
 
@@ -1481,8 +1479,6 @@ public class BodyHelper {
      */
     public static byte[] buildExMsg(byte[] exMsgId, int para2, int para3, int para4, byte[] para6) {
 
-//        int attrr = para2 + (int) (para3 * Math.pow(2, 1)) + (int) (para4 * Math.pow(2, 4));
-//        byte[] resultBody = ByteUtil.add(exMsgId, int2Bytes(attrr, 2));
         byte[] resultBody = ByteUtil.add(exMsgId, exMsgId);
         resultBody = ByteUtil.add(resultBody, getExCode());
         resultBody = ByteUtil.add(resultBody, terminalNum);
@@ -1496,7 +1492,7 @@ public class BodyHelper {
                     0);
             resultBody = ByteUtil.add(resultBody, jiami); // 校验码  时间戳用0
         }
-        ByteUtil.printHexString("加密最后的结果和前面", resultBody);
+//        ByteUtil.printHexString("加密最后的结果和前面", resultBody);
         return resultBody;
     }
 

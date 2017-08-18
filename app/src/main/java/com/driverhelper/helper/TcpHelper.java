@@ -400,7 +400,6 @@ public class TcpHelper {
     public void send0306(String photoId, byte[] photoData) {
 
         List<byte[]> list = BodyHelper.make0306Part(photoId, photoData);
-//        List<byte[]> list1 = new ArrayList<>();
         if (list.size() > 1) {
             for (byte[] data : list) {
                 int index = list.indexOf(data) + 1;
