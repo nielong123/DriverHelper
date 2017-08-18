@@ -1,7 +1,6 @@
 package com.driverhelper.helper;
 
 
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,13 +19,14 @@ import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8301;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.ConstantInfo.SN;
 import static com.driverhelper.config.ConstantInfo.classType;
 import static com.driverhelper.config.ConstantInfo.coachId;
-import static com.driverhelper.config.ConstantInfo.photoData;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
@@ -54,9 +54,10 @@ import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogin;
 import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogout;
 import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogin;
 import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogiout;
-import static com.driverhelper.config.TcpBody.TransformID.driving;
 import static com.driverhelper.config.TcpBody.VERSION_CODE;
+import static com.driverhelper.config.TcpBody.driving;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
+import static com.driverhelper.utils.ByteUtil.int2DWORD;
 import static com.driverhelper.utils.ByteUtil.int2WORD;
 
 /**
@@ -1102,7 +1103,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, eventType);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(totle));
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(photoSize));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(1234567890));           //课堂id
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) new Date().getTime() / 1000));           //课堂id
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -1180,7 +1181,7 @@ public class BodyHelper {
         if (number > 0) {
             int index = 0;
             for (int i = 0; i < number; i++) {
-                Log.w("", " i = " + i);
+                Log.w("123", " i = " + i);
                 if (i != number) {
                     byte[] data1 = new byte[1000];
                     System.arraycopy(resultBody, index, data1, 0, data1.length);
@@ -1192,7 +1193,6 @@ public class BodyHelper {
                     System.arraycopy(resultBody, index, data2, 0, data2.length);
                     list.add(data2);
                 }
-
             }
         } else {
             list.add(resultBody);
@@ -1214,20 +1214,6 @@ public class BodyHelper {
         resultBody = ByteUtil.add(driving, resultBody);
         return resultBody;
     }
-
-    public static byte[] make0502(byte result, byte state, byte length, String str) {
-
-        byte[] resultBody = new byte[]{result};
-        resultBody = ByteUtil.add(resultBody, state);
-        resultBody = ByteUtil.add(resultBody, length);
-        if (length != 0) {
-            resultBody = ByteUtil.add(resultBody, str.getBytes());
-        }
-        resultBody = buildExMsg(id0502, 0, 1, 2, resultBody);
-        resultBody = ByteUtil.add(driving, resultBody);
-        return resultBody;
-    }
-
 
     public static byte[] makeHeart() {
         byte[] result = makeHead(TcpBody.MessageID.heart, false, 0, 0, 0, 0);
@@ -1361,6 +1347,20 @@ public class BodyHelper {
         return sticky(resultHead, resultBody);
     }
 
+    public static byte[] make0502(byte result, byte state, byte length, String str) {
+
+        byte[] resultBody = new byte[]{result};
+        resultBody = ByteUtil.add(resultBody, state);
+        resultBody = ByteUtil.add(resultBody, length);
+        if (length != 0) {
+            resultBody = ByteUtil.add(resultBody, str.getBytes());
+        }
+        resultBody = buildExMsg(id0502, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
+        return sticky(resultHead, resultBody);
+    }
+
     /****
      *
      * @param parameter1
@@ -1480,11 +1480,13 @@ public class BodyHelper {
      * @return
      */
     public static byte[] buildExMsg(byte[] exMsgId, int para2, int para3, int para4, byte[] para6) {
-        int attrr = para2 + (int) (para3 * Math.pow(2, 1)) + (int) (para4 * Math.pow(2, 4));
-        byte[] resultBody = ByteUtil.add(exMsgId, int2Bytes(attrr, 2));
+
+//        int attrr = para2 + (int) (para3 * Math.pow(2, 1)) + (int) (para4 * Math.pow(2, 4));
+//        byte[] resultBody = ByteUtil.add(exMsgId, int2Bytes(attrr, 2));
+        byte[] resultBody = ByteUtil.add(exMsgId, exMsgId);
         resultBody = ByteUtil.add(resultBody, getExCode());
         resultBody = ByteUtil.add(resultBody, terminalNum);
-        resultBody = ByteUtil.add(resultBody, int2Bytes(para6.length, 4));
+        resultBody = ByteUtil.add(resultBody, int2DWORD(para6.length));
         resultBody = ByteUtil.add(resultBody, para6);
         ///加密
         if (para4 == 2) {
@@ -1733,18 +1735,18 @@ public class BodyHelper {
                                 break;
                             case "8301":
                                 HandMsgHelper.Class8301 class8301 = HandMsgHelper.getClass8301(messageBean.throughExpand.data);
-                                TcpHelper.getInstance().send0301(class8301.updataType);         // 0301          ok
-                                Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123456.jpg");
-                                ConstantInfo.photoData = ByteUtil.bitmap2Bytes(bitmap);
-                                bitmap.recycle();
-                                if (ConstantInfo.photoData != null) {
-                                    ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
-//                                    ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
-//                                    totlePhotoNum = ConstantInfo.photoDataSize / (1024 - BodyHelper.getMake0306length(ConstantInfo.photoId)) + 1;
-//                                    Log.d("photo", "照片大小为 " + ConstantInfo.photoDataSize);
-//                                    Log.d("photo", "总包数为 " + totlePhotoNum);
-//                                    TcpHelper.getInstance().send0305(ConstantInfo.photoData.length);
-                                }
+                                RxBus.getInstance().post(RX_SETTING_8301, class8301);
+//                                TcpHelper.getInstance().send0301(class8301.updataType);         // 0301          ok
+
+//                                Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123456.jpg");
+//                                if (ConstantInfo.photoData != null) {
+//                                    ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
+////                                    ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
+////                                    totlePhotoNum = ConstantInfo.photoDataSize / (1024 - BodyHelper.getMake0306length(ConstantInfo.photoId)) + 1;
+////                                    Log.d("photo", "照片大小为 " + ConstantInfo.photoDataSize);
+////                                    Log.d("photo", "总包数为 " + totlePhotoNum);
+////                                    TcpHelper.getInstance().send0305(ConstantInfo.photoData.length);
+//                                }
                                 break;
                             case "8302":
                                 HandMsgHelper.Class8302 class8302 = HandMsgHelper.getClass8302(messageBean.throughExpand.data);
@@ -1752,18 +1754,18 @@ public class BodyHelper {
                                 break;
                             case "8305":
                                 HandMsgHelper.Class8305 class8305 = HandMsgHelper.getClass8305(messageBean.throughExpand.data);
-                                switch (class8305.code) {
-                                    case (byte) 0x00:
-                                        TcpHelper.getInstance().send0306(ConstantInfo.photoId, photoData);
-                                        break;
-                                    case (byte) 0x01:
-                                        TcpHelper.getInstance().send0306(ConstantInfo.photoId, photoData);
-                                        break;
-                                    case (byte) 0x09:
-                                        break;
-                                    case (byte) 0xff:
-                                        break;
-                                }
+//                                switch (class8305.code) {
+//                                    case (byte) 0x00:
+//                                        TcpHelper.getInstance().send0306(ConstantInfo.photoId, photoData);
+//                                        break;
+//                                    case (byte) 0x01:
+//                                        TcpHelper.getInstance().send0306(ConstantInfo.photoId, photoData);
+//                                        break;
+//                                    case (byte) 0x09:
+//                                        break;
+//                                    case (byte) 0xff:
+//                                        break;
+//                                }
                                 break;
                             case "8501":           //设置计时终端应用参数应答
                                 HandMsgHelper.Class8501 class8501 = HandMsgHelper.getClass8501(messageBean.throughExpand.data);

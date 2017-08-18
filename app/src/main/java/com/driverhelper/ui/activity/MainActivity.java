@@ -35,6 +35,7 @@ import com.driverhelper.beans.QRbean;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.AssetsHelper;
+import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.helper.PhotoHelper;
 import com.driverhelper.helper.TcpHelper;
@@ -42,6 +43,7 @@ import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
 import com.driverhelper.utils.ByteUtil;
+import com.driverhelper.utils.FileUtils;
 import com.driverhelper.widget.LiveSurfaceView;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -50,6 +52,7 @@ import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
+import com.jaydenxiao.common.compressorutils.FileUtil;
 
 import java.util.HashMap;
 import java.util.Timer;
@@ -235,13 +238,13 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
             switch (menuItem.getItemId()) {
                 case R.id.NoSendConti:
-                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "ic_launcher.png");
-                    ConstantInfo.photoData = ByteUtil.bitmap2Bytes(bitmap);
-                    bitmap.recycle();
-                    ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
-                    ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
-                    Log.e("11111111111111111", "ConstantInfo.photoDataSize = " + ConstantInfo.photoDataSize + " ||| " + " ConstantInfo.photoId = " + ConstantInfo.photoId);
-                    TcpHelper.getInstance().send0305(ConstantInfo.photoId, ConstantInfo.coachId, (byte) 129, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, ConstantInfo.photoDataSize);
+//                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "ic_launcher.png");
+//                    ConstantInfo.photoData = ByteUtil.bitmap2Bytes(bitmap);
+//                    bitmap.recycle();
+//                    ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
+//                    ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
+//                    Log.e("11111111111111111", "ConstantInfo.photoDataSize = " + ConstantInfo.photoDataSize + " ||| " + " ConstantInfo.photoId = " + ConstantInfo.photoId);
+//                    TcpHelper.getInstance().send0305(ConstantInfo.photoId, ConstantInfo.coachId, (byte) 129, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, ConstantInfo.photoDataSize);
                     break;
                 case R.id.NoSendClear:
                     break;
@@ -427,6 +430,19 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 WriteSettingHelper.set0501(class8501);
             }
         });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8301, new Action1<HandMsgHelper.Class8301>() {
+            @Override
+            public void call(HandMsgHelper.Class8301 class8301) {
+                String photoId = TimeUtil.getTime() / 1000 + "";
+                surfaceView.doTakePicture(photoId);
+                byte[] data = FileUtils.loadBitmap(MainActivity.this, photoId);
+                if (data != null) {
+//                    TcpHelper.getInstance().send0301(class8301.updataType);
+//                    TcpHelper.getInstance().send0305(photoId, ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
+                    TcpHelper.getInstance().send0306(photoId, data);
+                }
+            }
+        });
     }
 
 
@@ -497,7 +513,10 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             switch (view.getId()) {
                 case R.id.JiaoLianButton:
                     if (!Config.isCoachLoginOK) {
-                        startScanActivity("教练员签到");
+                        String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
+                        qRbean = new Gson().fromJson(str, QRbean.class);
+                        coachLogin();
+//                        startScanActivity("教练员签到");
                     } else {
                         new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("教练员登出提示").setIcon(R.drawable.main_img06).setMessage("教练员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
@@ -512,7 +531,10 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                     break;
                 case R.id.XueYuanButton:
                     if (!Config.isStudentLoginOK) {
-                        startScanActivity("学员签到");
+                        String str = "{\"name\": \"肖雪\",\"id\": \"420117199305250036\",\"number\": \"0655824366114239\"}";
+                        qRbean = new Gson().fromJson(str, QRbean.class);
+                        studentLogin(qRbean.getNumber());
+//                        startScanActivity("学员签到");
                     } else {
                         new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("学员登出提示").setIcon(R.drawable.main_img06).setMessage("学员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
@@ -528,7 +550,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 case R.id.textViewThisTime:
                     break;
                 case R.id.surfaceView:
-                    test();
+                    surfaceView.doTakePicture();
                     break;
             }
         } else {
@@ -677,22 +699,20 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             }
         }, 1000, 6 * 1000);
 
-//        photoTimer = new Timer(true);
-//        photoTimer.schedule(new TimerTask() {               //保存照片
-//            @Override
-//            public void run() {
-//                if (mPreBuffer != null) {
-//                    String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
-//                    String str66666 = str.substring(str.length() - 6, str.length());
-//                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MainActivity.this, "123456.jpg");
-//                    byte[] data = ByteUtil.bitmap2Bytes(bitmap);
-//                    PhotoHelper.saveBitmap(MainActivity.this, data);
-////                    DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
-////                            "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
-////                            TimeUtil.getTime());
-//                }
-//            }
-//        }, 10, 15 * 1000);
+        photoTimer = new Timer(true);
+        photoTimer.schedule(new TimerTask() {               //保存照片
+            @Override
+            public void run() {
+                if (mPreBuffer != null) {
+                    surfaceView.doTakePicture();
+                    String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
+                    String str66666 = str.substring(str.length() - 6, str.length());
+                    DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
+                            "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
+                            TimeUtil.getTime());
+                }
+            }
+        }, 10, 15 * 1000);
 //        }, 10, 15 * 60 * 1000);
     }
 
@@ -713,8 +733,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         ConstantInfo.studyTimeThis = 0;
         ConstantInfo.studyDistanceThis = 0;
     }
-
-
 
 
     private void test() {

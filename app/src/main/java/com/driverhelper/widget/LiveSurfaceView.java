@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -148,13 +149,19 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     public void onPictureTaken(byte[] bytes, Camera camera) {
         Bitmap b = null;
         if (null != bytes) {
-            b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);//data是字节数据，将其解析成位图
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+            b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);//data是字节数据，将其解析成位图
             camera.stopPreview();
             isPreview = false;
         }
         //保存图片到sdcard
         if (null != b) {
-            FileUtils.saveBitmap(getContext(), b);
+            if (!TextUtils.isEmpty(fileName)) {
+                FileUtils.saveBitmap(getContext(), b, fileName);
+            } else {
+                FileUtils.saveBitmap(getContext(), b);
+            }
         }
         //再次进入预览
         camera.startPreview();

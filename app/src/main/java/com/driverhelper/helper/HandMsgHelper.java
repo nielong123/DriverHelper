@@ -345,10 +345,10 @@ public final class HandMsgHelper {
         return class8205;
     }
 
-    static class Class8301 {
-        byte updataType;
-        byte cameraNum;
-        byte size;
+    public static class Class8301 {
+        public byte updataType;
+        public byte cameraNum;
+        public byte size;
     }
 
 

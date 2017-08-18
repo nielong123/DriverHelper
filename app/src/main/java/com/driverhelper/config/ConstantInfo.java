@@ -55,8 +55,6 @@ public class ConstantInfo {
     public static byte[] classId;             //课堂id
     public static String classType = "1211110000";          //培训课程
 
-    public static byte[] photoData;                           //照片的byte数据
-    public static int photoDataSize;                           //照片的byte数据大小
     public static String photoId;                         //上传的照片编号
     public static int totlePhotoNum;                        //上传照片包的总数
     public static int photoIndex;                           //当前包的计数

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
@@ -109,12 +110,12 @@ public class TcpHelper {
          *
          * 每次发送心跳包时自动调用
          */
-        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
-            @Override
-            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
-                return BodyHelper.makeHeart();              //心跳
-            }
-        });
+//        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
+//            @Override
+//            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
+//                return BodyHelper.makeHeart();              //心跳
+//            }
+//        });
     }
 
     private void __i__setReceiverCallBack(SocketClient socketClient) {
@@ -397,21 +398,16 @@ public class TcpHelper {
      * @param photoData     总的照片数据
      */
     public void send0306(String photoId, byte[] photoData) {
+
         List<byte[]> list = BodyHelper.make0306Part(photoId, photoData);
-        List<byte[]> list1 = new ArrayList<>();
+//        List<byte[]> list1 = new ArrayList<>();
         if (list.size() > 1) {
             for (byte[] data : list) {
                 int index = list.indexOf(data) + 1;
-                list1.add(BodyHelper.make0306(data, list.size(), index, true));
+                sendData(BodyHelper.make0306(data, list.size(), index, true));
+                Log.e("11","send photo data" + index);
             }
         }
-        for (byte[] data : list1) {
-            sendData(data);
-        }
-
-//        else if (list.size() == 1) {
-//            sendData(BodyHelper.make0306(list.get(0), 0, 0, false));
-//        }
     }
 
     public void send0302() {

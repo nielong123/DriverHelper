@@ -57,15 +57,14 @@ public class TestActivity extends SerialPortActivity {
 
     @Override
     public void initView() {
-        Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123456.jpg");
-        ConstantInfo.photoData = ByteUtil.bitmap2Bytes(bitmap);
-        bitmap.recycle();
-        bitmap = null;
-        ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
-        ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
-        Log.e("", "ConstantInfo.photoDataSize = " + ConstantInfo.photoDataSize + " ||| " + " ConstantInfo.photoId = " + ConstantInfo.photoId);
+//        Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123456.jpg");
+//        ConstantInfo.photoData = ByteUtil.bitmap2Bytes(bitmap);
+//        bitmap.recycle();
+//        bitmap = null;
+//        ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
+//        ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
+//        Log.e("", "ConstantInfo.photoDataSize = " + ConstantInfo.photoDataSize + " ||| " + " ConstantInfo.photoId = " + ConstantInfo.photoId);
 //        TcpHelper.getInstance().send0305(ConstantInfo.photoId, ConstantInfo.coachNum, (byte) 129, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, ConstantInfo.photoDataSize);
-
     }
 
     @Override
@@ -118,8 +117,8 @@ public class TestActivity extends SerialPortActivity {
 
     @OnClick(R.id.load)
     public void onClick() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.driverhelper1_preferences",MODE_PRIVATE);
-        Log.e("123",sharedPreferences.getString(Config.WriteSetting.PROVINCE,""));
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.driverhelper1_preferences", MODE_PRIVATE);
+        Log.e("123", sharedPreferences.getString(Config.WriteSetting.PROVINCE, ""));
 //        MSG.getInstance().setPARAM0001("1111");
 //        MSG.getInstance().getPARAM0001();
 //        Log.d("123",ConstantInfo.param0001 + "");
