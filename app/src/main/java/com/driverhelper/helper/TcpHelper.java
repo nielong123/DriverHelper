@@ -110,12 +110,12 @@ public class TcpHelper {
          *
          * 每次发送心跳包时自动调用
          */
-//        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
-//            @Override
-//            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
-//                return BodyHelper.makeHeart();              //心跳
-//            }
-//        });
+        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
+            @Override
+            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
+                return BodyHelper.makeHeart();              //心跳
+            }
+        });
     }
 
     private void __i__setReceiverCallBack(SocketClient socketClient) {
@@ -404,7 +404,6 @@ public class TcpHelper {
             for (byte[] data : list) {
                 int index = list.indexOf(data) + 1;
                 sendData(BodyHelper.make0306(data, list.size(), index, true));
-                Log.e("11","send photo data" + index);
             }
         }
     }

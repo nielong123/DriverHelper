@@ -1181,7 +1181,6 @@ public class BodyHelper {
         if (number > 0) {
             int index = 0;
             for (int i = 0; i <= number; i++) {
-//                Log.w("123", " i = " + i);
                 if (i != number) {
                     byte[] data1 = new byte[1000];
                     System.arraycopy(resultBody, index, data1, 0, data1.length);

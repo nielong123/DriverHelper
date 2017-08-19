@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.driverhelper.config.ConstantInfo;
+import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.utils.FileUtils;
 
 import java.io.IOException;
@@ -28,6 +30,7 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private final static int height = 480;
     byte[] preBuffer = null;
     boolean isPreview;
+    boolean isSend;
 
     String fileName;
 
@@ -140,6 +143,14 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 
+    public void doTakePictureAndSend(String fileName) {
+        this.fileName = fileName;
+        this.isSend = true;
+        if (isPreview && (camera != null)) {
+            camera.takePicture(this, null, this);
+        }
+    }
+
     /****
      * 照相
      * @param bytes
@@ -152,6 +163,11 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.RGB_565;
             b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);//data是字节数据，将其解析成位图
+            if (isSend) {
+                TcpHelper.getInstance().send0305(fileName, ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, bytes.length);
+                TcpHelper.getInstance().send0306(fileName, bytes);
+                isSend = false;
+            }
             camera.stopPreview();
             isPreview = false;
         }

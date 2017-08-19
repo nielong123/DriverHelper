@@ -22,13 +22,13 @@ public class FileUtils {
 
     static public void saveBitmap(Context context, Bitmap bm) {
         Log.e("", "保存图片");
-        File f = new File(context.getCacheDir(), new Date().getTime() + ".jpg");
+        File f = new File(context.getCacheDir(), new Date().getTime() + ".png");
         if (f.exists()) {
             f.delete();
         }
         try {
             FileOutputStream out = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.JPEG, 50, out);
+            bm.compress(Bitmap.CompressFormat.PNG, 50, out);
             out.flush();
             out.close();
             Log.i(TAG, "已经保存");
@@ -50,7 +50,7 @@ public class FileUtils {
         }
         try {
             FileOutputStream out = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.JPEG, 50, out);
+            bm.compress(Bitmap.CompressFormat.PNG, 50, out);
             out.flush();
             out.close();
             Log.i(TAG, "已经保存");
@@ -68,8 +68,8 @@ public class FileUtils {
     static public byte[] loadBitmap(Context context, String name) {
         FileInputStream fis = null;
         try {
-//            fis = new FileInputStream(context.getCacheDir() + name);
-            fis = new FileInputStream("/data/data/com.driverhelper1/cache/1503056538207.jpg");
+            fis = new FileInputStream(context.getCacheDir() + name);
+//            fis = new FileInputStream("/data/data/com.driverhelper1/cache/1503053714367.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
