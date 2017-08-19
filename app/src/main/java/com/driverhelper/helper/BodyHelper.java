@@ -302,11 +302,13 @@ public class BodyHelper {
      */
     public static byte[] makeStudentLogin(String coachNum, String studentNum) {
         byte[] resultBody = ByteUtil.str2Word(studentNum);
+        ByteUtil.printHexString("ByteUtil.str2Word(studentNum)", ByteUtil.str2Word(studentNum));
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(coachNum));      //当前教练编号
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
-        long time = TimeUtil.getTime();
-        ConstantInfo.classId = ByteUtil.int2Bytes((int) time, 4);
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
+        Log.e("coachNum", "coachNum = " + coachNum);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1212110000"));                //培训课程
+        long time = TimeUtil.getTime()/1000;
+        ConstantInfo.classId = ByteUtil.int2DWORD((int) time);              //课堂id  时间戳
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -321,7 +323,9 @@ public class BodyHelper {
         resultBody = buildExMsg(updataStudentLogin, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
-        return sticky(resultHead, resultBody);
+        byte[] result = sticky(resultHead, resultBody);
+        ByteUtil.printHexString("  result  ", result);
+        return result;
     }
 
 
@@ -368,6 +372,7 @@ public class BodyHelper {
         byte[] resultBody = ("0000000000000000" +
                 strTime +
                 IdHelper.getStudyCode()).getBytes();           //26        学时记录编号
+        Log.e("", "IdHelper.getStudyCode() = " + IdHelper.getStudyCode());
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
         resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentId.getBytes());       //学员编号
         resultBody = ByteUtil.add(resultBody, ConstantInfo.coachId.getBytes());             //教练员编号
@@ -1027,7 +1032,9 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentId.getBytes());       //学员编号
         resultBody = ByteUtil.add(resultBody, ConstantInfo.coachId.getBytes());             //教练员编号
         resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
+        ByteUtil.printHexString("ConstantInfo.classId = ", ConstantInfo.classId);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(strTime));               //記錄產生時間
+        Log.e("", "time666 = " + time666);
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
         resultBody = ByteUtil.add(resultBody, recordType);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(10));            //最大速度

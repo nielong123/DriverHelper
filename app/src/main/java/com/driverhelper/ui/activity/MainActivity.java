@@ -368,6 +368,11 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 ConstantInfo.StudentInfo.finishedMileage = class8201.finishedMileage;
                 ConstantInfo.StudentInfo.totleTime = class8201.totleStudyTime;
                 ConstantInfo.StudentInfo.finishedTime = class8201.finishedStudyTime;
+                Log.e("studentId", "studentId = " + ConstantInfo.StudentInfo.studentId);
+                Log.e("totleMileage", "totleMileage = " + ConstantInfo.StudentInfo.totleMileage);
+                Log.e("finishedMileage", "finishedMileage = " + ConstantInfo.StudentInfo.finishedMileage);
+                Log.e("totleTime", "totleTime = " + ConstantInfo.StudentInfo.totleTime);
+                Log.e("finishedTime", "finishedTime = " + ConstantInfo.StudentInfo.finishedTime);
                 startStudy();
             }
         });
@@ -676,6 +681,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
      * 开始培训
      */
     private void startStudy() {
+        surfaceView.doTakePictureAndSend(TimeUtil.getTime() / 1000 + "");       //学员登录的时候上传一张照片
         ConstantInfo.studyTimeThis = 0;
         studyTimer = new Timer(true);
         studyTimer.schedule(new TimerTask() {
@@ -698,14 +704,13 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         photoTimer.schedule(new TimerTask() {               //保存照片
             @Override
             public void run() {
-                if (mPreBuffer != null) {
-                    surfaceView.doTakePicture();
-                    String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
-                    String str66666 = str.substring(str.length() - 6, str.length());
-                    DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
-                            "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
-                            TimeUtil.getTime());
-                }
+                String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
+                String sms = str.substring(str.length() - 6, str.length());
+                String photoPath = TimeUtil.getTime() / 1000 + ".png";
+                surfaceView.doTakePictureAndSend(photoPath);
+                DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
+                        photoPath + "png", sms, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
+                        TimeUtil.getTime());
             }
         }, 10, 15 * 1000);
 //        }, 10, 15 * 60 * 1000);
