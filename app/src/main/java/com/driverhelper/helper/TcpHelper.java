@@ -110,12 +110,12 @@ public class TcpHelper {
          *
          * 每次发送心跳包时自动调用
          */
-        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
-            @Override
-            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
-                return BodyHelper.makeHeart();              //心跳
-            }
-        });
+//        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
+//            @Override
+//            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
+//                return BodyHelper.makeHeart();              //心跳
+//            }
+//        });
     }
 
     private void __i__setReceiverCallBack(SocketClient socketClient) {

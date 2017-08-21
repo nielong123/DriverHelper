@@ -11,6 +11,7 @@ import com.driverhelper.beans.MessageBean;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.config.TcpBody;
+import com.driverhelper.other.Action;
 import com.driverhelper.other.encrypt.Encrypt;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8202_;
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8301;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.ConstantInfo.SN;
@@ -306,7 +308,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(coachNum));      //当前教练编号
         Log.e("coachNum", "coachNum = " + coachNum);
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1212110000"));                //培训课程
-        long time = TimeUtil.getTime()/1000;
+        long time = TimeUtil.getTime() / 1000;
         ConstantInfo.classId = ByteUtil.int2DWORD((int) time);              //课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
@@ -1644,7 +1646,8 @@ public class BodyHelper {
 
                 case "8202":        //临时位置追踪控制
                     HandMsgHelper.Class8202_ class8202_ = HandMsgHelper.getClass8202_(messageBean.bodyBean);
-                    TcpHelper.getInstance().sendCommonResponse(messageBean.headBean.waterCode, 0);
+                    RxBus.getInstance().post(RX_SETTING_8202_, class8202_);
+//                    TcpHelper.getInstance().sendCommonResponse(messageBean.headBean.waterCode, 0);
 
 
                     break;

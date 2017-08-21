@@ -290,7 +290,7 @@ public final class HandMsgHelper {
     /***
      * 零食位置跟踪
      */
-    static class Class8202_ {
+    public static class Class8202_ {
         public int waterCode;
         public int timeInterval;
         public long term;

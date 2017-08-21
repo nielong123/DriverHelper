@@ -4,7 +4,6 @@ package com.driverhelper.ui.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
@@ -34,16 +33,14 @@ import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.QRbean;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
-import com.driverhelper.helper.AssetsHelper;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
-import com.driverhelper.helper.PhotoHelper;
 import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
+import com.driverhelper.other.Action;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
 import com.driverhelper.utils.ByteUtil;
-import com.driverhelper.utils.FileUtils;
 import com.driverhelper.widget.LiveSurfaceView;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -52,7 +49,6 @@ import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
-import com.jaydenxiao.common.compressorutils.FileUtil;
 
 import java.util.HashMap;
 import java.util.Timer;
@@ -177,7 +173,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Config.TextInfoType.UPDATATIME:
-                    textViewTime.setText(TimeUtil.getFriendlyDuration2(ConstantInfo.studyTimeThis));
+                    if (textViewTime != null) {
+                        textViewTime.setText(TimeUtil.getFriendlyDuration2(ConstantInfo.studyTimeThis));
+                    }
                     break;
                 case Config.TextInfoType.ChangeGPSINFO:
                     direction.setText("方向:" + MyApplication.getInstance().direction + "度");
@@ -441,6 +439,14 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 String photoId = TimeUtil.getTime() / 1000 + "";
                 TcpHelper.getInstance().send0301(class8301.updataType);
                 surfaceView.doTakePictureAndSend(photoId);
+            }
+        });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8202_, new Action1<HandMsgHelper.Class8202_>() {
+
+            @Override
+            public void call(HandMsgHelper.Class8202_ class8202_) {
+                Action.getInstance().action_8202_(class8202_);
+                ttsClient.speak("临时位置追踪", 1, null);
             }
         });
     }
