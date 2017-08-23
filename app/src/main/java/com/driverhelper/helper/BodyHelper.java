@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.MessageBean;
+import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.config.TcpBody;
@@ -24,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8202_;
+import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8205;
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8301;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.ConstantInfo.SN;
@@ -369,12 +371,7 @@ public class BodyHelper {
      * @return
      */
     public static byte[] makeSendStudyInfo(byte updataType, String time666, byte recordType) {
-        String strTime = TimeUtil.formatData(TimeUtil.dataFormatYMD, TimeUtil.getTime() / 1000);
-        strTime = strTime.substring(0, 6);
-        byte[] resultBody = ("0000000000000000" +
-                strTime +
-                IdHelper.getStudyCode()).getBytes();           //26        学时记录编号
-        Log.e("", "IdHelper.getStudyCode() = " + IdHelper.getStudyCode());
+        byte[] resultBody = ByteUtil.add(("0000000000000000" + time666).getBytes(), ByteUtil.int2DWORD(IdHelper.getStudyCode()));           //26        学时记录编号
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
         resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentId.getBytes());       //学员编号
         resultBody = ByteUtil.add(resultBody, ConstantInfo.coachId.getBytes());             //教练员编号
@@ -382,8 +379,8 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(classType));                //培训课程
         resultBody = ByteUtil.add(resultBody, recordType);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.ObdInfo.vehiclSspeed));            //最大速度
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2Bytes(ConstantInfo.ObdInfo.distance, 4));            //最大里程  10
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.ObdInfo.vehiclSspeed));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.ObdInfo.distance));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -398,7 +395,9 @@ public class BodyHelper {
         resultBody = buildExMsg(id0203, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
-        return sticky(resultHead, resultBody);
+        byte[] result = sticky(resultHead, resultBody);
+        ByteUtil.printHexString(result);
+        return result;
     }
 
     public static byte[] makeAll0104(int waterId) {
@@ -1021,26 +1020,19 @@ public class BodyHelper {
         return result;
     }
 
-    /****
-     * 上传学时信息
-     * @param updataType
-     * @return
-     */
-    public static byte[] make0203(byte updataType, String time666, byte recordType) {
-        String strTime = TimeUtil.formatData(TimeUtil.dataFormatYMD, TimeUtil.getTime() / 1000);
-        strTime = strTime.substring(0, 6);
-        byte[] resultBody = ByteUtil.add(("0000000000000000" + strTime).getBytes(), ByteUtil.int2DWORD(IdHelper.getStudyCode()));           //26        学时记录编号
+
+    public static byte[] make0203(byte updataType, byte recordType, StudyInfo info) {
+
+        byte[] resultBody = ByteUtil.add(("0000000000000000" + info.getMakeTime()).getBytes(), ByteUtil.int2DWORD(info.getWaterCode()));           //26        学时记录编号
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentId.getBytes());       //学员编号
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.coachId.getBytes());             //教练员编号
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
-        ByteUtil.printHexString("ConstantInfo.classId = ", ConstantInfo.classId);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(strTime));               //記錄產生時間
-        Log.e("", "time666 = " + time666);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1211110000"));                //培训课程
+        resultBody = ByteUtil.add(resultBody, info.getStudentId().getBytes());       //学员编号
+        resultBody = ByteUtil.add(resultBody, info.getCoachId().getBytes());             //教练员编号
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(info.getWaterCode()));           //课堂id  时间戳
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(info.getMakeTime()));               //記錄產生時間
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(classType));                //培训课程
         resultBody = ByteUtil.add(resultBody, recordType);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(10));            //最大速度
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(11));            //最大里程  10
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(info.getSpeed()));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(info.getDistance()));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -1055,7 +1047,9 @@ public class BodyHelper {
         resultBody = buildExMsg(id0203, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
-        return sticky(resultHead, resultBody);
+        byte[] result = sticky(resultHead, resultBody);
+        ByteUtil.printHexString(result);
+        return result;
     }
 
     /****
@@ -1647,8 +1641,6 @@ public class BodyHelper {
                 case "8202":        //临时位置追踪控制
                     HandMsgHelper.Class8202_ class8202_ = HandMsgHelper.getClass8202_(messageBean.bodyBean);
                     RxBus.getInstance().post(RX_SETTING_8202_, class8202_);
-//                    TcpHelper.getInstance().sendCommonResponse(messageBean.headBean.waterCode, 0);
-
 
                     break;
                 case "8900":            //透传消息应答
@@ -1734,24 +1726,11 @@ public class BodyHelper {
                                 break;
                             case "8205":            //先传0205-01  开始，然后传0205-
                                 HandMsgHelper.Class8205 class8205 = HandMsgHelper.getClass8205(messageBean.throughExpand.data);
-                                TcpHelper.getInstance().send0205((byte) 0x01);
-                                TcpHelper.getInstance().send0205((byte) 0x04);
-                                TcpHelper.getInstance().send0203((byte) 0x02, TimeUtil.getTime() / 1000 + "", (byte) 0x01);
+                                RxBus.getInstance().post(RX_SETTING_8205, class8205);
                                 break;
                             case "8301":
                                 HandMsgHelper.Class8301 class8301 = HandMsgHelper.getClass8301(messageBean.throughExpand.data);
                                 RxBus.getInstance().post(RX_SETTING_8301, class8301);
-//                                TcpHelper.getInstance().send0301(class8301.updataType);         // 0301          ok
-
-//                                Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123456.jpg");
-//                                if (ConstantInfo.photoData != null) {
-//                                    ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
-////                                    ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
-////                                    totlePhotoNum = ConstantInfo.photoDataSize / (1024 - BodyHelper.getMake0306length(ConstantInfo.photoId)) + 1;
-////                                    Log.d("photo", "照片大小为 " + ConstantInfo.photoDataSize);
-////                                    Log.d("photo", "总包数为 " + totlePhotoNum);
-////                                    TcpHelper.getInstance().send0305(ConstantInfo.photoData.length);
-//                                }
                                 break;
                             case "8302":
                                 HandMsgHelper.Class8302 class8302 = HandMsgHelper.getClass8302(messageBean.throughExpand.data);

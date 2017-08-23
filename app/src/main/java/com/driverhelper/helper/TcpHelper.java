@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
+import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.utils.ByteUtil;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import static com.driverhelper.config.ConstantInfo.StudentInfo.studentId;
 import static com.driverhelper.config.ConstantInfo.coachId;
+import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
 
@@ -350,28 +352,37 @@ public class TcpHelper {
      * 发送学时信息
      */
     public void sendStudyInfo(byte updataType) {
-        String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
+        int studyCode = IdHelper.getStudyCode();
+        String str = TimeUtil.formatData(dateFormatYMDHMS, TimeUtil.getTime() / 1000).replaceAll(":", "");
         String str66666 = str.substring(str.length() - 6, str.length());
         str = str.substring(str.length() - 2, str.length());            //发送时间
-        int index = Integer.valueOf(str);
+//        int index = Integer.valueOf(str);
 //        if (index > 50 && index < 59) {
         sendData(BodyHelper.makeSendStudyInfo(updataType, str66666, (byte) 0x00));
-        DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
+        DbHelper.getInstance().addStudyInfoDao(null, studyCode, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
                 "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
                 TimeUtil.getTime());
 //        }
     }
 
-    void send0205(byte type) {
+    public void send0205(byte type) {
         sendData(BodyHelper.make0205(type));
     }
 
     public void send0203(byte updataType, String time666, byte recordType) {
-        if (ConstantInfo.StudentInfo.studentId != null) {
-            sendData(BodyHelper.make0203(updataType, time666, recordType));
-        } else {
-            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员未签到");
-        }
+//        if (ConstantInfo.StudentInfo.studentId != null) {
+//        sendData(BodyHelper.make0203(updataType, time666, recordType));
+//        } else {
+//            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员未签到");
+//        }
+    }
+
+    public void send0203(StudyInfo info) {
+//        if (ConstantInfo.StudentInfo.studentId != null) {
+        sendData(BodyHelper.make0203((byte) 0x01, (byte) 0x01, info));
+//        } else {
+//            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员未签到");
+//        }
     }
 
     public void send0301(byte updataType) {

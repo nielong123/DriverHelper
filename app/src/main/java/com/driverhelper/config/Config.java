@@ -38,6 +38,7 @@ public class Config {
         public final static String RX_SETTING_8104 = "RX_SETTING_8104";
         public final static String RX_SETTING_8106 = "RX_SETTING_8106";
         public final static String RX_SETTING_8202_ = "RX_SETTING_8202_";
+        public final static String RX_SETTING_8205 = "RX_SETTING_8205";
         public final static String RX_SETTING_0501 = "RX_SETTING_0501";           //
         public final static String RX_SETTING_8301 = "RX_SETTING_8301";
     }

@@ -325,11 +325,11 @@ public final class HandMsgHelper {
         return class8202;
     }
 
-    static class Class8205 {
-        byte findType;
-        byte[] startTime = new byte[6];
-        byte[] endTime = new byte[6];
-        byte findNum;
+    public static class Class8205 {
+        public byte findType;
+        public byte[] startTime = new byte[6];
+        public byte[] endTime = new byte[6];
+        public byte findNum;
     }
 
     static Class8205 getClass8205(byte[] data) {

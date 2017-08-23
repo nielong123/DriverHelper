@@ -9,6 +9,10 @@ import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.beans.gen.GpsInfoDao;
 import com.driverhelper.beans.gen.StudyInfoDao;
 
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.WhereCondition;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,11 +71,11 @@ public class DbHelper {
     }
 
 
-    public void addStudyInfoDao(Long id, String studentId, String coachId, long classId,
+    public void addStudyInfoDao(Long id, int waterCode, String studentId, String coachId, long classId,
                                 String photoPath, String makeTime, String type, int vehicleSpeed,
                                 int distance, int speed, long time) {
         Log.w("dbhelper", "write db studyInfoDao");
-        studyInfo = new StudyInfo(id, studentId, coachId, classId,
+        studyInfo = new StudyInfo(id, waterCode, studentId, coachId, classId,
                 photoPath, makeTime, type, vehicleSpeed,
                 distance, speed, time);
         studyInfoDao.insert(studyInfo);
@@ -91,18 +95,16 @@ public class DbHelper {
     }
 
 
-    public StudyInfo queryStudyInfoByTime(long time) {
-        List<StudyInfo> list = studyInfoDao.loadAll();
-        for (StudyInfo data : list) {
-            if (time == data.getTime()) {
-                return data;
-            }
-        }
-        return null;
+    public List<StudyInfo> queryStudyInfoByTime(long startTime, long endTime) {
+        List<StudyInfo> list = studyInfoDao.queryBuilder().where(StudyInfoDao.Properties.Time.between(startTime, endTime)).build().list();
+        return list;
     }
 
-//    public void deleteGpsInfoByOther(){
-//        gpsInfoDao.deleteInTx();
-//    }
-
+    public List<StudyInfo> queryStudyInfoByNum(int num) {
+        List list = studyInfoDao.queryBuilder()
+                .where(StudyInfoDao.Properties.Id.le(num))
+                .orderDesc(StudyInfoDao.Properties.Id)
+                .list();
+        return list;
+    }
 }

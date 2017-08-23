@@ -35,6 +35,7 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
+import com.driverhelper.helper.IdHelper;
 import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Action;
@@ -58,6 +59,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
+import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8205;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
@@ -134,12 +136,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     private TextToSpeech ttsClient;
     Context context;
-
-    private final static int width = 320;
-    private final static int height = 240;
-    byte[] mPreBuffer = null;
-
-    boolean isPreview;
 
     private static final int REQUEST_SETTING = 1;
 
@@ -449,6 +445,14 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 ttsClient.speak("临时位置追踪", 1, null);
             }
         });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8205, new Action1<HandMsgHelper.Class8205>() {
+
+            @Override
+            public void call(HandMsgHelper.Class8205 class8205) {
+                ttsClient.speak("命令上报学时记录" + class8205.findType, 1, null);
+                Action.getInstance().action_8205(class8205);
+            }
+        });
     }
 
 
@@ -702,7 +706,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         updataTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息
+                TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息并保存
             }
         }, 1000, 6 * 1000);
 
@@ -713,8 +717,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
                 String sms = str.substring(str.length() - 6, str.length());
                 String photoPath = TimeUtil.getTime() / 1000 + ".png";
-                surfaceView.doTakePictureAndSend(photoPath);
-                DbHelper.getInstance().addStudyInfoDao(null, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
+//                surfaceView.doTakePictureAndSend(photoPath);
+                DbHelper.getInstance().addStudyInfoDao(null, IdHelper.getStudyCode(), ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
                         photoPath + "png", sms, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
                         TimeUtil.getTime());
             }

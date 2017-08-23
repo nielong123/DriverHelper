@@ -2,6 +2,7 @@ package com.driverhelper.beans.db;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Generated;
 
@@ -12,8 +13,11 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class StudyInfo {
 
-    @Id
+    @Id(autoincrement = true)
     private Long id;
+
+    @Property(nameInDb = "WATERCODE")       //流水号
+    private int waterCode;
 
     @Property(nameInDb = "STUDENTID")       //学员id
     private String studentId;
@@ -42,6 +46,7 @@ public class StudyInfo {
     @Property(nameInDb = "SPEED")       //发动机转速
     private int speed;
 
+    @Index(unique = true)
     @Property(nameInDb = "TIME")        //时间
     private long time;
 
@@ -133,11 +138,12 @@ public class StudyInfo {
         this.id = id;
     }
 
-    @Generated(hash = 707719013)
-    public StudyInfo(Long id, String studentId, String coachId, long classId,
-            String photoPath, String makeTime, String type, int vehicleSpeed,
-            int distance, int speed, long time) {
+    @Generated(hash = 515962320)
+    public StudyInfo(Long id, int waterCode, String studentId, String coachId, long classId,
+            String photoPath, String makeTime, String type, int vehicleSpeed, int distance,
+            int speed, long time) {
         this.id = id;
+        this.waterCode = waterCode;
         this.studentId = studentId;
         this.coachId = coachId;
         this.classId = classId;
@@ -169,5 +175,13 @@ public class StudyInfo {
                 ", speed=" + speed +
                 ", time=" + time +
                 '}';
+    }
+
+    public int getWaterCode() {
+        return this.waterCode;
+    }
+
+    public void setWaterCode(int waterCode) {
+        this.waterCode = waterCode;
     }
 }
