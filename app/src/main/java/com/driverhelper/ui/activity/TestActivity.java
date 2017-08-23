@@ -57,14 +57,6 @@ public class TestActivity extends SerialPortActivity {
 
     @Override
     public void initView() {
-//        Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "123456.jpg");
-//        ConstantInfo.photoData = ByteUtil.bitmap2Bytes(bitmap);
-//        bitmap.recycle();
-//        bitmap = null;
-//        ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
-//        ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
-//        Log.e("", "ConstantInfo.photoDataSize = " + ConstantInfo.photoDataSize + " ||| " + " ConstantInfo.photoId = " + ConstantInfo.photoId);
-//        TcpHelper.getInstance().send0305(ConstantInfo.photoId, ConstantInfo.coachNum, (byte) 129, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, ConstantInfo.photoDataSize);
     }
 
     @Override

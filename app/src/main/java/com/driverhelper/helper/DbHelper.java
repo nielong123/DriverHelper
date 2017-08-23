@@ -1,6 +1,7 @@
 package com.driverhelper.helper;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.driverhelper.app.MyApplication;
@@ -106,5 +107,22 @@ public class DbHelper {
                 .orderDesc(StudyInfoDao.Properties.Id)
                 .list();
         return list;
+    }
+
+    public List<String> queryPictureByTime(long startTime, long endTime) {
+//        List<StudyInfo> studyInfos = studyInfoDao.queryBuilder().where(StudyInfoDao.Properties.Time.between(startTime, endTime)).build().list();
+        List<StudyInfo> studyInfos = studyInfoDao.queryBuilder().where(StudyInfoDao.Properties.Time.between(1503392586697l, 1503392633606l)).build().list();
+        if (studyInfos != null) {
+            List<String> result = new ArrayList<>();
+            for (StudyInfo info : studyInfos) {
+                if (!TextUtils.isEmpty(info.getPhotoPath())) {
+                    result.add(info.getPhotoPath());
+                }
+            }
+
+            Log.e("123","1111111111111");
+            return result;
+        }
+        return null;
     }
 }

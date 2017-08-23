@@ -90,4 +90,15 @@ public class Action {
                 break;
         }
     }
+
+
+    public void action_0303(HandMsgHelper.Class8302 class8302) {
+        List<String> list = DbHelper.getInstance().queryPictureByTime(ByteUtil.byte2int(class8302.startTime),
+                ByteUtil.byte2int(class8302.startTime));
+        if (list.size() != 0){
+            TcpHelper.getInstance().send0303(list);
+        }else{
+            TcpHelper.getInstance().send0303(null);
+        }
+    }
 }

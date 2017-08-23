@@ -29,7 +29,7 @@ public final class TcpBody {
 
         public static byte[] id0301 = {(byte) 0x03, (byte) 0x01};               //立即拍照
         public static byte[] id0302 = {(byte) 0x03, (byte) 0x02};               //B.4.2.3.4　查询照片应答
-        public static byte[] id0303 = {(byte) 0x03, (byte) 0x03};               //B.4.2.3.4　查询照片应答
+        public static byte[] id0303 = {(byte) 0x03, (byte) 0x03};               //B.4.2.3.5　上报照片查询结果
         public static byte[] id0304 = {(byte) 0x03, (byte) 0x04};               //B.4.2.3.8　上传指定照片应答
         public static byte[] id0305 = {(byte) 0x03, (byte) 0x05};               //B.4.2.3.9　照片上传初始化
         public static byte[] id0306 = {(byte) 0x03, (byte) 0x06};               //B.4.2.3.8　上传指定照片应答

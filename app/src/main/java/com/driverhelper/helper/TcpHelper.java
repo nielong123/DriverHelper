@@ -112,12 +112,12 @@ public class TcpHelper {
          *
          * 每次发送心跳包时自动调用
          */
-//        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
-//            @Override
-//            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
-//                return BodyHelper.makeHeart();              //心跳
-//            }
-//        });
+        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
+            @Override
+            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
+                return BodyHelper.makeHeart();              //心跳
+            }
+        });
     }
 
     private void __i__setReceiverCallBack(SocketClient socketClient) {
@@ -423,8 +423,38 @@ public class TcpHelper {
         sendData(BodyHelper.make0302((byte) 0x01));
     }
 
-    public void send0303() {
-        sendData(BodyHelper.make0501((byte) 0x01));
+    public void send0303(List<String> list) {
+        final int pageSize = 10;
+//        list = null;
+        if (list != null) {
+            if (list.size() > pageSize) {
+                /*******************************这段代码可能有问题**********************/
+                int index = (list.size() / pageSize) + 1;
+                for (int i = 0; i < index; i++) {
+                    if (i != index - 1) {
+                        List<String> list1 = new ArrayList<>();
+                        for (int j = 0; j < pageSize * i; j++) {
+                            list1.add(list.get(j));
+                        }
+                        sendData(BodyHelper.make0303((byte) 0x00, list.size(), list1));
+                    } else {
+                        List<String> list1 = new ArrayList<>();
+                        for (int j = 0; j < list.size() % pageSize; j++) {
+                            list1.add(list.get(j));
+                        }
+                        sendData(BodyHelper.make0303((byte) 0x01, list.size(), list1));
+                    }
+                }
+                /***************************************************************************/
+                return;
+            } else {
+                sendData(BodyHelper.make0303((byte) 0x01, list.size(), list));
+            }
+
+        } else {
+            sendData(BodyHelper.make0303((byte) 0x01, 0, new ArrayList<String>()));
+        }
+
     }
 
     public void send0503(int parameter1,

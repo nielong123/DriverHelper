@@ -437,6 +437,12 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 surfaceView.doTakePictureAndSend(photoId);
             }
         });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8302, new Action1<HandMsgHelper.Class8302>() {
+            @Override
+            public void call(HandMsgHelper.Class8302 class8302) {
+                Action.getInstance().action_0303(class8302);
+            }
+        });
         mRxManager.on(Config.Config_RxBus.RX_SETTING_8202_, new Action1<HandMsgHelper.Class8202_>() {
 
             @Override
@@ -719,7 +725,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 String photoPath = TimeUtil.getTime() / 1000 + ".png";
 //                surfaceView.doTakePictureAndSend(photoPath);
                 DbHelper.getInstance().addStudyInfoDao(null, IdHelper.getStudyCode(), ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
-                        photoPath + "png", sms, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
+                        photoPath, sms, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
                         TimeUtil.getTime());
             }
         }, 10, 15 * 1000);

@@ -27,6 +27,7 @@ import java.util.List;
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8202_;
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8205;
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8301;
+import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8302;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.ConstantInfo.SN;
 import static com.driverhelper.config.ConstantInfo.classType;
@@ -1132,15 +1133,21 @@ public class BodyHelper {
         return sticky(resultHead, resultBody);
     }
 
-    public static byte[] make0303(byte isUpdataEnd) {
+    public static byte[] make0303(byte isUpdataEnd, int totle, List<String> list) {
 
-        byte[] resultBody = new byte[]{isUpdataEnd};
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(totle));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(1234567890));           //课堂id
+        byte[] resultBody = new byte[]{isUpdataEnd, (byte) totle};
+        if (totle != 0) {
+            resultBody = ByteUtil.add(resultBody, (byte) (list.size()));
+            for (String str : list) {
+                resultBody = ByteUtil.add(resultBody, str.replaceAll(".pngpng", "").getBytes());
+            }
+        }
         resultBody = buildExMsg(id0303, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
-        return sticky(resultHead, resultBody);
+        byte[] result = sticky(resultHead, resultBody);
+        ByteUtil.printHexString("result 0303 = ", result);
+        return result;
     }
 
     /****
@@ -1735,6 +1742,10 @@ public class BodyHelper {
                             case "8302":
                                 HandMsgHelper.Class8302 class8302 = HandMsgHelper.getClass8302(messageBean.throughExpand.data);
                                 TcpHelper.getInstance().send0302();
+                                RxBus.getInstance().post(RX_SETTING_8302, class8302);
+                                break;
+                            case "8304":
+                                HandMsgHelper.Class8304 class8304 = HandMsgHelper.getClass8304(messageBean.throughExpand.data);
                                 break;
                             case "8305":
                                 HandMsgHelper.Class8305 class8305 = HandMsgHelper.getClass8305(messageBean.throughExpand.data);
@@ -1755,7 +1766,6 @@ public class BodyHelper {
                                 HandMsgHelper.Class8501 class8501 = HandMsgHelper.getClass8501(messageBean.throughExpand.data);
                                 Logger.w(class8501.toString());
                                 RxBus.getInstance().post(Config.Config_RxBus.RX_SETTING_0501, class8501);
-                                TcpHelper.getInstance().send0303();
                                 break;
                             case "8502":
                                 HandMsgHelper.Class8502 class8502 = HandMsgHelper.getClass8502(messageBean.throughExpand.data);

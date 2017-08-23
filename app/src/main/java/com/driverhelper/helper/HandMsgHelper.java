@@ -1,5 +1,7 @@
 package com.driverhelper.helper;
 
+import android.util.Log;
+
 import com.driverhelper.utils.ByteUtil;
 
 import java.util.ArrayList;
@@ -360,10 +362,10 @@ public final class HandMsgHelper {
         return class8301;
     }
 
-    static class Class8302 {
+    public static class Class8302 {
         public byte type;
-        byte[] startTime = new byte[6];
-        byte[] endTime = new byte[6];
+        public byte[] startTime = new byte[6];
+        public byte[] endTime = new byte[6];
     }
 
     public static Class8302 getClass8302(byte[] data) {
@@ -388,12 +390,13 @@ public final class HandMsgHelper {
     }
 
     public static class Class8304 {
-        byte[] photoId;
+        byte[] photoId = new byte[10];
     }
 
     public static Class8304 getClass8304(byte[] data) {
         Class8304 class8304 = new Class8304();
         System.arraycopy(data, 0, class8304.photoId, 0, class8304.photoId.length);
+        Log.e("", ByteUtil.getString(class8304.photoId));
         return class8304;
     }
 
