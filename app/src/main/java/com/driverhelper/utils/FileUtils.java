@@ -68,8 +68,8 @@ public class FileUtils {
     static public byte[] loadBitmap(Context context, String name) {
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream(context.getCacheDir() + name);
-//            fis = new FileInputStream("/data/data/com.driverhelper1/cache/1503053714367.png");
+            fis = new FileInputStream(context.getFilesDir().getPath() + "/" + name);
+//            fis = new FileInputStream("/data/data/com.driverhelper1/cache/1503554926.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -79,4 +79,5 @@ public class FileUtils {
         }
         return null;
     }
+
 }

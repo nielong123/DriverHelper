@@ -164,8 +164,8 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             options.inPreferredConfig = Bitmap.Config.RGB_565;
             b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);//data是字节数据，将其解析成位图
             if (isSend) {
-                TcpHelper.getInstance().send0305(fileName, ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, bytes.length);
-                TcpHelper.getInstance().send0306(fileName, bytes);
+                TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, bytes.length);
+                TcpHelper.getInstance().send0306(fileName.replace(".png", ""), bytes);
                 isSend = false;
             }
             camera.stopPreview();

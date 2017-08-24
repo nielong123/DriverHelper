@@ -459,6 +459,14 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 Action.getInstance().action_8205(class8205);
             }
         });
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8304, new Action1<HandMsgHelper.Class8304>() {
+
+            @Override
+            public void call(HandMsgHelper.Class8304 class8304) {
+                ttsClient.speak("上传指定照片" + ByteUtil.getString(class8304.photoId), 1, null);
+                Action.getInstance().action_8304(MainActivity.this, class8304);
+            }
+        });
     }
 
 
@@ -697,7 +705,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
      * 开始培训
      */
     private void startStudy() {
-        surfaceView.doTakePictureAndSend(TimeUtil.getTime() / 1000 + "");       //学员登录的时候上传一张照片
         ConstantInfo.studyTimeThis = 0;
         studyTimer = new Timer(true);
         studyTimer.schedule(new TimerTask() {
@@ -714,7 +721,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void run() {
                 TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息并保存
             }
-        }, 1000, 6 * 1000);
+        }, 10, 60 * 1000);
 
         photoTimer = new Timer(true);
         photoTimer.schedule(new TimerTask() {               //保存照片
@@ -723,13 +730,12 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
                 String sms = str.substring(str.length() - 6, str.length());
                 String photoPath = TimeUtil.getTime() / 1000 + ".png";
-//                surfaceView.doTakePictureAndSend(photoPath);
+                surfaceView.doTakePictureAndSend(photoPath);
                 DbHelper.getInstance().addStudyInfoDao(null, IdHelper.getStudyCode(), ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
                         photoPath, sms, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
                         TimeUtil.getTime());
             }
-        }, 10, 15 * 1000);
-//        }, 10, 15 * 60 * 1000);
+        }, 2 * 1000, 15 * 60 * 1000);
     }
 
     private void stopStudy() {

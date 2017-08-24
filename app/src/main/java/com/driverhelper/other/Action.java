@@ -9,7 +9,9 @@ import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.helper.TcpHelper;
 import com.driverhelper.utils.ByteUtil;
+import com.driverhelper.utils.FileUtils;
 import com.jaydenxiao.common.commonutils.TimeUtil;
+import com.jaydenxiao.common.compressorutils.FileUtil;
 
 import java.util.List;
 import java.util.Timer;
@@ -95,10 +97,22 @@ public class Action {
     public void action_0303(HandMsgHelper.Class8302 class8302) {
         List<String> list = DbHelper.getInstance().queryPictureByTime(ByteUtil.byte2int(class8302.startTime),
                 ByteUtil.byte2int(class8302.startTime));
-        if (list.size() != 0){
+        if (list.size() != 0) {
             TcpHelper.getInstance().send0303(list);
-        }else{
+        } else {
             TcpHelper.getInstance().send0303(null);
+        }
+    }
+
+    public void action_8304(Context context, HandMsgHelper.Class8304 class8304) {
+        String name = ByteUtil.getString(class8304.photoId);
+        if (FileUtil.fileIsExists(context.getFilesDir().getPath() + "/" + name + ".png")) {
+            TcpHelper.getInstance().send0304((byte) 0x00);
+            byte[] data = FileUtils.loadBitmap(context, name + ".png");
+            TcpHelper.getInstance().send0305(name, ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
+            TcpHelper.getInstance().send0306(name, data);
+        } else {
+            TcpHelper.getInstance().send0304((byte) 0x01);
         }
     }
 }

@@ -389,6 +389,10 @@ public class TcpHelper {
         sendData(BodyHelper.make0301((byte) 0x01, updataType, (byte) 0x04, (byte) 0x02));
     }
 
+    public void send0304(byte eventType) {
+        sendData(BodyHelper.make0304(eventType));
+    }
+
     /****
      *
      * @param photoId       照片id
@@ -412,9 +416,13 @@ public class TcpHelper {
 
         List<byte[]> list = BodyHelper.make0306Part(photoId, photoData);
         if (list.size() > 1) {
+            List<byte[]> res = new ArrayList<>();
             for (byte[] data : list) {
                 int index = list.indexOf(data) + 1;
-                sendData(BodyHelper.make0306(data, list.size(), index, true));
+                res.add(BodyHelper.make0306(data, list.size(), index, true));
+            }
+            for (byte[] data : res) {
+                sendData(data);
             }
         }
     }

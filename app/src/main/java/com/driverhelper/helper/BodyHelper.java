@@ -28,6 +28,7 @@ import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8202_;
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8205;
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8301;
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8302;
+import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8304;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.ConstantInfo.SN;
 import static com.driverhelper.config.ConstantInfo.classType;
@@ -1151,18 +1152,13 @@ public class BodyHelper {
     }
 
     /****
-     * B.4.2.3.9　照片上传初始化
+     * B.4.2.3.9　上传指定照片应答
      * @param
      * @return
      */
-    public static byte[] make0304(byte eventType, byte totlePhotoNum, byte num, List<String> photoIdList) {
+    public static byte[] make0304(byte eventType) {
 
-        byte[] resultBody = new byte[]{eventType};            //照片编号
-        resultBody = ByteUtil.add(resultBody, totlePhotoNum);
-        resultBody = ByteUtil.add(resultBody, num);
-        for (String photoId : photoIdList) {
-            resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(photoId));
-        }
+        byte[] resultBody = new byte[]{eventType};            //
         resultBody = buildExMsg(id0304, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
@@ -1744,8 +1740,9 @@ public class BodyHelper {
                                 TcpHelper.getInstance().send0302();
                                 RxBus.getInstance().post(RX_SETTING_8302, class8302);
                                 break;
-                            case "8304":
+                            case "8304":        //上传指定照片
                                 HandMsgHelper.Class8304 class8304 = HandMsgHelper.getClass8304(messageBean.throughExpand.data);
+                                RxBus.getInstance().post(RX_SETTING_8304, class8304);
                                 break;
                             case "8305":
                                 HandMsgHelper.Class8305 class8305 = HandMsgHelper.getClass8305(messageBean.throughExpand.data);

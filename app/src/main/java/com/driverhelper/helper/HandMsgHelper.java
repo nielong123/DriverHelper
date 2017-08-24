@@ -390,7 +390,7 @@ public final class HandMsgHelper {
     }
 
     public static class Class8304 {
-        byte[] photoId = new byte[10];
+        public byte[] photoId = new byte[10];
     }
 
     public static Class8304 getClass8304(byte[] data) {
