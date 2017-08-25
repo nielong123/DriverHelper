@@ -1512,6 +1512,9 @@ public class BodyHelper {
             ByteUtil.printRecvHexString(data);
             MessageBean messageBean = ByteUtil.handlerInfo(data);
             switch (messageBean.headBean.messageId) {
+                case "8003":                //补传分包
+                    HandMsgHelper.Class8003 class8003 = HandMsgHelper.getClass8003(messageBean.bodyBean);
+                    break;
                 case "8100":            //终端注册应答
                     if (messageBean.headBean.bodyLength == 3) {
                         switch (messageBean.bodyBean[2]) {

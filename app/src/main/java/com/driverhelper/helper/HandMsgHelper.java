@@ -14,6 +14,23 @@ import java.util.List;
 
 public final class HandMsgHelper {
 
+    public static class Class8003 {
+        byte[] waterCode = new byte[2];
+        byte totle;
+        List<byte[]> idList = new ArrayList<>();
+    }
+
+    public static Class8003 getClass8003(byte[] data) {
+        Class8003 class8003 = new Class8003();
+        System.arraycopy(data, 0, class8003.waterCode, 0, class8003.waterCode.length);
+        class8003.totle = data[3];
+        for (int i = 0; i < class8003.totle; i++) {
+            byte[] data1 = new byte[1];
+            System.arraycopy(data, 3 + i, data1, 0, 1);
+        }
+        return class8003;
+    }
+
     public static class Class8101 {
         byte[] result = new byte[1];
         byte[] coachNum = new byte[16];
