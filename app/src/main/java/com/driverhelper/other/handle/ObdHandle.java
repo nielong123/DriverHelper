@@ -18,17 +18,20 @@ public class ObdHandle {
         for (int i = 0; i < data.length; i++) {
             if (data[i] == (byte) 0x2e) {
                 if (i >= data.length - 3)           //当0x2e在数据的最后三位时抛弃
-                    break;
-                if (data[i + 2] + 1 + 2 > data.length - i)
-                    break;
-                if (data[i + 2] > data.length - i)
-                    break;
+                    continue;
+                if (data[i + 2] + 1 >= data.length - i - 2)
+                    continue;
                 byte[] data0 = new byte[data[i + 2] + 4];
                 data0[0] = data[i]; // 0x2e
                 data0[1] = data[i + 1]; // 种类
                 int length = data[i + 2]; // 数据长度
                 if ((data.length - i - 2) <= length)
-                    break;
+                    continue;
+//                System.out.println("data.length = " + data.length);
+//                System.out.println("i = " + i);
+//                System.out.println("data[i+2] = " + data[i + 2]);
+//                System.out.println("[data.length - i] = " + (data.length - i));
+                ByteUtil.printHexString(data, "OBD data = ");
                 data0[2] = (byte) length;
                 System.arraycopy(data, i + 3, data0, 3, data[i + 2] + 1); // 数据，效验
                 byte[] checkData = new byte[data0.length - 2];
@@ -36,6 +39,7 @@ public class ObdHandle {
                 if (ByteUtil.checkSum(checkData, data0[data0.length - 1])) { // 检查数据sum的结果
                     dataList.add(data0);
                 }
+                break;
             }
         }
         HashMap<String, String> map = new HashMap();

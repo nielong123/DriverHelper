@@ -57,6 +57,18 @@ public class ByteUtil {
         }
     }
 
+    public static void printHexString(byte[] b, String str) {
+        String printResult = "";
+        for (int i = 0; i < b.length; i++) {
+            String hex = Integer.toHexString(b[i] & 0xFF);
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            printResult = printResult + hex.toUpperCase() + " ";
+        }
+        Log.e(TAG, str + printResult);
+    }
+
     public static void printRecvHexString(byte[] b) {
         if (isDebug) {
             String printResult = "";
@@ -88,7 +100,7 @@ public class ByteUtil {
     }
 
     public static String getString(byte[] bytes) {
-        if(bytes == null){
+        if (bytes == null) {
             return null;
         }
         return getString(bytes, "GBK");
@@ -646,7 +658,7 @@ public class ByteUtil {
         byte[] data3 = new byte[2];
         System.arraycopy(data, 13, data3, 0, data3.length);
         messageBean.headBean.waterCode = ByteUtil.byte2int(data3);
-        Log.e("messageBean", "messageBean.headBean.waterCode = " + messageBean.headBean.waterCode);
+//        Log.e("messageBean", "messageBean.headBean.waterCode = " + messageBean.headBean.waterCode);
         messageBean.headBean.benAttribute = autoAddZeroByLength(hexStringToBinary(messageBean.headBean.messageAttribute), 10);      //由消息体得到二进制的消息体
         messageBean.headBean.bodyLength = Integer.valueOf(binString2DexString(messageBean.headBean.benAttribute.substring(6, messageBean.headBean.benAttribute.length())));
         messageBean.headBean.isPart = Integer.valueOf(messageBean.headBean.benAttribute.substring(2, 3));
@@ -663,7 +675,6 @@ public class ByteUtil {
         }
         messageBean.bodyBean = new byte[messageBean.headBean.bodyLength];
         System.arraycopy(data, data.length - messageBean.headBean.bodyLength - 1, messageBean.bodyBean, 0, messageBean.headBean.bodyLength);
-        Log.d(TAG, "handlerInfo: ");
 //    }
         return messageBean;
     }

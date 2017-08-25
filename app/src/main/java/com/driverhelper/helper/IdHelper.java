@@ -21,7 +21,7 @@ public final class IdHelper {
         } else {
             waterCode += 1;
         }
-        Log.e("water code", "get  strWaterCode = " + waterCode);
+//        Log.e("water code", "get  strWaterCode = " + waterCode);
         WriteSettingHelper.setWATER_CODE(waterCode);
         return waterCode;
     }
