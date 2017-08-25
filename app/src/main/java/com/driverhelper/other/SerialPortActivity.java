@@ -16,7 +16,6 @@
 
 package com.driverhelper.other;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -24,10 +23,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.util.Log;
 
 import com.driverhelper.app.MyApplication;
-import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.base.BaseActivity;
 
 import java.io.IOException;

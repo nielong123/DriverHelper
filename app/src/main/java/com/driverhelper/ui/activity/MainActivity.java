@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,6 +60,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8205;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
@@ -225,6 +227,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         initToolBar();
         networksw.setOnCheckedChangeListener(onCheckedChangeListener);
     }
+
 
     Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override
@@ -759,6 +762,24 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     private void test() {
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KEYCODE_BACK:
+                new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("是否退出应用").setIcon(R.drawable.main_img06).setMessage("是否退出应用").setCancelable(false).setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                        MainActivity.this.finish();
+                    }
+                }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                        paramAnonymous2DialogInterface.dismiss();
+                    }
+                }).show();
+                break;
+        }
+        return false;
     }
 }
 
