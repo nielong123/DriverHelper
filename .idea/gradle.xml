@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/library/common" />
             <option value="$PROJECT_DIR$/library/irecyclerview" />
             <option value="$PROJECT_DIR$/library/jcvideoplayer" />
+            <option value="$PROJECT_DIR$/library/usblibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

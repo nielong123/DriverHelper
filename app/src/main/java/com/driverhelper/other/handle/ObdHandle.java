@@ -17,6 +17,7 @@ public class ObdHandle {
         List<byte[]> dataList = new ArrayList<>();
         for (int i = 0; i < data.length; i++) {
             if (data[i] == (byte) 0x2e) {
+                if (i == 9) break;
                 if (i >= data.length - 3)           //当0x2e在数据的最后三位时抛弃
                     continue;
                 if (data[i + 2] + 1 >= data.length - i - 2)
@@ -39,7 +40,6 @@ public class ObdHandle {
                 if (ByteUtil.checkSum(checkData, data0[data0.length - 1])) { // 检查数据sum的结果
                     dataList.add(data0);
                 }
-                break;
             }
         }
         HashMap<String, String> map = new HashMap();

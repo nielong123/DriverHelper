@@ -72,6 +72,7 @@ dependencies {
     compile project(path: ':library:common')
     compile project(path: ':library:irecyclerview')
     compile project(path: ':library:SerialPortLibrary')
+    compile project(path: ':library:usblibrary')
     compile files('libs/AMap_Location_V3.4.1_20170629.jar')
     compile files('libs/sun.misc.BASE64Decoder.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
