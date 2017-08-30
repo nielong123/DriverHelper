@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="syno_usb">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/library/usblibrary/libs/syno_usb.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

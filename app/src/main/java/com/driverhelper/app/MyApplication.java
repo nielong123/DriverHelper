@@ -63,7 +63,6 @@ public class MyApplication extends BaseApplication {
         initData();
         setDatabase();
         initLog();
-        initServer();
     }
 
     void initData() {
@@ -108,9 +107,6 @@ public class MyApplication extends BaseApplication {
         option.setNeedAddress(false);
         mLocationClient.setLocationOption(option);
         mLocationClient.startLocation();
-    }
-
-    void initServer() {
     }
 
     void initLog() {
