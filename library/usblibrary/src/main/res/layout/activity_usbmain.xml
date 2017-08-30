@@ -64,21 +64,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ContinuousSearch" />
+                android:text="比对指纹" />
 
             <Button
                 android:id="@+id/BTClear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="连续搜索" />
+                android:text="清理所有指纹数据" />
 
             <Button
                 android:id="@+id/upImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="上传图片" />
+                android:text="上传图片"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/devMsg"
@@ -91,7 +92,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
 
             <Button
                 android:id="@+id/upChar"
@@ -107,6 +109,13 @@
                 android:layout_weight="1"
                 android:text="下载功能" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/close"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="关闭页面" />
 
         <ProgressBar
             android:id="@+id/bar"

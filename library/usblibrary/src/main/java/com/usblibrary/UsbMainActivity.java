@@ -61,7 +61,7 @@ public class UsbMainActivity extends AppCompatActivity implements View.OnClickLi
     private TextView mResponseTextView;
     public TextView mImputTextView;
     private Button mOpen;
-    private Button mClose;
+    private Button mClose;      //停止识别
     private Button mSearch;
     private Button mClear;
     private Button mDevMsg;
@@ -70,6 +70,7 @@ public class UsbMainActivity extends AppCompatActivity implements View.OnClickLi
     private Button mStop;
     private Button mUpChar;
     private Button mDownChar;
+    private Button close;       //关闭页面
 
     String imagePath = "finger.bmp";
     byte[] fingerBuf = new byte[IMAGE_X * IMAGE_Y];
@@ -122,6 +123,9 @@ public class UsbMainActivity extends AppCompatActivity implements View.OnClickLi
 
         mDownChar = (Button) findViewById(R.id.downChar);
         mDownChar.setOnClickListener(this);
+
+        close = (Button) findViewById(R.id.close);
+        close.setOnClickListener(this);
 
         mImputTextView = (TextView) findViewById(R.id.imputTextView);
         mResponseTextView = (TextView) findViewById(R.id.TVLog);
@@ -247,9 +251,13 @@ public class UsbMainActivity extends AppCompatActivity implements View.OnClickLi
 
         if (v == mOpen) {
             openUSB();
-        } else if (v == mClose) {
+            return;
+        }
+        if (v == mClose) {
             closeUSB();
-        } else if (v == mEnroll) { // finger
+            return;
+        }
+        if (v == mEnroll) { // finger
 
             // logMsg("�������ָ");
             // bar.setVisibility(View.VISIBLE);
@@ -266,20 +274,26 @@ public class UsbMainActivity extends AppCompatActivity implements View.OnClickLi
             bar.setProgress(0);
             ImputAsyncTask asyncTask = new ImputAsyncTask();
             asyncTask.execute(1);
-        } else if (v == mSearch) // ����ָ��
+            return;
+        }
+        if (v == mSearch) // ����ָ��
         {
             globalControl = true;
             ctlStatus(true);
             SearchAsyncTask asyncTask_search = new SearchAsyncTask();
             asyncTask_search.execute(1);
-        } else if (v == mClear) // ���ָ�ƿ�
+            return;
+        }
+        if (v == mClear) // ���ָ�ƿ�
         {
             if (PS_OK != msyUsbKey.PSEmpty(DEV_ADDR)) {
                 logMsg("Clear all fingerprint template datas failed");
             }
             fingerCnt = 0;
             logMsg("Clear all fingerprint template datas successfully");
-        } else if (v == mDevMsg) {
+            return;
+        }
+        if (v == mDevMsg) {
             int[] indexMax = new int[1];
             int[] len = new int[1];
             byte[] index = new byte[256];
@@ -300,17 +314,23 @@ public class UsbMainActivity extends AppCompatActivity implements View.OnClickLi
                 logMsg("Max ID��" + indexMax[0]);
             }
             logMsg("Get the devie info successfully");
-        } else if (v == mUpImage) // �ϴ�ͼ��
+            return;
+        }
+        if (v == mUpImage) // �ϴ�ͼ��
         {
             int ret;
             ctlStatus(true);
             globalControl = true;
             UpAsyncTask asyncTask_up = new UpAsyncTask();
             asyncTask_up.execute(1);
-        } else if (v == mStop) {
+            return;
+        }
+        if (v == mStop) {
             globalControl = false;
             ctlStatus(false);
-        } else if (v == mUpChar) {
+            return;
+        }
+        if (v == mUpChar) {
             int pageId = 0;
             if (0 != msyUsbKey.loadChar(CHAR_BUFFER_A, pageId)) {
                 logMsg("loadChar failed");
@@ -323,7 +343,9 @@ public class UsbMainActivity extends AppCompatActivity implements View.OnClickLi
             } else {
                 logMsg("Upload fingerprint feature failed");
             }
-        } else if (v == mDownChar) {
+            return;
+        }
+        if (v == mDownChar) {
             // the 8 is test value
             int pageId = 8;
             // Log.i( TAG2,
@@ -346,6 +368,12 @@ public class UsbMainActivity extends AppCompatActivity implements View.OnClickLi
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            return;
+        }
+        if (v == close) {
+            this.finish();
+            closeUSB();
+            return;
         }
     }
 
@@ -380,11 +408,24 @@ public class UsbMainActivity extends AppCompatActivity implements View.OnClickLi
         }
     };
 
-    public synchronized void logMsg(String msg) {
-        String oldMsg = mResponseTextView.getText().toString();
+    public synchronized void logMsg(final String msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String oldMsg = mResponseTextView.getText().toString();
+                mResponseTextView.setText(oldMsg + "\n" + msg);
+                if (mResponseTextView.getLineCount() > CNT_LINES) {
+                    // Toast.makeText(getApplicationContext(),
+                    // "LINE:"+mResponseTextView.getLineCount()+" CNT",
+                    // Toast.LENGTH_SHORT).show();
+                    mResponseTextView.scrollTo(0,
+                            (mResponseTextView.getLineCount() - CNT_LINES)
+                                    * mResponseTextView.getLineHeight() + 5);
+                }
+            }
+        });
 
-        mResponseTextView.setText(oldMsg + "\n" + msg);
-        new myAsyncTask().execute();
+//        new myAsyncTask().execute();
     }
 
     /*
