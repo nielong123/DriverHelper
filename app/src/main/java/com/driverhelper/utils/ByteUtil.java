@@ -111,7 +111,7 @@ public class ByteUtil {
         return data.getBytes(charset);
     }
 
-    public static byte[] str2Word(String data) {
+    public static byte[] str2Bytes(String data) {
         return getBytes(data, "GBK");
     }
 

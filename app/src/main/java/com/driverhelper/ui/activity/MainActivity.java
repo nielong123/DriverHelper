@@ -32,6 +32,7 @@ import com.driverhelper.R;
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.QRbean;
+import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
@@ -53,6 +54,7 @@ import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -235,17 +237,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
             switch (menuItem.getItemId()) {
                 case R.id.NoSendConti:
-//                    Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(MyApplication.getAppContext(), "ic_launcher.png");
-//                    ConstantInfo.photoData = ByteUtil.bitmap2Bytes(bitmap);
-//                    bitmap.recycle();
-//                    ConstantInfo.photoDataSize = ConstantInfo.photoData.length;
-//                    ConstantInfo.photoId = TimeUtil.getTime() / 1000 + "";
-//                    Log.e("11111111111111111", "ConstantInfo.photoDataSize = " + ConstantInfo.photoDataSize + " ||| " + " ConstantInfo.photoId = " + ConstantInfo.photoId);
-//                    TcpHelper.getInstance().send0305(ConstantInfo.photoId, ConstantInfo.coachId, (byte) 129, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, ConstantInfo.photoDataSize);
-                    break;
-                case R.id.NoSendClear:
-                    break;
-                case R.id.NoSendReSend:
                     break;
                 case R.id.action_0402_1:
                     TcpHelper.getInstance().send0402((byte) 0x01, "");
@@ -255,6 +246,16 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                     break;
                 case R.id.action_0402_7:
                     TcpHelper.getInstance().send0402((byte) 0x07, "");
+                    break;
+                case R.id.deteleStudyInfo:
+                    DbHelper.getInstance().deteleStudyInfoByTime(TimeUtil.getFirstTimeOfDay());
+                    break;
+                case R.id.deteleStudyInfo_Uped:
+                    DbHelper.getInstance().deteleStudyInfoUped();
+                    break;
+                case R.id.upNoUpInfo:
+                    List<StudyInfo> list = DbHelper.getInstance().queryStudyInfoByUp();
+                    TcpHelper.getInstance().reSendRStudyInfo(list);
                     break;
             }
             return false;

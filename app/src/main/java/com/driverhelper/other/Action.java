@@ -48,12 +48,10 @@ public class Action {
             @Override
             public void run() {
                 TcpHelper.getInstance().sendLocationInfo();
-                Log.e("", "发送一次   " + index8202_);
                 index8202_++;
                 if (index8202_ * class8202_.term >= class8202_.timeInterval) {
                     index8202_ = 0;
                     timer.cancel();
-                    Log.e("", "  停止  ");
                 }
             }
         };

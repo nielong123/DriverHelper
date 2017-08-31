@@ -355,7 +355,7 @@ public class TcpHelper {
         int studyCode = IdHelper.getStudyCode();
         String str = TimeUtil.formatData(dateFormatYMDHMS, TimeUtil.getTime() / 1000).replaceAll(":", "");
         String str66666 = str.substring(str.length() - 6, str.length());
-        str = str.substring(str.length() - 2, str.length());            //发送时间
+//        str = str.substring(str.length() - 2, str.length());            //发送时间
 //        int index = Integer.valueOf(str);
 //        if (index > 50 && index < 59) {
         sendData(BodyHelper.makeSendStudyInfo(updataType, str66666, (byte) 0x00));
@@ -363,6 +363,16 @@ public class TcpHelper {
                 "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
                 TimeUtil.getTime());
 //        }
+    }
+
+    /*****
+     * 发送学时信息
+     */
+    public void reSendRStudyInfo(List<StudyInfo> list) {
+        ToastUitl.show("查询到未上传记录，共" + list.size() + "条，开始上传", Toast.LENGTH_SHORT);
+        for (StudyInfo data : list) {
+            sendData(BodyHelper.makeReSendStudyInfo(data));
+        }
     }
 
     public void send0205(byte type) {

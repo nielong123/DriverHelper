@@ -189,9 +189,9 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ConstantInfo.makerID); // 制造商id
         resultBody = ByteUtil.add(resultBody, ByteUtil.autoAddZeroByLengthOnRight(ConstantInfo.MODEL, 20).getBytes()); // 终端型号
         resultBody = ByteUtil.add(resultBody, SN.getBytes()); // 终端编号
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(ConstantInfo.IMEI)); // IMEI
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes(ConstantInfo.IMEI)); // IMEI
         resultBody = ByteUtil.add(resultBody, vehicleColor.getBytes()); // 车身颜色
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(vehicleNum)); // 车牌号
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes(vehicleNum)); // 车牌号
         int bodyLength = resultBody.length;
         System.out.println("bodyLength = " + bodyLength);
         byte[] resultHead = makeHead(register, false, 0, 0, 0, bodyLength); // 包头固定
@@ -256,9 +256,9 @@ public class BodyHelper {
      */
     public static byte[] makeCoachLogin(String idCard, String coachnum, String carType) {
 
-        byte[] resultBody = ByteUtil.str2Word(coachnum.toUpperCase());
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(idCard.toUpperCase()));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(carType.toUpperCase()));
+        byte[] resultBody = ByteUtil.str2Bytes(coachnum.toUpperCase());
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes(idCard.toUpperCase()));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes(carType.toUpperCase()));
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -282,7 +282,7 @@ public class BodyHelper {
      * @return
      */
     public static byte[] makeCoachLogout(String coachnum) {
-        byte[] resultBody = ByteUtil.str2Word(coachnum);
+        byte[] resultBody = ByteUtil.str2Bytes(coachnum);
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -307,9 +307,9 @@ public class BodyHelper {
      * @return
      */
     public static byte[] makeStudentLogin(String coachNum, String studentNum) {
-        byte[] resultBody = ByteUtil.str2Word(studentNum);
-        ByteUtil.printHexString("ByteUtil.str2Word(studentNum)", ByteUtil.str2Word(studentNum));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(coachNum));      //当前教练编号
+        byte[] resultBody = ByteUtil.str2Bytes(studentNum);
+        ByteUtil.printHexString("ByteUtil.str2Word(studentNum)", ByteUtil.str2Bytes(studentNum));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes(coachNum));      //当前教练编号
         Log.e("coachNum", "coachNum = " + coachNum);
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1212110000"));                //培训课程
         long time = TimeUtil.getTime() / 1000;
@@ -342,13 +342,13 @@ public class BodyHelper {
      */
     public static byte[] makeStudentLogiout(String studentNum) {
         long time = TimeUtil.getTime() / 1000;
-        byte[] resultBody = ByteUtil.str2Word(studentNum);              //学员编号
+        byte[] resultBody = ByteUtil.str2Bytes(studentNum);              //学员编号
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));     //登出时间
 //        ByteUtil.printHexString("登出时间  =  ", ByteUtil.str2Bcd(TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));
 //        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(studyTime / 60 + ""));                //学员该次登录总时间   min
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word("01"));                //学员该次登录总时间   min
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes("01"));                //学员该次登录总时间   min
 //        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(studyDistance / 10 + ""));                //学员该次登录总时间   min
-        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word("02"));                //学员该次登录总时间   min
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes("02"));                //学员该次登录总时间   min
         resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
@@ -383,6 +383,40 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, recordType);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.ObdInfo.vehiclSspeed));            //最大速度
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.ObdInfo.distance));            //最大里程  10
+        resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
+                "40080000",
+                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
+                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                10,
+                (int) MyApplication.getInstance().speedGPS,
+                (int) MyApplication.getInstance().direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                20, -2000, -2000, 30)
+        );
+
+        resultBody = buildExMsg(id0203, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
+        byte[] result = sticky(resultHead, resultBody);
+        ByteUtil.printHexString(result);
+        return result;
+    }
+
+    /****
+     * 重传学时信息
+     * @return
+     */
+    public static byte[] makeReSendStudyInfo(StudyInfo studyInfo) {
+        byte[] resultBody = ByteUtil.add(("0000000000000000" + studyInfo.getMakeTime()).getBytes(), ByteUtil.int2DWORD(IdHelper.getStudyCode()));           //26        学时记录编号
+        resultBody = ByteUtil.add(resultBody, (byte) 0x01);              //      上报类型
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes(studyInfo.getStudentId()));       //学员编号
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes(studyInfo.getCoachId()));             //教练员编号
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(Integer.valueOf(studyInfo.getClassId())));           //课堂id  时间戳
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(studyInfo.getMakeTime()));               //記錄產生時間
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(studyInfo.getType()));                //培训课程
+        resultBody = ByteUtil.add(resultBody, (byte) 0x00);                                      //记录状态
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(studyInfo.getSpeed()));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(studyInfo.getDistance()));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),

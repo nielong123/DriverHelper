@@ -1,10 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:icon="@drawable/ic_menu_manage" android:id="@+id/NoSendConti" android:orderInCategory="100" android:title="@string/NoSendContiname" app:showAsAction="never" />
-    <item android:icon="@drawable/ic_menu_manage" android:id="@+id/NoSendClear" android:orderInCategory="100" android:title="@string/NoSendClearname" app:showAsAction="never" />
-    <item android:icon="@drawable/ic_menu_manage" android:id="@+id/NoSendReSend" android:orderInCategory="100" android:title="@string/NoSendReSendname" app:showAsAction="never" />
-    <item android:icon="@drawable/ic_menu_manage" android:id="@+id/action_0402_1" android:orderInCategory="100" android:title="@string/action_0402_1name" />
-    <item android:icon="@drawable/ic_menu_manage" android:id="@+id/action_0402_5" android:orderInCategory="100" android:title="@string/action_0402_5name" app:showAsAction="never" />
-    <item android:icon="@drawable/ic_menu_manage" android:id="@+id/action_0402_7" android:orderInCategory="100" android:title="@string/action_0402_7name" app:showAsAction="never" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/NoSendConti"
+        android:icon="@drawable/ic_menu_manage"
+        android:orderInCategory="100"
+        android:title="@string/NoSendContiname"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_0402_1"
+        android:icon="@drawable/ic_menu_manage"
+        android:orderInCategory="100"
+        android:title="@string/action_0402_1name" />
+    <item
+        android:id="@+id/action_0402_5"
+        android:icon="@drawable/ic_menu_manage"
+        android:orderInCategory="100"
+        android:title="@string/action_0402_5name"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_0402_7"
+        android:icon="@drawable/ic_menu_manage"
+        android:orderInCategory="100"
+        android:title="@string/action_0402_7name"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/deteleStudyInfo"
+        android:icon="@drawable/ic_menu_manage"
+        android:orderInCategory="100"
+        android:title="@string/deteleStudyInfoToday"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/deteleStudyInfo_Uped"
+        android:icon="@drawable/ic_menu_manage"
+        android:orderInCategory="100"
+        android:title="@string/deteleStudyInfo_Uped"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/upNoUpInfo"
+        android:icon="@drawable/ic_menu_manage"
+        android:orderInCategory="100"
+        android:title="@string/upNoUpInfo"
+        app:showAsAction="never" />
 </menu>

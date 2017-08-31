@@ -10,9 +10,6 @@ import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.beans.gen.GpsInfoDao;
 import com.driverhelper.beans.gen.StudyInfoDao;
 
-import org.greenrobot.greendao.query.Query;
-import org.greenrobot.greendao.query.WhereCondition;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,19 +73,28 @@ public class DbHelper {
                                 String photoPath, String makeTime, String type, int vehicleSpeed,
                                 int distance, int speed, long time) {
         Log.w("dbhelper", "write db studyInfoDao");
-        studyInfo = new StudyInfo(id, waterCode, studentId, coachId, classId,
+        studyInfo = new StudyInfo(id, waterCode, studentId, coachId, classId + "",
                 photoPath, makeTime, type, vehicleSpeed,
-                distance, speed, time);
+                distance, speed, time, false);
         studyInfoDao.insert(studyInfo);
     }
 
-    public void deleteStudyInfoById(long id) {
+    public void deteleStudyInfoById(long id) {
         studyInfoDao.deleteByKey(id);
     }
 
-    public void deleteStudyInfoALl() {
+    public void deteleStudyInfoALl() {
         studyInfoDao.deleteAll();
     }
+
+    public void deteleStudyInfoByTime(long time) {
+        studyInfoDao.getDatabase().execSQL("DELETE  FROM Study_Info where TIME < " + time);
+    }
+
+    public void deteleStudyInfoUped() {
+        studyInfoDao.getDatabase().execSQL("DELETE  FROM Study_Info where ISUPDATA = 1 ");
+    }
+
 
     public List<StudyInfo> queryStudyInfoAll() {
         List<StudyInfo> list = studyInfoDao.loadAll();
@@ -98,6 +104,15 @@ public class DbHelper {
 
     public List<StudyInfo> queryStudyInfoByTime(long startTime, long endTime) {
         List<StudyInfo> list = studyInfoDao.queryBuilder().where(StudyInfoDao.Properties.Time.between(startTime, endTime)).build().list();
+        return list;
+    }
+
+    /***
+     * 删除已上传的学时信息
+     * @return
+     */
+    public List<StudyInfo> queryStudyInfoByUp() {
+        List<StudyInfo> list = studyInfoDao.queryBuilder().where(StudyInfoDao.Properties.IsUpdata.eq(0)).build().list();
         return list;
     }
 
@@ -120,7 +135,7 @@ public class DbHelper {
                 }
             }
 
-            Log.e("123","1111111111111");
+            Log.e("123", "1111111111111");
             return result;
         }
         return null;

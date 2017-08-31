@@ -66,6 +66,9 @@
     <string name="action_0402_1name">请求当前驾培机构的统一编号</string>
     <string name="action_0402_5name">请求当前教练车的统一编号</string>
     <string name="action_0402_7name">请求本计时终端的统一编号</string>
+    <string name="deteleStudyInfoToday">清空今日前学时记录</string>
+    <string name="deteleStudyInfo_Uped">清空已上传的学时记录</string>
+    <string name="upNoUpInfo">上传未上传的学时信息</string>
     <string name="action_0a02_1">请求本计时终端的统一编号</string>
     <string name="app_name">EXSUNTerminal 终端系统</string>
     <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>

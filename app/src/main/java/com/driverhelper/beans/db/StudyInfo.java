@@ -26,7 +26,7 @@ public class StudyInfo {
     private String coachId;
 
     @Property(nameInDb = "CLASSID")     //课堂id
-    private long classId;
+    private String classId;
 
     @Property(nameInDb = "PHOTOPATH")       //照片的路径
     private String photoPath;
@@ -49,6 +49,17 @@ public class StudyInfo {
     @Index(unique = true)
     @Property(nameInDb = "TIME")        //时间
     private long time;
+
+    @Property(nameInDb = "ISUPDATA")       //是否上传
+    private boolean isUpdata;
+
+    public boolean getIsUpdata() {
+        return this.isUpdata;
+    }
+
+    public void setIsUpdata(boolean isUpdata) {
+        this.isUpdata = isUpdata;
+    }
 
     public long getTime() {
         return this.time;
@@ -106,11 +117,11 @@ public class StudyInfo {
         this.photoPath = photoPath;
     }
 
-    public long getClassId() {
+    public String getClassId() {
         return this.classId;
     }
 
-    public void setClassId(long classId) {
+    public void setClassId(String classId) {
         this.classId = classId;
     }
 
@@ -130,6 +141,14 @@ public class StudyInfo {
         this.studentId = studentId;
     }
 
+    public int getWaterCode() {
+        return this.waterCode;
+    }
+
+    public void setWaterCode(int waterCode) {
+        this.waterCode = waterCode;
+    }
+
     public Long getId() {
         return this.id;
     }
@@ -138,10 +157,10 @@ public class StudyInfo {
         this.id = id;
     }
 
-    @Generated(hash = 515962320)
-    public StudyInfo(Long id, int waterCode, String studentId, String coachId, long classId,
-            String photoPath, String makeTime, String type, int vehicleSpeed, int distance,
-            int speed, long time) {
+    @Generated(hash = 936820716)
+    public StudyInfo(Long id, int waterCode, String studentId, String coachId,
+            String classId, String photoPath, String makeTime, String type,
+            int vehicleSpeed, int distance, int speed, long time, boolean isUpdata) {
         this.id = id;
         this.waterCode = waterCode;
         this.studentId = studentId;
@@ -154,34 +173,11 @@ public class StudyInfo {
         this.distance = distance;
         this.speed = speed;
         this.time = time;
+        this.isUpdata = isUpdata;
     }
 
     @Generated(hash = 1468203050)
     public StudyInfo() {
     }
 
-    @Override
-    public String toString() {
-        return "StudyInfo{" +
-                "id=" + id +
-                ", studentId='" + studentId + '\'' +
-                ", coachId='" + coachId + '\'' +
-                ", classId=" + classId +
-                ", photoPath='" + photoPath + '\'' +
-                ", makeTime='" + makeTime + '\'' +
-                ", type='" + type + '\'' +
-                ", vehicleSpeed=" + vehicleSpeed +
-                ", distance=" + distance +
-                ", speed=" + speed +
-                ", time=" + time +
-                '}';
-    }
-
-    public int getWaterCode() {
-        return this.waterCode;
-    }
-
-    public void setWaterCode(int waterCode) {
-        this.waterCode = waterCode;
-    }
 }
