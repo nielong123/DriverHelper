@@ -154,7 +154,7 @@ public abstract class SerialPortActivity extends BaseActivity {
             obdReadThread = new ObdReadThread();
             obdReadThread.start();
 
-//            /*** icReader  ***/
+            /*** icReader  ***/
             icReaderSerialPort = mApplication.getIcReaderSerialPort();
             icReaderOutputStream = icReaderSerialPort.getOutputStream();
             icReaderInputStream = icReaderSerialPort.getInputStream();

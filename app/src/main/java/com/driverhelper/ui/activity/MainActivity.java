@@ -504,7 +504,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             @Override
             public void run() {
                 ByteUtil.printHexString("读卡器接收到数据", buffer);
-                ToastUitl.show(ByteUtil.getString(buffer), Toast.LENGTH_SHORT);
             }
         });
     }
