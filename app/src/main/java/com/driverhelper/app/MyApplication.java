@@ -136,7 +136,7 @@ public class MyApplication extends BaseApplication {
 
     public SerialPort getIcReaderSerialPort() throws SecurityException, IOException, InvalidParameterException {
         if (icReaderSerialPort == null) {
-            icReaderSerialPort = new SerialPort(new File("/dev/ttyS5"), 38400, 0);
+            icReaderSerialPort = new SerialPort(new File("/dev/ttyS5"), 9600, 0);
         }
         return icReaderSerialPort;
     }
