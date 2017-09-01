@@ -31,6 +31,7 @@ public class MessageBean {
         public int isPart;              // * 是否分包
         public EncapsulationInfo encapsulationInfo = new EncapsulationInfo();     //有分包的时候才有这个
         public int bodyLength;              // * 消息体长度
+        public byte res8001;            //通用应答状态
 
         public class EncapsulationInfo {
             public int totle;                   //分包项的总数

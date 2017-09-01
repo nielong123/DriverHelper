@@ -3,6 +3,8 @@ package com.driverhelper.config;
 import com.driverhelper.beans.QRbean;
 import com.driverhelper.helper.WriteSettingHelper;
 
+import java.util.Timer;
+
 /**
  * Created by Administrator on 2017/6/6.
  * <p>
@@ -33,18 +35,10 @@ public class ConstantInfo {
     public static String vehicleNum;            //车牌号
     public static String MODEL;            //终端型号
 
-//    public static byte[] requestWaterCode = new byte[2];      //应答流水号
-//    public static byte[] result = new byte[1];                  //结果
-//    public static byte[] platformNum = new byte[5];                        //平台编号
-//    public static byte[] institutionNumber = new byte[16];        //培训机构编号
-//    public static byte[] terminalNum = new byte[16];       //计时终端编号
-//    public static byte[] certificatePassword = new byte[12];       //证书口令;
-//    public static String terminalCertificate = "";         //终端证书
-
     public static byte[] requestWaterCode;      //应答流水号
     public static byte[] result;                  //结果
-    public static byte[] platformNum ;                        //平台编号
-    public static byte[] institutionNumber ;        //培训机构编号
+    public static byte[] platformNum;                        //平台编号
+    public static byte[] institutionNumber;        //培训机构编号
     public static byte[] terminalNum;       //计时终端编号
     public static byte[] certificatePassword;       //证书口令;
     public static String terminalCertificate = null;         //终端证书
@@ -52,14 +46,12 @@ public class ConstantInfo {
 
     public static long studyTimeThis = 0;             //学习的时间
     public static long studyDistanceThis = 0;             //学习的里程
-    public static byte[] classId;             //课堂id
+    public static long classId;             //课堂id  学生登录后生产
     public static String classType = "1211110000";          //培训课程
 
-    public static String photoId;                         //上传的照片编号
-    public static int totlePhotoNum;                        //上传照片包的总数
-    public static int photoIndex;                           //当前包的计数
     public static boolean isEmbargo;                     //禁运状态          true
     public static String embargoStr;            //      禁运提示消息内容
+    public static boolean is0102_OK;                //是否鉴权成功
 
 
     /***** 0502的设置  start ***************/
@@ -163,5 +155,8 @@ public class ConstantInfo {
 
 
     public static QRbean qRbean;
+
+    public static Timer locationTimer;
+    public static long locationTimerDelay = 10 * 1000;
 
 }

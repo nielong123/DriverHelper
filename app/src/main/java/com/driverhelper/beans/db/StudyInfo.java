@@ -53,6 +53,21 @@ public class StudyInfo {
     @Property(nameInDb = "ISUPDATA")       //是否上传
     private boolean isUpdata;
 
+    @Property(nameInDb = "SPEEDGPS")
+    private float speedGPS;
+
+    @Property(nameInDb = "DIRECTION")
+    private float direction;
+
+    @Property(nameInDb = "LAT")
+    private double lat;
+
+    @Property(nameInDb = "LON")
+    private double lon;
+
+    @Property(nameInDb = "TIMEGPS")
+    private long timeGPS;
+
     public boolean getIsUpdata() {
         return this.isUpdata;
     }
@@ -157,10 +172,75 @@ public class StudyInfo {
         this.id = id;
     }
 
-    @Generated(hash = 936820716)
+    public long getTimeGPS() {
+        return this.timeGPS;
+    }
+
+    public void setTimeGPS(long timeGPS) {
+        this.timeGPS = timeGPS;
+    }
+
+    public double getLon() {
+        return this.lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public double getLat() {
+        return this.lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public float getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(float direction) {
+        this.direction = direction;
+    }
+
+    public float getSpeedGPS() {
+        return this.speedGPS;
+    }
+
+    @Override
+    public String toString() {
+        return "StudyInfo{" +
+                "id=" + id +
+                ", waterCode=" + waterCode +
+                ", studentId='" + studentId + '\'' +
+                ", coachId='" + coachId + '\'' +
+                ", classId='" + classId + '\'' +
+                ", photoPath='" + photoPath + '\'' +
+                ", makeTime='" + makeTime + '\'' +
+                ", type='" + type + '\'' +
+                ", vehicleSpeed=" + vehicleSpeed +
+                ", distance=" + distance +
+                ", speed=" + speed +
+                ", time=" + time +
+                ", isUpdata=" + isUpdata +
+                ", speedGPS=" + speedGPS +
+                ", direction=" + direction +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                ", timeGPS=" + timeGPS +
+                '}';
+    }
+
+    public void setSpeedGPS(float speedGPS) {
+        this.speedGPS = speedGPS;
+    }
+
+    @Generated(hash = 556779751)
     public StudyInfo(Long id, int waterCode, String studentId, String coachId,
-            String classId, String photoPath, String makeTime, String type,
-            int vehicleSpeed, int distance, int speed, long time, boolean isUpdata) {
+            String classId, String photoPath, String makeTime, String type, int vehicleSpeed,
+            int distance, int speed, long time, boolean isUpdata, float speedGPS,
+            float direction, double lat, double lon, long timeGPS) {
         this.id = id;
         this.waterCode = waterCode;
         this.studentId = studentId;
@@ -174,6 +254,11 @@ public class StudyInfo {
         this.speed = speed;
         this.time = time;
         this.isUpdata = isUpdata;
+        this.speedGPS = speedGPS;
+        this.direction = direction;
+        this.lat = lat;
+        this.lon = lon;
+        this.timeGPS = timeGPS;
     }
 
     @Generated(hash = 1468203050)

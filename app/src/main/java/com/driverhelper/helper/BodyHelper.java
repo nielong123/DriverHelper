@@ -11,9 +11,10 @@ import com.driverhelper.beans.MessageBean;
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
-import com.driverhelper.config.TcpBody;
-import com.driverhelper.other.Action;
+import com.driverhelper.other.tcp.TcpBody;
 import com.driverhelper.other.encrypt.Encrypt;
+import com.driverhelper.other.tcp.TcpHelper;
+import com.driverhelper.other.tcp.TcpManager;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
@@ -36,32 +37,32 @@ import static com.driverhelper.config.ConstantInfo.coachId;
 import static com.driverhelper.config.ConstantInfo.terminalNum;
 import static com.driverhelper.config.ConstantInfo.vehicleColor;
 import static com.driverhelper.config.ConstantInfo.vehicleNum;
-import static com.driverhelper.config.TcpBody.MessageID.findLocatInfoRequest;
-import static com.driverhelper.config.TcpBody.MessageID.id0001;
-import static com.driverhelper.config.TcpBody.MessageID.id0104;
-import static com.driverhelper.config.TcpBody.MessageID.id0203;
-import static com.driverhelper.config.TcpBody.MessageID.id0205;
-import static com.driverhelper.config.TcpBody.MessageID.id0301;
-import static com.driverhelper.config.TcpBody.MessageID.id0302;
-import static com.driverhelper.config.TcpBody.MessageID.id0303;
-import static com.driverhelper.config.TcpBody.MessageID.id0304;
-import static com.driverhelper.config.TcpBody.MessageID.id0305;
-import static com.driverhelper.config.TcpBody.MessageID.id0306;
-import static com.driverhelper.config.TcpBody.MessageID.id0401;
-import static com.driverhelper.config.TcpBody.MessageID.id0402;
-import static com.driverhelper.config.TcpBody.MessageID.id0403;
-import static com.driverhelper.config.TcpBody.MessageID.id0501;
-import static com.driverhelper.config.TcpBody.MessageID.id0502;
-import static com.driverhelper.config.TcpBody.MessageID.id0503;
-import static com.driverhelper.config.TcpBody.MessageID.locationInfoUpdata;
-import static com.driverhelper.config.TcpBody.MessageID.register;
-import static com.driverhelper.config.TcpBody.MessageID.transparentInfo;
-import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogin;
-import static com.driverhelper.config.TcpBody.MessageID.updataCoachLogout;
-import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogin;
-import static com.driverhelper.config.TcpBody.MessageID.updataStudentLogiout;
-import static com.driverhelper.config.TcpBody.VERSION_CODE;
-import static com.driverhelper.config.TcpBody.driving;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.findLocatInfoRequest;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0001;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0104;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0203;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0205;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0301;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0302;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0303;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0304;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0305;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0306;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0401;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0402;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0403;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0501;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0502;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0503;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.locationInfoUpdata;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.register;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.transparentInfo;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.updataCoachLogin;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.updataCoachLogout;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.updataStudentLogin;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.updataStudentLogiout;
+import static com.driverhelper.other.tcp.TcpBody.VERSION_CODE;
+import static com.driverhelper.other.tcp.TcpBody.driving;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
 import static com.driverhelper.utils.ByteUtil.int2DWORD;
 import static com.driverhelper.utils.ByteUtil.int2WORD;
@@ -138,6 +139,7 @@ public class BodyHelper {
             data = ByteUtil.add(data, ByteUtil.int2WORD(index));
         }
         ByteUtil.printHexString("hand = ", data);
+        ByteUtil.printHexString("watercode = ", watercode);
         return data;
     }
 
@@ -215,7 +217,6 @@ public class BodyHelper {
         result = ByteUtil.addXor(result);
         result = ByteUtil.addEND(result);
         result = ByteUtil.checkMark(result);
-//        ByteUtil.printHexString(result);
         return result;
     }
 
@@ -313,8 +314,8 @@ public class BodyHelper {
         Log.e("coachNum", "coachNum = " + coachNum);
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd("1212110000"));                //培训课程
         long time = TimeUtil.getTime() / 1000;
-        ConstantInfo.classId = ByteUtil.int2DWORD((int) time);              //课堂id  时间戳
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);
+        ConstantInfo.classId = time;
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) ConstantInfo.classId));//课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -349,7 +350,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes("01"));                //学员该次登录总时间   min
 //        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Word(studyDistance / 10 + ""));                //学员该次登录总时间   min
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes("02"));                //学员该次登录总时间   min
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) ConstantInfo.classId));           //课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
@@ -377,7 +378,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
         resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentId.getBytes());       //学员编号
         resultBody = ByteUtil.add(resultBody, ConstantInfo.coachId.getBytes());             //教练员编号
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.classId);           //课堂id  时间戳
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) ConstantInfo.classId));//课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(classType));                //培训课程
         resultBody = ByteUtil.add(resultBody, recordType);
@@ -1618,7 +1619,9 @@ public class BodyHelper {
                     }
                     break;
                 case "8001":            //服务端通用应答
+                    //7E 80 80 01 00 05 00 00 00 00 00 10 00 31 2B 0D 2A 00 36 00 03 01 1D 7E
                     if (messageBean.headBean.bodyLength == 5) {
+                        TcpManager.getInstance().remove(messageBean.headBean.waterCode, messageBean.headBean.res8001);
                         switch (messageBean.bodyBean[4]) {
                             case 0:
                                 ToastUitl.show("成功/确认", Toast.LENGTH_SHORT);

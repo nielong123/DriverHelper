@@ -12,7 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.driverhelper.config.ConstantInfo;
-import com.driverhelper.helper.TcpHelper;
+import com.driverhelper.other.tcp.TcpHelper;
 import com.driverhelper.utils.FileUtils;
 
 import java.io.IOException;

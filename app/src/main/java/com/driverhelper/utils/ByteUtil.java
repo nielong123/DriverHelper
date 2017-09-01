@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.driverhelper.beans.MessageBean;
-import com.driverhelper.config.TcpBody;
+import com.driverhelper.other.tcp.TcpBody;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
@@ -656,8 +656,9 @@ public class ByteUtil {
         messageBean.headBean.messageAttribute = ByteUtil.bcdByte2bcdString(data1);
         byte[] data2 = new byte[8];
         byte[] data3 = new byte[2];
-        System.arraycopy(data, 13, data3, 0, data3.length);
+        System.arraycopy(data, 16, data3, 0, data3.length);
         messageBean.headBean.waterCode = ByteUtil.byte2int(data3);
+//        ByteUtil.printHexString("data3", data3);
 //        Log.e("messageBean", "messageBean.headBean.waterCode = " + messageBean.headBean.waterCode);
         messageBean.headBean.benAttribute = autoAddZeroByLength(hexStringToBinary(messageBean.headBean.messageAttribute), 10);      //由消息体得到二进制的消息体
         messageBean.headBean.bodyLength = Integer.valueOf(binString2DexString(messageBean.headBean.benAttribute.substring(6, messageBean.headBean.benAttribute.length())));
@@ -675,7 +676,11 @@ public class ByteUtil {
         }
         messageBean.bodyBean = new byte[messageBean.headBean.bodyLength];
         System.arraycopy(data, data.length - messageBean.headBean.bodyLength - 1, messageBean.bodyBean, 0, messageBean.headBean.bodyLength);
-//    }
+
+        if ("8001".equals(messageBean.headBean.messageId)) {
+            messageBean.headBean.res8001 = messageBean.bodyBean[4];
+        }
+
         return messageBean;
     }
 }

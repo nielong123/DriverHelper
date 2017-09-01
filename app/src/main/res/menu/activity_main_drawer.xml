@@ -17,9 +17,9 @@
             <item
                 android:id="@+id/nav_DEVlogin"
                 android:title="0x0102 终端鉴权" />
-            <item
-                android:id="@+id/nav_aLive"
-                android:title="0x0002 客户端心跳" />
+            <!--<item-->
+                <!--android:id="@+id/nav_aLive"-->
+                <!--android:title="0x0002 客户端心跳" />-->
             <item
                 android:id="@+id/nav_ZhuCe"
                 android:title="0x0100 终端注册" />

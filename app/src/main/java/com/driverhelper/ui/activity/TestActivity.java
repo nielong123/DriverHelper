@@ -1,8 +1,6 @@
 package com.driverhelper.ui.activity;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,19 +8,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.driverhelper.R;
-import com.driverhelper.app.MyApplication;
-import com.driverhelper.beans.MSG;
-import com.driverhelper.beans.db.GpsInfo;
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
-import com.driverhelper.config.ConstantInfo;
-import com.driverhelper.helper.AssetsHelper;
 import com.driverhelper.helper.DbHelper;
-import com.driverhelper.helper.PhotoHelper;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
 import com.driverhelper.utils.ByteUtil;
-import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 
 import java.util.HashMap;
@@ -66,10 +57,6 @@ public class TestActivity extends SerialPortActivity {
             Log.d("studyinfo", data.toString());
         }
 
-        List<GpsInfo> list1 = DbHelper.getInstance().queryGpsInfoAll();
-        for (GpsInfo data : list1) {
-            Log.d("GpsInfo", data.toString());
-        }
     }
 
     @Override

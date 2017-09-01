@@ -13,7 +13,6 @@ import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.gen.DaoMaster;
 import com.driverhelper.beans.gen.DaoSession;
 import com.driverhelper.config.Config;
-import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.jaydenxiao.common.baseapp.BaseApplication;
 import com.jaydenxiao.common.baserx.RxBus;
@@ -44,7 +43,7 @@ public class MyApplication extends BaseApplication {
 
     public float speedGPS, direction;
     public double lat, lon;
-    public long timeGPS, timeSYS;
+    public long timeGPS;
     public boolean isLocation;
     public boolean isFirst = false;         //是否是第一次登陆
 
@@ -171,14 +170,11 @@ public class MyApplication extends BaseApplication {
                 MyApplication.getInstance().direction = amapLocation.getBearing();
                 MyApplication.getInstance().timeGPS = amapLocation.getTime();
                 MyApplication.getInstance().isLocation = true;
-                if (Config.isStudentLoginOK) {
-                    DbHelper.getInstance().addGpsInfo(null, speedGPS, direction, lat, lon, timeGPS);
-                }
                 RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_OK, "");
             } else {
                 MyApplication.getInstance().isLocation = false;
-                Logger.e("AmapError", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
                 RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_FALINE, "");
+                Logger.e("AmapError", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
             }
         }
     }

@@ -1,23 +1,19 @@
 package com.driverhelper.other;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
-import com.driverhelper.helper.TcpHelper;
+import com.driverhelper.other.tcp.TcpHelper;
 import com.driverhelper.utils.ByteUtil;
 import com.driverhelper.utils.FileUtils;
-import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.compressorutils.FileUtil;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
 
 /**
  * Created by Administrator on 2017/8/21.
