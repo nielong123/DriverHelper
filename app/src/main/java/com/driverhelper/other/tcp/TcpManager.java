@@ -3,12 +3,10 @@ package com.driverhelper.other.tcp;
 import android.util.Log;
 
 import com.driverhelper.helper.DbHelper;
-import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 
@@ -23,7 +21,7 @@ public class TcpManager {
 
     private static volatile TcpManager tcpManager;
 
-    static Hashtable<Integer, String> container = new Hashtable<>();
+    static ConcurrentHashMap<Integer, String> container = new ConcurrentHashMap<>();
 
     public static TcpManager getInstance() {
         if (tcpManager == null) {

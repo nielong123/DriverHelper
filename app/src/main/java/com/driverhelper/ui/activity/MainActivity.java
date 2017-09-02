@@ -297,6 +297,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         WriteSettingHelper.loadRegistInfo();
         MSG.getInstance().loadSetting1();
         MSG.getInstance().loadSetting();
+        TcpHelper.getInstance().connect(ip, port, 10 * 1000);
     }
 
     @Override

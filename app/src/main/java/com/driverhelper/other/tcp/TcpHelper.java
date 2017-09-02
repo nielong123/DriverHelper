@@ -44,15 +44,19 @@ import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.A
 
 public class TcpHelper {
 
-    private static TcpHelper self;
+    private static volatile TcpHelper tcpHelper;
     public boolean isConnected;
     private static SocketClient socketClient;
 
     static public TcpHelper getInstance() {
-        if (self == null) {
-            self = new TcpHelper();
+        if (tcpHelper == null) {
+            synchronized (TcpHelper.class) {
+                if (tcpHelper == null) {
+                    tcpHelper = new TcpHelper();
+                }
+            }
         }
-        return self;
+        return tcpHelper;
     }
 
 
@@ -64,7 +68,7 @@ public class TcpHelper {
      */
     public void connect(String ip, String port, int timeOut) {
         if (!TextUtils.isEmpty(ip) && !TextUtils.isEmpty(port)) {
-            self.getLocalSocketClient(ip, port, timeOut).connect();
+            tcpHelper.getLocalSocketClient(ip, port, timeOut).connect();
         } else {
             ToastUitl.show("请设置正确的端口号和IP地址", Toast.LENGTH_SHORT);
         }
@@ -115,12 +119,12 @@ public class TcpHelper {
          *
          * 每次发送心跳包时自动调用
          */
-//        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
-//            @Override
-//            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
-//                return BodyHelper.makeHeart();              //心跳
-//            }
-//        });
+        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
+            @Override
+            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
+                return BodyHelper.makeHeart();              //心跳
+            }
+        });
     }
 
     private void __i__setReceiverCallBack(SocketClient socketClient) {
@@ -222,7 +226,7 @@ public class TcpHelper {
         if (locationTimer != null) {
             locationTimer.cancel();
         }
-        self.__i__disConnect(socketClient);
+        tcpHelper.__i__disConnect(socketClient);
         socketClient = null;
     }
 
@@ -270,6 +274,7 @@ public class TcpHelper {
         byte[] waterByte = new byte[2];
         System.arraycopy(data, 14, waterByte, 0, 2);
         TcpManager.getInstance().put(ByteUtil.byte2int(waterByte), ByteUtil.bcdByte2bcdString(TcpBody.MessageID.authentication));
+        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "开始鉴权");
         sendData(data);
     }
 
