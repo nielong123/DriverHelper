@@ -13,21 +13,11 @@ public class Config {
     public static String ip, port, timeOut;
 
     public static class Config_RxBus {
-        public final static String RX_COACH_SIGN = "RX_COACH_SIGN";
-        public final static String RX_COACH_SIGN_OK = "RX_COACH_SIGN_OK";
-        public final static String RX_SHOW_COACH_INFO = "RX_SHOW_COACH_INFO";
-        public final static String RX_STUDENT_SIGN = "RX_STUDENT_SIGN";
-        public final static String RX_STUDENT_SIGN_OK = "RX_STUDENT_SIGN_OK";
-        public final static String RX_REBACK_MARKACTIVITY = "RX_RETURN_MARKACTIVITY";
-        public final static String RX_COACH_SIGN_OUT = "RX_COACH_SIGN_OUT";
-        public final static String RX_COACH_SIGN_OUT_OK = "RX_COACH_SIGN_OUT_OK";
-        public final static String RX_STUDENT_SIGN_OUT = "RX_STUDENT_SIGN_OUT";    //签退
-        public final static String RX_PHOTOGRAPH = "RX_PHOTOGRAPH";         //照相
-
         public final static String RX_LOCATION_OK = "RX_LOCATION_OK";           //定位成功
         public final static String RX_LOCATION_FALINE = "RX_LOCATION_FAILE";           //定位失败
         public final static String RX_CHANGE_TEXTINFO = "RX_CHANGE_TEXTINFO";       //刷新界面
         public final static String RX_TTS_SPEAK = "RX_TTS_SPEAK";           //語音
+        public final static String RX_NET_CONNECTED = "RX_NET_CONNECTED";           //网络连接OK
         public final static String RX_NET_DISCONNECT = "RX_NET_DISCONNECT";           //网络连接中断
         public final static String RX_COACH_LOGINOK = "RX_COACH_LOGINOK";           //教练员登录
         public final static String RX_COACH_LOGOUTOK = "RX_COACH_LOGOUTOK";           //教练员登出

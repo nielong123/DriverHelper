@@ -19,24 +19,29 @@ public class LocationInfoTimeTask extends TimerTask {
     @Override
     public void run() {
 
-        TcpHelper.getInstance().sendMakeLocationInfo(
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
-                10,         //车辆obd算出的速度
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
-                TimeUtil.formatData(dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000)
-        );
+        int lon = (int) (MyApplication.getInstance().lon * Math.pow(10, 6));
+        int lat = (int) (MyApplication.getInstance().lat * Math.pow(10, 6));
+        int speedVehicle = ConstantInfo.ObdInfo.vehiclSspeed;
+        int speedGPS = (int) MyApplication.getInstance().speedGPS;
+        int direction = (int) MyApplication.getInstance().direction;
+        long timeGPS = MyApplication.getInstance().timeGPS / 1000;                 //秒级
+        String timeGPS_ = TimeUtil.formatData(dateFormatYMDHMS_, timeGPS);
+        long timeSYS = TimeUtil.getTime()/1000;
+
+
+
+        TcpHelper.getInstance().sendMakeLocationInfo(lon, lat, speedVehicle, speedGPS, direction, timeGPS_);
+
         DbHelper.getInstance().addLocationInfo(
-                ConstantInfo.ObdInfo.vehiclSspeed,
+                speedVehicle,
                 ConstantInfo.ObdInfo.distance,
                 ConstantInfo.ObdInfo.speed,
-                TimeUtil.getTime(),
+                timeSYS,
                 false,
-                MyApplication.getInstance().speedGPS,
-                MyApplication.getInstance().direction,
-                MyApplication.getInstance().lat,
-                MyApplication.getInstance().lon,
-                MyApplication.getInstance().timeGPS);
+                speedGPS,
+                direction,
+                lat,
+                lon,
+                timeGPS);
     }
 }

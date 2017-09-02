@@ -32,6 +32,7 @@ import java.util.Timer;
 
 import static com.driverhelper.config.ConstantInfo.StudentInfo.studentId;
 import static com.driverhelper.config.ConstantInfo.coachId;
+import static com.driverhelper.config.ConstantInfo.isDisConnectByUser;
 import static com.driverhelper.config.ConstantInfo.locationTimer;
 import static com.driverhelper.config.ConstantInfo.locationTimerDelay;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS;
@@ -45,7 +46,7 @@ import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.A
 public class TcpHelper {
 
     private static volatile TcpHelper tcpHelper;
-    public boolean isConnected;
+    public static boolean isConnected;
     private static SocketClient socketClient;
 
     static public TcpHelper getInstance() {
@@ -53,6 +54,9 @@ public class TcpHelper {
             synchronized (TcpHelper.class) {
                 if (tcpHelper == null) {
                     tcpHelper = new TcpHelper();
+                }
+                if (socketClient == null) {
+                    socketClient = new SocketClient();
                 }
             }
         }
@@ -164,6 +168,7 @@ public class TcpHelper {
             @Override
             public void onConnected(SocketClient client) {
                 isConnected = true;
+                isDisConnectByUser = false;
                 Logger.d("onConnected", "SocketClient: onConnected");
                 RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp连接成功");
                 if (client.getSocketPacketHelper().getReadStrategy() == SocketPacketHelper.ReadStrategy.Manually) {
@@ -177,6 +182,7 @@ public class TcpHelper {
                     RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
                     return;
                 }
+                RxBus.getInstance().post(Config.Config_RxBus.RX_NET_CONNECTED, null);
                 TcpHelper.getInstance().sendAuthentication();           //鉴权
                 startUpDataLocationInfo();                          //开始上传定位信息
             }
@@ -184,25 +190,27 @@ public class TcpHelper {
             @Override
             public void onDisconnected(final SocketClient client) {
                 isConnected = false;
-                Logger.d("onDisconnected", "SocketClient: onDisconnected");
                 RxBus.getInstance().post(Config.Config_RxBus.RX_NET_DISCONNECT, "tcp连接已断开");
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        try {
-                            Thread.sleep(3 * 1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                locationTimer.cancel();
+                if (!isDisConnectByUser) {
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            try {
+                                Thread.sleep(3 * 1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            client.connect();
+                            return null;
                         }
-                        client.connect();
-                        return null;
-                    }
 
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        super.onPostExecute(aVoid);
-                    }
-                }.execute();
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            super.onPostExecute(aVoid);
+                        }
+                    }.execute();
+                }
             }
 
             @Override
@@ -217,6 +225,7 @@ public class TcpHelper {
 
 
     private void startUpDataLocationInfo() {
+        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "开始上传位置信息");
         locationTimer = new Timer(true);
         locationTimer.schedule(new LocationInfoTimeTask(), 1000, locationTimerDelay);          //暂定十秒一次,要改成可以设置的
     }
@@ -226,8 +235,10 @@ public class TcpHelper {
         if (locationTimer != null) {
             locationTimer.cancel();
         }
+        isDisConnectByUser = true;
         tcpHelper.__i__disConnect(socketClient);
         socketClient = null;
+        tcpHelper = null;
     }
 
     private void __i__disConnect(SocketClient socketClient) {
@@ -274,7 +285,7 @@ public class TcpHelper {
         byte[] waterByte = new byte[2];
         System.arraycopy(data, 14, waterByte, 0, 2);
         TcpManager.getInstance().put(ByteUtil.byte2int(waterByte), ByteUtil.bcdByte2bcdString(TcpBody.MessageID.authentication));
-        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "开始鉴权");
+//        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "开始鉴权");
         sendData(data);
     }
 
@@ -325,6 +336,9 @@ public class TcpHelper {
                     -2000, -2000, -2000, -2000);
             sendData(data);
         }
+        byte[] waterByte = new byte[2];
+        System.arraycopy(data, 14, waterByte, 0, 2);
+        TcpManager.getInstance().put(ByteUtil.byte2int(waterByte), ByteUtil.bcdByte2bcdString(TcpBody.MessageID.locationInfoUpdata));
     }
 
     /****

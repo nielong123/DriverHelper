@@ -66,6 +66,8 @@ public class TcpManager {
                     RxBus.getInstance().post(RX_TTS_SPEAK, "终端鉴权失败");
                 }
                 break;
+            case "0200":
+                break;
             default:
                 break;
         }

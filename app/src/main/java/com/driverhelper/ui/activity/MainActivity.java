@@ -302,10 +302,10 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     @Override
     public void initEvent() {
-        mRxManager.on(Config.Config_RxBus.RX_CHANGE_TEXTINFO, new Action1<Config.TextInfoType>() {
+        mRxManager.on(Config.Config_RxBus.RX_NET_CONNECTED, new Action1<Object>() {
             @Override
-            public void call(Config.TextInfoType textInfoType) {
-
+            public void call(Object obj) {
+                networksw.setChecked(true);
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_LOCATION_OK, new Action1<Object>() {

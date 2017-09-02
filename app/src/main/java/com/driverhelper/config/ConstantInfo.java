@@ -52,6 +52,7 @@ public class ConstantInfo {
     public static boolean isEmbargo;                     //禁运状态          true
     public static String embargoStr;            //      禁运提示消息内容
     public static boolean is0102_OK;                //是否鉴权成功
+    public static boolean isDisConnectByUser;           //用户手动断开连接
 
 
     /***** 0502的设置  start ***************/
