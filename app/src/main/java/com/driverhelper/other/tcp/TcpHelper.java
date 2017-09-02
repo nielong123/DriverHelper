@@ -11,6 +11,7 @@ import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.BodyHelper;
+import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.IdHelper;
 import com.driverhelper.other.LocationInfoTimeTask;
 import com.driverhelper.utils.ByteUtil;
@@ -31,10 +32,12 @@ import java.util.List;
 import java.util.Timer;
 
 import static com.driverhelper.config.ConstantInfo.StudentInfo.studentId;
+import static com.driverhelper.config.ConstantInfo.classId;
 import static com.driverhelper.config.ConstantInfo.coachId;
 import static com.driverhelper.config.ConstantInfo.isDisConnectByUser;
 import static com.driverhelper.config.ConstantInfo.locationTimer;
 import static com.driverhelper.config.ConstantInfo.locationTimerDelay;
+import static com.driverhelper.other.tcp.TcpBody.MessageID.id0203;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
@@ -373,15 +376,21 @@ public class TcpHelper {
     /*****
      * 发送学时信息
      */
-    public void sendStudyInfo(byte updataType) {
-        int studyCode = IdHelper.getStudyCode();
-        String str = TimeUtil.formatData(dateFormatYMDHMS, TimeUtil.getTime() / 1000).replaceAll(":", "");
-        String str66666 = str.substring(str.length() - 6, str.length());
-        sendData(BodyHelper.makeSendStudyInfo(updataType, str66666, (byte) 0x00));
-//        DbHelper.getInstance().addStudyInfoDao(null, studyCode, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
-//                "", str66666, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
-//                TimeUtil.getTime());
-//        }
+    public void sendStudyInfo(String time666, int studyCode, byte updataType, String studentId, String coachId,
+                              int vehiclSspeed, int distance, int lon, int lat, int speedGPS,
+                              int direction, long timeSYS, long timeGPS, byte recordType) {
+        byte[] data = BodyHelper.makeSendStudyInfo(time666, studyCode, updataType, studentId, coachId, vehiclSspeed, distance, lon, lat, speedGPS, direction, timeSYS,
+                recordType);
+        sendData(data);
+        ByteUtil.printHexString("学时记录    =   ", data);
+        byte[] waterByte = new byte[2];
+        System.arraycopy(data, 14, waterByte, 0, 2);
+        int waterCode = ByteUtil.byte2int(waterByte);
+        TcpManager.getInstance().put(waterCode, ByteUtil.bcdByte2bcdString(id0203));
+        DbHelper.getInstance().addStudyInfo(waterCode, studentId, coachId, classId + "",
+                null, time666, null, vehiclSspeed,
+                distance, vehiclSspeed, timeSYS, false,
+                speedGPS, direction, lat, lon, timeGPS);
     }
 
     /*****

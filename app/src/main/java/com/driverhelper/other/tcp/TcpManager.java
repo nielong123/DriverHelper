@@ -68,6 +68,13 @@ public class TcpManager {
                 break;
             case "0200":
                 break;
+            case "0203":
+                if (res8001 == 0) {
+                    RxBus.getInstance().post(RX_TTS_SPEAK, "学时记录上传成功");
+                } else {
+                    RxBus.getInstance().post(RX_TTS_SPEAK, "学时记录上传失败");
+                }
+                break;
             default:
                 break;
         }

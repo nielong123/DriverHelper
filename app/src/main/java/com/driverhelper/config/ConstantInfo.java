@@ -158,6 +158,9 @@ public class ConstantInfo {
     public static QRbean qRbean;
 
     public static Timer locationTimer;
+    public static Timer studyInfoTimer;
+
     public static long locationTimerDelay = 10 * 1000;
+    public static long studyInfoTimerDelay = 15 * 1000;
 
 }

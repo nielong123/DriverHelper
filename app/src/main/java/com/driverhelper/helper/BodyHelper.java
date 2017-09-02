@@ -373,6 +373,42 @@ public class BodyHelper {
      * @param updataType
      * @return
      */
+    public static byte[] makeSendStudyInfo(String time666, int studyCode, byte updataType, String studentId, String coachId, int vehiclSspeed, int distance, int lon, int lat, int speedGPS, int direction, long timeSYS,
+                                           byte recordType) {
+        byte[] resultBody = ByteUtil.add(("0000000000000000" + time666).getBytes(), ByteUtil.int2DWORD(studyCode));           //26        学时记录编号
+        resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
+        resultBody = ByteUtil.add(resultBody, studentId.getBytes());       //学员编号
+        resultBody = ByteUtil.add(resultBody, coachId.getBytes());             //教练员编号
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) ConstantInfo.classId));//课堂id  时间戳
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
+        resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(classType));                //培训课程
+        resultBody = ByteUtil.add(resultBody, recordType);
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(vehiclSspeed));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(distance));            //最大里程  10
+        resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
+                "40080000",
+                lon,
+                lat,
+                10,
+                speedGPS,
+                direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, timeSYS),
+                20, -2000, -2000, 30)
+        );
+
+        resultBody = buildExMsg(id0203, 0, 1, 2, resultBody);
+        resultBody = ByteUtil.add(driving, resultBody);
+        byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
+        byte[] result = sticky(resultHead, resultBody);
+        ByteUtil.printHexString(result);
+        return result;
+    }
+
+    /****
+     * 上传学时信息
+     * @param updataType
+     * @return
+     */
     public static byte[] makeSendStudyInfo(byte updataType, String time666, byte recordType) {
         byte[] resultBody = ByteUtil.add(("0000000000000000" + time666).getBytes(), ByteUtil.int2DWORD(IdHelper.getStudyCode()));           //26        学时记录编号
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型

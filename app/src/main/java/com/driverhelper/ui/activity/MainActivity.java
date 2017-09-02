@@ -37,6 +37,7 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
+import com.driverhelper.other.StudyInfoTimeTask;
 import com.driverhelper.other.tcp.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Action;
@@ -70,6 +71,7 @@ import static com.driverhelper.config.Config.port;
 import static com.driverhelper.config.ConstantInfo.embargoStr;
 import static com.driverhelper.config.ConstantInfo.isEmbargo;
 import static com.driverhelper.config.ConstantInfo.qRbean;
+import static com.driverhelper.config.ConstantInfo.studyInfoTimerDelay;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 
 public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -713,17 +715,20 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             @Override
             public void run() {
                 sendMessage(UPDATATIME);
-                ConstantInfo.studyTimeThis += 1;
+                ConstantInfo.studyTimeThis++;
             }
         }, 1000, 1000);
 
-        updataTimer = new Timer(true);
-        updataTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息并保存
-            }
-        }, 10, 60 * 1000);
+        ConstantInfo.studyInfoTimer = new Timer(true);
+        ConstantInfo.studyInfoTimer.schedule(new StudyInfoTimeTask(), 10, studyInfoTimerDelay);
+
+//        updataTimer = new Timer(true);
+//        updataTimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息并保存
+//            }
+//        }, 10, 60 * 1000);
 
         photoTimer = new Timer(true);
         photoTimer.schedule(new TimerTask() {               //保存照片

@@ -238,9 +238,10 @@ public class StudyInfo {
 
     @Generated(hash = 556779751)
     public StudyInfo(Long id, int waterCode, String studentId, String coachId,
-            String classId, String photoPath, String makeTime, String type, int vehicleSpeed,
-            int distance, int speed, long time, boolean isUpdata, float speedGPS,
-            float direction, double lat, double lon, long timeGPS) {
+                     String classId, String photoPath, String makeTime, String type,
+                     int vehicleSpeed, int distance, int speed, long time,
+                     boolean isUpdata, float speedGPS, float direction, double lat,
+                     double lon, long timeGPS) {
         this.id = id;
         this.waterCode = waterCode;
         this.studentId = studentId;
