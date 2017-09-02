@@ -44,7 +44,7 @@ public class TcpManager {
         String features = container.get(waterId);
         DbHelper.getInstance().setUpState(waterId);
         container.remove(waterId);
-        if (features != null) {
+        if (features != null) {             //有些包不用加入队列
             action(features, res8001);
         }
     }

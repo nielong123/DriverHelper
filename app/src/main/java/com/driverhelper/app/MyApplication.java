@@ -44,7 +44,7 @@ public class MyApplication extends BaseApplication {
     public float speedGPS, direction;
     public double lat, lon;
     public long timeGPS;
-    public boolean isLocation;
+    public boolean isLocation;              //是否定位成功
     public boolean isFirst = false;         //是否是第一次登陆
 
     public static Context mApplicationContext;

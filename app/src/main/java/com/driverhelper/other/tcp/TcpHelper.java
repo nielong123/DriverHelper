@@ -119,12 +119,12 @@ public class TcpHelper {
          *
          * 每次发送心跳包时自动调用
          */
-        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
-            @Override
-            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
-                return BodyHelper.makeHeart();              //心跳
-            }
-        });
+//        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
+//            @Override
+//            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
+//                return BodyHelper.makeHeart();              //心跳
+//            }
+//        });
     }
 
     private void __i__setReceiverCallBack(SocketClient socketClient) {
@@ -178,7 +178,7 @@ public class TcpHelper {
                     return;
                 }
                 TcpHelper.getInstance().sendAuthentication();           //鉴权
-//                startUpDataLocationInfo();
+                startUpDataLocationInfo();                          //开始上传定位信息
             }
 
             @Override
@@ -299,28 +299,31 @@ public class TcpHelper {
     /***
      * 发送位置信息
      */
-    public void sendMakeLocationInfo() {
+    public void sendMakeLocationInfo(int lon, int lat, int speedVehicle, int speedGPS, int direction, String time) {
 
+        byte[] data;
         if (MyApplication.getInstance().isLocation) {
-            sendData(BodyHelper.makeLocationInfo("00000000",
+            data = BodyHelper.makeLocationInfo("00000000",
                     "40080000",
-                    (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                    (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
-                    10,
-                    (int) MyApplication.getInstance().speedGPS,
-                    (int) MyApplication.getInstance().direction,
-                    TimeUtil.formatData(dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
-                    -2000, -2000, -2000, -2000));
-        } else {
-            sendData(BodyHelper.makeLocationInfo("00000000",
+                    lon,
+                    lat,
+                    speedVehicle,
+                    speedGPS,
+                    direction,
+                    time + "",
+                    -2000, -2000, -2000, -2000);
+            sendData(data);
+        } else {                //定位不成功报警标识应该不同
+            data = BodyHelper.makeLocationInfo("00000000",
                     "40080000",
-                    (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                    (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
-                    10,
-                    (int) MyApplication.getInstance().speedGPS,
-                    (int) MyApplication.getInstance().direction,
-                    TimeUtil.formatData(dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
-                    -2000, -2000, -2000, -2000));
+                    lon,
+                    lat,
+                    speedVehicle,
+                    speedGPS,
+                    direction,
+                    time + "",
+                    -2000, -2000, -2000, -2000);
+            sendData(data);
         }
     }
 
