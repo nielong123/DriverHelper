@@ -160,9 +160,11 @@ public class ConstantInfo {
     public static Timer locationTimer;
     public static Timer studyInfoTimer;
     public static Timer clearTimer;
+    public static Timer photoTimer;
 
     public static long locationTimerDelay = 10 * 1000;
-    public static long studyInfoTimerDelay = 15 * 1000;
-    public static long clearTimerDelay = 5 * 1000;
+    public static long studyInfoTimerDelay = 5 * 1000;
+    public static long clearTimerDelay = 10 * 60 * 1000;
+    public static long photoTImerDelay = 15 * 60 * 1000;
 
 }

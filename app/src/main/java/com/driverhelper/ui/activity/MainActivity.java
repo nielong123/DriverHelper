@@ -37,6 +37,7 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
+import com.driverhelper.other.timeTask.PhotoTimerTask;
 import com.driverhelper.other.timeTask.StudyInfoTimeTask;
 import com.driverhelper.other.tcp.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
@@ -70,6 +71,7 @@ import static com.driverhelper.config.Config.ip;
 import static com.driverhelper.config.Config.port;
 import static com.driverhelper.config.ConstantInfo.embargoStr;
 import static com.driverhelper.config.ConstantInfo.isEmbargo;
+import static com.driverhelper.config.ConstantInfo.photoTImerDelay;
 import static com.driverhelper.config.ConstantInfo.qRbean;
 import static com.driverhelper.config.ConstantInfo.studyInfoTimerDelay;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
@@ -144,8 +146,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     private static final int REQUEST_SETTING = 1;
 
     Timer studyTimer;
-    Timer updataTimer;
-    Timer photoTimer;
+//    Timer updataTimer;
+//    Timer photoTimer;
 
     @Override
     protected void onStart() {
@@ -722,19 +724,23 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         ConstantInfo.studyInfoTimer = new Timer(true);
         ConstantInfo.studyInfoTimer.schedule(new StudyInfoTimeTask(), 10, studyInfoTimerDelay);
 
-        photoTimer = new Timer(true);
-        photoTimer.schedule(new TimerTask() {               //保存照片
-            @Override
-            public void run() {
-                String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
-                String sms = str.substring(str.length() - 6, str.length());
-                String photoPath = TimeUtil.getTime() / 1000 + ".png";
-                surfaceView.doTakePictureAndSend(photoPath);
+        ConstantInfo.photoTimer = new Timer(true);
+        ConstantInfo.photoTimer.schedule(new PhotoTimerTask(surfaceView), 10, photoTImerDelay);
+
+
+//        photoTimer = new Timer(true);
+//        photoTimer.schedule(new TimerTask() {               //保存照片
+//            @Override
+//            public void run() {
+//                String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
+//                String sms = str.substring(str.length() - 6, str.length());
+//                String photoPath = TimeUtil.getTime() / 1000 + ".png";
+//                surfaceView.doTakePictureAndSend(photoPath);
 //                DbHelper.getInstance().addStudyInfoDao(null, IdHelper.getStudyCode(), ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
 //                        photoPath, sms, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
 //                        TimeUtil.getTime());
-            }
-        }, 2 * 1000, 15 * 60 * 1000);
+//            }
+//        }, 2 * 1000, 15 * 60 * 1000);
     }
 
     private void stopStudy() {
@@ -742,13 +748,13 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             studyTimer.cancel();
             studyTimer = null;
         }
-        if (updataTimer != null) {
-            updataTimer.cancel();
-            updataTimer = null;
+        if (ConstantInfo.studyInfoTimer != null) {
+            ConstantInfo.studyInfoTimer.cancel();
+            ConstantInfo.studyInfoTimer = null;
         }
-        if (photoTimer != null) {
-            photoTimer.cancel();
-            photoTimer = null;
+        if (ConstantInfo.photoTimer != null) {
+            ConstantInfo.photoTimer.cancel();
+            ConstantInfo.photoTimer = null;
         }
         Config.isStudentLoginOK = false;
         ConstantInfo.studyTimeThis = 0;
