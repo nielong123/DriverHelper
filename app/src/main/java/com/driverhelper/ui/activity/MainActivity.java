@@ -37,7 +37,7 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
-import com.driverhelper.other.StudyInfoTimeTask;
+import com.driverhelper.other.timeTask.StudyInfoTimeTask;
 import com.driverhelper.other.tcp.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Action;
@@ -721,14 +721,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
         ConstantInfo.studyInfoTimer = new Timer(true);
         ConstantInfo.studyInfoTimer.schedule(new StudyInfoTimeTask(), 10, studyInfoTimerDelay);
-
-//        updataTimer = new Timer(true);
-//        updataTimer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                TcpHelper.getInstance().sendStudyInfo((byte) 0x01);            //上传学时信息并保存
-//            }
-//        }, 10, 60 * 1000);
 
         photoTimer = new Timer(true);
         photoTimer.schedule(new TimerTask() {               //保存照片

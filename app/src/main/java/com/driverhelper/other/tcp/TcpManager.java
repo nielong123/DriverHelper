@@ -5,7 +5,6 @@ import android.util.Log;
 import com.driverhelper.helper.DbHelper;
 import com.jaydenxiao.common.baserx.RxBus;
 
-import java.util.Hashtable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
@@ -34,6 +33,13 @@ public class TcpManager {
         return tcpManager;
     }
 
+    public void clearContainer() {
+        container.clear();
+    }
+
+    public int getNum() {
+        return container.size();
+    }
 
     public void put(int waterId, String features) {
         container.put(waterId, features);

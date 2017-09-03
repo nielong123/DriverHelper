@@ -3,7 +3,6 @@ package com.driverhelper.other.tcp;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
@@ -12,8 +11,8 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.helper.DbHelper;
-import com.driverhelper.helper.IdHelper;
-import com.driverhelper.other.LocationInfoTimeTask;
+import com.driverhelper.other.timeTask.ClearTimerTask;
+import com.driverhelper.other.timeTask.LocationInfoTimeTask;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
@@ -22,7 +21,6 @@ import com.orhanobut.logger.Logger;
 import com.vilyever.socketclient.SocketClient;
 import com.vilyever.socketclient.helper.SocketClientDelegate;
 import com.vilyever.socketclient.helper.SocketClientReceivingDelegate;
-import com.vilyever.socketclient.helper.SocketHeartBeatHelper;
 import com.vilyever.socketclient.helper.SocketPacketHelper;
 import com.vilyever.socketclient.helper.SocketResponsePacket;
 import com.vilyever.socketclient.util.CharsetUtil;
@@ -33,13 +31,13 @@ import java.util.Timer;
 
 import static com.driverhelper.config.ConstantInfo.StudentInfo.studentId;
 import static com.driverhelper.config.ConstantInfo.classId;
+import static com.driverhelper.config.ConstantInfo.clearTimer;
+import static com.driverhelper.config.ConstantInfo.clearTimerDelay;
 import static com.driverhelper.config.ConstantInfo.coachId;
 import static com.driverhelper.config.ConstantInfo.isDisConnectByUser;
 import static com.driverhelper.config.ConstantInfo.locationTimer;
 import static com.driverhelper.config.ConstantInfo.locationTimerDelay;
 import static com.driverhelper.other.tcp.TcpBody.MessageID.id0203;
-import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS;
-import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 import static com.vilyever.socketclient.helper.SocketPacketHelper.ReadStrategy.AutoReadToTrailer;
 
 /**
@@ -188,6 +186,7 @@ public class TcpHelper {
                 RxBus.getInstance().post(Config.Config_RxBus.RX_NET_CONNECTED, null);
                 TcpHelper.getInstance().sendAuthentication();           //鉴权
                 startUpDataLocationInfo();                          //开始上传定位信息
+                startClearTimer();
             }
 
             @Override
@@ -233,10 +232,18 @@ public class TcpHelper {
         locationTimer.schedule(new LocationInfoTimeTask(), 1000, locationTimerDelay);          //暂定十秒一次,要改成可以设置的
     }
 
+    private void startClearTimer() {
+        clearTimer = new Timer(true);
+        clearTimer.schedule(new ClearTimerTask(), 0, clearTimerDelay);
+    }
+
 
     public void disConnect() {
         if (locationTimer != null) {
             locationTimer.cancel();
+        }
+        if (clearTimer != null) {
+            clearTimer.cancel();
         }
         isDisConnectByUser = true;
         tcpHelper.__i__disConnect(socketClient);
