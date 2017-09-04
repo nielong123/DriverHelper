@@ -605,11 +605,16 @@ public final class MSG {
 
 
     public void getPARAM0050() {
-        ConstantInfo.param0050 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0050, "55"));
+        boolean res = sharePreferences.getBoolean(Config.WriteSetting.param0050, false);
+        if(res){
+            ConstantInfo.param0050 = 1;
+        }else {
+            ConstantInfo.param0050 = 0;
+        }
     }
 
-    public void setPARAM0050(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0050, str).apply();
+    public void setPARAM0050(boolean str) {
+        sharePreferences.edit().putBoolean(Config.WriteSetting.param0050, str).apply();
     }
 
     public void getPARAM0051() {
@@ -925,7 +930,7 @@ public final class MSG {
         setPARAM0048("1");
         setPARAM0049("1");
 
-        setPARAM0050("1");
+        setPARAM0050(true);
         setPARAM0051("1");
         setPARAM0052("1");
         setPARAM0053("1");

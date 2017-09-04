@@ -46,7 +46,6 @@ public class StudyInfo {
     @Property(nameInDb = "SPEED")       //发动机转速
     private int speed;
 
-    @Index(unique = true)
     @Property(nameInDb = "TIME")        //时间
     private long time;
 

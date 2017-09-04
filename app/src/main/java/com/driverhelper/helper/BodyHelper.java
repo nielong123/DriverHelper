@@ -1562,7 +1562,6 @@ public class BodyHelper {
                 break;
         }
         bin += "0000000000";
-//        byte[] resultBody = ByteUtil.add(exMsgId, exMsgId);
         byte[] resultBody = ByteUtil.add(exMsgId, binaryStr2hex(bin));
         resultBody = ByteUtil.add(resultBody, getExCode());
         resultBody = ByteUtil.add(resultBody, terminalNum);

@@ -23,9 +23,13 @@ import com.driverhelper.config.Config;
 import java.util.List;
 
 import static com.driverhelper.config.Config.WriteSetting.CITY;
+import static com.driverhelper.config.Config.WriteSetting.CameraID;
+import static com.driverhelper.config.Config.WriteSetting.Car_ID;
 import static com.driverhelper.config.Config.WriteSetting.DISTANCE;
 import static com.driverhelper.config.Config.WriteSetting.IMEI;
+import static com.driverhelper.config.Config.WriteSetting.KEMU;
 import static com.driverhelper.config.Config.WriteSetting.MODEL;
+import static com.driverhelper.config.Config.WriteSetting.PERDRITYPE;
 import static com.driverhelper.config.Config.WriteSetting.PROVINCE;
 import static com.driverhelper.config.Config.WriteSetting.SN;
 import static com.driverhelper.config.Config.WriteSetting.TCP_IP;
@@ -33,6 +37,8 @@ import static com.driverhelper.config.Config.WriteSetting.TCP_PORT;
 import static com.driverhelper.config.Config.WriteSetting.TERMINALPHONENUMBER;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_COLOR;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_NUMBER;
+import static com.driverhelper.config.Config.WriteSetting.VENDER_ID;
+import static com.driverhelper.config.Config.WriteSetting.idsub0306ret;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
@@ -133,7 +139,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(PROVINCE));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(Config.WriteSetting.CITY));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("VENDER_ID"));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(VENDER_ID));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(MODEL));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(SN));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(IMEI));
@@ -142,11 +148,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TCP_IP));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TCP_PORT));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TERMINALPHONENUMBER));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("KEMU"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("PERDRITYPE"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("CameraID"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("Car_ID"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("idsub0306ret"));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(KEMU));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(PERDRITYPE));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(CameraID));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(Car_ID));
+            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference(idsub0306ret));
         }
 
         @Override
@@ -161,7 +167,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     //
     @TargetApi(11)
-    public static class EDUParamPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public static class EDUParamPreferenceFragment extends PreferenceFragment {
 
         @Override
         public void onCreate(Bundle paramBundle) {
@@ -188,12 +194,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(paramMenuItem);
         }
 
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-//if(sharedPreferences.){
-//
-//}
-        }
     }
 
     @TargetApi(11)

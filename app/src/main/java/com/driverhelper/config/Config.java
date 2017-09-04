@@ -43,6 +43,11 @@ public class Config {
         public final static String HTTP_URL = "HTTP_URL";               //http 地址
         public final static String VEHICLE_NUMBER = "VEHICLE_NUMBER";       //车牌号
         public final static String TERMINALPHONENUMBER = "TERMINALPHONENUMBER";         //终端手机号
+        public final static String KEMU = "KEMU";
+        public final static String PERDRITYPE = "PERDRITYPE";
+        public final static String CameraID = "CameraID";
+        public final static String Car_ID = "Car_ID";
+        public final static String idsub0306ret = "idsub0306ret";
         public final static String SN = "SN";           //终端出厂编号
         public final static String IMEI = "IMEI";
         public final static String MODEL = "MODEL";                 //终端型号
@@ -54,6 +59,7 @@ public class Config {
         public final static String PROVINCE = "PROVINCE";       //省
         public final static String DISTANCE = "DISTANCE";       //里程
         public final static String CITY = "CITY";       //省
+        public final static String VENDER_ID = "VENDER_ID";
         public final static String PLATFORMNUM = "platformNum";     //平台编号
         public final static String INSTITUTIONNUMBER = "institutionNumber";     //培训机构编号
         public final static String TERMINALNUM = "terminalNum";     //终端编号
