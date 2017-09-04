@@ -229,8 +229,8 @@ public class TcpHelper {
 
     private void startUpDataLocationInfo() {
         RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "开始上传位置信息");
-//        locationTimer = new Timer(true);
-//        locationTimer.schedule(new LocationInfoTimeTask(), 1000, locationTimerDelay);          //暂定十秒一次,要改成可以设置的
+        locationTimer = new Timer(true);
+        locationTimer.schedule(new LocationInfoTimeTask(), 1000, locationTimerDelay);          //暂定十秒一次,要改成可以设置的
     }
 
     private void startClearTimer() {

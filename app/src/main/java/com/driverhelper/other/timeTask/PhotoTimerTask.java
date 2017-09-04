@@ -2,6 +2,10 @@ package com.driverhelper.other.timeTask;
 
 import android.view.SurfaceView;
 
+import com.driverhelper.config.ConstantInfo;
+import com.driverhelper.helper.DbHelper;
+import com.driverhelper.helper.IdHelper;
+import com.driverhelper.utils.ByteUtil;
 import com.driverhelper.widget.LiveSurfaceView;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 
@@ -29,12 +33,12 @@ public class PhotoTimerTask extends TimerTask {
 
     @Override
     public void run() {
+        long time = TimeUtil.getTime() / 1000;
         String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
         String sms = str.substring(str.length() - 6, str.length());
-        String photoPath = TimeUtil.getTime() / 1000 + ".png";
+        String photoPath = time + ".png";
         surfaceView.doTakePictureAndSend(photoPath);
-        //                DbHelper.getInstance().addStudyInfoDao(null, IdHelper.getStudyCode(), ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
-//                        photoPath, sms, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
-//                        TimeUtil.getTime());
+        DbHelper.getInstance().addphotoInfo(0, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, (int) ConstantInfo.classId + "",
+                photoPath, sms, time, false);
     }
 }

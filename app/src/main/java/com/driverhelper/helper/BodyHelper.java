@@ -66,6 +66,8 @@ import static com.driverhelper.other.tcp.TcpBody.driving;
 import static com.driverhelper.utils.ByteUtil.int2Bytes;
 import static com.driverhelper.utils.ByteUtil.int2DWORD;
 import static com.driverhelper.utils.ByteUtil.int2WORD;
+import static com.jaydenxiao.common.commonutils.ByteUtils.binaryStr2hex;
+import static com.jaydenxiao.common.commonutils.ByteUtils.binaryString2hexString;
 
 /**
  * Created by Administrator on 2017/6/7.
@@ -1275,13 +1277,6 @@ public class BodyHelper {
         return list;
     }
 
-    public static int getMake0306length(String photoId) {
-        byte[] resultBody = photoId.getBytes();
-        resultBody = buildExMsg(id0306, 0, 1, 2, resultBody);
-        resultBody = ByteUtil.add(driving, resultBody);
-        return resultBody.length;
-    }
-
     public static byte[] make0403(String vehicleId) {
         vehicleId = "12345679012345678901234567890123456";
         byte[] resultBody = vehicleId.getBytes();
@@ -1554,7 +1549,21 @@ public class BodyHelper {
      */
     public static byte[] buildExMsg(byte[] exMsgId, int para2, int para3, int para4, byte[] para6) {
 
-        byte[] resultBody = ByteUtil.add(exMsgId, exMsgId);
+        String bin = para2 + "" + para3;
+        switch (para4) {
+            case 0:
+                bin += "0000";
+                break;
+            case 1:
+                bin += "0001";
+                break;
+            case 2:
+                bin += "0010";
+                break;
+        }
+        bin += "0000000000";
+//        byte[] resultBody = ByteUtil.add(exMsgId, exMsgId);
+        byte[] resultBody = ByteUtil.add(exMsgId, binaryStr2hex(bin));
         resultBody = ByteUtil.add(resultBody, getExCode());
         resultBody = ByteUtil.add(resultBody, terminalNum);
         resultBody = ByteUtil.add(resultBody, int2DWORD(para6.length));

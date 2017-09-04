@@ -102,6 +102,26 @@ public class ByteUtils {
         return Long.toHexString(dString);
     }
 
+    /****
+     * 二进制的字符串转十六进制byte[]
+     * @param bStr
+     * @return
+     */
+    public static byte[] binaryStr2hex(String bStr) {
+        if (bStr.length() % 8 != 0) {
+            bStr = autoAddZeroByLength(bStr, 8 - bStr.length());
+        }
+        int index = bStr.length() / 8;
+        byte[] result = new byte[index];
+        for (int i = 0; i < index; i += 8) {
+            String str = bStr.substring(i, i + 8);
+            System.out.println(str);
+            result[i] = (byte) Integer.parseInt(Integer.valueOf(str, 2)
+                    .toString(), 16);
+        }
+        return result;
+    }
+
     public static byte[] add(byte[] data1, byte[] data2) {
 
         byte[] result = new byte[data1.length + data2.length];

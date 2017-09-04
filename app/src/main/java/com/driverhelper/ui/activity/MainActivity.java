@@ -69,6 +69,7 @@ import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
 import static com.driverhelper.config.Config.ip;
+import static com.driverhelper.config.Config.isStudentLoginOK;
 import static com.driverhelper.config.Config.port;
 import static com.driverhelper.config.ConstantInfo.embargoStr;
 import static com.driverhelper.config.ConstantInfo.isEmbargo;
@@ -205,9 +206,12 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                     IDCARDtext.setText("");
                     break;
                 case Config.TextInfoType.CLEARXUEYUAN:
+
                     XueYuanTEXT.setText("");
                     STUNUMtext.setText("");
                     textViewTime.setText("00:00:00");
+                    textViewStat.setText("培训学时:" + 0 + " / " + 0 + "分\n"
+                            + "培训里程:" + 0 + "km / " + 0 + "km");
                     break;
             }
             super.handleMessage(msg);
@@ -548,15 +552,21 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                         coachLogin();
 //                        startScanActivity("教练员签到");
                     } else {
-                        new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("教练员登出提示").setIcon(R.drawable.main_img06).setMessage("教练员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
-                                coachLogout();
-                            }
-                        }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
-                                paramAnonymous2DialogInterface.dismiss();
-                            }
-                        }).show();
+                        if (isStudentLoginOK) {
+                            ttsClient.speak("学员未登出，请先学员登出", 1, null);
+                            return;
+                        } else {
+                            new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("教练员登出提示").setIcon(R.drawable.main_img06).setMessage("教练员是否登出").setCancelable(false).setPositiveButton("登出", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+
+                                    coachLogout();
+                                }
+                            }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                                    paramAnonymous2DialogInterface.dismiss();
+                                }
+                            }).show();
+                        }
                     }
                     break;
                 case R.id.XueYuanButton:
@@ -727,20 +737,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         ConstantInfo.photoTimer = new Timer(true);
         ConstantInfo.photoTimer.schedule(new PhotoTimerTask(surfaceView), 10, photoTImerDelay);
 
-
-//        photoTimer = new Timer(true);
-//        photoTimer.schedule(new TimerTask() {               //保存照片
-//            @Override
-//            public void run() {
-//                String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
-//                String sms = str.substring(str.length() - 6, str.length());
-//                String photoPath = TimeUtil.getTime() / 1000 + ".png";
-//                surfaceView.doTakePictureAndSend(photoPath);
-//                DbHelper.getInstance().addStudyInfoDao(null, IdHelper.getStudyCode(), ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, ByteUtil.byte2int(ConstantInfo.classId),
-//                        photoPath, sms, ConstantInfo.classType, ConstantInfo.ObdInfo.vehiclSspeed, ConstantInfo.ObdInfo.distance, ConstantInfo.ObdInfo.speed,
-//                        TimeUtil.getTime());
-//            }
-//        }, 2 * 1000, 15 * 60 * 1000);
     }
 
     private void stopStudy() {
@@ -757,6 +753,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             ConstantInfo.photoTimer = null;
         }
         Config.isStudentLoginOK = false;
+        ConstantInfo.StudentInfo.studentId = null;
         ConstantInfo.studyTimeThis = 0;
         ConstantInfo.studyDistanceThis = 0;
     }

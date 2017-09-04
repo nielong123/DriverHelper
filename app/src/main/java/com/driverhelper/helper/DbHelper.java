@@ -35,6 +35,26 @@ public class DbHelper {
         return dbHelper;
     }
 
+    /****
+     * 添加一个学时信息
+     * @param waterCode
+     * @param studentId
+     * @param coachId
+     * @param classId
+     * @param photoPath
+     * @param makeTime
+     * @param type
+     * @param vehicleSpeed
+     * @param distance
+     * @param speed
+     * @param time
+     * @param isUpdata
+     * @param speedGPS
+     * @param direction
+     * @param lat
+     * @param lon
+     * @param timeGPS
+     */
     public void addStudyInfo(int waterCode, String studentId, String coachId,
                              String classId, String photoPath, String makeTime, String type, int vehicleSpeed,
                              int distance, int speed, long time, boolean isUpdata, float speedGPS,
@@ -47,6 +67,30 @@ public class DbHelper {
         studyInfoDao.insert(studyInfo);
     }
 
+    public void addphotoInfo(int waterCode, String studentId, String coachId,
+                             String classId, String photoPath, String makeTime,
+                             long time, boolean isUpdata) {
+        studyInfo = new StudyInfo(null, waterCode, studentId, coachId,
+                classId, photoPath, makeTime, null, 0,
+                0, 0, time, isUpdata, 0,
+                0, 0, 0, 0);
+        Log.e("dbhelper", "write db photo , " + studyInfo.toString());
+        studyInfoDao.insert(studyInfo);
+    }
+
+    /****
+     * 添加一个定位记录
+     * @param vehicleSpeed
+     * @param distance
+     * @param speed
+     * @param time
+     * @param isUpdata
+     * @param speedGPS
+     * @param direction
+     * @param lat
+     * @param lon
+     * @param timeGPS
+     */
     public void addLocationInfo(int vehicleSpeed, int distance,
                                 int speed, long time, boolean isUpdata,
                                 float speedGPS, float direction, double lat,

@@ -434,6 +434,9 @@ public class ByteUtil {
         if (hexString == null || hexString.equals("")) {
             return null;
         }
+        if (hexString.length() % 2 != 0) {
+            hexString = "0" + hexString;
+        }
         hexString = hexString.toUpperCase();
         int length = hexString.length() / 2;
         char[] hexChars = hexString.toCharArray();
