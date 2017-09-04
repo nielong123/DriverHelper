@@ -132,7 +132,6 @@ public class BodyHelper {
         data = ByteUtil.add(data, makePhone2BCD(ConstantInfo.terminalPhoneNumber));
         byte[] watercode = getWaterCode();
         data = ByteUtil.add(data, watercode);
-        ByteUtil.printHexString("water code ", watercode);
         data = ByteUtil.add(data, getReserve());
         if (isDivision) { // 分包
             data = ByteUtil.add(data, ByteUtil.int2WORD(totle));

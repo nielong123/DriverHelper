@@ -21,6 +21,7 @@ import com.orhanobut.logger.Logger;
 import com.vilyever.socketclient.SocketClient;
 import com.vilyever.socketclient.helper.SocketClientDelegate;
 import com.vilyever.socketclient.helper.SocketClientReceivingDelegate;
+import com.vilyever.socketclient.helper.SocketHeartBeatHelper;
 import com.vilyever.socketclient.helper.SocketPacketHelper;
 import com.vilyever.socketclient.helper.SocketResponsePacket;
 import com.vilyever.socketclient.util.CharsetUtil;
@@ -124,12 +125,12 @@ public class TcpHelper {
          *
          * 每次发送心跳包时自动调用
          */
-//        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
-//            @Override
-//            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
-//                return BodyHelper.makeHeart();              //心跳
-//            }
-//        });
+        socketClient.getHeartBeatHelper().setSendDataBuilder(new SocketHeartBeatHelper.SendDataBuilder() {
+            @Override
+            public byte[] obtainSendHeartBeatData(SocketHeartBeatHelper helper) {
+                return BodyHelper.makeHeart();              //心跳
+            }
+        });
     }
 
     private void __i__setReceiverCallBack(SocketClient socketClient) {
@@ -393,11 +394,11 @@ public class TcpHelper {
         byte[] waterByte = new byte[2];
         System.arraycopy(data, 14, waterByte, 0, 2);
         int waterCode = ByteUtil.byte2int(waterByte);
-        TcpManager.getInstance().put(waterCode, ByteUtil.bcdByte2bcdString(id0203));
         DbHelper.getInstance().addStudyInfo(waterCode, studentId, coachId, classId + "",
                 null, time666, null, vehiclSspeed,
                 distance, vehiclSspeed, timeSYS, false,
                 speedGPS, direction, lat, lon, timeGPS);
+        TcpManager.getInstance().put(waterCode, ByteUtil.bcdByte2bcdString(id0203));
     }
 
     /*****

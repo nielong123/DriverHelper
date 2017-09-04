@@ -275,24 +275,16 @@ public class ByteUtil {
     }
 
     /********
-     *          4字节byte[] 转化成int
+     *          byte[] 转化成int
      * @param
      * @return
      */
-//    public static int byte2int(byte[] res) {
-//
-//        int intValue = 0;
-//        for (int i = 0; i < res.length; i++) {
-//            intValue += (res[i] & 0xFF) << (8 * (3 - i));
-//        }
-//        return intValue;
-//    }
     public static int byte2int(byte[] data) {
-        int intValue = 0;
-        for (int i = 0; i < data.length; i++) {
-            intValue += data[i] * Math.pow(256, data.length - i - 1);
+        int i = 0;
+        for (int j = 0; j < data.length; j++) {
+            i += ((data[j] & 0xff) * Math.pow(256, data.length - j - 1));
         }
-        return intValue;
+        return i;
     }
 
     public static int byte2int(byte data) {
@@ -658,8 +650,7 @@ public class ByteUtil {
         byte[] data3 = new byte[2];
         System.arraycopy(data, 16, data3, 0, data3.length);
         messageBean.headBean.waterCode = ByteUtil.byte2int(data3);
-//        ByteUtil.printHexString("data3", data3);
-//        Log.e("messageBean", "messageBean.headBean.waterCode = " + messageBean.headBean.waterCode);
+        ByteUtil.printHexString("收到应答，流水号为   ", data3);
         messageBean.headBean.benAttribute = autoAddZeroByLength(hexStringToBinary(messageBean.headBean.messageAttribute), 10);      //由消息体得到二进制的消息体
         messageBean.headBean.bodyLength = Integer.valueOf(binString2DexString(messageBean.headBean.benAttribute.substring(6, messageBean.headBean.benAttribute.length())));
         messageBean.headBean.isPart = Integer.valueOf(messageBean.headBean.benAttribute.substring(2, 3));

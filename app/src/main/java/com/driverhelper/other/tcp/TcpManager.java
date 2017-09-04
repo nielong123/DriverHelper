@@ -1,9 +1,11 @@
 package com.driverhelper.other.tcp;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.driverhelper.helper.DbHelper;
 import com.jaydenxiao.common.baserx.RxBus;
+import com.jaydenxiao.common.commonutils.ToastUitl;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,14 +45,15 @@ public class TcpManager {
 
     public void put(int waterId, String features) {
         container.put(waterId, features);
-        Log.e(TAG, "container 添加一个内容，container大小为" + container.size() + "   waterId = " + waterId + "features = " + features);
+        Log.e(TAG, "container 添加一个内容，container大小为" + container.size() + "   waterId = " + waterId + "  features = " + features);
     }
 
     public void remove(int waterId, int res8001) {
         String features = container.get(waterId);
         DbHelper.getInstance().setUpState(waterId);
         container.remove(waterId);
-        if (features != null) {             //有些包不用加入队列
+        Log.e(TAG, "查询到的应答功能号为:   " + features);
+        if (!TextUtils.isEmpty(features)) {             //有些包不用加入队列
             action(features, res8001);
         }
     }

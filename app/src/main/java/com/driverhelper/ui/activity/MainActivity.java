@@ -37,6 +37,7 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
+import com.driverhelper.helper.IdHelper;
 import com.driverhelper.other.timeTask.PhotoTimerTask;
 import com.driverhelper.other.timeTask.StudyInfoTimeTask;
 import com.driverhelper.other.tcp.TcpHelper;
@@ -146,8 +147,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     private static final int REQUEST_SETTING = 1;
 
     Timer studyTimer;
-//    Timer updataTimer;
-//    Timer photoTimer;
 
     @Override
     protected void onStart() {
@@ -223,7 +222,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     @Override
     public void initPresenter() {
-        test();
+
     }
 
     @Override
@@ -239,6 +238,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
             switch (menuItem.getItemId()) {
                 case R.id.NoSendConti:
+                    test();
                     break;
                 case R.id.action_0402_1:
                     TcpHelper.getInstance().send0402((byte) 0x01, "");
@@ -763,7 +763,24 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
 
     private void test() {
-
+        Log.e("111", "/**************************************************/");
+        for (int i = 0; i < 20; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int waterCode = IdHelper.getWaterCode();
+                    Log.w("getWaterCode", waterCode + "");
+                    byte[] byte111 = ByteUtil.int2WORD(waterCode);
+                    ByteUtil.printHexString("byte", byte111);
+                    Log.e("getWaterCode1111", ByteUtil.byte2int(byte111) + "");
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     }
 
     @Override
