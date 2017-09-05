@@ -606,9 +606,9 @@ public final class MSG {
 
     public void getPARAM0050() {
         boolean res = sharePreferences.getBoolean(Config.WriteSetting.param0050, false);
-        if(res){
+        if (res) {
             ConstantInfo.param0050 = 1;
-        }else {
+        } else {
             ConstantInfo.param0050 = 0;
         }
     }
@@ -618,35 +618,79 @@ public final class MSG {
     }
 
     public void getPARAM0051() {
-        ConstantInfo.param0051 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0051, "55"));
+        boolean res = sharePreferences.getBoolean(Config.WriteSetting.param0051, false);
+        if (res) {
+            ConstantInfo.param0051 = 1;
+        } else {
+            ConstantInfo.param0051 = 0;
+        }
     }
 
-    public void setPARAM0051(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0051, str).apply();
+    public void setPARAM0051(int PARAM0051) {
+        if (PARAM0051 == 1) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.param0051, true).apply();
+            return;
+        }
+        if (PARAM0051 == 0) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.param0051, false).apply();
+        }
     }
 
     public void getPARAM0052() {
-        ConstantInfo.param0052 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0052, "55"));
+        boolean res = sharePreferences.getBoolean(Config.WriteSetting.param0052, false);
+        if (res) {
+            ConstantInfo.param0052 = 1;
+        } else {
+            ConstantInfo.param0052 = 0;
+        }
     }
 
-    public void setPARAM0052(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0052, str).apply();
+    public void setPARAM0052(int PARAM0052) {
+        if (PARAM0052 == 1) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.param0052, true).apply();
+            return;
+        }
+        if (PARAM0052 == 0) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.param0052, false).apply();
+        }
     }
 
     public void getPARAM0053() {
-        ConstantInfo.param0053 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0053, "55"));
+        boolean res = sharePreferences.getBoolean(Config.WriteSetting.param0053, false);
+        if (res) {
+            ConstantInfo.param0053 = 1;
+        } else {
+            ConstantInfo.param0053 = 0;
+        }
     }
 
-    public void setPARAM0053(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0053, str).apply();
+    public void setPARAM0053(int PARAM0053) {
+        if (PARAM0053 == 1) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.param0053, true).apply();
+            return;
+        }
+        if (PARAM0053 == 0) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.param0053, false).apply();
+        }
     }
 
     public void getPARAM0054() {
-        ConstantInfo.param0054 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0054, "55"));
+        boolean res = sharePreferences.getBoolean(Config.WriteSetting.param0054, false);
+        if (res) {
+            ConstantInfo.param0054 = 1;
+        } else {
+            ConstantInfo.param0054 = 0;
+        }
     }
 
-    public void setPARAM0054(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0054, str).apply();
+    public void setPARAM0054(int PARAM0054) {
+        if (PARAM0054 == 1) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.param0054, true).apply();
+            return;
+        }
+        if (PARAM0054 == 0) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.param0054, false).apply();
+        }
     }
 
     public void getPARAM0055() {
@@ -931,10 +975,10 @@ public final class MSG {
         setPARAM0049("1");
 
         setPARAM0050(true);
-        setPARAM0051("1");
-        setPARAM0052("1");
-        setPARAM0053("1");
-        setPARAM0054("1");
+        setPARAM0051(1);
+        setPARAM0052(1);
+        setPARAM0053(1);
+        setPARAM0054(1);
         setPARAM0055("1");
         setPARAM0056("1");
         setPARAM0057("1");
@@ -1058,16 +1102,16 @@ public final class MSG {
                     setPARAM0049(setting.getStrParameter());
                     break;
                 case (byte) 0x51:
-                    setPARAM0051(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0051(ByteUtil.byte2int(setting.getByteParameter()));
                     break;
                 case (byte) 0x52:
                     setPARAM0055(ByteUtil.byte2int(setting.getByteParameter()) + "");
                     break;
                 case (byte) 0x53:
-                    setPARAM0053(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0053(ByteUtil.byte2int(setting.getByteParameter()));
                     break;
                 case (byte) 0x54:
-                    setPARAM0054(ByteUtil.byte2int(setting.getByteParameter()) + "");
+                    setPARAM0054(ByteUtil.byte2int(setting.getByteParameter()));
                     break;
                 case (byte) 0x55:
                     setPARAM0055(ByteUtil.byte2int(setting.getByteParameter()) + "");
