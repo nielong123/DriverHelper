@@ -13,6 +13,7 @@ import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.gen.DaoMaster;
 import com.driverhelper.beans.gen.DaoSession;
 import com.driverhelper.config.Config;
+import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.jaydenxiao.common.baseapp.BaseApplication;
 import com.jaydenxiao.common.baserx.RxBus;

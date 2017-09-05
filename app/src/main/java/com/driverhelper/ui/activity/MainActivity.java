@@ -321,13 +321,18 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void call(Object object) {
                 ttsClient.speak("gps定位成功", 1, null);
                 sendMessage(ChangeGPSINFO);
+                ConstantInfo.gpsdisConnectIndex = 0;
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_LOCATION_FALINE, new Action1<Object>() {
             @Override
             public void call(Object object) {
-                ttsClient.speak("gps定位失败", 1, null);
                 sendMessage(Config.TextInfoType.ClearGPSINFO);
+                if (++ConstantInfo.gpsdisConnectIndex >= ConstantInfo.gpsDisConnectMex && isStudentLoginOK) {
+                    ttsClient.speak("gps定位失败已超过一定时间，请暂停学习", 1, null);
+                }else{
+                    ttsClient.speak("gps定位失败", 1, null);
+                }
             }
         });
         mRxManager.on(RX_TTS_SPEAK, new Action1<String>() {

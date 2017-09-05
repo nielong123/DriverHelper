@@ -98,7 +98,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     protected boolean isValidFragment(String paramString) {
-//        return ((DefaultPreferenceFragment.class.getName().equals(paramString)) || (Param1PreferenceFragment.class.getName().equals(paramString)));
         return (PreferenceFragment.class.getName().equals(paramString)) || (DefaultPreferenceFragment.class.getName().equals(paramString)) || (EDUParamPreferenceFragment.class.getName().equals(paramString)) || (Param1PreferenceFragment.class.getName().equals(paramString)) || (Param2PreferenceFragment.class.getName().equals(paramString)) || (Param3PreferenceFragment.class.getName().equals(paramString)) || (Param4PreferenceFragment.class.getName().equals(paramString)) || (Param5PreferenceFragment.class.getName().equals(paramString)) || (Param6PreferenceFragment.class.getName().equals(paramString)) || (Param7PreferenceFragment.class.getName().equals(paramString));
     }
 

@@ -54,6 +54,9 @@ public class ConstantInfo {
     public static boolean is0102_OK;                //是否鉴权成功
     public static boolean isDisConnectByUser;           //用户手动断开连接
 
+    public static int gpsdisConnectIndex = 0;           //gps断开连接的计数
+    public static final int gpsDisConnectMex = 5;           //gps断开报警的最大次数
+
 
     /***** 0502的设置  start ***************/
     public static int PIC_INTV_min;          //定时拍照间隔
