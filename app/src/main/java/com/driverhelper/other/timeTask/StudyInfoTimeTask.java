@@ -29,7 +29,6 @@ public class StudyInfoTimeTask extends TimerTask {
         int lon = (int) MyApplication.getInstance().lon;
         int lat = (int) MyApplication.getInstance().lat;
         int speedGPS = (int) MyApplication.getInstance().speedGPS;
-        ;
         int direction = (int) MyApplication.getInstance().direction;
         long timeGPS = MyApplication.getInstance().timeGPS / 1000;
         long timeSYS = TimeUtil.getTime() / 1000;

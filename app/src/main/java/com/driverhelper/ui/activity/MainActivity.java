@@ -287,7 +287,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         WriteSettingHelper.loadRegistInfo();
         MSG.getInstance().loadSetting1();
         MSG.getInstance().loadSetting();
-        TcpHelper.getInstance().connect(ip, port, 10 * 1000);
+        TcpHelper.getInstance().connect(ip, port);
     }
 
     @Override
@@ -602,11 +602,11 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            if (!TcpHelper.getInstance().isConnected && b) {
-                TcpHelper.getInstance().connect(ip, port, 10 * 1000);
+            if (!TcpHelper.getInstance().getConnectState() && b) {
+                TcpHelper.getInstance().connect(ip, port);
                 return;
             }
-            if (TcpHelper.getInstance().isConnected && !b) {
+            if (TcpHelper.getInstance().getConnectState() && !b) {
                 RxBus.getInstance().post(RX_TTS_SPEAK, "是否断开连接");
                 new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("服务器断开提示").setIcon(R.drawable.main_img06).setMessage("是否服务器断开").setCancelable(false).setPositiveButton("断开", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {

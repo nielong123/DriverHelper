@@ -10,7 +10,8 @@ import java.util.List;
 
 public class Config {
 
-    public static String ip, port, timeOut;
+    public static String ip;
+    public static int port, timeOut;
 
     public static class Config_RxBus {
         public final static String RX_LOCATION_OK = "RX_LOCATION_OK";           //定位成功

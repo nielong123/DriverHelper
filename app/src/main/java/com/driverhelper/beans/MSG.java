@@ -1165,9 +1165,8 @@ public final class MSG {
 
     public void loadTcpSetting() {
         Config.ip = sharePreferences.getString(Config.WriteSetting.TCP_IP, "221.235.53.37");
-        Config.port = sharePreferences.getString(Config.WriteSetting.TCP_PORT, "2346");
-        Config.timeOut = sharePreferences.getString(Config.WriteSetting.TIME_OUT, "10*1000");
-        Config.timeOut = "10*1000";
+        Config.port = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TCP_PORT, "2346"));
+        Config.timeOut = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TIME_OUT, "10000"));
     }
 
 

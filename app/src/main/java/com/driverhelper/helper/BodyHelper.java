@@ -67,7 +67,6 @@ import static com.driverhelper.utils.ByteUtil.int2Bytes;
 import static com.driverhelper.utils.ByteUtil.int2DWORD;
 import static com.driverhelper.utils.ByteUtil.int2WORD;
 import static com.jaydenxiao.common.commonutils.ByteUtils.binaryStr2hex;
-import static com.jaydenxiao.common.commonutils.ByteUtils.binaryString2hexString;
 
 /**
  * Created by Administrator on 2017/6/7.
