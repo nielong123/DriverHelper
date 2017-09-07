@@ -115,7 +115,7 @@ public class MyApplication extends BaseApplication {
 
     void getIsFirst() {
         if (WriteSettingHelper.getISFIRST()) {
-            MSG.getInstance().initSetting();
+//            MSG.getInstance().initSetting();
             isFirst = true;
             WriteSettingHelper.setISFIRST(false);
         }

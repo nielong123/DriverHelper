@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -38,13 +37,13 @@ import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.helper.IdHelper;
-import com.driverhelper.other.timeTask.PhotoTimerTask;
-import com.driverhelper.other.timeTask.StudyInfoTimeTask;
-import com.driverhelper.other.tcp.TcpHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Action;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
+import com.driverhelper.other.tcp.TcpHelper;
+import com.driverhelper.other.timeTask.PhotoTimerTask;
+import com.driverhelper.other.timeTask.StudyInfoTimeTask;
 import com.driverhelper.utils.ByteUtil;
 import com.driverhelper.widget.LiveSurfaceView;
 import com.google.gson.Gson;
@@ -76,7 +75,6 @@ import static com.driverhelper.config.ConstantInfo.isEmbargo;
 import static com.driverhelper.config.ConstantInfo.photoTImerDelay;
 import static com.driverhelper.config.ConstantInfo.qRbean;
 import static com.driverhelper.config.ConstantInfo.studyInfoTimerDelay;
-import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 
 public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener {
@@ -89,8 +87,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     Switch networksw;
     @Bind(R.id.surfaceView)
     LiveSurfaceView surfaceView;
-    @Bind(R.id.layout)
-    FrameLayout layout;
     @Bind(R.id.LLcamera)
     LinearLayout LLcamera;
     @Bind(R.id.JiaoLianButton)
@@ -142,27 +138,13 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
+
     private TextToSpeech ttsClient;
     Context context;
 
     private static final int REQUEST_SETTING = 1;
 
     Timer studyTimer;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     private void sendMessage(int what) {
         Message message = new Message();
@@ -330,7 +312,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 sendMessage(Config.TextInfoType.ClearGPSINFO);
                 if (++ConstantInfo.gpsdisConnectIndex >= ConstantInfo.gpsDisConnectMex && isStudentLoginOK) {
                     ttsClient.speak("gps定位失败已超过一定时间，请暂停学习", 1, null);
-                }else{
+                } else {
                     ttsClient.speak("gps定位失败", 1, null);
                 }
             }
@@ -802,6 +784,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         }
         return false;
     }
+
 }
 
 
