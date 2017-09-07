@@ -1,6 +1,7 @@
-package com.driverhelper.other.tcp;
+package com.driverhelper.other.tcp.netty;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.driverhelper.app.MyApplication;
@@ -8,7 +9,8 @@ import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
 import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.helper.DbHelper;
-import com.driverhelper.other.tcp.netty.NettyClient;
+import com.driverhelper.other.tcp.TcpBody;
+import com.driverhelper.other.tcp.TcpManager;
 import com.driverhelper.other.timeTask.ClearTimerTask;
 import com.driverhelper.other.timeTask.LocationInfoTimeTask;
 import com.driverhelper.utils.ByteUtil;
@@ -19,6 +21,21 @@ import com.jaydenxiao.common.commonutils.ToastUitl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 import static com.driverhelper.config.ConstantInfo.StudentInfo.studentId;
 import static com.driverhelper.config.ConstantInfo.classId;
@@ -28,18 +45,41 @@ import static com.driverhelper.config.ConstantInfo.coachId;
 import static com.driverhelper.config.ConstantInfo.locationTimer;
 import static com.driverhelper.config.ConstantInfo.locationTimerDelay;
 import static com.driverhelper.other.tcp.TcpBody.MessageID.id0203;
+import static com.driverhelper.other.tcp.netty.TcpHelper.ConnectState.CONNECTED;
+import static com.driverhelper.other.tcp.netty.TcpHelper.ConnectState.CONNECTING;
+import static com.driverhelper.other.tcp.netty.TcpHelper.ConnectState.DISCONNECTION;
+
 
 /**
- * Created by Administrator on 2017/9/7.
+ * Created by Administrator on 2017/9/5.
  */
 
 public class TcpHelper {
 
-    static TcpHelper tcpHelper;
-    String ip;
-    int port;
+    private final String TAG = "NettyClient";
 
-//    NettyClient nettyClient;
+    private static TcpHelper tcpHelper;
+
+    static ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(5);
+
+    protected String ip;
+    protected int port;
+    protected byte[] heartData;
+    protected long heartDelay = 10000l;
+
+    public enum ConnectState {
+        DISCONNECTION,
+        CONNECTING,
+        CONNECTED
+    }
+
+    protected boolean disConnectByUser;
+
+    private static ConnectState connectState = DISCONNECTION;
+
+    private EventLoopGroup group = null;
+    private Bootstrap bootstrap = null;
+    private ChannelFuture channelFuture = null;
 
     public static TcpHelper getInstance() {
         if (tcpHelper == null) {
@@ -52,54 +92,168 @@ public class TcpHelper {
         return tcpHelper;
     }
 
-    TcpHelper() {
-//        nettyClient = NettyClient.getInstance();
+    protected TcpHelper() {
+        init();
     }
+
+    private void init() {
+        setConnectState(DISCONNECTION);
+        bootstrap = new Bootstrap();
+        group = new NioEventLoopGroup();
+        bootstrap.group(group);
+        bootstrap.channel(NioSocketChannel.class);
+        bootstrap.option(ChannelOption.TCP_NODELAY, true);
+        bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
+        bootstrap.handler(new ChannelInitializer<SocketChannel>() {
+            @Override
+            protected void initChannel(SocketChannel socketChannel) throws Exception {
+                ChannelPipeline pipeline = socketChannel.pipeline();
+                pipeline.addLast("clientHandler", new NettyClientHandler(tcpHelper));
+            }
+        });
+    }
+
 
     public void connect(String ip, int port) {
         this.ip = ip;
         this.port = port;
-        NettyClient.getInstance().connect(ip, port);
+//        this.ip = "192.168.1.110";
+//        this.port = 8098;
+        connect();
     }
 
     public void connect() {
-        connect(this.ip, this.port);
-    }
-
-    public void disConnect() {
-        NettyClient.getInstance().disConnection();
-    }
-
-    public boolean getConnectState() {
-        if (NettyClient.getInstance().getConnectState() == NettyClient.ConnectState.CONNECTED) {
-            return true;
-        } else {
-            return false;
+        if (getConnectState() != CONNECTED) {
+            setConnectState(CONNECTING);
+            channelFuture = bootstrap.connect(ip, port);
+            channelFuture.addListener(listener);
+            disConnectByUser = false;
         }
     }
 
+    public void disConnect() {
+        setConnectState(DISCONNECTION);
+        disConnectByUser = true;
+        if (channelFuture != null) {
+            channelFuture.channel().closeFuture();
+            channelFuture.channel().close();
+            channelFuture = null;
+        }
+        if (group != null) {
+            group.shutdownGracefully();
+            group = null;
+            tcpHelper = null;
+            bootstrap = null;
+        }
+    }
 
-    /************************************************************************************************************/
+    /****
+     * 设置自动重连
+     * @param disconnectionByUser
+     */
+    public void setAutoReConnect(boolean disconnectionByUser) {
+        this.disConnectByUser = !disconnectionByUser;
+    }
 
 
-    private void startUpDataLocationInfo() {
+    private ChannelFutureListener listener = new ChannelFutureListener() {
+        @Override
+        public void operationComplete(ChannelFuture future) throws Exception {
+            if (future.isSuccess()) {
+                channelFuture = future;
+                setConnectState(CONNECTED);
+            } else {
+                setConnectState(DISCONNECTION);
+                if (!disConnectByUser) {
+                    future.channel().eventLoop().schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            connect();
+                        }
+                    }, 3L, TimeUnit.SECONDS);
+                }
+            }
+        }
+    };
+
+    /**
+     * 发送消息的线程
+     */
+    private void sendData(final byte[] data) {
+
+        if (getConnectState() == CONNECTED) {
+            newFixedThreadPool.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        channelFuture.channel().writeAndFlush(Unpooled.buffer().writeBytes(data)).sync();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } else {
+            Log.e(TAG, "网络未连接");
+        }
+    }
+
+    Runnable heartRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (getConnectState() == CONNECTED) {
+                try {
+                    channelFuture.channel().writeAndFlush(Unpooled.buffer().writeBytes(heartData)).sync();
+                    Thread.sleep(heartDelay);
+                    newFixedThreadPool.execute(this);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
+
+    public void setHeart(byte[] heart, long delay) {
+        heartData = heart;
+        this.heartDelay = delay;
+    }
+
+    public void setHeartDelay(long heartDelay) {
+        this.heartDelay = heartDelay;
+    }
+
+    public byte[] getHeartData() {
+        return heartData;
+    }
+
+    public void setHeartData(byte[] heartData) {
+        this.heartData = heartData;
+    }
+
+    protected void startHeart() {
+        newFixedThreadPool.execute(heartRunnable);
+    }
+
+    public ConnectState getConnectState() {
+        return connectState;
+    }
+
+    public void setConnectState(ConnectState state) {
+        this.connectState = state;
+    }
+
+
+    /**********************************************    业务相关   **************************************************/
+
+
+    protected void startUpDataLocationInfo() {
         RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "开始上传位置信息");
         locationTimer = new Timer(true);
         locationTimer.schedule(new LocationInfoTimeTask(), 1000, locationTimerDelay);          //暂定十秒一次,要改成可以设置的
     }
 
-    private void startClearTimer() {
+    protected void startClearTimer() {
         clearTimer = new Timer(true);
         clearTimer.schedule(new ClearTimerTask(), 0, clearTimerDelay);
-    }
-
-
-    private void sendData(final byte[] data) {
-        if (NettyClient.getInstance().getConnectState() == NettyClient.ConnectState.CONNECTED) {
-            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "网络未连接");
-            return;
-        }
-        NettyClient.getInstance().sendData(data);
     }
 
     public void sendCommonResponse(int id, int state) {
@@ -395,6 +549,5 @@ public class TcpHelper {
                 (int) MyApplication.getInstance().direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));
     }
-
 
 }

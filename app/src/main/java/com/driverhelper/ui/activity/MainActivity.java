@@ -34,6 +34,7 @@ import com.driverhelper.beans.QRbean;
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
+import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.helper.IdHelper;
@@ -41,7 +42,7 @@ import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Action;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
-import com.driverhelper.other.tcp.TcpHelper;
+import com.driverhelper.other.tcp.netty.TcpHelper;
 import com.driverhelper.other.timeTask.PhotoTimerTask;
 import com.driverhelper.other.timeTask.StudyInfoTimeTask;
 import com.driverhelper.utils.ByteUtil;
@@ -287,6 +288,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         WriteSettingHelper.loadRegistInfo();
         MSG.getInstance().loadSetting1();
         MSG.getInstance().loadSetting();
+        TcpHelper.getInstance().setHeart(BodyHelper.makeHeart(), 1000L);
         TcpHelper.getInstance().connect(ip, port);
     }
 
@@ -602,11 +604,11 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            if (!TcpHelper.getInstance().getConnectState() && b) {
+            if (TcpHelper.getInstance().getConnectState() == TcpHelper.ConnectState.CONNECTED && b) {
                 TcpHelper.getInstance().connect(ip, port);
                 return;
             }
-            if (TcpHelper.getInstance().getConnectState() && !b) {
+            if (TcpHelper.getInstance().getConnectState() == TcpHelper.ConnectState.CONNECTED && !b) {
                 RxBus.getInstance().post(RX_TTS_SPEAK, "是否断开连接");
                 new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("服务器断开提示").setIcon(R.drawable.main_img06).setMessage("是否服务器断开").setCancelable(false).setPositiveButton("断开", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {

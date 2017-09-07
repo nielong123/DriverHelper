@@ -6,7 +6,7 @@ import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
-import com.driverhelper.other.tcp.TcpHelper;
+import com.driverhelper.other.tcp.netty.TcpHelper;
 import com.driverhelper.utils.ByteUtil;
 import com.driverhelper.utils.FileUtils;
 import com.jaydenxiao.common.compressorutils.FileUtil;
