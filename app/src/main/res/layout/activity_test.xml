@@ -25,6 +25,12 @@
         android:layout_height="120dp"
         android:text="读取照片" />
 
+    <Button
+        android:id="@+id/load1"
+        android:layout_width="240dp"
+        android:layout_height="120dp"
+        android:text="读取照片" />
+
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"

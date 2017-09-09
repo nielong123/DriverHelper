@@ -25,28 +25,53 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fab4f4b-9cb1-418e-b8dc-2558d50e4c35" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/TcpHelper.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/libs/netty-buffer-4.0.24.Final.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/libs/netty-codec-4.0.24.Final.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/libs/netty-common-4.0.24.Final.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/libs/netty-handler-4.0.24.Final.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/libs/netty-transport-4.0.24.Final.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/libs/protobuf-2.5.0.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/netty_buffer_4_0_24_Final.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/netty_codec_4_0_24_Final.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/netty_common_4_0_24_Final.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/netty_handler_4_0_24_Final.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/netty_transport_4_0_24_Final.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/protobuf_2_5_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/OnServerConnectListener.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/netty_all_5_0_0_Alpha2.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_library_common_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_library_common_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_library_common_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_library_common_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_library_irecyclerview_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_library_irecyclerview_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_library_irecyclerview_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_library_irecyclerview_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/Action.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/Action.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/LocationInfoTimeTask.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/LocationInfoTimeTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/StudyInfoTimeTask.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/StudyInfoTimeTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/widget/LiveSurfaceView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/widget/LiveSurfaceView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/TestActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/TestActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_test.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_test.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/SerialPortLibrary/build/intermediates/blame/res/androidTest/debug/single/drawable-mdpi-v4.json" afterPath="$PROJECT_DIR$/library/SerialPortLibrary/build/intermediates/blame/res/androidTest/debug/single/drawable-mdpi-v4.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/SerialPortLibrary/build/intermediates/blame/res/androidTest/debug/single/drawable-xxhdpi-v4.json" afterPath="$PROJECT_DIR$/library/SerialPortLibrary/build/intermediates/blame/res/androidTest/debug/single/drawable-xxhdpi-v4.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/SerialPortLibrary/build/intermediates/blame/res/debug/single/drawable-ldrtl-hdpi-v17.json" afterPath="$PROJECT_DIR$/library/SerialPortLibrary/build/intermediates/blame/res/debug/single/drawable-ldrtl-hdpi-v17.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/SerialPortLibrary/build/outputs/aar/SerialPortLibrary-debug.aar" afterPath="$PROJECT_DIR$/library/SerialPortLibrary/build/outputs/aar/SerialPortLibrary-debug.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/SerialPortLibrary/build/outputs/aar/SerialPortLibrary-release.aar" afterPath="$PROJECT_DIR$/library/SerialPortLibrary/build/outputs/aar/SerialPortLibrary-release.aar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/jcvideoplayer/jcvideoplayer.iml" afterPath="$PROJECT_DIR$/library/jcvideoplayer/jcvideoplayer.iml" />
     </list>
     <ignored path="DriverHelper1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,52 +105,57 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TestActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/TestActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="783">
+              <caret line="80" column="45" selection-start-line="80" selection-start-column="45" selection-end-line="80" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="290" column="70" selection-start-line="290" selection-start-column="70" selection-end-line="290" selection-end-column="70" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#25488#26874#0" expanded="true" />
-                <element signature="e#26483#26811#0" expanded="true" />
-                <element signature="e#26810#26811#0" expanded="true" />
-                <element signature="e#26873#26874#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="783">
+              <caret line="289" column="41" selection-start-line="289" selection-start-column="41" selection-end-line="289" selection-end-column="41" />
+              <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_test.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="30" column="37" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="NettyClientHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2025">
-              <caret line="95" column="9" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="9" />
+            <state relative-caret-position="333">
+              <caret line="21" column="55" selection-start-line="21" selection-start-column="55" selection-end-line="21" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BodyHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="213" column="31" selection-start-line="213" selection-start-column="31" selection-end-line="213" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TcpHelper.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TcpHelper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="657">
-              <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
+            <state relative-caret-position="252">
+              <caret line="542" column="0" selection-start-line="542" selection-start-column="0" selection-end-line="542" selection-end-column="0" />
               <folding>
-                <element signature="e#7370#7371#0" expanded="true" />
-                <element signature="e#7405#7406#0" expanded="true" />
-                <element signature="e#7460#7461#0" expanded="true" />
-                <element signature="e#7501#7502#0" expanded="true" />
+                <element signature="e#18558#18559#0" expanded="true" />
+                <element signature="e#18629#18630#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -137,6 +167,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile_vertical" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -6482,7 +6513,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="C:\Users\Administrator\Desktop\DriverHelper1" value="12034540980597" />
+        <entry key="C:\Users\Administrator\Desktop\DriverHelper1" value="12034710620382" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -8097,14 +8128,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/library/usblibrary/build.gradle" />
-        <option value="$PROJECT_DIR$/library/usblibrary/src/main/java/com/usblibrary/UsbainActivity.java" />
-        <option value="$PROJECT_DIR$/library/usblibrary/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/library/usblibrary/src/main/java/com/usblibrary/ukey/UsbException.java" />
         <option value="$PROJECT_DIR$/library/usblibrary/src/main/java/com/usblibrary/UsbBroadcastReceiver.java" />
         <option value="$PROJECT_DIR$/library/usblibrary/src/main/java/com/usblibrary/UsbMainActivity.java" />
         <option value="$PROJECT_DIR$/library/usblibrary/src/main/res/layout/activity_usbmain.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/SerialPortActivity.java" />
         <option value="$PROJECT_DIR$/library/common/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/api/ApiConstants.java" />
@@ -8112,7 +8138,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/gen/StudyInfoDao.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/TestActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/gen/DaoSession.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/MyTimeTask.java" />
@@ -8135,19 +8160,25 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/app/MyApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/Config.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/TcpHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/StudyInfoTimeTask.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/LocationInfoTimeTask.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/Action.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/widget/LiveSurfaceView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/OnServerConnectListener.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClient.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/Test.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/Dispatcher.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_test.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/TestActivity.java" />
       </list>
     </option>
   </component>
@@ -8182,6 +8213,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -8434,10 +8469,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -8446,17 +8477,17 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
-    <property name="device.picker.selection" value="20080411" />
+    <property name="device.picker.selection" value="1c1818ae" />
     <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
     <property name="SearchEverywhereHistoryKey" value="OnKeyListener&#9;PSI&#9;JAVA://android.content.DialogInterface.OnKeyListener&#10;onKe&#9;PSI&#9;JAVA://android.content.DialogInterface.OnKeyListener&#10;onAc&#9;PSI&#9;JAVA://com.driverhelper.ui.activity.MainActivity#onActivityResult&#10;get&#9;PSI&#9;JAVA://retrofit2.http.GET&#10;onAct&#9;PSI&#9;JAVA://com.driverhelper.ui.activity.MainActivity#onActivityResult&#10;ViewfinderView&#9;PSI&#9;JAVA://com.driverhelper.R.id#zxing_viewfinder_view&#10;initEvent&#9;PSI&#9;JAVA://com.jaydenxiao.common.base.BaseActivity#initEvent&#10;onActivityRes&#9;PSI&#9;JAVA://android.app.Activity#onActivityResult" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\libs" />
       <recent name="C:\Users\Administrator\Desktop\DriverHelper1\app\src\main\java\com\driverhelper\other\tcp" />
       <recent name="C:\Users\Administrator\Desktop\DriverHelper1\library\usblibrary\src\main\res" />
       <recent name="C:\Users\Administrator\Desktop\DriverHelper1\library\usblibrary\libs" />
       <recent name="C:\Users\Administrator\Desktop\DriverHelper1\library\usblibrary\src\main\java\com\usblibrary" />
-      <recent name="C:\Users\Administrator\Desktop\DriverHelper1\library\usblibrary\src\main\res\values" />
     </key>
     <key name="android.template.packageName">
       <recent name="com.usblibrary" />
@@ -8466,6 +8497,7 @@
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.driverhelper.other.tcp.netty" />
       <recent name="com.driverhelper.utils" />
       <recent name="com.driverhelper.widget" />
       <recent name="com.driverhelper.other" />
@@ -8851,13 +8883,6 @@
       <option name="presentableId" value="Default" />
       <updated>1498272599135</updated>
     </task>
-    <task id="LOCAL-00035" summary="添加了上传照片的代码">
-      <created>1502380086898</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1502380086898</updated>
-    </task>
     <task id="LOCAL-00036" summary="添加了上传照片的代码">
       <created>1502381422401</created>
       <option name="number" value="00036" />
@@ -9194,7 +9219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504766929769</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="将socket更换成nio">
+      <created>1504776203353</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1504776203353</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TodoView">
@@ -9211,25 +9243,25 @@
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28013393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27455357" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.51339287" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.54352677" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36941963" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17549168" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18976545" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22974414" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50334823" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.671875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -9237,7 +9269,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -9304,7 +9336,9 @@
     <MESSAGE value="增加了定位失败时的报警功能" />
     <MESSAGE value="删除了一些无用的布局" />
     <MESSAGE value="修复了一些bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复了一些bug" />
+    <MESSAGE value="将socket更换成nio" />
+    <MESSAGE value="修复了netty的一些bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复了netty的一些bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -9345,167 +9379,21 @@
           <option name="timeStamp" value="886" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java</url>
-          <line>94</line>
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java</url>
+          <line>295</line>
           <properties />
-          <option name="timeStamp" value="994" />
+          <option name="timeStamp" value="1012" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="995" />
+      <option name="time" value="1040" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/gen/StudyInfoDao.java" />
-    <entry file="file://$PROJECT_DIR$/library/common/src/main/java/com/jaydenxiao/common/baserx/RxBus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.vilyever/AndroidSocketClient/3.0.3/dce8214028d36f2e3dbadc53f2b47c376dfba842/AndroidSocketClient-3.0.3-sources.jar!/com/vilyever/socketclient/SocketClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-353">
-          <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Android/sdk/platforms/android-25/android.jar!/java/util/Hashtable.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="71" column="26" selection-start-line="71" selection-start-column="26" selection-end-line="71" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MessageBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://E:/Android/sdk/sources/android-23/java/util/Date.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6800">
-          <caret line="314" column="16" selection-start-line="314" selection-start-column="16" selection-end-line="314" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/library/common/src/main/java/com/jaydenxiao/common/commonutils/TimeUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3400">
-          <caret line="151" column="30" selection-start-line="151" selection-start-column="30" selection-end-line="151" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/fragment/MarkFragment.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/adapter/HistoryRecyvlerViewAdapter.java" />
-    <entry file="jar://E:/Android/sdk/platforms/android-25/android.jar!/java/util/TimerTask.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Android/sdk/platforms/android-25/android.jar!/android/view/SurfaceView.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/TcpManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="800">
-          <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/IdHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Android/sdk/platforms/android-25/android.jar!/java/lang/Integer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/PhotoTimerTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="30" column="39" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/ClearTimerTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/library/common/src/main/java/com/jaydenxiao/common/commonutils/ByteUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="109" column="30" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/DbHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1300">
-          <caret line="61" column="27" selection-start-line="61" selection-start-column="27" selection-end-line="61" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/db/StudyInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1400">
-          <caret line="60" column="31" selection-start-line="60" selection-start-column="31" selection-end-line="60" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_eduparam.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_param7.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/ConstantInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1350">
           <caret line="57" column="74" selection-start-line="57" selection-start-column="74" selection-end-line="57" selection-end-column="74" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/utils/ByteUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3550">
-          <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9523,15 +9411,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
           <caret line="335" column="0" selection-start-line="335" selection-start-column="0" selection-end-line="335" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/WriteSettingHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3900">
-          <caret line="163" column="13" selection-start-line="163" selection-start-column="13" selection-end-line="163" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9555,7 +9434,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="377">
           <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9563,10 +9441,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
           <caret line="101" column="38" selection-start-line="101" selection-start-column="38" selection-end-line="101" selection-end-column="38" />
-          <folding>
-            <element signature="e#2967#2968#0" expanded="false" />
-            <element signature="e#3019#3020#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -9581,7 +9455,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2850">
           <caret line="144" column="0" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9589,7 +9462,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2375">
           <caret line="97" column="23" selection-start-line="97" selection-start-column="11" selection-end-line="97" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9597,50 +9469,16 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="800">
           <caret line="32" column="46" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
       <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="88" column="45" selection-start-line="88" selection-start-column="45" selection-end-line="88" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/TcpBody.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
           <caret line="13" column="73" selection-start-line="13" selection-start-column="73" selection-end-line="13" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="1170" column="0" selection-start-line="1170" selection-start-column="0" selection-end-line="1170" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/TcpHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-28">
-          <caret line="51" column="48" selection-start-line="51" selection-start-column="48" selection-end-line="51" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9648,7 +9486,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
           <caret line="173" column="21" selection-start-line="173" selection-start-column="21" selection-end-line="173" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9664,7 +9501,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="35" column="29" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9672,7 +9508,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="466">
           <caret line="32" column="66" selection-start-line="32" selection-start-column="66" selection-end-line="32" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9680,7 +9515,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -9688,49 +9522,223 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
           <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/EncodeUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/encrypt/Encrypt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="99" column="31" selection-start-line="99" selection-start-column="31" selection-end-line="99" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/5.0.0.Alpha2/8d6e2c34232e6aa80c7dc966c3e99e522bdbba05/netty-all-5.0.0.Alpha2-sources.jar!/io/netty/channel/Channel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="174" column="19" selection-start-line="174" selection-start-column="4" selection-end-line="174" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/utils/ByteUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="671" column="0" selection-start-line="671" selection-start-column="0" selection-end-line="671" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/5.0.0.Alpha2/8d6e2c34232e6aa80c7dc966c3e99e522bdbba05/netty-all-5.0.0.Alpha2-sources.jar!/io/netty/handler/codec/protobuf/ProtobufDecoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="86" column="11" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/WriteSettingHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5375">
+          <caret line="222" column="23" selection-start-line="222" selection-start-column="23" selection-end-line="222" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="508">
+          <caret line="1168" column="36" selection-start-line="1168" selection-start-column="36" selection-end-line="1168" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/Android/sdk/platforms/android-25/android.jar!/java/net/InetSocketAddress.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/Dispatcher.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClient.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/Test.java" />
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/5.0.0.Alpha2/8d6e2c34232e6aa80c7dc966c3e99e522bdbba05/netty-all-5.0.0.Alpha2-sources.jar!/io/netty/channel/ChannelFutureListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="34" column="17" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/TcpHelper.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1689">
+          <caret line="1826" column="77" selection-start-line="1826" selection-start-column="77" selection-end-line="1826" selection-end-column="77" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="213" column="31" selection-start-line="213" selection-start-column="31" selection-end-line="213" selection-end-column="31" />
+        <state relative-caret-position="525">
+          <caret line="99" column="49" selection-start-line="99" selection-start-column="49" selection-end-line="99" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://E:/Android/sdk/platforms/android-25/android.jar!/junit/framework/Test.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/libs/netty-handler-4.0.24.Final.jar!/META-INF/INDEX.LIST">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/OnServerConnectListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/libs/netty-common-4.0.24.Final.jar!/io/netty/util/ReferenceCountUtil.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="55">
+          <caret line="24" column="33" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/libs/netty-transport-4.0.24.Final.jar!/io/netty/channel/SimpleChannelInboundHandler.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/libs/netty-common-4.0.24.Final.jar!/io/netty/util/concurrent/DefaultThreadFactory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/libs/netty-transport-4.0.24.Final.jar!/io/netty/channel/AbstractChannelHandlerContext.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="313" column="0" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/libs/netty-transport-4.0.24.Final.jar!/io/netty/channel/ChannelHandlerContext.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="41" column="26" selection-start-line="41" selection-start-column="26" selection-end-line="41" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/libs/netty-transport-4.0.24.Final.jar!/io/netty/channel/ChannelInboundHandlerAdapter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2025">
-          <caret line="95" column="9" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="9" />
+        <state relative-caret-position="333">
+          <caret line="21" column="55" selection-start-line="21" selection-start-column="55" selection-end-line="21" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="30" column="37" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="783">
+          <caret line="289" column="41" selection-start-line="289" selection-start-column="41" selection-end-line="289" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/TestActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="783">
+          <caret line="80" column="45" selection-start-line="80" selection-start-column="45" selection-end-line="80" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="657">
-          <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
+        <state relative-caret-position="252">
+          <caret line="542" column="0" selection-start-line="542" selection-start-column="0" selection-end-line="542" selection-end-column="0" />
           <folding>
-            <element signature="e#7370#7371#0" expanded="true" />
-            <element signature="e#7405#7406#0" expanded="true" />
-            <element signature="e#7460#7461#0" expanded="true" />
-            <element signature="e#7501#7502#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="290" column="70" selection-start-line="290" selection-start-column="70" selection-end-line="290" selection-end-column="70" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#25488#26874#0" expanded="true" />
-            <element signature="e#26483#26811#0" expanded="true" />
-            <element signature="e#26810#26811#0" expanded="true" />
-            <element signature="e#26873#26874#0" expanded="true" />
+            <element signature="e#18558#18559#0" expanded="true" />
+            <element signature="e#18629#18630#0" expanded="true" />
           </folding>
         </state>
       </provider>

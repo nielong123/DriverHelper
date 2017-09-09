@@ -55,6 +55,7 @@ import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 
+import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -288,8 +289,13 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         WriteSettingHelper.loadRegistInfo();
         MSG.getInstance().loadSetting1();
         MSG.getInstance().loadSetting();
-        TcpHelper.getInstance().setHeart(BodyHelper.makeHeart(), 1000L);
-        TcpHelper.getInstance().connect(ip, port);
+        TcpHelper.getInstance().setHeart(BodyHelper.makeHeart(), 10000L);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TcpHelper.getInstance().connect(new InetSocketAddress(ip, port));
+            }
+        }).start();
     }
 
     @Override
@@ -604,8 +610,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            if (TcpHelper.getInstance().getConnectState() == TcpHelper.ConnectState.CONNECTED && b) {
-                TcpHelper.getInstance().connect(ip, port);
+            if (TcpHelper.getInstance().getConnectState() == TcpHelper.ConnectState.DISCONNECTION && b) {
+                TcpHelper.getInstance().connect(new InetSocketAddress(ip, port));
                 return;
             }
             if (TcpHelper.getInstance().getConnectState() == TcpHelper.ConnectState.CONNECTED && !b) {

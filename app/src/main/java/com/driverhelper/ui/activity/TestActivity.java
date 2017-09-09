@@ -2,6 +2,7 @@ package com.driverhelper.ui.activity;
 
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,9 +14,12 @@ import com.driverhelper.config.Config;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
+import com.driverhelper.other.tcp.netty.TcpHelper;
 import com.driverhelper.utils.ByteUtil;
+import com.jaydenxiao.common.base.BaseActivity;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 
+import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +27,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 
-public class TestActivity extends SerialPortActivity {
+public class TestActivity extends BaseActivity {
 
     @Bind(R.id.tv1)
     TextView tv1;
@@ -31,6 +35,8 @@ public class TestActivity extends SerialPortActivity {
     TextView tv2;
     @Bind(R.id.load)
     Button load;
+    @Bind(R.id.load1)
+    Button load1;
     @Bind(R.id.imageView1)
     ImageView imageView1;
 
@@ -52,10 +58,6 @@ public class TestActivity extends SerialPortActivity {
 
     @Override
     public void initData() {
-        List<StudyInfo> list = DbHelper.getInstance().queryStudyInfoAll();
-        for (StudyInfo data : list) {
-            Log.d("studyinfo", data.toString());
-        }
 
     }
 
@@ -64,48 +66,20 @@ public class TestActivity extends SerialPortActivity {
 
     }
 
-    @Override
-    protected void onIcReaderDataReceived(final byte[] buffer, final int size) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ByteUtil.printHexString("读卡器接收到数据", buffer);
-                ToastUitl.show(ByteUtil.getString(buffer), Toast.LENGTH_SHORT);
-            }
-        });
-    }
-
-    @Override
-    protected void onOBDDataReceived(final byte[] buffer, final int size) {
-
-
-        runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                tv1.setText(size + "km/h");
-                byte[] data = new byte[size];
-                System.arraycopy(buffer, 0, data, 0, size);
-                ByteUtil.printHexString("obd接收到数据", data);
-                final HashMap<String, String> map = ObdHandle.handle(data);
-                String str = map.get("speed");
-                tv2.setText(str);
-            }
-        });
-    }
-
-    @OnClick(R.id.load)
-    public void onClick() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.driverhelper1_preferences", MODE_PRIVATE);
-        Log.e("123", sharedPreferences.getString(Config.WriteSetting.PROVINCE, ""));
-//        MSG.getInstance().setPARAM0001("1111");
-//        MSG.getInstance().getPARAM0001();
-//        Log.d("123",ConstantInfo.param0001 + "");
-//        Bitmap bitmap = AssetsHelper.getImageFromAssetsFile(this, "123456.jpg");
-//        byte[] data = ByteUtil.bitmap2Bytes(bitmap);
-////        bitmap.recycle();
-//        String path = PhotoHelper.saveBitmap(this, data);
-//        Bitmap bt = PhotoHelper.loadBitmap(path);
-//        imageView1.setImageBitmap(bt);
+    @OnClick({R.id.load, R.id.load1})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.load:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TcpHelper.getInstance().connect(new InetSocketAddress("192.168.1.110", 4321));
+                    }
+                }).start();
+                break;
+            case R.id.load1:
+                TcpHelper.getInstance().send0401();
+                break;
+        }
     }
 }

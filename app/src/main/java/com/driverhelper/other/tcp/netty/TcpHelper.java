@@ -7,17 +7,20 @@ import android.widget.Toast;
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
+import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.other.tcp.TcpBody;
 import com.driverhelper.other.tcp.TcpManager;
 import com.driverhelper.other.timeTask.ClearTimerTask;
 import com.driverhelper.other.timeTask.LocationInfoTimeTask;
+import com.driverhelper.ui.activity.MainActivity;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -27,8 +30,11 @@ import java.util.concurrent.TimeUnit;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
@@ -36,6 +42,10 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.bytes.ByteArrayDecoder;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
 import static com.driverhelper.config.ConstantInfo.StudentInfo.studentId;
 import static com.driverhelper.config.ConstantInfo.classId;
@@ -54,18 +64,9 @@ import static com.driverhelper.other.tcp.netty.TcpHelper.ConnectState.DISCONNECT
  * Created by Administrator on 2017/9/5.
  */
 
-public class TcpHelper {
+public class TcpHelper implements ChannelFutureListener, OnServerConnectListener {
 
-    private final String TAG = "NettyClient";
-
-    private static TcpHelper tcpHelper;
-
-    static ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(5);
-
-    protected String ip;
-    protected int port;
-    protected byte[] heartData;
-    protected long heartDelay = 10000l;
+    private final String TAG = "TcpHelper";
 
     public enum ConnectState {
         DISCONNECTION,
@@ -73,13 +74,19 @@ public class TcpHelper {
         CONNECTED
     }
 
-    protected boolean disConnectByUser;
+    private static TcpHelper tcpHelper;
 
-    private static ConnectState connectState = DISCONNECTION;
+    private static ExecutorService newFixedThreadPool;
 
+    private static byte[] heartData;
+    private static long heartDelay = 10000L;
+
+    private ConnectState connectState = DISCONNECTION;
+    private Bootstrap bootstrap;
     private EventLoopGroup group = null;
-    private Bootstrap bootstrap = null;
     private ChannelFuture channelFuture = null;
+    private Channel channel;
+    private InetSocketAddress serverAddress;
 
     public static TcpHelper getInstance() {
         if (tcpHelper == null) {
@@ -93,47 +100,81 @@ public class TcpHelper {
     }
 
     protected TcpHelper() {
-        init();
+        newFixedThreadPool = Executors.newFixedThreadPool(5);
     }
 
-    private void init() {
+    @Override
+    public void operationComplete(ChannelFuture future) throws Exception {
+        if (future.isSuccess()) {
+            channel = future.channel();
+            onConnectSuccess();
+            Log.e(TAG, "operationComplete: connected!");
+        } else {
+            onConnectFailed();
+            Log.e(TAG, "operationComplete: connect failed!");
+        }
+    }
+
+    @Override
+    public void onConnectSuccess() {
+        setConnectState(CONNECTED);
+//        if (tcpHelper.getHeartData() != null) {
+////            tcpHelper.startHeart();
+//        }
+//        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp连接成功");
+//        if (TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.institutionNumber)) ||
+//                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.platformNum)) ||
+//                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.terminalNum)) ||
+//                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.certificatePassword)) ||
+//                TextUtils.isEmpty(ConstantInfo.terminalCertificate)) {
+//            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
+//            return;
+//        }
+//        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_CONNECTED, null);
+//        TcpHelper.getInstance().sendAuthentication();           //鉴权
+//        tcpHelper.startUpDataLocationInfo();                          //开始上传定位信息
+//        tcpHelper.startClearTimer();
+    }
+
+    @Override
+    public void onConnectFailed() {
         setConnectState(DISCONNECTION);
-        bootstrap = new Bootstrap();
-        group = new NioEventLoopGroup();
-        bootstrap.group(group);
-        bootstrap.channel(NioSocketChannel.class);
-        bootstrap.option(ChannelOption.TCP_NODELAY, true);
-        bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
-        bootstrap.handler(new ChannelInitializer<SocketChannel>() {
-            @Override
-            protected void initChannel(SocketChannel socketChannel) throws Exception {
-                ChannelPipeline pipeline = socketChannel.pipeline();
-                pipeline.addLast("clientHandler", new NettyClientHandler(tcpHelper));
-            }
-        });
     }
 
-
-    public void connect(String ip, int port) {
-        this.ip = ip;
-        this.port = port;
-//        this.ip = "192.168.1.110";
-//        this.port = 8098;
+    public void connect(final InetSocketAddress socketAddress) {
+        this.serverAddress = socketAddress;
         connect();
     }
 
     public void connect() {
-        if (getConnectState() != CONNECTED) {
-            setConnectState(CONNECTING);
-            channelFuture = bootstrap.connect(ip, port);
-            channelFuture.addListener(listener);
-            disConnectByUser = false;
+        if (channel != null && channel.isActive()) {
+            return;
         }
+        setConnectState(CONNECTING);
+        if (bootstrap == null) {
+            group = new NioEventLoopGroup();
+            bootstrap = new Bootstrap();
+            bootstrap.group(group)
+                    .channel(NioSocketChannel.class)
+                    .option(ChannelOption.SO_KEEPALIVE, true)
+                    .handler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        protected void initChannel(SocketChannel socketChannel) throws Exception {
+                            ChannelPipeline pipeline = socketChannel.pipeline();
+                            pipeline.addLast("encoder", new ProtobufEncoder());
+                            pipeline.addLast("handler", new NettyClientHandler());
+
+                        }
+                    })
+                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000);
+        }
+
+        channelFuture = bootstrap.connect(serverAddress);
+        channelFuture.addListener(this);
     }
 
     public void disConnect() {
         setConnectState(DISCONNECTION);
-        disConnectByUser = true;
         if (channelFuture != null) {
             channelFuture.channel().closeFuture();
             channelFuture.channel().close();
@@ -152,29 +193,7 @@ public class TcpHelper {
      * @param disconnectionByUser
      */
     public void setAutoReConnect(boolean disconnectionByUser) {
-        this.disConnectByUser = !disconnectionByUser;
     }
-
-
-    private ChannelFutureListener listener = new ChannelFutureListener() {
-        @Override
-        public void operationComplete(ChannelFuture future) throws Exception {
-            if (future.isSuccess()) {
-                channelFuture = future;
-                setConnectState(CONNECTED);
-            } else {
-                setConnectState(DISCONNECTION);
-                if (!disConnectByUser) {
-                    future.channel().eventLoop().schedule(new Runnable() {
-                        @Override
-                        public void run() {
-                            connect();
-                        }
-                    }, 3L, TimeUnit.SECONDS);
-                }
-            }
-        }
-    };
 
     /**
      * 发送消息的线程
@@ -186,7 +205,7 @@ public class TcpHelper {
                 @Override
                 public void run() {
                     try {
-                        channelFuture.channel().writeAndFlush(Unpooled.buffer().writeBytes(data)).sync();
+                        channel.writeAndFlush(Unpooled.buffer().writeBytes(data)).sync();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
