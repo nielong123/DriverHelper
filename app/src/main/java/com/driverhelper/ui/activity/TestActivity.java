@@ -78,7 +78,7 @@ public class TestActivity extends BaseActivity {
                 }).start();
                 break;
             case R.id.load1:
-                TcpHelper.getInstance().send0401();
+                TcpHelper.getInstance().sendTest();
                 break;
         }
     }

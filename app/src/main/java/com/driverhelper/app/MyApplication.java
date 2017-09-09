@@ -18,6 +18,7 @@ import com.driverhelper.helper.WriteSettingHelper;
 import com.jaydenxiao.common.baseapp.BaseApplication;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.PreferenceUtils;
+import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
@@ -68,6 +69,7 @@ public class MyApplication extends BaseApplication {
     void initData() {
         myApp = this;
         mApplicationContext = getApplicationContext();
+        ToastUitl.init(mApplicationContext);
         PreferenceUtils.init(this);
         getIsFirst();
         initLocation();
@@ -115,7 +117,7 @@ public class MyApplication extends BaseApplication {
 
     void getIsFirst() {
         if (WriteSettingHelper.getISFIRST()) {
-//            MSG.getInstance().initSetting();
+            MSG.getInstance().initSetting();
             isFirst = true;
             WriteSettingHelper.setISFIRST(false);
         }

@@ -642,6 +642,7 @@ public class ByteUtil {
      * @return
      */
     public static MessageBean handlerInfo(byte[] data) {
+
         MessageBean messageBean = new MessageBean();
         byte[] data0 = new byte[2];         //消息id
         System.arraycopy(data, 1, data0, 0, 2);

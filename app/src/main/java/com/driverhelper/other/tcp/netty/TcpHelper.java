@@ -29,6 +29,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -43,7 +44,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.bytes.ByteArrayDecoder;
+import io.netty.handler.codec.bytes.ByteArrayEncoder;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
@@ -118,22 +122,22 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     @Override
     public void onConnectSuccess() {
         setConnectState(CONNECTED);
-//        if (tcpHelper.getHeartData() != null) {
-////            tcpHelper.startHeart();
-//        }
-//        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp连接成功");
-//        if (TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.institutionNumber)) ||
-//                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.platformNum)) ||
-//                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.terminalNum)) ||
-//                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.certificatePassword)) ||
-//                TextUtils.isEmpty(ConstantInfo.terminalCertificate)) {
-//            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
-//            return;
-//        }
-//        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_CONNECTED, null);
-//        TcpHelper.getInstance().sendAuthentication();           //鉴权
-//        tcpHelper.startUpDataLocationInfo();                          //开始上传定位信息
-//        tcpHelper.startClearTimer();
+        if (tcpHelper.getHeartData() != null) {
+            tcpHelper.startHeart();
+        }
+        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp连接成功");
+        tcpHelper.startUpDataLocationInfo();                          //开始上传定位信息
+        tcpHelper.startClearTimer();
+        if (TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.institutionNumber)) ||
+                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.platformNum)) ||
+                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.terminalNum)) ||
+                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.certificatePassword)) ||
+                TextUtils.isEmpty(ConstantInfo.terminalCertificate)) {
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
+            return;
+        }
+        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_CONNECTED, null);
+        TcpHelper.getInstance().sendAuthentication();           //鉴权
     }
 
     @Override
@@ -161,7 +165,12 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
-                            pipeline.addLast("encoder", new ProtobufEncoder());
+                            ByteBuf buf = Unpooled.copiedBuffer(new byte[]{(byte) 0x7E});
+                            pipeline.addLast(new DelimiterBasedFrameDecoder(1024, buf));
+                            //过滤编码
+                            pipeline.addLast("decoder", new ByteArrayDecoder());
+                            //过滤编码
+                            pipeline.addLast("encoder", new ByteArrayEncoder());
                             pipeline.addLast("handler", new NettyClientHandler());
 
                         }
@@ -567,6 +576,11 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
                 (int) MyApplication.getInstance().speedGPS,
                 (int) MyApplication.getInstance().direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));
+    }
+
+
+    public void sendTest() {
+        sendData("wriufwhelirfdjwloejrfdwlrjfdwlhfcfskideywnfr3o2".getBytes());
     }
 
 }

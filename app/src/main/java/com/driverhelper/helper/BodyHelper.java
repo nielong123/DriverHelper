@@ -15,6 +15,7 @@ import com.driverhelper.other.tcp.TcpBody;
 import com.driverhelper.other.encrypt.Encrypt;
 import com.driverhelper.other.tcp.TcpManager;
 import com.driverhelper.other.tcp.netty.TcpHelper;
+import com.driverhelper.ui.activity.MainActivity;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
@@ -1586,7 +1587,6 @@ public class BodyHelper {
 
     public static void handleReceiveInfo(byte[] data) {
         if (ByteUtil.checkXOR(data)) {
-            ByteUtil.printRecvHexString(data);
             MessageBean messageBean = ByteUtil.handlerInfo(data);
             switch (messageBean.headBean.messageId) {
                 case "8003":                //补传分包
@@ -1666,16 +1666,17 @@ public class BodyHelper {
                         TcpManager.getInstance().remove(messageBean.headBean.waterCode, messageBean.headBean.res8001);
                         switch (messageBean.bodyBean[4]) {
                             case 0:
-                                ToastUitl.show("成功/确认", Toast.LENGTH_SHORT);
+//                                ToastUitl.show("成功/确认", Toast.LENGTH_SHORT);
+//                                Toast.makeText(MyApplication.mApplicationContext,"成功/确认",Toast.LENGTH_SHORT).show();
                                 break;
                             case 1:
-                                ToastUitl.show("失败", Toast.LENGTH_SHORT);
+//                                ToastUitl.show("失败", Toast.LENGTH_SHORT);
                                 break;
                             case 2:
-                                ToastUitl.show("消息有误", Toast.LENGTH_SHORT);
+//                                ToastUitl.show("消息有误", Toast.LENGTH_SHORT);
                                 break;
                             case 3:
-                                ToastUitl.show("不支持", Toast.LENGTH_SHORT);
+//                                ToastUitl.show("不支持", Toast.LENGTH_SHORT);
                                 break;
                         }
                     }
