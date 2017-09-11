@@ -82,8 +82,8 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         Log.d("NettyClientHandl", "网络异常!");
-        super.exceptionCaught(ctx, cause);
         ctx.close();
+        super.exceptionCaught(ctx, cause);
     }
 
 }
