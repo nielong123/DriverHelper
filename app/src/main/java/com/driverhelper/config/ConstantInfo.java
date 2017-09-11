@@ -56,14 +56,14 @@ public class ConstantInfo {
 
 
     /***** 0502的设置  start ***************/
-    public static int PIC_INTV_min;          //定时拍照间隔
-    public static int UPLOAD_GBN;       //照片上传设置
-    public static int ADDMSG_YN;        //是否报读附加消息
-    public static int STOP_DELAY_TIME_min;      //熄火后停止学时计时的延时时间, 单: min
-    public static int STOP_GNSS_UPLOAD_INTV_sec;   //熄火后停止学时计时的延时时间, 单位: s
-    public static int STOP_COACH_DELAY_TIME_min;    //熄火后教练自动登出的延时时间, 单位: min
-    public static int USER_CHK_TIME_min;            //重新验证身份时间, 单位: min
-    public static int COACH_TRANS_YN;         //教练跨校教学
+    public static int PIC_INTV_min = 15;          //定时拍照间隔
+    public static int UPLOAD_GBN = 1;       //照片上传设置
+    public static int ADDMSG_YN = 0;        //是否报读附加消息
+    public static int STOP_DELAY_TIME_min = 5;      //熄火后停止学时计时的延时时间, 单: min
+    public static int STOP_GNSS_UPLOAD_INTV_sec = 3600;   //熄火后停止学时计时的延时时间, 单位: s
+    public static int STOP_COACH_DELAY_TIME_min = 150;    //熄火后教练自动登出的延时时间, 单位: min
+    public static int USER_CHK_TIME_min = 30;            //重新验证身份时间, 单位: min
+    public static int COACH_TRANS_YN = 1;         //教练跨校教学
     public static int STU_TRANS_YN;           //学员跨校学习
     public static int DUP_MSG_REJECT_INTV_sec;      //响应平台同类消息时间间隔
 

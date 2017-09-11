@@ -239,8 +239,15 @@ public final class MSG {
         ConstantInfo.ADDMSG_YN = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.ADDMSG_YN, "1"));
     }
 
-    public void setADDMSG_YN(byte ADDMSG_YN) {
-        sharePreferences.edit().putString(Config.WriteSetting.ADDMSG_YN, ADDMSG_YN + "").apply();
+    public void setADDMSG_YN(int ADDMSG_YN) {
+        if (ADDMSG_YN == 0) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.ADDMSG_YN, false).apply();
+            return;
+        }
+        if (ADDMSG_YN == 1) {
+            sharePreferences.edit().putBoolean(Config.WriteSetting.ADDMSG_YN, true).apply();
+            return;
+        }
     }
 
     /****
@@ -309,7 +316,7 @@ public final class MSG {
             return;
         }
         if (COACH_TRANS_YN == 2) {
-            sharePreferences.edit().putBoolean(Config.WriteSetting.COACH_TRANS_YN, true);
+            sharePreferences.edit().putBoolean(Config.WriteSetting.COACH_TRANS_YN, false);
             return;
         }
     }
@@ -332,7 +339,7 @@ public final class MSG {
             return;
         }
         if (STU_TRANS_YN == 2) {
-            sharePreferences.edit().putBoolean(Config.WriteSetting.STU_TRANS_YN, true);
+            sharePreferences.edit().putBoolean(Config.WriteSetting.STU_TRANS_YN, false);
             return;
         }
     }
@@ -965,6 +972,18 @@ public final class MSG {
         Log.e("123", "/*******************************************/");
     }
 
+    public void setSetting1() {
+        setPIC_INTV_min(ConstantInfo.PIC_INTV_min);
+        setUPLOAD_GBN(ConstantInfo.UPLOAD_GBN);
+        setADDMSG_YN(ConstantInfo.ADDMSG_YN);
+        setSTOP_DELAY_TIME_min(ConstantInfo.STOP_DELAY_TIME_min);
+        setSTOP_GNSS_UPLOAD_INTV_sec(ConstantInfo.STOP_GNSS_UPLOAD_INTV_sec);
+        setSTOP_COACH_DELAY_TIME_min(ConstantInfo.STOP_COACH_DELAY_TIME_min);
+        setUSER_CHK_TIME_min(ConstantInfo.USER_CHK_TIME_min);
+        setCOACH_TRANS_YN(ConstantInfo.COACH_TRANS_YN);
+        setSTU_TRANS_YN(ConstantInfo.STU_TRANS_YN);
+    }
+
     public void loadSetting1() {
         loadPIC_INTV_min();
         loadUPLOAD_GBN();
@@ -1053,8 +1072,9 @@ public final class MSG {
     /*****
      * 第一次登陆时初始化设置
      */
-    public void initSetting() {
+    public void initSettings() {
         setSetting0();
+        setSetting1();
         setPARAM0001("1");
         setPARAM0002("1");
         setPARAM0003("1");

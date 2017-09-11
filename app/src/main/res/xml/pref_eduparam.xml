@@ -2,7 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="15"
         android:inputType="number"
         android:key="PIC_INTV_min"
         android:maxLength="2"
@@ -11,20 +10,17 @@
         android:singleLine="true"
         android:title="定时拍照时间间隔, 单位: min" />
     <SwitchPreference
-        android:defaultValue="true"
         android:key="UPLOAD_GBN"
         android:summaryOff="不自动请求上传"
         android:summaryOn="自动请求上传"
         android:title="照片上传设置" />
     <SwitchPreference
-        android:defaultValue="false"
         android:key="ADDMSG_YN"
         android:summaryOff="自动报读"
         android:summaryOn="不报读"
         android:title="是否报读附加消息" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="5"
         android:inputType="number"
         android:key="STOP_DELAY_TIME_min"
         android:maxLength="2"
@@ -34,7 +30,6 @@
         android:title="熄火后停止学时计时的延时时间, 单: min" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="3600"
         android:inputType="number"
         android:key="STOP_GNSS_UPLOAD_INTV_sec"
         android:maxLength="5"
@@ -44,7 +39,6 @@
         android:title="熄火后停止学时计时的延时时间, 单位: s" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="150"
         android:inputType="number"
         android:key="STOP_COACH_DELAY_TIME_min"
         android:maxLength="3"
@@ -54,7 +48,6 @@
         android:title="熄火后教练自动登出的延时时间, 单位: min" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="30"
         android:inputType="number"
         android:key="USER_CHK_TIME_min"
         android:maxLength="3"
@@ -63,7 +56,6 @@
         android:singleLine="true"
         android:title="重新验证身份时间, 单位: min" />
     <SwitchPreference
-        android:defaultValue="true"
         android:key="COACH_TRANS_YN"
         android:summaryOff="允许"
         android:summaryOn="禁止"

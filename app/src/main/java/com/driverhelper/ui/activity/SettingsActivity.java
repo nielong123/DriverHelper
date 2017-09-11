@@ -162,7 +162,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    //
     @TargetApi(11)
     public static class EDUParamPreferenceFragment extends PreferenceFragment {
 

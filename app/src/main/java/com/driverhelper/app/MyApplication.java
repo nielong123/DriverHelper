@@ -120,7 +120,7 @@ public class MyApplication extends BaseApplication {
     void getIsFirst() {
         if (WriteSettingHelper.getISFIRST()) {
             Log.e("123", "首次进入设置数据");
-            MSG.getInstance().initSetting();
+            MSG.getInstance().initSettings();
         }
     }
 
