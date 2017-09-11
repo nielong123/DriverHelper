@@ -40,8 +40,6 @@ public class Config {
         public final static String HTTP_URL = "HTTP_URL";               //http 地址
         public final static String VEHICLE_NUMBER = "VEHICLE_NUMBER";       //车牌号
         public final static String TERMINALPHONENUMBER = "TERMINALPHONENUMBER";         //终端手机号
-        public final static String KEMU = "KEMU";
-        public final static String PERDRITYPE = "PERDRITYPE";
         public final static String CameraID = "CameraID";
         public final static String Car_ID = "Car_ID";
         public final static String idsub0306ret = "idsub0306ret";
@@ -50,6 +48,8 @@ public class Config {
         public final static String MODEL = "MODEL";                 //终端型号
         public final static String VEHICLE_COLOR = "VEHICLE_COLOR";         //车辆颜色
         public final static String MAKER_ID = "MAKER_ID";           //制造商ID
+        public final static String TRAIN_TYPE = "TRAIN_TYPE";       //培训种类
+        public final static String PERDRITYPE = "PERDRITYPE";      //准教车型
 
         public final static String WATER_CODE = "WATER_CODE111";       //流水号
         public final static String EX_CODE = "EX_CODE11";       //透传消息流水号
@@ -58,7 +58,6 @@ public class Config {
         public final static String PROVINCE = "PROVINCE";       //省
         public final static String DISTANCE = "DISTANCE";       //里程
         public final static String CITY = "CITY";       //省
-        public final static String VENDER_ID = "VENDER_ID";
         public final static String PLATFORMNUM = "platformNum";     //平台编号
         public final static String INSTITUTIONNUMBER = "institutionNumber";     //培训机构编号
         public final static String TERMINALNUM = "terminalNum";     //终端编号

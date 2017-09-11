@@ -61,18 +61,20 @@ public class MyApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        myApp = this;
+        mApplicationContext = getApplicationContext();
+        PreferenceUtils.init(this);
         initData();
         setDatabase();
         initLog();
+        initLocation();
     }
 
     void initData() {
-        myApp = this;
-        mApplicationContext = getApplicationContext();
-        ToastUitl.init(mApplicationContext);
-        PreferenceUtils.init(this);
         getIsFirst();
-        initLocation();
+        WriteSettingHelper.loadRegistInfo();
+        MSG.getInstance().loadSetting0();
+        MSG.getInstance().loadSetting1();
     }
 
     /**

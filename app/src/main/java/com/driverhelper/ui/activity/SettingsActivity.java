@@ -2,7 +2,6 @@ package com.driverhelper.ui.activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -14,7 +13,6 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.driverhelper.R;
@@ -27,7 +25,7 @@ import static com.driverhelper.config.Config.WriteSetting.CameraID;
 import static com.driverhelper.config.Config.WriteSetting.Car_ID;
 import static com.driverhelper.config.Config.WriteSetting.DISTANCE;
 import static com.driverhelper.config.Config.WriteSetting.IMEI;
-import static com.driverhelper.config.Config.WriteSetting.KEMU;
+import static com.driverhelper.config.Config.WriteSetting.MAKER_ID;
 import static com.driverhelper.config.Config.WriteSetting.MODEL;
 import static com.driverhelper.config.Config.WriteSetting.PERDRITYPE;
 import static com.driverhelper.config.Config.WriteSetting.PROVINCE;
@@ -35,9 +33,9 @@ import static com.driverhelper.config.Config.WriteSetting.SN;
 import static com.driverhelper.config.Config.WriteSetting.TCP_IP;
 import static com.driverhelper.config.Config.WriteSetting.TCP_PORT;
 import static com.driverhelper.config.Config.WriteSetting.TERMINALPHONENUMBER;
+import static com.driverhelper.config.Config.WriteSetting.TRAIN_TYPE;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_COLOR;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_NUMBER;
-import static com.driverhelper.config.Config.WriteSetting.VENDER_ID;
 import static com.driverhelper.config.Config.WriteSetting.idsub0306ret;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
@@ -138,7 +136,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(PROVINCE));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(Config.WriteSetting.CITY));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(VENDER_ID));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(MAKER_ID));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(MODEL));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(SN));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(IMEI));
@@ -147,11 +145,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TCP_IP));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TCP_PORT));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TERMINALPHONENUMBER));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(KEMU));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(TRAIN_TYPE));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(PERDRITYPE));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(CameraID));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(Car_ID));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference(idsub0306ret));
+//            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference(idsub0306ret));
         }
 
         @Override

@@ -2,7 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_param0081_d"
         android:inputType="number"
         android:key="PROVINCE"
         android:maxLength="2"
@@ -12,7 +11,6 @@
         android:title="@string/pref_default_param0081" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_param0082_d"
         android:inputType="number"
         android:key="CITY"
         android:maxLength="4"
@@ -22,9 +20,8 @@
         android:title="@string/pref_default_param0082" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_VENDER_ID_d"
         android:inputType="textCapWords"
-        android:key="VENDER_ID"
+        android:key="MAKER_ID"
         android:maxLength="5"
         android:maxLines="1"
         android:selectAllOnFocus="true"
@@ -32,7 +29,6 @@
         android:title="@string/pref_default_VENDER_ID" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_MODEL_d"
         android:inputType="textCapWords"
         android:key="MODEL"
         android:maxLength="20"
@@ -42,7 +38,6 @@
         android:title="@string/pref_default_MODEL" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_SN_d"
         android:inputType="number"
         android:key="SN"
         android:maxLength="7"
@@ -52,7 +47,6 @@
         android:title="@string/pref_default_SN" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_IMEI_d"
         android:inputType="number"
         android:key="IMEI"
         android:maxLength="15"
@@ -62,17 +56,15 @@
         android:title="@string/pref_default_IMEI" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="1"
         android:inputType="number"
         android:key="VEHICLE_COLOR"
-        android:maxLength="3"
+        android:maxLength="1"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="0x0084 车牌颜色" />
+        android:title="车牌颜色" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_param0083_d"
         android:inputType="textCapWords"
         android:key="VEHICLE_NUMBER"
         android:maxLength="15"
@@ -111,13 +103,12 @@
         android:singleLine="true"
         android:title="@string/pref_default_DIAL_NO" />
     <ListPreference
-        android:defaultValue="2"
         android:entries="@array/pref_default_KEMU_items"
         android:entryValues="@array/pref_default_KEMU_values"
-        android:key="KEMU"
+        android:key="TRAIN_TYPE"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_default_KEMU" />
+        android:title="@string/pref_default_TRAIN_TYPE" />
     <ListPreference
         android:defaultValue="@string/pref_default_PERDRITYPE_d"
         android:entries="@array/pref_default_PERDRITYPE_items"
@@ -128,14 +119,13 @@
         android:title="@string/pref_default_PERDRITYPE" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="4"
         android:inputType="number"
         android:key="CameraID"
         android:maxLength="1"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="摄像头设备编号(9:auto)" />
+        android:title="摄像头设备编号(4:auto)" />
     <EditTextPreference
         android:capitalize="words"
         android:inputType="number"
@@ -145,10 +135,11 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="当前教练车统一编号" />
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="idsub0306ret"
-        android:summaryOff=""
-        android:summaryOn="0x8001"
-        android:title="照片上载时，等待应答" />
+    <!--<SwitchPreference-->
+        <!--android:visibility="gone"-->
+        <!--android:defaultValue="true"-->
+        <!--android:key="idsub0306ret"-->
+        <!--android:summaryOff=""-->
+        <!--android:summaryOn="0x8001"-->
+        <!--android:title="照片上载时，等待应答" />-->
 </PreferenceScreen>

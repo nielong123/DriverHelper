@@ -17,17 +17,9 @@ public class ConstantInfo {
 
     public static String ip;
     public static int port, timeOut;
-
-    /***
-     * 省代码
-     */
+    public static String httpURL;
     public static byte[] province = new byte[2];   //test
-
     public static byte[] city = new byte[2];       //test
-
-    /***
-     * 制造商id
-     */
     public static byte[] makerID;
     public static String SN;
     public static String IMEI;
@@ -35,6 +27,10 @@ public class ConstantInfo {
     public static String vehicleColor;           //车辆颜色
     public static String vehicleNum;            //车牌号
     public static String MODEL;            //终端型号
+    public static String trainType;     //培训种类
+    public static String perdriType;        //准教车型
+    public static String camera_ID;      //摄像头编号
+    public static String car_Id;        //教练车id
 
     public static byte[] requestWaterCode;      //应答流水号
     public static byte[] result;                  //结果

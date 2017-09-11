@@ -42,4 +42,8 @@ public class BaseApplication extends MultiDexApplication {
         MultiDex.install(this);
     }
 
+    public String getString(String id) {
+        return this.getString(id);
+    }
+
 }

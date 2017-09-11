@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.driverhelper.R;
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
@@ -50,6 +51,39 @@ public final class MSG {
             }
         }
         return msg;
+    }
+
+    public void loadTcpIp() {
+        ConstantInfo.ip = sharePreferences.getString(Config.WriteSetting.TCP_IP, "221.235.53.37");
+    }
+
+    public void setTcpIp(String tcpIp) {
+        sharePreferences.edit().putString(Config.WriteSetting.TCP_IP, tcpIp).apply();
+    }
+
+    public void loadTcpPort() {
+        ConstantInfo.port = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TCP_PORT, "2346"));
+    }
+
+    public void setTcpPort(String tcpIp) {
+        sharePreferences.edit().putString(Config.WriteSetting.TCP_IP, tcpIp).apply();
+    }
+
+    public void loadTcpTimeOut() {
+        ConstantInfo.port = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TIME_OUT, "1000"));
+    }
+
+    public void setTcpTimeOut(String timeOut) {
+        sharePreferences.edit().putString(Config.WriteSetting.TIME_OUT, timeOut).apply();
+    }
+
+
+    public void loadHttpUrl() {
+        ConstantInfo.httpURL = sharePreferences.getString(Config.WriteSetting.HTTP_URL, "http://221.235.53.37/");
+    }
+
+    public void setHttpUrl(String tcpIp) {
+        sharePreferences.edit().putString(Config.WriteSetting.HTTP_URL, tcpIp).apply();
     }
 
     public void loadProvince() {
@@ -126,6 +160,38 @@ public final class MSG {
 
     public void setMakerID(String makerID) {
         sharePreferences.edit().putString(Config.WriteSetting.MAKER_ID, makerID).apply();
+    }
+
+    public void loadTrainType() {
+        ConstantInfo.trainType = sharePreferences.getString(Config.WriteSetting.TRAIN_TYPE, "");
+    }
+
+    public void setTrainType(String trainType) {
+        sharePreferences.edit().putString(Config.WriteSetting.TRAIN_TYPE, trainType).apply();
+    }
+
+    public void loadPerdriType() {
+        ConstantInfo.perdriType = sharePreferences.getString(Config.WriteSetting.PERDRITYPE, "");
+    }
+
+    public void setPerdriType(String perdriType) {
+        sharePreferences.edit().putString(Config.WriteSetting.PERDRITYPE, perdriType).apply();
+    }
+
+    public void loadCameraID() {
+        ConstantInfo.camera_ID = sharePreferences.getString(Config.WriteSetting.CameraID, "");
+    }
+
+    public void setCameraID(String cameraID) {
+        sharePreferences.edit().putString(Config.WriteSetting.CameraID, cameraID).apply();
+    }
+
+    public void loadCar_ID() {
+        ConstantInfo.car_Id = sharePreferences.getString(Config.WriteSetting.Car_ID, "");
+    }
+
+    public void setCar_ID(String car_id) {
+        sharePreferences.edit().putString(Config.WriteSetting.Car_ID, car_id).apply();
     }
 
 /**********************************************************************************/
@@ -850,19 +916,23 @@ public final class MSG {
         sharePreferences.edit().putString(Config.WriteSetting.param0085, str).apply();
     }
 
-    public void setSetting() {
-        setProvince("31");
-        setCity("00");
-        setMODEL("YX/4G 528G");
-        setVehicle_number("京A0031学");
-        setTerminalPhoneNumber("15070000001");
-        setSN("1001001");
-        setVehicleColor("2");
-        setIMEI("100221235053037");
-        setMakerID("HZLYT");
+    public void setSetting0() {
+        setProvince(MyApplication.getInstance().getString(R.string.pref_default_param0081_d));
+        setCity(MyApplication.getInstance().getString(R.string.pref_default_param0082_d));
+        setMODEL(MyApplication.getInstance().getString(R.string.pref_default_MODEL_d));
+        setVehicle_number(MyApplication.getInstance().getString(R.string.pref_default_param0083_d));
+        setTerminalPhoneNumber(MyApplication.getInstance().getString(R.string.pref_default_DIAL_NO_d));
+        setSN(MyApplication.getInstance().getString(R.string.pref_default_SN_d));
+        setVehicleColor(MyApplication.getInstance().getString(R.string.pref_default_vehicle_color));
+        setIMEI(MyApplication.getInstance().getString(R.string.pref_default_IMEI_d));
+        setMakerID(MyApplication.getInstance().getString(R.string.pref_default_VENDER_ID_d));
+        setTrainType(MyApplication.getInstance().getString(R.string.pref_default_TRAIN_TYPE_d));
+        setPerdriType(MyApplication.getInstance().getString(R.string.pref_default_PERDRITYPE_d));
+        setCameraID("4");
+        setCar_ID("12345");
     }
 
-    public void loadSetting() {
+    public void loadSetting0() {
         loadProvince();
         loadCity();
         loadMODEL();
@@ -873,6 +943,12 @@ public final class MSG {
         loadIMEI();
         loadMakerID();
         loadTcpSetting();
+        loadTrainType();
+        loadPerdriType();
+        loadCameraID();
+        loadCar_ID();
+
+
         Log.e("123", "/*******************************************/");
         ByteUtil.printHexString("ConstantInfo.province", ConstantInfo.province);
         ByteUtil.printHexString("ConstantInfo.city", ConstantInfo.city);
@@ -978,7 +1054,7 @@ public final class MSG {
      * 第一次登陆时初始化设置
      */
     public void initSetting() {
-        setSetting();
+        setSetting0();
         setPARAM0001("1");
         setPARAM0002("1");
         setPARAM0003("1");
@@ -1216,11 +1292,12 @@ public final class MSG {
 
 
     public void loadTcpSetting() {
-        ConstantInfo.ip = sharePreferences.getString(Config.WriteSetting.TCP_IP, "221.235.53.37");
-        ConstantInfo.port = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TCP_PORT, "2346"));
-//        Config.ip = "120.77.47.115";      //洪总
+        loadTcpIp();
+        loadTcpPort();
+        loadTcpTimeOut();
+        loadHttpUrl();
+        //        Config.ip = "120.77.47.115";      //洪总
 //        Config.port = 6000;
-        ConstantInfo.timeOut = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TIME_OUT, "10000"));
     }
 
 

@@ -286,12 +286,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         this.ttsClient = new TextToSpeech(getApplicationContext(), this);
         if (WriteSettingHelper.getISFIRST()) {
             this.ttsClient.speak("首次登陆，请设置终端参数", 1, null);
-            MSG.getInstance().initSetting();
             WriteSettingHelper.setISFIRST(false);
         }
-        WriteSettingHelper.loadRegistInfo();
-        MSG.getInstance().loadSetting1();
-        MSG.getInstance().loadSetting();
         TcpHelper.getInstance().setHeart(BodyHelper.makeHeart(), 10000L);
         new Thread(new Runnable() {
             @Override
@@ -684,7 +680,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         }
         switch (requestCode) {
             case REQUEST_SETTING:
-                MSG.getInstance().loadSetting();
+                MSG.getInstance().loadSetting0();
                 MSG.getInstance().loadSetting1();
                 WriteSettingHelper.loadRegistInfo();
                 break;
