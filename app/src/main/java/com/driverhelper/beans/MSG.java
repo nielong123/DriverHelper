@@ -859,7 +859,7 @@ public final class MSG {
         setSN("1001001");
         setVehicleColor("2");
         setIMEI("100221235053037");
-        setMakerID("ex-sun");
+        setMakerID("HZLYT");
     }
 
     public void loadSetting() {
@@ -873,7 +873,7 @@ public final class MSG {
         loadIMEI();
         loadMakerID();
         loadTcpSetting();
-        Log.e("123","/*******************************************/");
+        Log.e("123", "/*******************************************/");
         ByteUtil.printHexString("ConstantInfo.province", ConstantInfo.province);
         ByteUtil.printHexString("ConstantInfo.city", ConstantInfo.city);
         Log.e("ConstantInfo.MODEL", ConstantInfo.MODEL);
@@ -886,7 +886,7 @@ public final class MSG {
         Log.e("ip", ConstantInfo.ip);
         Log.e("port", ConstantInfo.port + "");
         Log.e("timeOut", ConstantInfo.timeOut + "");
-        Log.e("123","/*******************************************/");
+        Log.e("123", "/*******************************************/");
     }
 
     public void loadSetting1() {

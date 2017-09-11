@@ -203,7 +203,7 @@ public class BodyHelper {
         result = ByteUtil.addEND(result); // 添加尾部
         result = ByteUtil.checkMark(result);
 
-//        ByteUtil.printHexString(result);
+        ByteUtil.printHexString(result);
         return result;
     }
 

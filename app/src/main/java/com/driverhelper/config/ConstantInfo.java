@@ -21,18 +21,15 @@ public class ConstantInfo {
     /***
      * 省代码
      */
-    public static byte[] province = {(byte) 0x00, (byte) 0x2a};   //test
+    public static byte[] province = new byte[2];   //test
 
-    public static byte[] city = {(byte) 0x00, (byte) 0x6f};       //test
+    public static byte[] city = new byte[2];       //test
 
     /***
      * 制造商id
      */
     public static byte[] makerID;
-//    public static byte[] makerID = {(byte) 0x48, (byte) 0x5a, (byte) 0x4C, (byte) 0x59, (byte) 0x54};
-
     public static String SN;
-
     public static String IMEI;
     public static String terminalPhoneNumber;    //终端手机号
     public static String vehicleColor;           //车辆颜色
