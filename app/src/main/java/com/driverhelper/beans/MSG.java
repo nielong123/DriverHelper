@@ -20,6 +20,7 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_COLOR;
+import static com.driverhelper.config.ConstantInfo.IMEI;
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -42,61 +43,69 @@ public final class MSG {
     public static MSG getInstance() {
 
         if (msg == null) {
-            msg = new MSG();
+            synchronized (MSG.class) {
+                if (msg == null) {
+                    msg = new MSG();
+                }
+            }
         }
         return msg;
-    }
-
-    public int getNoSendCount_GPS() {
-        return noSendCount_GPS;
-    }
-
-    public void setNoSendCount_GPS(int noSendCount_GPS) {
-        this.noSendCount_GPS = noSendCount_GPS;
-    }
-
-    public int getNoSendCount_EDU() {
-        return noSendCount_EDU;
-    }
-
-    public void setNoSendCount_EDU(int noSendCount_EDU) {
-        this.noSendCount_EDU = noSendCount_EDU;
-    }
-
-    public int getNoSendCount_PIC() {
-        return noSendCount_PIC;
-    }
-
-    public void setNoSendCount_PIC(int noSendCount_PIC) {
-        this.noSendCount_PIC = noSendCount_PIC;
     }
 
     public void loadProvince() {
         ConstantInfo.province[1] = ByteUtil.hexString2BCD(sharePreferences.getString(Config.WriteSetting.PROVINCE, "00"))[0];
     }
 
+    public void setProvince(String province) {
+        sharePreferences.edit().putString(Config.WriteSetting.PROVINCE, province).apply();
+    }
+
     public void loadCity() {
         ConstantInfo.city[1] = ByteUtil.hexString2BCD(sharePreferences.getString(Config.WriteSetting.CITY, "00"))[0];
+    }
+
+    public void setCity(String city) {
+        sharePreferences.edit().putString(Config.WriteSetting.CITY, city).apply();
     }
 
     public void loadMODEL() {
         ConstantInfo.MODEL = sharePreferences.getString(Config.WriteSetting.MODEL, "YX/4G 528G");
     }
 
+    public void setMODEL(String model) {
+        sharePreferences.edit().putString(Config.WriteSetting.MODEL, model).apply();
+    }
+
     public void loadVehicle_number() {
         ConstantInfo.vehicleNum = sharePreferences.getString(Config.WriteSetting.VEHICLE_NUMBER, "00");
+    }
+
+    public void setVehicle_number(String vehicle_number) {
+        sharePreferences.edit().putString(Config.WriteSetting.VEHICLE_NUMBER, vehicle_number).apply();
     }
 
     public void loadTerminalPhoneNumber() {
         ConstantInfo.terminalPhoneNumber = sharePreferences.getString(Config.WriteSetting.TERMINALPHONENUMBER, "13469986047");
     }
 
+    public void setTerminalPhoneNumber(String phoneNumber) {
+        sharePreferences.edit().putString(Config.WriteSetting.TERMINALPHONENUMBER, phoneNumber).apply();
+    }
+
     public void loadSN() {
         ConstantInfo.SN = sharePreferences.getString(Config.WriteSetting.SN, "");
     }
 
+    public void setSN(String sn) {
+        sharePreferences.edit().putString(Config.WriteSetting.SN, sn).apply();
+    }
+
     public void loadVehicleColor() {
         ConstantInfo.vehicleColor = sharePreferences.getString(VEHICLE_COLOR, "2");
+    }
+
+    public void setVehicleColor(String color) {
+        sharePreferences.edit().putString(VEHICLE_COLOR, color).apply();
     }
 
     /***
@@ -104,7 +113,19 @@ public final class MSG {
      * @return
      */
     public void loadIMEI() {
-        ConstantInfo.IMEI = sharePreferences.getString(Config.WriteSetting.IMEI, "");
+        IMEI = sharePreferences.getString(Config.WriteSetting.IMEI, "");
+    }
+
+    public void setIMEI(String imei) {
+        sharePreferences.edit().putString(Config.WriteSetting.IMEI, imei).apply();
+    }
+
+    public void loadMakerID() {
+        ConstantInfo.makerID = ByteUtil.str2Bytes(sharePreferences.getString(Config.WriteSetting.MAKER_ID, ""));
+    }
+
+    public void setMakerID(String makerID) {
+        sharePreferences.edit().putString(Config.WriteSetting.MAKER_ID, makerID).apply();
     }
 
 /**********************************************************************************/
@@ -829,6 +850,17 @@ public final class MSG {
         sharePreferences.edit().putString(Config.WriteSetting.param0085, str).apply();
     }
 
+    public void setSetting() {
+        setProvince("31");
+        setCity("00");
+        setMODEL("YX/4G 528G");
+        setVehicle_number("京A0031学");
+        setTerminalPhoneNumber("15070000001");
+        setSN("1001001");
+        setVehicleColor("2");
+        setIMEI("100221235053037");
+        setMakerID("ex-sun");
+    }
 
     public void loadSetting() {
         loadProvince();
@@ -839,7 +871,22 @@ public final class MSG {
         loadSN();
         loadVehicleColor();
         loadIMEI();
+        loadMakerID();
         loadTcpSetting();
+        Log.e("123","/*******************************************/");
+        ByteUtil.printHexString("ConstantInfo.province", ConstantInfo.province);
+        ByteUtil.printHexString("ConstantInfo.city", ConstantInfo.city);
+        Log.e("ConstantInfo.MODEL", ConstantInfo.MODEL);
+        Log.e("ConstantInfo.vehicleNum", ConstantInfo.vehicleNum);
+        Log.e("terminalPhoneNumber", ConstantInfo.terminalPhoneNumber);
+        Log.e("ConstantInfo.SN", ConstantInfo.SN);
+        Log.e("vehicleColor", ConstantInfo.vehicleColor);
+        Log.e("IMEI", ConstantInfo.IMEI);
+        ByteUtil.printHexString("MakerID", ConstantInfo.makerID);
+        Log.e("ip", ConstantInfo.ip);
+        Log.e("port", ConstantInfo.port + "");
+        Log.e("timeOut", ConstantInfo.timeOut + "");
+        Log.e("123","/*******************************************/");
     }
 
     public void loadSetting1() {
@@ -926,7 +973,12 @@ public final class MSG {
         getPARAM0085();
     }
 
+
+    /*****
+     * 第一次登陆时初始化设置
+     */
     public void initSetting() {
+        setSetting();
         setPARAM0001("1");
         setPARAM0002("1");
         setPARAM0003("1");
@@ -1164,11 +1216,11 @@ public final class MSG {
 
 
     public void loadTcpSetting() {
-        Config.ip = sharePreferences.getString(Config.WriteSetting.TCP_IP, "221.235.53.37");
-        Config.port = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TCP_PORT, "2346"));
+        ConstantInfo.ip = sharePreferences.getString(Config.WriteSetting.TCP_IP, "221.235.53.37");
+        ConstantInfo.port = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TCP_PORT, "2346"));
 //        Config.ip = "120.77.47.115";      //洪总
 //        Config.port = 6000;
-        Config.timeOut = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TIME_OUT, "10000"));
+        ConstantInfo.timeOut = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TIME_OUT, "10000"));
     }
 
 

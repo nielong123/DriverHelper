@@ -10,9 +10,6 @@ import java.util.List;
 
 public class Config {
 
-    public static String ip;
-    public static int port, timeOut;
-
     public static class Config_RxBus {
         public final static String RX_LOCATION_OK = "RX_LOCATION_OK";           //定位成功
         public final static String RX_LOCATION_FALINE = "RX_LOCATION_FAILE";           //定位失败
@@ -53,6 +50,8 @@ public class Config {
         public final static String IMEI = "IMEI";
         public final static String MODEL = "MODEL";                 //终端型号
         public final static String VEHICLE_COLOR = "VEHICLE_COLOR";         //车辆颜色
+        public final static String MAKER_ID = "MAKER_ID";           //制造商ID
+
         public final static String WATER_CODE = "WATER_CODE111";       //流水号
         public final static String EX_CODE = "EX_CODE11";       //透传消息流水号
         public final static String STUDY_CODE = "STUDY_CODE11";       //课堂ID

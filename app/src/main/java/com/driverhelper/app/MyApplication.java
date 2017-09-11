@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -47,7 +48,6 @@ public class MyApplication extends BaseApplication {
     public double lat, lon;
     public long timeGPS;
     public boolean isLocation;              //是否定位成功
-    public boolean isFirst = false;         //是否是第一次登陆
 
     public static Context mApplicationContext;
     public static MyApplication myApp;
@@ -117,9 +117,8 @@ public class MyApplication extends BaseApplication {
 
     void getIsFirst() {
         if (WriteSettingHelper.getISFIRST()) {
+            Log.e("123", "首次进入设置数据");
             MSG.getInstance().initSetting();
-            isFirst = true;
-            WriteSettingHelper.setISFIRST(false);
         }
     }
 

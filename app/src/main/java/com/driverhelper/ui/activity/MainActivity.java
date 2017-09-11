@@ -69,9 +69,9 @@ import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
-import static com.driverhelper.config.Config.ip;
+import static com.driverhelper.config.ConstantInfo.ip;
 import static com.driverhelper.config.Config.isStudentLoginOK;
-import static com.driverhelper.config.Config.port;
+import static com.driverhelper.config.ConstantInfo.port;
 import static com.driverhelper.config.ConstantInfo.embargoStr;
 import static com.driverhelper.config.ConstantInfo.isEmbargo;
 import static com.driverhelper.config.ConstantInfo.photoTImerDelay;
@@ -284,8 +284,11 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     public void initData() {
         context = this;
         this.ttsClient = new TextToSpeech(getApplicationContext(), this);
-        if (MyApplication.getInstance().isFirst)
+        if (WriteSettingHelper.getISFIRST()) {
             this.ttsClient.speak("首次登陆，请设置终端参数", 1, null);
+            MSG.getInstance().initSetting();
+            WriteSettingHelper.setISFIRST(false);
+        }
         WriteSettingHelper.loadRegistInfo();
         MSG.getInstance().loadSetting1();
         MSG.getInstance().loadSetting();

@@ -15,6 +15,9 @@ public class ConstantInfo {
 
     public static boolean isDebug = true;
 
+    public static String ip;
+    public static int port, timeOut;
+
     /***
      * 省代码
      */
@@ -25,12 +28,13 @@ public class ConstantInfo {
     /***
      * 制造商id
      */
-    public static byte[] makerID = {(byte) 0x48, (byte) 0x5a, (byte) 0x4C, (byte) 0x59, (byte) 0x54};
+    public static byte[] makerID;
+//    public static byte[] makerID = {(byte) 0x48, (byte) 0x5a, (byte) 0x4C, (byte) 0x59, (byte) 0x54};
 
     public static String SN;
 
-    public static String IMEI = "100221235053037";
-    public static String terminalPhoneNumber = "15070000001";    //终端手机号
+    public static String IMEI;
+    public static String terminalPhoneNumber;    //终端手机号
     public static String vehicleColor;           //车辆颜色
     public static String vehicleNum;            //车牌号
     public static String MODEL;            //终端型号
