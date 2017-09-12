@@ -702,11 +702,11 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, (byte) 0x04);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.param0074));
 
-        MSG.getInstance().getPARAM0080();
+        MSG.getInstance().getDISTANCE();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x80));
         resultBody = ByteUtil.add(resultBody, (byte) 0x04);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.param0080));
-        MSG.getInstance().getPARAM0081();
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.distance));
+        MSG.getInstance().getDISTANCE();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x81));
         resultBody = ByteUtil.add(resultBody, (byte) 0x02);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0081));
@@ -1053,12 +1053,12 @@ public class BodyHelper {
                     break;
 
                 case (byte) 0x80:
-                    MSG.getInstance().getPARAM0080();
+                    MSG.getInstance().getDISTANCE();
                     resultBody = ByteUtil.add(resultBody, (byte) 0x04);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.param0080));
+                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.distance));
                     break;
                 case (byte) 0x81:
-                    MSG.getInstance().getPARAM0081();
+                    MSG.getInstance().getDISTANCE();
                     resultBody = ByteUtil.add(resultBody, (byte) 0x02);
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0081));
                     break;

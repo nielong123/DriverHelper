@@ -2,7 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="3"
         android:inputType="number"
         android:key="DISTANCE"
         android:maxLength="5"
@@ -10,54 +9,52 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="0x0080 车辆里程表读数，1/10km" />
-    <EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="@string/pref_default_param0081_d"
-        android:inputType="number"
-        android:key="PROVINCE"
-        android:maxLength="2"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_default_param0081" />
-    <EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="@string/pref_default_param0082_d"
-        android:inputType="number"
-        android:key="CITY"
-        android:maxLength="4"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_default_param0082" />
-    <EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="@string/pref_default_param0083_d"
-        android:inputType="textCapWords"
-        android:key="VEHICLE_NUMBER"
-        android:maxLength="15"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_default_param0083" />
-    <EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="1"
-        android:inputType="number"
-        android:key="VEHICLE_COLOR"
-        android:maxLength="3"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="0x0084 车牌颜色" />
     <!--<EditTextPreference-->
         <!--android:capitalize="words"-->
-        <!--android:defaultValue="1000"-->
         <!--android:inputType="number"-->
-        <!--android:key="param0085"-->
-        <!--android:maxLength="6"-->
+        <!--android:key="PROVINCE"-->
+        <!--android:maxLength="2"-->
         <!--android:maxLines="1"-->
         <!--android:selectAllOnFocus="true"-->
         <!--android:singleLine="true"-->
-        <!--android:title="0x0085 车辆脉冲系数，车辆行驶1km距离过程中产生的脉冲信号个数" />-->
+        <!--android:title="@string/pref_default_param0081" />-->
+    <!--<EditTextPreference-->
+        <!--android:capitalize="words"-->
+        <!--android:inputType="number"-->
+        <!--android:key="CITY"-->
+        <!--android:maxLength="4"-->
+        <!--android:maxLines="1"-->
+        <!--android:selectAllOnFocus="true"-->
+        <!--android:singleLine="true"-->
+        <!--android:title="@string/pref_default_param0082" />-->
+    <!--<EditTextPreference-->
+        <!--android:capitalize="words"-->
+        <!--android:defaultValue="@string/pref_default_param0083_d"-->
+        <!--android:inputType="textCapWords"-->
+        <!--android:key="VEHICLE_NUMBER"-->
+        <!--android:maxLength="15"-->
+        <!--android:maxLines="1"-->
+        <!--android:selectAllOnFocus="true"-->
+        <!--android:singleLine="true"-->
+        <!--android:title="@string/pref_default_param0083" />-->
+    <!--<EditTextPreference-->
+        <!--android:capitalize="words"-->
+        <!--android:defaultValue="1"-->
+        <!--android:inputType="number"-->
+        <!--android:key="VEHICLE_COLOR"-->
+        <!--android:maxLength="3"-->
+        <!--android:maxLines="1"-->
+        <!--android:selectAllOnFocus="true"-->
+        <!--android:singleLine="true"-->
+        <!--android:title="0x0084 车牌颜色" />-->
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="1000"
+        android:inputType="number"
+        android:key="param0085"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="0x0085 车辆脉冲系数，车辆行驶1km距离过程中产生的脉冲信号个数" />
 </PreferenceScreen>

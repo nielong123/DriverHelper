@@ -37,6 +37,7 @@ import static com.driverhelper.config.Config.WriteSetting.TRAIN_TYPE;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_COLOR;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_NUMBER;
 import static com.driverhelper.config.Config.WriteSetting.idsub0306ret;
+import static com.driverhelper.config.Config.WriteSetting.param0085;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
@@ -375,10 +376,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_param7);
             setHasOptionsMenu(true);
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(DISTANCE));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(PROVINCE));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(CITY));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(VEHICLE_NUMBER));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(VEHICLE_COLOR));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(PROVINCE));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(CITY));
+//            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(VEHICLE_NUMBER));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(param0085));
         }
 
         @Override

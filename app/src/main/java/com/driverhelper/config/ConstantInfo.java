@@ -67,77 +67,73 @@ public class ConstantInfo {
     public static int STU_TRANS_YN = 2;           //学员跨校学习
     public static int DUP_MSG_REJECT_INTV_sec = 30;      //响应平台同类消息时间间隔
 
-    public static int param0001;
-    public static int param0002;
-    public static int param0003;
-    public static int param0004;
-    public static int param0005;
-    public static int param0006;
-    public static int param0007;
+    public static int param0001 = 120;
+    public static int param0002 = 10;
+    public static int param0003 = 1;
+    public static int param0004 = 10;
+    public static int param0005 = 1;
+    public static int param0006 = 100;
+    public static int param0007 = 1;
 
-    public static String param0010;
-    public static String param0011;
-    public static String param0012;
-    public static String param0013;
-    public static String param0014;
-    public static String param0015;
-    public static String param0016;
-    public static String param0017;
-    public static int param0018;
-    public static int param0019;
+    public static String param0010 = "apn";
+    public static String param0011 = "userName";
+    public static String param0012 = "password";
+    public static String param0013 = "127.0.0.1";
+    public static String param0014 = "apn";
+    public static String param0015 = "wirelessUserName";
+    public static String param0016 = "wirelessPassWord";
+    public static String param0017 = "backupsAddress";
+    public static int param0018 = 9000;
+    public static int param0019 = 9001;
 
-    public static int param0020;
-    public static int param0021;
-    public static int param0022;
-    public static int param0023;
-    public static int param0024;
-    public static int param0025;
-    public static int param0026;
-    public static int param0027;
-    public static int param0028;
-    public static int param0029;
-    public static int param002C;
-    public static int param002D;
-    public static int param002E;
-    public static int param002F;
+    public static int param0020 = 0;
+    public static int param0021 = 1;
+    public static int param0022 = 3600;
+    public static int param0027 = 3600;
+    public static int param0028 = 600;
+    public static int param0029 = 60;
+    public static int param002C = 500;
+    public static int param002D = 1000;
+    public static int param002E = 1000;
+    public static int param002F = 500;
 
-    public static int param0030;
+    public static int param0030 = 999;            //不知道这什么用
 
-    public static String param0040;
-    public static String param0041;
-    public static String param0042;
-    public static String param0043;
-    public static String param0044;
-    public static int param0045;
-    public static int param0046;
-    public static int param0047;
-    public static String param0048;
+    public static String param0040 = "8005008888";
+    public static String param0041 = "8005008889";
+    public static String param0042 = "8005008890";
+    public static String param0043 = "8005008891";
+    public static String param0044 = "8005008892";
+    public static int param0045 = 0;
+    public static int param0046 = 0;
+    public static int param0047 = 0;
+    public static String param0048 = "110";
     public static String param0049;
 
-    public static int param0050;
-    public static int param0051;
-    public static int param0052;
-    public static int param0053;
-    public static int param0054;
-    public static int param0055;
-    public static int param0056;
-    public static int param0057;
-    public static int param0058;
-    public static int param0059;
-    public static int param005A;
+    public static int param0050 = 1;
+    public static int param0051 = 0;
+    public static int param0052 = 0;
+    public static int param0053 = 0;
+    public static int param0054 = 0;
+    public static int param0055 = 60;
+    public static int param0056 = 20;
+    public static int param0057 = 3600;
+    public static int param0058 = 3600;
+    public static int param0059 = 300;
+    public static int param005A = 600;
 
-    public static int param0070;
-    public static int param0071;
-    public static int param0072;
-    public static int param0073;
-    public static int param0074;
+    public static int param0070 = 3;
+    public static int param0071 = 128;
+    public static int param0072 = 128;
+    public static int param0073 = 64;
+    public static int param0074 = 128;
 
-    public static int param0080;
+    public static int distance = 3;
     public static int param0081;
     public static int param0082;
     public static String param0083;
     public static int param0084;
-    public static int param0085;
+    public static int param0085 = 1000;
 
 
     public static class StudentInfo {

@@ -2,7 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue=""
         android:inputType="phone"
         android:key="param0040"
         android:maxLength="16"
@@ -12,7 +11,6 @@
         android:title="0x0040 监控平台电话号码" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue=""
         android:inputType="phone"
         android:key="param0041"
         android:maxLength="16"
@@ -22,7 +20,6 @@
         android:title="0x0041 复位电话号码，可采用此电话号码拨打终端电话让终端复位" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue=""
         android:inputType="phone"
         android:key="param0042"
         android:maxLength="16"
@@ -32,7 +29,6 @@
         android:title="0x0042 恢复出厂设置电话号码，可采用此电话号码拨打终端电话让终端恢复出厂设置" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue=""
         android:inputType="phone"
         android:key="param0043"
         android:maxLength="16"
@@ -42,7 +38,6 @@
         android:title="0x0043 监控平台SMS电话号码" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue=""
         android:inputType="phone"
         android:key="param0044"
         android:maxLength="16"
@@ -51,7 +46,6 @@
         android:singleLine="true"
         android:title="0x0044 接收终端SMS文本报警号码" />
     <ListPreference
-        android:defaultValue="0"
         android:entries="@array/pref_param0045_items"
         android:entryValues="@array/pref_param0045_values"
         android:key="param0045"
@@ -60,7 +54,6 @@
         android:title="0x0045 终端电话接听策略" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="60"
         android:inputType="number"
         android:key="param0046"
         android:maxLength="5"
@@ -70,7 +63,6 @@
         android:title="0x0046 每次最长通话时间，单位为秒(s),0为不允许通话" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="3600"
         android:inputType="number"
         android:key="param0047"
         android:maxLength="5"
@@ -80,7 +72,6 @@
         android:title="0x0047 当月最长通话时间，单位为秒(s),0为不允许通话" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue=""
         android:inputType="phone"
         android:key="param0048"
         android:maxLength="16"
@@ -90,7 +81,6 @@
         android:title="0x0048 监听电话号码" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue=""
         android:inputType="phone"
         android:key="param0049"
         android:maxLength="16"

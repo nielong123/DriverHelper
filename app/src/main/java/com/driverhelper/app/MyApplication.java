@@ -75,6 +75,14 @@ public class MyApplication extends BaseApplication {
         WriteSettingHelper.loadRegistInfo();
         MSG.getInstance().loadSetting0();
         MSG.getInstance().loadSetting1();
+        MSG.getInstance().loadSetting2();
+        MSG.getInstance().loadSetting3();
+        MSG.getInstance().loadSetting4();
+        MSG.getInstance().loadSetting5();
+        MSG.getInstance().loadSetting6();
+        MSG.getInstance().loadSetting7();
+        MSG.getInstance().loadSetting8();
+        MSG.getInstance().loadSetting9();
     }
 
     /**

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-        android:defaultValue="0"
         android:entries="@array/pref_param0020_items"
         android:entryValues="@array/pref_param0020_values"
         android:key="param0020"
@@ -9,7 +8,6 @@
         android:positiveButtonText="@null"
         android:title="0x0020 位置汇报策略" />
     <ListPreference
-        android:defaultValue="1"
         android:entries="@array/pref_param0021_items"
         android:entryValues="@array/pref_param0021_values"
         android:key="param0021"
@@ -18,7 +16,6 @@
         android:title="0x0021 位置汇报方案" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="3600"
         android:inputType="number"
         android:key="param0022"
         android:maxLength="5"
@@ -28,7 +25,6 @@
         android:title="0x0022 驾驶员未登录汇报时间间隔，单位为秒(s),>0" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="3600"
         android:inputType="number"
         android:key="param0027"
         android:maxLength="5"
@@ -38,7 +34,6 @@
         android:title="0x0027 休眠时汇报时间间隔，单位为秒(s),>0" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="600"
         android:inputType="number"
         android:key="param0028"
         android:maxLength="5"
@@ -48,7 +43,6 @@
         android:title="0x0028 紧急报警时汇报时间间隔，单位为秒(s),>0" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="60"
         android:inputType="number"
         android:key="param0029"
         android:maxLength="5"
@@ -58,7 +52,6 @@
         android:title="0x0029 缺省时间汇报间隔，单位为秒(s),>0" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="500"
         android:inputType="number"
         android:key="param002c"
         android:maxLength="5"
@@ -68,7 +61,6 @@
         android:title="0x002c 缺省距离汇报间隔，单位为米(m),>0" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="1000"
         android:inputType="number"
         android:key="param002d"
         android:maxLength="5"
@@ -88,7 +80,6 @@
         android:title="0x002e 休眠时汇报距离间隔，单位为米(m),>0" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="500"
         android:inputType="number"
         android:key="param002f"
         android:maxLength="5"
@@ -96,14 +87,14 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="0x002f 紧急报警时汇报距离间隔，单位为米(m),>0" />
-    <EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="0"
-        android:inputType="number"
-        android:key="param0030"
-        android:maxLength="3"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="0x0030 拐点补传角度，&lt;180°" />
+    <!--<EditTextPreference-->
+        <!--android:capitalize="words"-->
+        <!--android:defaultValue="0"-->
+        <!--android:inputType="number"-->
+        <!--android:key="param0030"-->
+        <!--android:maxLength="3"-->
+        <!--android:maxLines="1"-->
+        <!--android:selectAllOnFocus="true"-->
+        <!--android:singleLine="true"-->
+        <!--android:title="0x0030 拐点补传角度，&lt;180°" />-->
 </PreferenceScreen>
