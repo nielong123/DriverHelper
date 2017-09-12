@@ -68,7 +68,6 @@
         android:title="学员跨校学习" />
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="30"
         android:inputType="number"
         android:key="DUP_MSG_REJECT_INTV_sec"
         android:maxLength="3"

@@ -64,8 +64,8 @@ public class ConstantInfo {
     public static int STOP_COACH_DELAY_TIME_min = 150;    //熄火后教练自动登出的延时时间, 单位: min
     public static int USER_CHK_TIME_min = 30;            //重新验证身份时间, 单位: min
     public static int COACH_TRANS_YN = 1;         //教练跨校教学
-    public static int STU_TRANS_YN;           //学员跨校学习
-    public static int DUP_MSG_REJECT_INTV_sec;      //响应平台同类消息时间间隔
+    public static int STU_TRANS_YN = 2;           //学员跨校学习
+    public static int DUP_MSG_REJECT_INTV_sec = 30;      //响应平台同类消息时间间隔
 
     public static int param0001;
     public static int param0002;

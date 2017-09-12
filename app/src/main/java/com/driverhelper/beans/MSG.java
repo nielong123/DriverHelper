@@ -236,7 +236,11 @@ public final class MSG {
      * @return
      */
     public void loadADDMSG_YN() {
-        ConstantInfo.ADDMSG_YN = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.ADDMSG_YN, "1"));
+        if (sharePreferences.getBoolean(Config.WriteSetting.ADDMSG_YN, false)) {
+            ConstantInfo.ADDMSG_YN = 1;
+        } else {
+            ConstantInfo.ADDMSG_YN = 0;
+        }
     }
 
     public void setADDMSG_YN(int ADDMSG_YN) {
@@ -982,6 +986,7 @@ public final class MSG {
         setUSER_CHK_TIME_min(ConstantInfo.USER_CHK_TIME_min);
         setCOACH_TRANS_YN(ConstantInfo.COACH_TRANS_YN);
         setSTU_TRANS_YN(ConstantInfo.STU_TRANS_YN);
+        setDUP_MSG_REJECT_INTV_sec(ConstantInfo.DUP_MSG_REJECT_INTV_sec);
     }
 
     public void loadSetting1() {
