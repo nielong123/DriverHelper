@@ -29,7 +29,7 @@ public class ConstantInfo {
     public static String MODEL;            //终端型号
     public static String trainType;     //培训种类
     public static String perdriType;        //准教车型
-    public static String camera_ID;      //摄像头编号
+    public static int camera_ID = 4;      //摄像头编号
     public static String car_Id;        //教练车id
 
     public static byte[] requestWaterCode;      //应答流水号

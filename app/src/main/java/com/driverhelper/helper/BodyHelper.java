@@ -780,7 +780,6 @@ public class BodyHelper {
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.param0007));
                     break;
 
-
                 case (byte) 0x10:
                     MSG.getInstance().getPARAM0010();
                     resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0010.getBytes().length);

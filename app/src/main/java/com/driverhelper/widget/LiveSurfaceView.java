@@ -92,7 +92,7 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         try {
             if (!isPreview) {
                 Log.d("", Camera.getNumberOfCameras() + "");
-                if (null == camera) camera = Camera.open(4);
+                if (null == camera) camera = Camera.open(ConstantInfo.camera_ID);
                 Camera.Parameters parameters = camera.getParameters();
                 parameters.setPictureFormat(PixelFormat.JPEG);
                 parameters.set("jpeg-quality", 85);

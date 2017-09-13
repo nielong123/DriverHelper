@@ -180,11 +180,11 @@ public final class MSG {
     }
 
     public void loadCameraID() {
-        ConstantInfo.camera_ID = sharePreferences.getString(Config.WriteSetting.CameraID, "");
+        ConstantInfo.camera_ID = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.CameraID, ""));
     }
 
-    public void setCameraID(String cameraID) {
-        sharePreferences.edit().putString(Config.WriteSetting.CameraID, cameraID).apply();
+    public void setCameraID(int cameraID) {
+        sharePreferences.edit().putString(Config.WriteSetting.CameraID, cameraID + "").apply();
     }
 
     public void loadCar_ID() {
@@ -905,7 +905,7 @@ public final class MSG {
         setMakerID(MyApplication.getInstance().getString(R.string.pref_default_VENDER_ID_d));
         setTrainType(MyApplication.getInstance().getString(R.string.pref_default_TRAIN_TYPE_d));
         setPerdriType(MyApplication.getInstance().getString(R.string.pref_default_PERDRITYPE_d));
-        setCameraID("4");
+        setCameraID(ConstantInfo.camera_ID);
         setCar_ID("12345");
     }
 
