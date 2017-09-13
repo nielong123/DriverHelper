@@ -292,6 +292,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         new Thread(new Runnable() {
             @Override
             public void run() {
+//                ConstantInfo.ip = "120.77.47.115";      //洪总
+//                ConstantInfo.port = 6000;
                 TcpHelper.getInstance().connect(new InetSocketAddress(ip, port));
             }
         }).start();
@@ -303,6 +305,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             @Override
             public void call(Object obj) {
                 networksw.setChecked(true);
+                ttsClient.speak("tcp链接成功", 1, null);
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_LOCATION_OK, new Action1<Object>() {

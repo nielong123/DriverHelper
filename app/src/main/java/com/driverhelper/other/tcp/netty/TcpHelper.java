@@ -125,7 +125,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
         if (tcpHelper.getHeartData() != null) {
             tcpHelper.startHeart();
         }
-        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp连接成功");
+        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_CONNECTED, "");
         tcpHelper.startUpDataLocationInfo();                          //开始上传定位信息
         tcpHelper.startClearTimer();
         if (TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.institutionNumber)) ||
@@ -136,13 +136,13 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
             RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
             return;
         }
-        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_CONNECTED, null);
-        TcpHelper.getInstance().sendAuthentication();           //鉴权
+//        TcpHelper.getInstance().sendAuthentication();           //鉴权
     }
 
     @Override
     public void onConnectFailed() {
         setConnectState(DISCONNECTION);
+        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp链接失败");
     }
 
     public void connect(final InetSocketAddress socketAddress) {

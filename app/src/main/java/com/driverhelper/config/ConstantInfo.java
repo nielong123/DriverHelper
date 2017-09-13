@@ -1,7 +1,6 @@
 package com.driverhelper.config;
 
 import com.driverhelper.beans.QRbean;
-import com.driverhelper.helper.WriteSettingHelper;
 
 import java.util.Timer;
 

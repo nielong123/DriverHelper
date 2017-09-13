@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.driverhelper.R;
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
+import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
@@ -73,7 +74,8 @@ public class TestActivity extends BaseActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        TcpHelper.getInstance().connect(new InetSocketAddress("192.168.1.110", 4321));
+//                        TcpHelper.getInstance().connect(new InetSocketAddress("192.168.1.110", 4321));
+                        TcpHelper.getInstance().connect(new InetSocketAddress(ConstantInfo.ip, ConstantInfo.port));
                     }
                 }).start();
                 break;

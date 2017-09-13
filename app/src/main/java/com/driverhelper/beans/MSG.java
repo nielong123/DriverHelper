@@ -71,7 +71,7 @@ public final class MSG {
     }
 
     public void loadTcpTimeOut() {
-        ConstantInfo.port = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TIME_OUT, "1000"));
+        ConstantInfo.timeOut = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.TIME_OUT, "1000"));
     }
 
     public void setTcpTimeOut(String timeOut) {
@@ -966,79 +966,6 @@ public final class MSG {
         getCOACH_TRANS_YN();         //教练跨校教学
         getSTU_TRANS_YN();           //学员跨校学习
         getDUP_MSG_REJECT_INTV_sec();      //响应平台同类消息时间间隔
-
-
-//        getPARAM0001();
-//        getPARAM0002();
-//        getPARAM0003();
-//        getPARAM0004();
-//        getPARAM0005();
-//        getPARAM0006();
-//        getPARAM0007();
-//
-//        getPARAM0010();
-//        getPARAM0011();
-//        getPARAM0012();
-//        getPARAM0013();
-//        getPARAM0014();
-//        getPARAM0015();
-//        getPARAM0016();
-//        getPARAM0017();
-//        getPARAM0018();
-//        getPARAM0019();
-//
-//        getPARAM0020();
-//        getPARAM0021();
-//        getPARAM0022();
-////        getPARAM0023();
-////        getPARAM0024();
-////        getPARAM0025();
-////        getPARAM0026();
-//        getPARAM0027();
-//        getPARAM0028();
-//        getPARAM0029();
-//        getPARAM002C();
-//        getPARAM002D();
-//        getPARAM002E();
-//        getPARAM002F();
-//
-//        getPARAM0030();
-//
-//        getPARAM0040();
-//        getPARAM0041();
-//        getPARAM0042();
-//        getPARAM0043();
-//        getPARAM0044();
-//        getPARAM0045();
-//        getPARAM0046();
-//        getPARAM0047();
-//        getPARAM0048();
-//        getPARAM0049();
-//
-//        getPARAM0050();
-//        getPARAM0051();
-//        getPARAM0052();
-//        getPARAM0053();
-//        getPARAM0054();
-//        getPARAM0055();
-//        getPARAM0056();
-//        getPARAM0057();
-//        getPARAM0058();
-//        getPARAM0059();
-//        getPARAM005A();
-//
-//        getPARAM0070();
-//        getPARAM0071();
-//        getPARAM0072();
-//        getPARAM0073();
-//        getPARAM0074();
-//
-//        getPARAM0080();
-//        getPARAM0081();
-//        getPARAM0082();
-//        getPARAM0083();
-//        getPARAM0084();
-//        getPARAM0085();
     }
 
     public void loadSetting2() {
@@ -1398,8 +1325,6 @@ public final class MSG {
         loadTcpPort();
         loadTcpTimeOut();
         loadHttpUrl();
-        //        Config.ip = "120.77.47.115";      //洪总
-//        Config.port = 6000;
     }
 
 
