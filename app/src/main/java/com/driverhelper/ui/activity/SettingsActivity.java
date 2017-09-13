@@ -201,7 +201,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(paramBundle);
             addPreferencesFromResource(R.xml.pref_param1);
             setHasOptionsMenu(true);
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0001"));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(Config.WriteSetting.HEARTDELAY));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0002"));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0003"));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0004"));

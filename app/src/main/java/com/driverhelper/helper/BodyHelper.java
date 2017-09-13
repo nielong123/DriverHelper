@@ -479,10 +479,10 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, (byte) 0x3B);          //应答参数个数
         resultBody = ByteUtil.add(resultBody, (byte) 0x3B);          //包参数个数
 
-        MSG.getInstance().getPARAM0001();
+        MSG.getInstance().getHEARTDELAY();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(1));
         resultBody = ByteUtil.add(resultBody, (byte) 0x04);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.param0001));
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.heartdelay));
         MSG.getInstance().getPARAM0002();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(2));
         resultBody = ByteUtil.add(resultBody, (byte) 0x04);
@@ -745,9 +745,9 @@ public class BodyHelper {
             resultBody = ByteUtil.add(resultBody, id);
             switch (ByteUtil.byte2int(id)) {
                 case (byte) 0x01:
-                    MSG.getInstance().getPARAM0001();
+                    MSG.getInstance().getHEARTDELAY();
                     resultBody = ByteUtil.add(resultBody, (byte) 0x04);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.param0001));
+                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.heartdelay));
                     break;
                 case (byte) 0x02:
                     MSG.getInstance().getPARAM0002();

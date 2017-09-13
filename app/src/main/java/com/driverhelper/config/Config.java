@@ -77,7 +77,7 @@ public class Config {
         public final static String STU_TRANS_YN = "STU_TRANS_YN";             //学员跨校学习
         public final static String DUP_MSG_REJECT_INTV_sec = "DUP_MSG_REJECT_INTV_sec";     //响应平台同类消息时间间隔
 
-        public final static String PARAM0001 = "param0001";
+        public final static String HEARTDELAY = "HEARTDELAY";
         public final static String PARAM0002 = "param0002";
         public final static String PARAM0003 = "param0003";
         public final static String PARAM0004 = "param0004";

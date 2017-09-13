@@ -683,9 +683,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         }
         switch (requestCode) {
             case REQUEST_SETTING:
-                MSG.getInstance().loadSetting0();
-                MSG.getInstance().loadSetting1();
+                MSG.getInstance().loadSettings();
                 WriteSettingHelper.loadRegistInfo();
+                TcpHelper.getInstance().setHeartDelay(ConstantInfo.heartdelay);     //使设置生效
                 break;
         }
     }

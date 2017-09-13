@@ -362,12 +362,12 @@ public final class MSG {
     }
 
     /*************************************************第三个页面的内容 *****************/
-    public void getPARAM0001() {
-        ConstantInfo.param0001 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.PARAM0001, "15"));
+    public void getHEARTDELAY() {
+        ConstantInfo.heartdelay = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.HEARTDELAY, "15"));
     }
 
-    public void setPARAM0001(int str) {
-        sharePreferences.edit().putString(Config.WriteSetting.PARAM0001, str + "").apply();
+    public void setHEARTDELAY(int str) {
+        sharePreferences.edit().putString(Config.WriteSetting.HEARTDELAY, str + "").apply();
     }
 
     public void getPARAM0002() {
@@ -969,7 +969,7 @@ public final class MSG {
     }
 
     public void loadSetting2() {
-        getPARAM0001();
+        getHEARTDELAY();
         getPARAM0002();
         getPARAM0003();
         getPARAM0004();
@@ -979,7 +979,7 @@ public final class MSG {
     }
 
     public void setSetting2() {
-        setPARAM0001(ConstantInfo.param0001);
+        setHEARTDELAY(ConstantInfo.heartdelay);
         setPARAM0002(ConstantInfo.param0002);
         setPARAM0003(ConstantInfo.param0003);
         setPARAM0004(ConstantInfo.param0004);
@@ -1142,14 +1142,27 @@ public final class MSG {
         setSetting7();
         setSetting8();
         setSetting9();
+    }
 
+
+    public void loadSettings() {
+        loadSetting0();
+        loadSetting1();
+        loadSetting2();
+        loadSetting3();
+        loadSetting4();
+        loadSetting5();
+        loadSetting6();
+        loadSetting7();
+        loadSetting8();
+        loadSetting9();
     }
 
     public void setSettings(List<HandMsgHelper.Class8103.Setting> settings) {
         for (HandMsgHelper.Class8103.Setting setting : settings) {
             switch (setting.getId()) {
                 case (byte) 0x01:
-                    setPARAM0001(ByteUtil.byte2int(setting.getByteParameter()));
+                    setHEARTDELAY(ByteUtil.byte2int(setting.getByteParameter()));
                     break;
                 case (byte) 0x02:
                     setPARAM0002(ByteUtil.byte2int(setting.getByteParameter()));

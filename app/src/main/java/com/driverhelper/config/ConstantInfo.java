@@ -16,6 +16,7 @@ public class ConstantInfo {
 
     public static String ip;
     public static int port, timeOut;
+
     public static String httpURL;
     public static byte[] province = new byte[2];   //test
     public static byte[] city = new byte[2];       //test
@@ -66,7 +67,7 @@ public class ConstantInfo {
     public static int STU_TRANS_YN = 2;           //学员跨校学习
     public static int DUP_MSG_REJECT_INTV_sec = 30;      //响应平台同类消息时间间隔
 
-    public static int param0001 = 120;
+    public static int heartdelay = 120;
     public static int param0002 = 10;
     public static int param0003 = 1;
     public static int param0004 = 10;
@@ -128,7 +129,7 @@ public class ConstantInfo {
     public static int param0074 = 128;
 
     public static int distance = 3;
-    public static int param0081;
+    public static int param0081;        //这几个变量没用，但暂时保留
     public static int param0082;
     public static String param0083;
     public static int param0084;

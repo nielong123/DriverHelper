@@ -3,7 +3,7 @@
     <EditTextPreference
         android:capitalize="words"
         android:inputType="number"
-        android:key="param0001"
+        android:key="HEARTDELAY"
         android:maxLength="5"
         android:maxLines="1"
         android:selectAllOnFocus="true"
