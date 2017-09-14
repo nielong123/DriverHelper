@@ -263,12 +263,12 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bytes(carType.toUpperCase()));
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6)),
                 10,
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
-                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                (int) ConstantInfo.gpsModel.speedGPS,
+                (int) ConstantInfo.gpsModel.direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, ConstantInfo.gpsModel.timeGPS / 1000),
                 -2000, -2000, -2000, -2000)
         );
 
@@ -287,12 +287,12 @@ public class BodyHelper {
         byte[] resultBody = ByteUtil.str2Bytes(coachnum);
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6)),
                 10,
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
-                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                (int) ConstantInfo.gpsModel.speedGPS,
+                (int) ConstantInfo.gpsModel.direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, ConstantInfo.gpsModel.timeGPS / 1000),
                 -2000, -2000, -2000, -2000)
         );
 
@@ -319,11 +319,11 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) ConstantInfo.classId));//课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6)),
                 10,
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
+                (int) ConstantInfo.gpsModel.speedGPS,
+                (int) ConstantInfo.gpsModel.direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time),
                 -2000, -2000, -2000, -2000)
         );
@@ -354,11 +354,11 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) ConstantInfo.classId));           //课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6)),
                 10,
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
+                (int) ConstantInfo.gpsModel.speedGPS,
+                (int) ConstantInfo.gpsModel.direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time),
                 -2000, -2000, -2000, -2000)
         );
@@ -419,16 +419,16 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(classType));                //培训课程
         resultBody = ByteUtil.add(resultBody, recordType);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.ObdInfo.vehiclSspeed));            //最大速度
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.ObdInfo.distance));            //最大里程  10
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.obdInfo.getSpeed()));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.obdInfo.getMileage()));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6)),
                 10,
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
-                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                (int) ConstantInfo.gpsModel.speedGPS,
+                (int) ConstantInfo.gpsModel.direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, ConstantInfo.gpsModel.timeGPS / 1000),
                 20, -2000, -2000, 30)
         );
 
@@ -457,12 +457,12 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(studyInfo.getDistance()));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6)),
                 10,
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
-                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                (int) ConstantInfo.gpsModel.speedGPS,
+                (int) ConstantInfo.gpsModel.direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, ConstantInfo.gpsModel.timeGPS / 1000),
                 20, -2000, -2000, 30)
         );
 
@@ -1108,12 +1108,12 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(info.getDistance()));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6)),
                 10,
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
-                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                (int) ConstantInfo.gpsModel.speedGPS,
+                (int) ConstantInfo.gpsModel.direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, ConstantInfo.gpsModel.timeGPS / 1000),
                 20, -2000, -2000, 30)
         );
 
@@ -1182,12 +1182,12 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) new Date().getTime() / 1000));           //课堂id
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6)),
                 10,
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
-                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, MyApplication.getInstance().timeGPS / 1000),
+                (int) ConstantInfo.gpsModel.speedGPS,
+                (int) ConstantInfo.gpsModel.direction,
+                TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, ConstantInfo.gpsModel.timeGPS / 1000),
                 20, -2000, -2000, 30)
         );
         resultBody = ByteUtil.add(resultBody, (byte) 0x50);           //人脸识别程度

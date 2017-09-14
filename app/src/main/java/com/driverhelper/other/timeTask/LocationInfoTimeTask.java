@@ -19,12 +19,12 @@ public class LocationInfoTimeTask extends TimerTask {
     @Override
     public void run() {
 
-        int lon = (int) (MyApplication.getInstance().lon * Math.pow(10, 6));
-        int lat = (int) (MyApplication.getInstance().lat * Math.pow(10, 6));
+        int lon = (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6));
+        int lat = (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6));
         int speedVehicle = ConstantInfo.ObdInfo.vehiclSspeed;
-        int speedGPS = (int) MyApplication.getInstance().speedGPS;
-        int direction = (int) MyApplication.getInstance().direction;
-        long timeGPS = MyApplication.getInstance().timeGPS / 1000;                 //秒级
+        int speedGPS = (int) ConstantInfo.gpsModel.speedGPS;
+        int direction = (int) ConstantInfo.gpsModel.direction;
+        long timeGPS = ConstantInfo.gpsModel.timeGPS / 1000;                 //秒级
         String timeGPS_ = TimeUtil.formatData(dateFormatYMDHMS_, timeGPS);
         long timeSYS = TimeUtil.getTime()/1000;
 

@@ -26,11 +26,11 @@ public class StudyInfoTimeTask extends TimerTask {
         byte updataType = (byte) 0x01;
         int vehiclSspeed = ConstantInfo.ObdInfo.vehiclSspeed;
         int distance = ConstantInfo.ObdInfo.distance;
-        int lon = (int) MyApplication.getInstance().lon;
-        int lat = (int) MyApplication.getInstance().lat;
-        int speedGPS = (int) MyApplication.getInstance().speedGPS;
-        int direction = (int) MyApplication.getInstance().direction;
-        long timeGPS = MyApplication.getInstance().timeGPS / 1000;
+        int lon = (int) ConstantInfo.gpsModel.lon;
+        int lat = (int) ConstantInfo.gpsModel.lat;
+        int speedGPS = (int) ConstantInfo.gpsModel.speedGPS;
+        int direction = (int) ConstantInfo.gpsModel.direction;
+        long timeGPS = ConstantInfo.gpsModel.timeGPS / 1000;
         long timeSYS = TimeUtil.getTime() / 1000;
         byte recordType = (byte) 0x00;
 

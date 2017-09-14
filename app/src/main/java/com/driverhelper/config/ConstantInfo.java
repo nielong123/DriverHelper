@@ -1,5 +1,7 @@
 package com.driverhelper.config;
 
+import com.driverhelper.beans.GpsModel;
+import com.driverhelper.beans.ObdModel;
 import com.driverhelper.beans.QRbean;
 
 import java.util.Timer;
@@ -150,6 +152,9 @@ public class ConstantInfo {
         public static int distance = 15;         //距离
     }
 
+    public static ObdModel obdInfo = new ObdModel();
+    public static GpsModel gpsModel = new GpsModel();
+
 
     public static QRbean qRbean;
 
@@ -159,7 +164,7 @@ public class ConstantInfo {
     public static Thread photoThread;
 
     public static long locationTimerDelay = 10 * 1000;
-    public static long studyInfoTimerDelay = 5 * 1000;
+    public final static long studyInfoTimerDelay = 60 * 1000;
     public final static long clearTimerDelay = 1 * 60 * 1000;
     public static long photoTImerDelay = 15 * 30 * 1000;//PIC_INTV_min
 

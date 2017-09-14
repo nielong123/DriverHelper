@@ -1,28 +1,16 @@
 package com.driverhelper.ui.activity;
 
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.driverhelper.R;
-import com.driverhelper.beans.db.StudyInfo;
-import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
-import com.driverhelper.helper.DbHelper;
-import com.driverhelper.other.SerialPortActivity;
-import com.driverhelper.other.handle.ObdHandle;
 import com.driverhelper.other.tcp.netty.TcpHelper;
-import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.base.BaseActivity;
-import com.jaydenxiao.common.commonutils.ToastUitl;
 
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;

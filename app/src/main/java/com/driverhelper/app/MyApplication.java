@@ -32,22 +32,17 @@ import qingwei.kong.serialportlibrary.SerialPort;
  * Created by Administrator on 2017/5/31.
  */
 
-public class MyApplication extends BaseApplication {
+public class MyApplication extends BaseApplication implements AMapLocationListener {
 
     private DaoMaster.DevOpenHelper mHelper;
     private SQLiteDatabase db;
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
 
-    private AMapLocationListener locListener = new MyLocationListener();
     private OnLocationReceiveListener mOnLocationReceiveListener;
     private SerialPort obdSerialPort = null;
     private SerialPort icReaderSerialPort = null;
 
-    public float speedGPS, direction;
-    public double lat, lon;
-    public long timeGPS;
-    public boolean isLocation;              //是否定位成功
 
     public static Context mApplicationContext;
     public static MyApplication myApp;
@@ -103,11 +98,12 @@ public class MyApplication extends BaseApplication {
     //初始化定位
     private void initLocation() {
         AMapLocationClient mLocationClient = new AMapLocationClient(this);
-        mLocationClient.setLocationListener(locListener);
+        mLocationClient.setLocationListener(this);
         AMapLocationClientOption option = new AMapLocationClientOption();
         option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         option.setInterval(40000);
         option.setNeedAddress(false);
+        option.setSensorEnable(true);
         mLocationClient.setLocationOption(option);
         mLocationClient.startLocation();
     }
@@ -118,7 +114,6 @@ public class MyApplication extends BaseApplication {
 
     void getIsFirst() {
         if (WriteSettingHelper.getISFIRST()) {
-            Log.e("123", "首次进入设置数据");
             MSG.getInstance().initSettings();
         }
     }
@@ -157,28 +152,26 @@ public class MyApplication extends BaseApplication {
         }
     }
 
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation.getErrorCode() == 0) {
+            ConstantInfo.gpsModel.lat = aMapLocation.getLatitude();
+            ConstantInfo.gpsModel.lon = aMapLocation.getLongitude();
+            ConstantInfo.gpsModel.speedGPS = aMapLocation.getSpeed();
+            ConstantInfo.gpsModel.direction = aMapLocation.getBearing();
+            ConstantInfo.gpsModel.timeGPS = aMapLocation.getTime();
+            ConstantInfo.gpsModel.isLocation = true;
+            RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_OK, "");
+        } else {
+            ConstantInfo.gpsModel.isLocation = false;
+            RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_FALINE, "");
+            Logger.e("AmapError", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
+        }
+    }
+
 
     public interface OnLocationReceiveListener {
         void onLbsReceive(AMapLocation location);
     }
 
-    public class MyLocationListener implements AMapLocationListener {
-
-        @Override
-        public void onLocationChanged(AMapLocation amapLocation) {
-            if (amapLocation.getErrorCode() == 0) {
-                MyApplication.getInstance().lat = amapLocation.getLatitude();
-                MyApplication.getInstance().lon = amapLocation.getLongitude();
-                MyApplication.getInstance().speedGPS = 36.0F * amapLocation.getSpeed();
-                MyApplication.getInstance().direction = amapLocation.getBearing();
-                MyApplication.getInstance().timeGPS = amapLocation.getTime();
-                MyApplication.getInstance().isLocation = true;
-                RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_OK, "");
-            } else {
-                MyApplication.getInstance().isLocation = false;
-                RxBus.getInstance().post(Config.Config_RxBus.RX_LOCATION_FALINE, "");
-                Logger.e("AmapError", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation.getErrorInfo());
-            }
-        }
-    }
 }

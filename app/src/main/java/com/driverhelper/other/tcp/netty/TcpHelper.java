@@ -130,7 +130,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
         Business.startUpDataLocationInfo();                          //开始上传定位信息
         tcpHelper.startClearTimer();
         if (!Business.is0102_OK()) {
-            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未鉴权，请注册");
             return;
         }
 //        TcpHelper.getInstance().sendAuthentication();           //鉴权
@@ -334,7 +334,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     public void sendMakeLocationInfo(int lon, int lat, int speedVehicle, int speedGPS, int direction, String time) {
 
         byte[] data;
-        if (MyApplication.getInstance().isLocation) {
+        if (ConstantInfo.gpsModel.isLocation) {
             data = BodyHelper.makeLocationInfo("00000000",
                     "40080000",
                     lon,
@@ -562,11 +562,11 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
         long time = TimeUtil.getTime() / 1000;
         sendData(BodyHelper.makeFindLocatInfoRequest("00000000",
                 "40080000",
-                (int) (MyApplication.getInstance().lon * Math.pow(10, 6)),
-                (int) (MyApplication.getInstance().lat * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
+                (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6)),
                 10,
-                (int) MyApplication.getInstance().speedGPS,
-                (int) MyApplication.getInstance().direction,
+                (int) ConstantInfo.gpsModel.speedGPS,
+                (int) ConstantInfo.gpsModel.direction,
                 TimeUtil.formatData(TimeUtil.dateFormatYMDHMS_, time)));
     }
 

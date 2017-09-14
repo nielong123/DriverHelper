@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.driverhelper.R;
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MSG;
+import com.driverhelper.beans.ObdModel;
 import com.driverhelper.beans.QRbean;
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
@@ -42,7 +43,7 @@ import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Action;
 import com.driverhelper.other.Business;
 import com.driverhelper.other.SerialPortActivity;
-import com.driverhelper.other.handle.ObdHandle;
+import com.driverhelper.other.obd.Obd_Nissan;
 import com.driverhelper.other.tcp.netty.TcpHelper;
 import com.driverhelper.utils.ByteUtil;
 import com.driverhelper.widget.LiveSurfaceView;
@@ -161,10 +162,10 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                     }
                     break;
                 case Config.TextInfoType.ChangeGPSINFO:
-                    direction.setText("方向:" + MyApplication.getInstance().direction + "度");
-                    speed.setText("速度:" + MyApplication.getInstance().speedGPS + "km/h");
-                    lat.setText("纬度:" + MyApplication.getInstance().lat);
-                    lon.setText("经度:" + MyApplication.getInstance().lon);
+                    direction.setText("方向:" + ConstantInfo.gpsModel.direction + "度");
+                    speed.setText("速度:" + ConstantInfo.gpsModel.speedGPS + "m/s");
+                    lat.setText("纬度:" + ConstantInfo.gpsModel.lat);
+                    lon.setText("经度:" + ConstantInfo.gpsModel.lon);
                     break;
                 case Config.TextInfoType.ClearGPSINFO:
                     direction.setText(" ");
@@ -179,8 +180,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 case Config.TextInfoType.SETXUEYUAN:
                     XueYuanTEXT.setText(qRbean.getName());
                     STUNUMtext.setText(qRbean.getNumber());
-                    textViewStat.setText("培训学时:" + ConstantInfo.StudentInfo.totleTime / 10 + " / " + ConstantInfo.StudentInfo.finishedTime / 10 + "分\n"
-                            + "培训里程:" + ConstantInfo.StudentInfo.totleMileage + "km / " + ConstantInfo.StudentInfo.finishedMileage + "km");
+                    textViewStat.setText("培训学时:" + ConstantInfo.StudentInfo.totleTime + " / " + ConstantInfo.StudentInfo.finishedTime + "分\n"
+                            + "培训里程:" + ConstantInfo.StudentInfo.totleMileage + " / " + ConstantInfo.StudentInfo.finishedMileage + " 1/10km");
                     break;
                 case Config.TextInfoType.CLEARJIAOLIAN:
                     COACHNUMtext.setText("");
@@ -192,7 +193,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                     STUNUMtext.setText("");
                     textViewTime.setText("00:00:00");
                     textViewStat.setText("培训学时:" + 0 + " / " + 0 + "分\n"
-                            + "培训里程:" + 0 + "km / " + 0 + "km");
+                            + "培训里程:" + 0 + " / " + 0 + " 1/10km");
                     break;
             }
             super.handleMessage(msg);
@@ -365,7 +366,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             @Override
             public void call(HandMsgHelper.Class8201 class8201) {
                 ttsClient.speak("学员登录成功", 1, null);
-                sendMessage(Config.TextInfoType.SETXUEYUAN);
                 Config.isStudentLoginOK = true;
                 ConstantInfo.StudentInfo.studentId = ByteUtil.getString(class8201.studentNum);
                 ConstantInfo.StudentInfo.totleMileage = class8201.totleMileage;
@@ -377,6 +377,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 Log.e("finishedMileage", "finishedMileage = " + ConstantInfo.StudentInfo.finishedMileage);
                 Log.e("totleTime", "totleTime = " + ConstantInfo.StudentInfo.totleTime);
                 Log.e("finishedTime", "finishedTime = " + ConstantInfo.StudentInfo.finishedTime);
+                sendMessage(Config.TextInfoType.SETXUEYUAN);
                 if (ConstantInfo.ADDMSG_YN == 1 && class8201.isUpdataOtherInfo) {
                     ttsClient.speak(class8201.otherInfo, 1, null);
                 }
@@ -520,16 +521,16 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 byte[] data = new byte[length];
                 System.arraycopy(buffer, 0, data, 0, length);
 //                ByteUtil.printHexString("obd接收到数据", data);
-                HashMap<String, String> map = ObdHandle.handle(data);
-                String carSpeed = map.get("car speed");
+                ObdModel model = Obd_Nissan.handle(data);
+                String carSpeed = model.getSpeed() + "";
                 if (!TextUtils.isEmpty(carSpeed)) {
                     textViewSpeed.setText(carSpeed + "km/h");
                 }
-                String speed = map.get("speed");
+                String speed = model.getEngineSpeed() + "";
                 if (!TextUtils.isEmpty(speed)) {
                     textViewRPM.setText(speed + "RPM");
                 }
-                String mileage = map.get("mileage");
+                String mileage = model.getMileage() + "";
                 if (!TextUtils.isEmpty(mileage)) {
                     textViewDistance.setText(mileage + "km");
                 }
