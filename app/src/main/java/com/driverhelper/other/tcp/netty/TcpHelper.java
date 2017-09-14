@@ -10,6 +10,7 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.helper.DbHelper;
+import com.driverhelper.other.Business;
 import com.driverhelper.other.tcp.TcpBody;
 import com.driverhelper.other.tcp.TcpManager;
 import com.driverhelper.other.timeTask.ClearTimerTask;
@@ -126,14 +127,10 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
             tcpHelper.startHeart();
         }
         RxBus.getInstance().post(Config.Config_RxBus.RX_NET_CONNECTED, "");
-        tcpHelper.startUpDataLocationInfo();                          //开始上传定位信息
+        Business.startUpDataLocationInfo();                          //开始上传定位信息
         tcpHelper.startClearTimer();
-        if (TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.institutionNumber)) ||
-                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.platformNum)) ||
-                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.terminalNum)) ||
-                TextUtils.isEmpty(ByteUtil.getString(ConstantInfo.certificatePassword)) ||
-                TextUtils.isEmpty(ConstantInfo.terminalCertificate)) {
-            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
+        if (!Business.is0102_OK()) {
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未鉴权，请注册");
             return;
         }
 //        TcpHelper.getInstance().sendAuthentication();           //鉴权
@@ -151,6 +148,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     }
 
     public void connect() {
+
         if (channel != null && channel.isActive()) {
             return;
         }
@@ -231,7 +229,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
             if (getConnectState() == CONNECTED) {
                 try {
                     channelFuture.channel().writeAndFlush(Unpooled.buffer().writeBytes(heartData)).sync();
-                    Thread.sleep(heartDelay);
+                    Thread.sleep(heartDelay * 1000);
                     newFixedThreadPool.execute(this);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -272,12 +270,6 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
 
     /**********************************************    业务相关   **************************************************/
 
-
-    protected void startUpDataLocationInfo() {
-        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "开始上传位置信息");
-        locationTimer = new Timer(true);
-        locationTimer.schedule(new LocationInfoTimeTask(), 1000, locationTimerDelay);          //暂定十秒一次,要改成可以设置的
-    }
 
     protected void startClearTimer() {
         clearTimer = new Timer(true);

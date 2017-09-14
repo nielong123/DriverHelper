@@ -40,6 +40,7 @@ import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.helper.IdHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Action;
+import com.driverhelper.other.Business;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
 import com.driverhelper.other.tcp.netty.TcpHelper;
@@ -69,12 +70,12 @@ import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
+import static com.driverhelper.config.ConstantInfo.PIC_INTV_min;
 import static com.driverhelper.config.ConstantInfo.ip;
 import static com.driverhelper.config.Config.isStudentLoginOK;
 import static com.driverhelper.config.ConstantInfo.port;
 import static com.driverhelper.config.ConstantInfo.embargoStr;
 import static com.driverhelper.config.ConstantInfo.isEmbargo;
-import static com.driverhelper.config.ConstantInfo.photoTImerDelay;
 import static com.driverhelper.config.ConstantInfo.qRbean;
 import static com.driverhelper.config.ConstantInfo.studyInfoTimerDelay;
 
@@ -158,7 +159,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case Config.TextInfoType.UPDATATIME:
+                case UPDATATIME:
                     if (textViewTime != null) {
                         textViewTime.setText(TimeUtil.getFriendlyDuration2(ConstantInfo.studyTimeThis));
                     }
@@ -288,7 +289,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             this.ttsClient.speak("首次登陆，请设置终端参数", 1, null);
             WriteSettingHelper.setISFIRST(false);
         }
-        TcpHelper.getInstance().setHeart(BodyHelper.makeHeart(), 10000L);
+        TcpHelper.getInstance().setHeart(BodyHelper.makeHeart(), ConstantInfo.heartdelay);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -479,6 +480,13 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
 
     @Override
+    protected void onDestroy() {
+        Business.stopPhotoTimer();
+        Business.stopStudyInfoTimer();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onOBDDataReceived(final byte[] buffer, final int length) {
         runOnUiThread(new Runnable() {
             @Override
@@ -543,6 +551,10 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         if (!ConstantInfo.isEmbargo) {
             switch (view.getId()) {
                 case R.id.JiaoLianButton:
+                    if (!Business.is0102_OK()) {
+                        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未鉴权");
+                        return;
+                    }
                     if (!Config.isCoachLoginOK) {
                         String str = "{\"name\": \"张泽斌\",\"id\": \"130727199604011092\",\"number\": \"3400452633643758\",\"type\": \"C1\"}";
                         qRbean = new Gson().fromJson(str, QRbean.class);
@@ -603,7 +615,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         integrator.setPrompt(title);
         integrator.setCameraId(Config.carmerId_HANGJING);  // Use a specific camera of the device
         integrator.setBeepEnabled(false);
-//        integrator.setTimeout(10 * 1000);
+        integrator.setTimeout(10 * 1000);
         integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan();
     }
@@ -685,7 +697,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             case REQUEST_SETTING:
                 MSG.getInstance().loadSettings();
                 WriteSettingHelper.loadRegistInfo();
-                TcpHelper.getInstance().setHeartDelay(ConstantInfo.heartdelay);     //使设置生效
+                Business.reActivaSettings();
                 break;
         }
     }
@@ -728,12 +740,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             }
         }, 1000, 1000);
 
-        ConstantInfo.studyInfoTimer = new Timer(true);
-        ConstantInfo.studyInfoTimer.schedule(new StudyInfoTimeTask(), 10, studyInfoTimerDelay);
-
-        ConstantInfo.photoTimer = new Timer(true);
-        ConstantInfo.photoTimer.schedule(new PhotoTimerTask(surfaceView), 10, photoTImerDelay);
-
+        Business.startStudyInfoTimer();
+        Business.startPhotoTimer();
     }
 
     private void stopStudy() {
@@ -741,14 +749,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             studyTimer.cancel();
             studyTimer = null;
         }
-        if (ConstantInfo.studyInfoTimer != null) {
-            ConstantInfo.studyInfoTimer.cancel();
-            ConstantInfo.studyInfoTimer = null;
-        }
-        if (ConstantInfo.photoTimer != null) {
-            ConstantInfo.photoTimer.cancel();
-            ConstantInfo.photoTimer = null;
-        }
+        Business.stopStudyInfoTimer();
+        Business.stopPhotoTimer();
+
         Config.isStudentLoginOK = false;
         ConstantInfo.StudentInfo.studentId = null;
         ConstantInfo.studyTimeThis = 0;

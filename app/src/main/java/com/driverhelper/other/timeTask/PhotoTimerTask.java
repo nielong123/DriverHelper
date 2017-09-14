@@ -1,11 +1,7 @@
 package com.driverhelper.other.timeTask;
 
-import android.view.SurfaceView;
-
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.DbHelper;
-import com.driverhelper.helper.IdHelper;
-import com.driverhelper.utils.ByteUtil;
 import com.driverhelper.widget.LiveSurfaceView;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 
@@ -20,15 +16,15 @@ import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 public class PhotoTimerTask extends TimerTask {
 
 
-    LiveSurfaceView surfaceView;
+    static LiveSurfaceView surfaceView;
 
     public PhotoTimerTask() {
-
+        super();
     }
 
-    public PhotoTimerTask(LiveSurfaceView surfaceView) {
+    public PhotoTimerTask(LiveSurfaceView mSurfaceView) {
         super();
-        this.surfaceView = surfaceView;
+        surfaceView = mSurfaceView;
     }
 
     @Override

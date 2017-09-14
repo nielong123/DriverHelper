@@ -67,7 +67,7 @@ public class ConstantInfo {
     public static int STU_TRANS_YN = 2;           //学员跨校学习
     public static int DUP_MSG_REJECT_INTV_sec = 30;      //响应平台同类消息时间间隔
 
-    public static int heartdelay = 120;
+    public static int heartdelay = 120;         //心跳包间隔
     public static int param0002 = 10;
     public static int param0003 = 1;
     public static int param0004 = 10;
@@ -160,7 +160,7 @@ public class ConstantInfo {
 
     public static long locationTimerDelay = 10 * 1000;
     public static long studyInfoTimerDelay = 5 * 1000;
-    public static long clearTimerDelay = 1 * 60 * 1000;
-    public static long photoTImerDelay = 15 * 30 * 1000;
+    public final static long clearTimerDelay = 1 * 60 * 1000;
+    public static long photoTImerDelay = 15 * 30 * 1000;//PIC_INTV_min
 
 }
