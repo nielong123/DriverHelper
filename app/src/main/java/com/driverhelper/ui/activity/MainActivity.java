@@ -44,8 +44,6 @@ import com.driverhelper.other.Business;
 import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.handle.ObdHandle;
 import com.driverhelper.other.tcp.netty.TcpHelper;
-import com.driverhelper.other.timeTask.PhotoTimerTask;
-import com.driverhelper.other.timeTask.StudyInfoTimeTask;
 import com.driverhelper.utils.ByteUtil;
 import com.driverhelper.widget.LiveSurfaceView;
 import com.google.gson.Gson;
@@ -70,14 +68,12 @@ import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
-import static com.driverhelper.config.ConstantInfo.PIC_INTV_min;
 import static com.driverhelper.config.ConstantInfo.ip;
 import static com.driverhelper.config.Config.isStudentLoginOK;
 import static com.driverhelper.config.ConstantInfo.port;
 import static com.driverhelper.config.ConstantInfo.embargoStr;
 import static com.driverhelper.config.ConstantInfo.isEmbargo;
 import static com.driverhelper.config.ConstantInfo.qRbean;
-import static com.driverhelper.config.ConstantInfo.studyInfoTimerDelay;
 
 public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener {
@@ -341,17 +337,22 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 networksw.setChecked(false);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_COACH_LOGINOK, new Action1<String>() {
+        mRxManager.on(Config.Config_RxBus.RX_COACH_LOGINOK, new Action1<HandMsgHelper.Class8101>() {
             @Override
-            public void call(String str) {
-                ttsClient.speak(str, 1, null);
+            public void call(HandMsgHelper.Class8101 class8101) {
+                ttsClient.speak("教练员登录成功", 1, null);
                 sendMessage(Config.TextInfoType.SETJIAOLIAN);
                 Config.isCoachLoginOK = true;
                 ConstantInfo.coachId = qRbean.getNumber();
                 WriteSettingHelper.setCOACHNUM(ConstantInfo.coachId);
+                if (ConstantInfo.ADDMSG_YN == 1) {
+                    ttsClient.speak(class8101.additionalInfo, 1, null);
+                }
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_COACH_LOGOUTOK, new Action1<String>() {
+        mRxManager.on(Config.Config_RxBus.RX_COACH_LOGOUTOK, new Action1<String>()
+
+        {
             @Override
             public void call(String str) {
                 ttsClient.speak(str, 1, null);
@@ -376,10 +377,15 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 Log.e("finishedMileage", "finishedMileage = " + ConstantInfo.StudentInfo.finishedMileage);
                 Log.e("totleTime", "totleTime = " + ConstantInfo.StudentInfo.totleTime);
                 Log.e("finishedTime", "finishedTime = " + ConstantInfo.StudentInfo.finishedTime);
+                if (ConstantInfo.ADDMSG_YN == 1 && class8201.isUpdataOtherInfo) {
+                    ttsClient.speak(class8201.otherInfo, 1, null);
+                }
                 startStudy();
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_STUDENT_LOGOUTOK, new Action1<String>() {
+        mRxManager.on(Config.Config_RxBus.RX_STUDENT_LOGOUTOK, new Action1<String>()
+
+        {
             @Override
             public void call(String str) {
                 stopStudy();
@@ -387,7 +393,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 sendMessage(Config.TextInfoType.CLEARXUEYUAN);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8103, new Action1<HandMsgHelper.Class8103>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8103, new Action1<HandMsgHelper.Class8103>()
+
+        {
             @Override
             public void call(HandMsgHelper.Class8103 class8103) {
                 ttsClient.speak("收到设置终端参数请求", 1, null);
@@ -396,7 +404,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 }
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_EMBARGOSTATE, new Action1<HandMsgHelper.Class8502>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_EMBARGOSTATE, new Action1<HandMsgHelper.Class8502>()
+
+        {
             @Override
             public void call(HandMsgHelper.Class8502 class8502) {
                 if (!TextUtils.isEmpty(class8502.data)) {
@@ -417,28 +427,36 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 WriteSettingHelper.setEMBARGOSTR(embargoStr);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8106, new Action1<HandMsgHelper.Class8106>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8106, new Action1<HandMsgHelper.Class8106>()
+
+        {
             @Override
             public void call(HandMsgHelper.Class8106 class8106) {
                 ttsClient.speak("收到终端查询请求", 1, null);
                 TcpHelper.getInstance().send0104(class8106.waterCode, class8106.idList);            //8106和8104都是返回0104,区别在于8106返回所有，8104返回查询指定的
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8104, new Action1<Integer>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8104, new Action1<Integer>()
+
+        {
             @Override
             public void call(Integer waterId) {
                 ttsClient.speak("收到查询终端所有参数请求", 1, null);
                 TcpHelper.getInstance().sendAll0104(waterId);            //8106和8104都是返回0104,区别在于8106返回所有，8104返回查询指定的
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_0501, new Action1<HandMsgHelper.Class8501>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_0501, new Action1<HandMsgHelper.Class8501>()
+
+        {
             @Override
             public void call(HandMsgHelper.Class8501 class8501) {
                 ttsClient.speak("收到设置请求", 1, null);
                 WriteSettingHelper.set0501(class8501);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8301, new Action1<HandMsgHelper.Class8301>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8301, new Action1<HandMsgHelper.Class8301>()
+
+        {
             @Override
             public void call(HandMsgHelper.Class8301 class8301) {
                 String photoId = TimeUtil.getTime() / 1000 + "";
@@ -446,13 +464,17 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 surfaceView.doTakePictureAndSend(photoId);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8302, new Action1<HandMsgHelper.Class8302>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8302, new Action1<HandMsgHelper.Class8302>()
+
+        {
             @Override
             public void call(HandMsgHelper.Class8302 class8302) {
                 Action.getInstance().action_0303(class8302);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8202_, new Action1<HandMsgHelper.Class8202_>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8202_, new Action1<HandMsgHelper.Class8202_>()
+
+        {
 
             @Override
             public void call(HandMsgHelper.Class8202_ class8202_) {
@@ -460,7 +482,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 ttsClient.speak("临时位置追踪", 1, null);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8205, new Action1<HandMsgHelper.Class8205>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8205, new Action1<HandMsgHelper.Class8205>()
+
+        {
 
             @Override
             public void call(HandMsgHelper.Class8205 class8205) {
@@ -468,7 +492,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 Action.getInstance().action_8205(class8205);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8304, new Action1<HandMsgHelper.Class8304>() {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8304, new Action1<HandMsgHelper.Class8304>()
+
+        {
 
             @Override
             public void call(HandMsgHelper.Class8304 class8304) {
@@ -697,7 +723,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             case REQUEST_SETTING:
                 MSG.getInstance().loadSettings();
                 WriteSettingHelper.loadRegistInfo();
-                Business.reActivaSettings();
+                Business.reActivaSettings(surfaceView);
                 break;
         }
     }
@@ -741,7 +767,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         }, 1000, 1000);
 
         Business.startStudyInfoTimer();
-        Business.startPhotoTimer();
+        Business.startPhotoTimer(surfaceView);
     }
 
     private void stopStudy() {

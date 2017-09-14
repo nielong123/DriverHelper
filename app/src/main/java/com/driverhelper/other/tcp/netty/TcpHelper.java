@@ -130,7 +130,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
         Business.startUpDataLocationInfo();                          //开始上传定位信息
         tcpHelper.startClearTimer();
         if (!Business.is0102_OK()) {
-            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未鉴权，请注册");
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
             return;
         }
 //        TcpHelper.getInstance().sendAuthentication();           //鉴权

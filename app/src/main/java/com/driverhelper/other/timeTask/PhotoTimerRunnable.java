@@ -7,22 +7,23 @@ import com.jaydenxiao.common.commonutils.TimeUtil;
 
 import java.util.TimerTask;
 
+import static com.driverhelper.config.ConstantInfo.PIC_INTV_min;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 
 /**
  * Created by Administrator on 2017/9/3.
  */
 
-public class PhotoTimerTask extends TimerTask {
+public class PhotoTimerRunnable implements Runnable{
 
 
     static LiveSurfaceView surfaceView;
 
-    public PhotoTimerTask() {
+    public PhotoTimerRunnable() {
         super();
     }
 
-    public PhotoTimerTask(LiveSurfaceView mSurfaceView) {
+    public PhotoTimerRunnable(LiveSurfaceView mSurfaceView) {
         super();
         surfaceView = mSurfaceView;
     }
@@ -36,5 +37,10 @@ public class PhotoTimerTask extends TimerTask {
         surfaceView.doTakePictureAndSend(photoPath);
         DbHelper.getInstance().addphotoInfo(0, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, (int) ConstantInfo.classId + "",
                 photoPath, sms, time, false);
+        try {
+            Thread.sleep(PIC_INTV_min);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

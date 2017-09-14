@@ -20,20 +20,30 @@ import com.driverhelper.config.Config;
 
 import java.util.List;
 
+import static com.driverhelper.config.Config.WriteSetting.ADDMSG_YN;
 import static com.driverhelper.config.Config.WriteSetting.CITY;
+import static com.driverhelper.config.Config.WriteSetting.COACH_TRANS_YN;
 import static com.driverhelper.config.Config.WriteSetting.CameraID;
 import static com.driverhelper.config.Config.WriteSetting.Car_ID;
 import static com.driverhelper.config.Config.WriteSetting.DISTANCE;
+import static com.driverhelper.config.Config.WriteSetting.DUP_MSG_REJECT_INTV_sec;
 import static com.driverhelper.config.Config.WriteSetting.IMEI;
 import static com.driverhelper.config.Config.WriteSetting.MAKER_ID;
 import static com.driverhelper.config.Config.WriteSetting.MODEL;
 import static com.driverhelper.config.Config.WriteSetting.PERDRITYPE;
+import static com.driverhelper.config.Config.WriteSetting.PIC_INTV_min;
 import static com.driverhelper.config.Config.WriteSetting.PROVINCE;
 import static com.driverhelper.config.Config.WriteSetting.SN;
+import static com.driverhelper.config.Config.WriteSetting.STOP_COACH_DELAY_TIME_min;
+import static com.driverhelper.config.Config.WriteSetting.STOP_DELAY_TIME_min;
+import static com.driverhelper.config.Config.WriteSetting.STOP_GNSS_UPLOAD_INTV_sec;
+import static com.driverhelper.config.Config.WriteSetting.STU_TRANS_YN;
 import static com.driverhelper.config.Config.WriteSetting.TCP_IP;
 import static com.driverhelper.config.Config.WriteSetting.TCP_PORT;
 import static com.driverhelper.config.Config.WriteSetting.TERMINALPHONENUMBER;
 import static com.driverhelper.config.Config.WriteSetting.TRAIN_TYPE;
+import static com.driverhelper.config.Config.WriteSetting.UPLOAD_GBN;
+import static com.driverhelper.config.Config.WriteSetting.USER_CHK_TIME_min;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_COLOR;
 import static com.driverhelper.config.Config.WriteSetting.VEHICLE_NUMBER;
 import static com.driverhelper.config.Config.WriteSetting.idsub0306ret;
@@ -171,16 +181,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(paramBundle);
             addPreferencesFromResource(R.xml.pref_eduparam);
             setHasOptionsMenu(true);
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("PIC_INTV_min"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("UPLOAD_GBN"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("ADDMSG_YN"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("STOP_DELAY_TIME_min"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("STOP_GNSS_UPLOAD_INTV_sec"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("STOP_COACH_DELAY_TIME_min"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("USER_CHK_TIME_min"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("COACH_TRANS_YN"));
-            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference("STU_TRANS_YN"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("DUP_MSG_REJECT_INTV_sec"));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(PIC_INTV_min));
+            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference(UPLOAD_GBN));
+            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference(ADDMSG_YN));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(STOP_DELAY_TIME_min));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(STOP_GNSS_UPLOAD_INTV_sec));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(STOP_COACH_DELAY_TIME_min));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(USER_CHK_TIME_min));
+            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference(COACH_TRANS_YN));
+            SettingsActivity.bindPreferenceSummaryToBoolValue(findPreference(STU_TRANS_YN));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference(DUP_MSG_REJECT_INTV_sec));
         }
 
         public boolean onOptionsItemSelected(MenuItem paramMenuItem) {

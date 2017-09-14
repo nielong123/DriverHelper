@@ -1736,7 +1736,7 @@ public class BodyHelper {
                                 HandMsgHelper.Class8101 class8101 = HandMsgHelper.getClass8101(messageBean.throughExpand.data);
                                 switch (Integer.valueOf(ByteUtil.bcdByte2bcdString(class8101.result))) {
                                     case 1:
-                                        RxBus.getInstance().post(Config.Config_RxBus.RX_COACH_LOGINOK, "教练员登录成功");
+                                        RxBus.getInstance().post(Config.Config_RxBus.RX_COACH_LOGINOK, class8101);
                                         coachId = ByteUtil.getString(class8101.coachNum);
                                         break;
                                     case 2:
@@ -1771,7 +1771,7 @@ public class BodyHelper {
                                 break;
                             case "8201":                    //学员登录
                                 HandMsgHelper.Class8201 class8201 = HandMsgHelper.getClass8201(messageBean.throughExpand.data);
-                                Logger.d(class8201.toString());
+                                Log.e(TAG, class8201.toString());
                                 switch (class8201.result) {
                                     case 1:
                                         RxBus.getInstance().post(Config.Config_RxBus.RX_STUDENT_LOGINOK, class8201);

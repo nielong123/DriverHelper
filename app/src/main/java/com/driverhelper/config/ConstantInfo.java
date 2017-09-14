@@ -156,7 +156,7 @@ public class ConstantInfo {
     public static Timer locationTimer;
     public static Timer studyInfoTimer;
     public static Timer clearTimer;
-    public static Timer photoTimer;
+    public static Thread photoThread;
 
     public static long locationTimerDelay = 10 * 1000;
     public static long studyInfoTimerDelay = 5 * 1000;

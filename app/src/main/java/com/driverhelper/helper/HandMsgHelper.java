@@ -32,11 +32,11 @@ public final class HandMsgHelper {
     }
 
     public static class Class8101 {
-        byte[] result = new byte[1];
+        public byte[] result = new byte[1];
         byte[] coachNum = new byte[16];
-        byte[] isReadAdditional = new byte[1];
+        public byte[] isReadAdditional = new byte[1];
         byte[] additionalLenght = new byte[1];
-        String additionalInfo;
+        public String additionalInfo;
     }
 
     public static Class8101 getClass8101(byte[] data) {
@@ -264,7 +264,7 @@ public final class HandMsgHelper {
 
     static Class8201 getClass8201(byte[] data) {
         Class8201 class8201 = new Class8201();
-        //   ByteUtil.printHexString(data);
+        ByteUtil.printHexString("学员登录应答:",data);
         class8201.result = data[0];
         int index = 1;
         System.arraycopy(data, index, class8201.studentNum, 0, class8201.studentNum.length);
@@ -297,10 +297,15 @@ public final class HandMsgHelper {
         if (data4[0] == 1) {
             class8201.isUpdataOtherInfo = true;
         }
+        byte[] data5 = new byte[1];
+        System.arraycopy(data, index, data5, 0, data5.length);
+        index += data5.length;
+        class8201.otherInfoLength = ByteUtil.byte2int(data5);
+
         if (class8201.otherInfoLength != 0) {
-            byte[] data5 = new byte[class8201.otherInfoLength];
-            System.arraycopy(data, index, data5, 0, data5.length);
-            class8201.otherInfo = ByteUtil.getString(data5);
+            byte[] data6 = new byte[class8201.otherInfoLength];
+            System.arraycopy(data, index, data6, 0, data6.length);
+            class8201.otherInfo = ByteUtil.getString(data6);
         }
 
         return class8201;

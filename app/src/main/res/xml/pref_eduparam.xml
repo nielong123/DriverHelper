@@ -16,8 +16,8 @@
         android:title="照片上传设置" />
     <SwitchPreference
         android:key="ADDMSG_YN"
-        android:summaryOff="自动报读"
-        android:summaryOn="不报读"
+        android:summaryOff="不报读"
+        android:summaryOn="自动报读"
         android:title="是否报读附加消息" />
     <EditTextPreference
         android:capitalize="words"

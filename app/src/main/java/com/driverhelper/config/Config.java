@@ -68,7 +68,7 @@ public class Config {
         public final static String EMBARGODSTR = "EMBARGOSTR";             //禁运状态
         public final static String PIC_INTV_min = "PIC_INTV_min";           //定时拍照时间间隔
         public final static String UPLOAD_GBN = "UPLOAD_GBN";           //照片上传设置
-        public final static String ADDMSG_YN = "ADDMSG_YN11";             //是否报读附加消息
+        public final static String ADDMSG_YN = "ADDMSG_YN";             //是否报读附加消息
         public final static String STOP_DELAY_TIME_min = "STOP_DELAY_TIME_min";  //熄火后停止学时计时的延时时间  min
         public final static String STOP_GNSS_UPLOAD_INTV_sec = "STOP_GNSS_UPLOAD_INTV_sec";     //熄火后停止学时计时的延时时间  s
         public final static String STOP_COACH_DELAY_TIME_min = "STOP_COACH_DELAY_TIME_min";     //熄火后教练自动登出的延时时间
