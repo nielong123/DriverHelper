@@ -1,6 +1,5 @@
 package com.driverhelper.other.timeTask;
 
-import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.IdHelper;
 import com.driverhelper.other.tcp.netty.TcpHelper;
@@ -8,7 +7,7 @@ import com.jaydenxiao.common.commonutils.TimeUtil;
 
 import java.util.TimerTask;
 
-import static com.driverhelper.config.ConstantInfo.StudentInfo.studentId;
+import static com.driverhelper.config.ConstantInfo.StudentInfo.id;
 import static com.driverhelper.config.ConstantInfo.coachId;
 import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS;
 
@@ -34,7 +33,7 @@ public class StudyInfoTimeTask extends TimerTask {
         long timeSYS = TimeUtil.getTime() / 1000;
         byte recordType = (byte) 0x00;
 
-        TcpHelper.getInstance().sendStudyInfo(str66666, studyCode, updataType, studentId, coachId,
+        TcpHelper.getInstance().sendStudyInfo(str66666, studyCode, updataType, id, coachId,
                 vehiclSspeed, distance, lon, lat, speedGPS,
                 direction, timeSYS, timeGPS, recordType);
     }

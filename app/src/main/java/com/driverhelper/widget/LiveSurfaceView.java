@@ -11,9 +11,15 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.driverhelper.R;
+import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.other.tcp.netty.TcpHelper;
+import com.driverhelper.utils.ByteUtil;
 import com.driverhelper.utils.FileUtils;
+import com.jaydenxiao.common.commonutils.ImageUtil;
+import com.jaydenxiao.common.commonutils.TimeUtil;
+import com.jaydenxiao.common.compressorutils.FileUtil;
 
 import java.io.IOException;
 
@@ -95,7 +101,7 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                 if (null == camera) camera = Camera.open(ConstantInfo.camera_ID);
                 Camera.Parameters parameters = camera.getParameters();
                 parameters.setPictureFormat(PixelFormat.JPEG);
-                parameters.set("jpeg-quality", 85);
+                parameters.set("jpeg-quality", 65);
                 Log.d(TAG, "width, height ==   " + width + " , " + height);
                 parameters.setPreviewSize(width, height);
                 parameters.setPictureSize(width, height);
@@ -158,25 +164,27 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
      */
     @Override
     public void onPictureTaken(byte[] bytes, Camera camera) {
-        Bitmap b = null;
+        Bitmap bitmap = null;
         if (null != bytes) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.RGB_565;
-            b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);//data是字节数据，将其解析成位图
+            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);//data是字节数据，将其解析成位图
+            Bitmap bitmapWithMark = addWaterMark(bitmap);
+            byte[] data = ByteUtil.bitmap2Bytes(bitmapWithMark);
             if (isSend) {
-                TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, bytes.length);
-                TcpHelper.getInstance().send0306(fileName.replace(".png", ""), bytes);
+                TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
+                TcpHelper.getInstance().send0306(fileName.replace(".png", ""), data);
                 isSend = false;
             }
             camera.stopPreview();
             isPreview = false;
-        }
-        //保存图片到sdcard
-        if (null != b) {
-            if (!TextUtils.isEmpty(fileName)) {
-                FileUtils.saveBitmap(getContext(), b, fileName);
-            } else {
-                FileUtils.saveBitmap(getContext(), b);
+            //保存图片到sdcard
+            if (null != bitmapWithMark) {
+                if (!TextUtils.isEmpty(fileName)) {
+                    FileUtils.saveBitmap2Cache(getContext(), bitmapWithMark, fileName);
+                } else {
+                    FileUtils.saveBitmap2Cache(getContext(), bitmapWithMark);
+                }
             }
         }
         //再次进入预览
@@ -187,5 +195,62 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void onShutter() {
 
+    }
+
+    private Bitmap addWaterMark(Bitmap bitmap) {
+        bitmap = ImageUtil.drawTextToLeftTop(
+                getContext(),
+                bitmap,
+                "驾校编号:" + ByteUtil.getString(ConstantInfo.institutionNumber),
+                ConstantInfo.WaterMark.textSize,
+                ConstantInfo.WaterMark.textColor,
+                10, 10);
+        bitmap = ImageUtil.drawTextToLeftTop(
+                getContext(),
+                bitmap,
+                "教练员:" + ConstantInfo.coachId + " " + ConstantInfo.coachId,
+                ConstantInfo.WaterMark.textSize,
+                ConstantInfo.WaterMark.textColor,
+                10, 40);
+        bitmap = ImageUtil.drawTextToLeftTop(
+                getContext(),
+                bitmap,
+                "学员:" + ConstantInfo.StudentInfo.name + " " + ConstantInfo.StudentInfo.id,
+                ConstantInfo.WaterMark.textSize,
+                ConstantInfo.WaterMark.textColor,
+                10, 70);
+
+        bitmap = ImageUtil.drawTextToLeftBottom(
+                getContext(),
+                bitmap,
+                ConstantInfo.vehicleNum,
+                ConstantInfo.WaterMark.textSize,
+                ConstantInfo.WaterMark.textColor,
+                10, 10);
+        bitmap = ImageUtil.drawTextToLeftBottom(
+                getContext(),
+                bitmap,
+                "车速:" + ConstantInfo.gpsModel.getSpeedGPS() + "km/h",
+                ConstantInfo.WaterMark.textSize,
+                ConstantInfo.WaterMark.textColor,
+                10, 40);
+
+        bitmap = ImageUtil.drawTextToRightBottom(
+                getContext(),
+                bitmap,
+                ConstantInfo.gpsModel.lat + "  " + ConstantInfo.gpsModel.lon,
+                ConstantInfo.WaterMark.textSize,
+                ConstantInfo.WaterMark.textColor,
+                10, 10);
+
+        bitmap = ImageUtil.drawTextToRightBottom(
+                getContext(),
+                bitmap,
+                TimeUtil.getCurrentDay(),
+                ConstantInfo.WaterMark.textSize,
+                ConstantInfo.WaterMark.textColor,
+                10, 40);
+
+        return bitmap;
     }
 }

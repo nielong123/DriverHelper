@@ -35,7 +35,7 @@ public class PhotoTimerRunnable implements Runnable{
         String sms = str.substring(str.length() - 6, str.length());
         String photoPath = time + ".png";
         surfaceView.doTakePictureAndSend(photoPath);
-        DbHelper.getInstance().addphotoInfo(0, ConstantInfo.StudentInfo.studentId, ConstantInfo.coachId, (int) ConstantInfo.classId + "",
+        DbHelper.getInstance().addphotoInfo(0, ConstantInfo.StudentInfo.id, ConstantInfo.coachId, (int) ConstantInfo.classId + "",
                 photoPath, sms, time, false);
         try {
             Thread.sleep(PIC_INTV_min);

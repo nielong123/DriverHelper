@@ -25,6 +25,7 @@ import com.orhanobut.logger.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.text.DecimalFormat;
 
 import qingwei.kong.serialportlibrary.SerialPort;
 
@@ -155,8 +156,9 @@ public class MyApplication extends BaseApplication implements AMapLocationListen
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation.getErrorCode() == 0) {
-            ConstantInfo.gpsModel.lat = aMapLocation.getLatitude();
-            ConstantInfo.gpsModel.lon = aMapLocation.getLongitude();
+            DecimalFormat df = new DecimalFormat("######0.00");
+            ConstantInfo.gpsModel.lat = Double.valueOf(df.format(aMapLocation.getLatitude()));
+            ConstantInfo.gpsModel.lon = Double.valueOf(df.format(aMapLocation.getLongitude()));
             ConstantInfo.gpsModel.speedGPS = aMapLocation.getSpeed();
             ConstantInfo.gpsModel.direction = aMapLocation.getBearing();
             ConstantInfo.gpsModel.timeGPS = aMapLocation.getTime();

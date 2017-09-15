@@ -4,6 +4,7 @@ package com.driverhelper.ui.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
@@ -46,14 +47,18 @@ import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.obd.Obd_Nissan;
 import com.driverhelper.other.tcp.netty.TcpHelper;
 import com.driverhelper.utils.ByteUtil;
+import com.driverhelper.utils.FileUtils;
 import com.driverhelper.widget.LiveSurfaceView;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.jaydenxiao.common.baserx.RxBus;
+import com.jaydenxiao.common.commonutils.AssetsUtils;
+import com.jaydenxiao.common.commonutils.ImageUtil;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
+import com.jaydenxiao.common.compressorutils.FileUtil;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -345,6 +350,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 sendMessage(Config.TextInfoType.SETJIAOLIAN);
                 Config.isCoachLoginOK = true;
                 ConstantInfo.coachId = qRbean.getNumber();
+                ConstantInfo.coachName = qRbean.getName();
                 WriteSettingHelper.setCOACHNUM(ConstantInfo.coachId);
                 if (ConstantInfo.ADDMSG_YN == 1) {
                     ttsClient.speak(class8101.additionalInfo, 1, null);
@@ -367,12 +373,12 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void call(HandMsgHelper.Class8201 class8201) {
                 ttsClient.speak("学员登录成功", 1, null);
                 Config.isStudentLoginOK = true;
-                ConstantInfo.StudentInfo.studentId = ByteUtil.getString(class8201.studentNum);
+                ConstantInfo.StudentInfo.id = ByteUtil.getString(class8201.studentNum);
                 ConstantInfo.StudentInfo.totleMileage = class8201.totleMileage;
                 ConstantInfo.StudentInfo.finishedMileage = class8201.finishedMileage;
                 ConstantInfo.StudentInfo.totleTime = class8201.totleStudyTime;
                 ConstantInfo.StudentInfo.finishedTime = class8201.finishedStudyTime;
-                Log.e("studentId", "studentId = " + ConstantInfo.StudentInfo.studentId);
+                Log.e("id", "id = " + ConstantInfo.StudentInfo.id);
                 Log.e("totleMileage", "totleMileage = " + ConstantInfo.StudentInfo.totleMileage);
                 Log.e("finishedMileage", "finishedMileage = " + ConstantInfo.StudentInfo.finishedMileage);
                 Log.e("totleTime", "totleTime = " + ConstantInfo.StudentInfo.totleTime);
@@ -780,7 +786,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         Business.stopPhotoTimer();
 
         Config.isStudentLoginOK = false;
-        ConstantInfo.StudentInfo.studentId = null;
+        ConstantInfo.StudentInfo.id = null;
         ConstantInfo.studyTimeThis = 0;
         ConstantInfo.studyDistanceThis = 0;
     }
@@ -788,23 +794,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     private void test() {
         Log.e("111", "/**************************************************/");
-        for (int i = 0; i < 20; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int waterCode = IdHelper.getWaterCode();
-                    Log.w("getWaterCode", waterCode + "");
-                    byte[] byte111 = ByteUtil.int2WORD(waterCode);
-                    ByteUtil.printHexString("byte", byte111);
-                    Log.e("getWaterCode1111", ByteUtil.byte2int(byte111) + "");
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        }
+        Bitmap bitmap = AssetsUtils.getImageFromAssetsFile(this, "1505457002.png");
+        Bitmap bitmap1 = ImageUtil.drawTextToCenter(this, bitmap, "1111111111111111111", 10, getResources().getColor(R.color.white));
+        FileUtils.saveBitmap2Cache(this,bitmap1);
     }
 
     @Override

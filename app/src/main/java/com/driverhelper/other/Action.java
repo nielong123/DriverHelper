@@ -102,7 +102,7 @@ public class Action {
         String name = ByteUtil.getString(class8304.photoId);
         if (FileUtil.fileIsExists(context.getFilesDir().getPath() + "/" + name + ".png")) {
             TcpHelper.getInstance().send0304((byte) 0x00);
-            byte[] data = FileUtils.loadBitmap(context, name + ".png");
+            byte[] data = FileUtils.loadBitmapFromCache(context, name + ".png");
             TcpHelper.getInstance().send0305(name, ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
             TcpHelper.getInstance().send0306(name, data);
         } else {

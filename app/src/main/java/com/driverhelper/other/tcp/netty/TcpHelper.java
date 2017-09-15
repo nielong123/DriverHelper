@@ -4,7 +4,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
@@ -14,8 +13,6 @@ import com.driverhelper.other.Business;
 import com.driverhelper.other.tcp.TcpBody;
 import com.driverhelper.other.tcp.TcpManager;
 import com.driverhelper.other.timeTask.ClearTimerTask;
-import com.driverhelper.other.timeTask.LocationInfoTimeTask;
-import com.driverhelper.ui.activity.MainActivity;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
@@ -27,7 +24,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -35,8 +31,6 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
@@ -45,20 +39,14 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.bytes.ByteArrayDecoder;
 import io.netty.handler.codec.bytes.ByteArrayEncoder;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
-import static com.driverhelper.config.ConstantInfo.StudentInfo.studentId;
+import static com.driverhelper.config.ConstantInfo.StudentInfo.id;
 import static com.driverhelper.config.ConstantInfo.classId;
 import static com.driverhelper.config.ConstantInfo.clearTimer;
 import static com.driverhelper.config.ConstantInfo.clearTimerDelay;
 import static com.driverhelper.config.ConstantInfo.coachId;
-import static com.driverhelper.config.ConstantInfo.locationTimer;
-import static com.driverhelper.config.ConstantInfo.locationTimerDelay;
 import static com.driverhelper.other.tcp.TcpBody.MessageID.id0203;
 import static com.driverhelper.other.tcp.netty.TcpHelper.ConnectState.CONNECTED;
 import static com.driverhelper.other.tcp.netty.TcpHelper.ConnectState.CONNECTING;
@@ -388,23 +376,23 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
      * 学员登出
      */
     public void sendStudentLogiout() {
-        sendData(BodyHelper.makeStudentLogiout(studentId));
+        sendData(BodyHelper.makeStudentLogiout(id));
     }
 
     /*****
      * 发送学时信息
      */
-    public void sendStudyInfo(String time666, int studyCode, byte updataType, String studentId, String coachId,
+    public void sendStudyInfo(String time666, int studyCode, byte updataType, String id, String coachId,
                               int vehiclSspeed, int distance, int lon, int lat, int speedGPS,
                               int direction, long timeSYS, long timeGPS, byte recordType) {
-        byte[] data = BodyHelper.makeSendStudyInfo(time666, studyCode, updataType, studentId, coachId, vehiclSspeed, distance, lon, lat, speedGPS, direction, timeSYS,
+        byte[] data = BodyHelper.makeSendStudyInfo(time666, studyCode, updataType, id, coachId, vehiclSspeed, distance, lon, lat, speedGPS, direction, timeSYS,
                 recordType);
         sendData(data);
         ByteUtil.printHexString("学时记录    =   ", data);
         byte[] waterByte = new byte[2];
         System.arraycopy(data, 14, waterByte, 0, 2);
         int waterCode = ByteUtil.byte2int(waterByte);
-        DbHelper.getInstance().addStudyInfo(waterCode, studentId, coachId, classId + "",
+        DbHelper.getInstance().addStudyInfo(waterCode, id, coachId, classId + "",
                 null, time666, null, vehiclSspeed,
                 distance, vehiclSspeed, timeSYS, false,
                 speedGPS, direction, lat, lon, timeGPS);
@@ -431,7 +419,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     }
 
     public void send0203(StudyInfo info) {
-//        if (ConstantInfo.StudentInfo.studentId != null) {
+//        if (ConstantInfo.StudentInfo.id != null) {
         sendData(BodyHelper.make0203((byte) 0x01, (byte) 0x01, info));
 //        } else {
 //            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "学员未签到");

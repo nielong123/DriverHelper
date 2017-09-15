@@ -374,11 +374,11 @@ public class BodyHelper {
      * @param updataType
      * @return
      */
-    public static byte[] makeSendStudyInfo(String time666, int studyCode, byte updataType, String studentId, String coachId, int vehiclSspeed, int distance, int lon, int lat, int speedGPS, int direction, long timeSYS,
+    public static byte[] makeSendStudyInfo(String time666, int studyCode, byte updataType, String id, String coachId, int vehiclSspeed, int distance, int lon, int lat, int speedGPS, int direction, long timeSYS,
                                            byte recordType) {
         byte[] resultBody = ByteUtil.add(("0000000000000000" + time666).getBytes(), ByteUtil.int2DWORD(studyCode));           //26        学时记录编号
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
-        resultBody = ByteUtil.add(resultBody, studentId.getBytes());       //学员编号
+        resultBody = ByteUtil.add(resultBody, id.getBytes());       //学员编号
         resultBody = ByteUtil.add(resultBody, coachId.getBytes());             //教练员编号
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) ConstantInfo.classId));//课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
@@ -413,7 +413,7 @@ public class BodyHelper {
     public static byte[] makeSendStudyInfo(byte updataType, String time666, byte recordType) {
         byte[] resultBody = ByteUtil.add(("0000000000000000" + time666).getBytes(), ByteUtil.int2DWORD(IdHelper.getStudyCode()));           //26        学时记录编号
         resultBody = ByteUtil.add(resultBody, updataType);              //      上报类型
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.studentId.getBytes());       //学员编号
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.StudentInfo.id.getBytes());       //学员编号
         resultBody = ByteUtil.add(resultBody, ConstantInfo.coachId.getBytes());             //教练员编号
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) ConstantInfo.classId));//课堂id  时间戳
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間

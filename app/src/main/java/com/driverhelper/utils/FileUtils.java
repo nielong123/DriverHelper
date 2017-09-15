@@ -20,7 +20,7 @@ import static android.content.ContentValues.TAG;
 
 public class FileUtils {
 
-    static public void saveBitmap(Context context, Bitmap bm) {
+    static public void saveBitmap2Cache(Context context, Bitmap bm) {
         Log.e("", "保存图片");
         File f = new File(context.getCacheDir(), new Date().getTime() + ".png");
         if (f.exists()) {
@@ -42,9 +42,9 @@ public class FileUtils {
 
     }
 
-    static public void saveBitmap(Context context, Bitmap bm, String fileName) {
+    static public void saveBitmap2Cache(Context context, Bitmap bm, String fileName) {
         Log.e("", "保存图片");
-        File f = new File(context.getFilesDir(), fileName);
+        File f = new File(context.getCacheDir(), fileName);
         if (f.exists()) {
             f.delete();
         }
@@ -65,10 +65,10 @@ public class FileUtils {
     }
 
 
-    static public byte[] loadBitmap(Context context, String name) {
+    static public byte[] loadBitmapFromCache(Context context, String name) {
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream(context.getFilesDir().getPath() + "/" + name);
+            fis = new FileInputStream(context.getCacheDir().getPath() + "/" + name);
 //            fis = new FileInputStream("/data/data/com.driverhelper1/cache/1503554926.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -78,6 +78,16 @@ public class FileUtils {
             return ByteUtil.bitmap2Bytes(bitmap);
         }
         return null;
+    }
+
+    static public Bitmap loadBitmap(Context context, String name) {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(context.getCacheDir().getPath() + "/" + name);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return BitmapFactory.decodeStream(fis);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.driverhelper.config;
 
+import android.graphics.Color;
+
 import com.driverhelper.beans.GpsModel;
 import com.driverhelper.beans.ObdModel;
 import com.driverhelper.beans.QRbean;
@@ -42,6 +44,7 @@ public class ConstantInfo {
     public static byte[] certificatePassword;       //证书口令;
     public static String terminalCertificate = null;         //终端证书
     public static String coachId;      //教练员编号
+    public static String coachName;      //教练员编号
 
     public static long studyTimeThis = 0;             //学习的时间
     public static long studyDistanceThis = 0;             //学习的里程
@@ -138,8 +141,15 @@ public class ConstantInfo {
     public static int param0085 = 1000;
 
 
+    public static class WaterMark{
+        public static int textSize = 24;
+        public static int textColor = Color.BLUE;
+    }
+
+
     public static class StudentInfo {
-        public static String studentId;        //学员编号
+        public static String name;
+        public static String id;        //学员编号
         public static int totleTime;            //需要完成的总学时
         public static int finishedTime;               //已完成的学时
         public static int totleMileage;             //需要完成的总里程
