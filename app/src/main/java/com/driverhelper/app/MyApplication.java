@@ -40,7 +40,6 @@ public class MyApplication extends BaseApplication implements AMapLocationListen
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
 
-    private OnLocationReceiveListener mOnLocationReceiveListener;
     private SerialPort obdSerialPort = null;
     private SerialPort icReaderSerialPort = null;
 
@@ -170,10 +169,4 @@ public class MyApplication extends BaseApplication implements AMapLocationListen
             Logger.e("AmapError", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
         }
     }
-
-
-    public interface OnLocationReceiveListener {
-        void onLbsReceive(AMapLocation location);
-    }
-
 }

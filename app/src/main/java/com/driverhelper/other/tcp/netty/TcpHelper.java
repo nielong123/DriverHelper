@@ -127,7 +127,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     @Override
     public void onConnectFailed() {
         setConnectState(DISCONNECTION);
-        RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "tcp链接失败");
+        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_DISCONNECT, "");
     }
 
     public void connect(final InetSocketAddress socketAddress) {

@@ -54,12 +54,14 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.AssetsUtils;
+import com.jaydenxiao.common.commonutils.BitmapUtils;
 import com.jaydenxiao.common.commonutils.ImageUtil;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 import com.jaydenxiao.common.compressorutils.FileUtil;
 
+import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +71,8 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.functions.Action1;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
@@ -794,9 +798,35 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     private void test() {
         Log.e("111", "/**************************************************/");
-        Bitmap bitmap = AssetsUtils.getImageFromAssetsFile(this, "1505457002.png");
-        Bitmap bitmap1 = ImageUtil.drawTextToCenter(this, bitmap, "1111111111111111111", 10, getResources().getColor(R.color.white));
-        FileUtils.saveBitmap2Cache(this,bitmap1);
+        Bitmap bitmap = AssetsUtils.getImageFromAssetsFile(this, "1503110384458.jpg");
+        Log.e("wechat", "压缩前图片的大小" + bitmap.getByteCount()
+                + "M宽度为" + bitmap.getWidth() + "高度为" + bitmap.getHeight() + "///" + bitmap.getByteCount());
+        BitmapUtils.CompressByQuality(bitmap, 20);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Luban.with(mContext)
+//                        .ignoreBy(100)
+//                        .load(FileUtils.bitmap2File(getCacheDir().getPath() + "/" + fileName, bitmapWithMark))
+//                        .setTargetDir(getFilesDir().getAbsolutePath())
+//                        .setCompressListener(new OnCompressListener() {
+//                            @Override
+//                            public void onStart() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onSuccess(File file) {
+//                                byte[] data = FileUtils.imageFile2Bitmap(file);
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//                                Log.e(TAG, e.getMessage());
+//                            }
+//                        }).launch();
+//            }
+//        }).start();
     }
 
     @Override

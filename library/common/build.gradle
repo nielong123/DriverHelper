@@ -59,6 +59,8 @@ dependencies {
     compile 'cn.hugeterry.updatefun:updatefun:1.8.6'//fire.im自动更新
     compile 'com.umeng.analytics:analytics:latest.integration'//友盟统计
     compile 'com.android.support:multidex:1.0.1'
+
+    compile 'top.zibin:Luban:1.1.3'
 }
 
 
