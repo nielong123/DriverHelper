@@ -37,10 +37,10 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private String TAG = this.toString();
     Camera camera;
     SurfaceHolder holder;
-//    private final static int width = 640;
+    //    private final static int width = 640;
 //    private final static int height = 480;
-    private final static int width = 512;
-    private final static int height = 384;
+    private final static int width = 400;
+    private final static int height = 320;
     byte[] preBuffer = null;
     boolean isPreview;
     boolean isSend;
@@ -108,7 +108,7 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                 if (null == camera) camera = Camera.open(ConstantInfo.camera_ID);
                 Camera.Parameters parameters = camera.getParameters();
                 parameters.setPictureFormat(PixelFormat.JPEG);
-                parameters.set("jpeg-quality", 40);
+                parameters.set("jpeg-quality", 90);
                 parameters.setPreviewSize(width, height);
                 parameters.setPictureSize(width, height);
                 parameters.setExposureCompensation(0);
@@ -177,48 +177,20 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             final Bitmap bitmapWithMark = addWaterMark(bitmap);
             bitmap.recycle();
             Log.e("wechat", "压缩前图片的大小" + bitmapWithMark.getByteCount()
-                    + "M宽度为" + bitmapWithMark.getWidth() + "高度为" + bitmapWithMark.getHeight());
-            byte[] data = BitmapUtils.CompressGetBytes(bitmapWithMark, 100);
+                    + "M宽度为" + bitmapWithMark.getWidth() + "高度为" + bitmapWithMark.getHeight() + "bytes.length = " + bytes.length);
+//            byte[] data = BitmapUtils.CompressGetBytes(bitmapWithMark, 100);
+            final byte[] data = ByteUtil.bitmap2Bytes(bitmapWithMark);
+            Log.e("wechat", "压缩后 = " + data.length);
             if (isSend) {
-                TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
-                TcpHelper.getInstance().send0306(fileName.replace(".png", ""), data);
-                isSend = false;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
+                        TcpHelper.getInstance().send0306(fileName.replace(".png", ""), data);
+                        isSend = false;
+                    }
+                }).start();
             }
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Luban.with(getContext())
-//                            .ignoreBy(100)
-//                            .load(FileUtils.bitmap2File(getContext().getCacheDir().getPath() + "/" + fileName, bitmapWithMark))
-//                            .setTargetDir(getContext().getFilesDir().getAbsolutePath())
-//                            .setCompressListener(new OnCompressListener() {
-//                                @Override
-//                                public void onStart() {
-//
-//                                }
-//
-//                                @Override
-//                                public void onSuccess(File file) {
-//                                    byte[] data = FileUtils.imageFile2Bitmap(file);
-//                                    if (isSend) {
-//                                        TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
-//                                        TcpHelper.getInstance().send0306(fileName.replace(".png", ""), data);
-//                                        isSend = false;
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onError(Throwable e) {
-//                                    Log.e(TAG, e.getMessage());
-//                                }
-//                            }).launch();
-//                }
-//            }).start();
-
-//            byte[] data = BitmapUtils.CompressGetBytes(bitmapWithMark, 80);
-            camera.stopPreview();
-            isPreview = false;
-            //保存图片到sdcard
             if (null != bitmapWithMark) {
 //                if (!TextUtils.isEmpty(fileName)) {
                 FileUtils.saveBitmap(getContext().getFilesDir().getPath() + "/" + fileName, bitmapWithMark);
@@ -226,6 +198,9 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 //                    FileUtils.saveBitmap(getContext(), bitmapWithMark);
 //                }
             }
+            camera.stopPreview();
+            isPreview = false;
+            //保存图片到sdcard
         }
         //再次进入预览
         camera.startPreview();

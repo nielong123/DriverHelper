@@ -40,21 +40,15 @@ public class BitmapUtils {
         Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         Log.e("wechat", "压缩后图片的大小" + bm.getByteCount()
                 + "M宽度为" + bm.getWidth() + "高度为" + bm.getHeight()
-                + "quality=" + quality + "  bytes.length = " + bytes.length);
+                + "quality=" + quality + "  数据长度为 = " + bytes.length);
         return bm;
     }
 
     public static byte[] CompressGetBytes(Bitmap bitmap, int quality) {
         byte[] bytes;
-        if (quality < 100) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
             bytes = baos.toByteArray();
-        } else {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, quality, baos);
-            bytes = baos.toByteArray();
-        }
         Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         Log.e("wechat", "压缩后图片的大小" + bm.getByteCount()
                 + "M宽度为" + bm.getWidth() + "高度为" + bm.getHeight()

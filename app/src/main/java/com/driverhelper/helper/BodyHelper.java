@@ -144,6 +144,38 @@ public class BodyHelper {
         return data;
     }
 
+    /***
+     * 构造数据包的头部
+     *
+     * @param id
+     *            消息id
+     *            设备号/电话号码 11位，不足16位的左边补0
+     * @return
+     */
+    static private byte[] makeHead(byte[] id,
+                                   boolean isDivision,
+                                   int encryption,
+                                   int totle,
+                                   int waterCode,
+                                   int index,
+                                   int length) {
+        byte[] data;
+        data = ByteUtil.add(TcpBody.HEAD, VERSION_CODE);
+        data = ByteUtil.add(data, id);
+        data = ByteUtil.add(data,
+                makeHeadAttribute(isDivision, encryption, length));
+        data = ByteUtil.add(data, makePhone2BCD(ConstantInfo.terminalPhoneNumber));
+        data = ByteUtil.add(data, ByteUtil.int2WORD(waterCode));
+        data = ByteUtil.add(data, getReserve());
+        if (isDivision) { // 分包
+            data = ByteUtil.add(data, ByteUtil.int2WORD(totle));
+            data = ByteUtil.add(data, ByteUtil.int2WORD(index));
+        }
+        ByteUtil.printHexString("hand = ", data);
+        Log.e("watercode = ", waterCode + "");
+        return data;
+    }
+
     /****
      * 把电话号码变成 BCD码
      *
@@ -1211,7 +1243,7 @@ public class BodyHelper {
         if (totle != 0) {
             resultBody = ByteUtil.add(resultBody, (byte) (list.size()));
             for (String str : list) {
-                resultBody = ByteUtil.add(resultBody, str.replaceAll(".pngpng", "").getBytes());
+                resultBody = ByteUtil.add(resultBody, str.replaceAll(".png", "").getBytes());
             }
         }
         resultBody = buildExMsg(id0303, 0, 1, 2, resultBody);
@@ -1241,10 +1273,10 @@ public class BodyHelper {
      * @param
      * @return
      */
-    public static byte[] make0306(byte[] data, int totle, int index, boolean isPart) {
+    public static byte[] make0306(byte[] data, int waterCode, int totle, int index, boolean isPart) {
 
         byte[] resultBody = data;
-        byte[] resultHead = makeHead(transparentInfo, isPart, 0, totle, index, resultBody.length);
+        byte[] resultHead = makeHead(transparentInfo, isPart, 0, totle, waterCode, index, resultBody.length);
         return sticky(resultHead, resultBody);
     }
 

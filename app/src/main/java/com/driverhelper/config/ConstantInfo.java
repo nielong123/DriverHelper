@@ -142,8 +142,8 @@ public class ConstantInfo {
 
 
     public static class WaterMark{
-        public static int textSize = 24;
-        public static int textColor = Color.BLUE;
+        public static int textSize = 20;
+        public static int textColor = Color.RED;
     }
 
 

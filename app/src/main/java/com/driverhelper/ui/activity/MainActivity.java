@@ -189,8 +189,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 case Config.TextInfoType.SETXUEYUAN:
                     XueYuanTEXT.setText(qRbean.getName());
                     STUNUMtext.setText(qRbean.getNumber());
-                    textViewStat.setText("培训学时:" + ConstantInfo.StudentInfo.totleTime + " / " + ConstantInfo.StudentInfo.finishedTime + "分\n"
-                            + "培训里程:" + ConstantInfo.StudentInfo.totleMileage + " / " + ConstantInfo.StudentInfo.finishedMileage + " 1/10km");
+                    textViewStat.setText("培训学时:" + ConstantInfo.StudentInfo.finishedTime + " / " + ConstantInfo.StudentInfo.totleTime + "分\n"
+                            + "培训里程:" + ConstantInfo.StudentInfo.finishedMileage + " / " + ConstantInfo.StudentInfo.totleMileage + " 1/10km");
                     break;
                 case Config.TextInfoType.CLEARJIAOLIAN:
                     COACHNUMtext.setText("");
@@ -798,10 +798,45 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     private void test() {
         Log.e("111", "/**************************************************/");
-        Bitmap bitmap = AssetsUtils.getImageFromAssetsFile(this, "1503110384458.jpg");
-        Log.e("wechat", "压缩前图片的大小" + bitmap.getByteCount()
-                + "M宽度为" + bitmap.getWidth() + "高度为" + bitmap.getHeight() + "///" + bitmap.getByteCount());
-        BitmapUtils.CompressByQuality(bitmap, 20);
+        surfaceView.doTakePictureAndSend("12.png");
+//        List<Integer> idList = IdHelper.clockWaterCode(100);
+//        Log.e(TAG, "idList = " + idList.size());
+//        for (Integer id : idList) {
+//            Log.e(TAG, "id = " + id);
+//        }
+
+        /*******
+         Bitmap bitmap = AssetsUtils.getImageFromAssetsFile(this, "1503110384458.jpg");
+         Log.e("wechat", "压缩前图片的大小" + bitmap.getByteCount()
+         + "M宽度为" + bitmap.getWidth() + "高度为" + bitmap.getHeight() + "///" + bitmap.getByteCount());
+         Log.e(TAG, "压缩前byte的数据长度为"+ByteUtil.bitmap2Bytes(bitmap).length);
+         BitmapUtils.CompressByQuality(bitmap, 20);
+
+         ***/
+
+//        Luban.with(this)
+//                .load(new File(getFilesDir().getAbsolutePath() + "/" + "1505720713.png"))
+//                .setTargetDir(getCacheDir().getAbsolutePath())
+//                .ignoreBy(10)
+//                .putGear(1)
+//                .setCompressListener(new OnCompressListener() {
+//                    @Override
+//                    public void onStart() {
+//                        Log.e(TAG, "onStart ");
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(File file) {
+//                        Log.e(TAG, "文件:" + FileUtil.fileIsExists(getCacheDir().getAbsolutePath()));
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e(TAG, "e = " + e.getMessage());
+//                    }
+//                }).launch();
+
+
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {

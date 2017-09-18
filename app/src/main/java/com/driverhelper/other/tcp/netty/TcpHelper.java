@@ -9,6 +9,7 @@ import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.helper.DbHelper;
+import com.driverhelper.helper.IdHelper;
 import com.driverhelper.other.Business;
 import com.driverhelper.other.tcp.TcpBody;
 import com.driverhelper.other.tcp.TcpManager;
@@ -17,6 +18,8 @@ import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
+
+import org.greenrobot.greendao.annotation.Id;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -118,10 +121,10 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
         Business.startUpDataLocationInfo();                          //开始上传定位信息
         tcpHelper.startClearTimer();
         if (!Business.is0102_OK()) {
-            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未鉴权，请注册");
+            RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "终端未注册，请注册");
             return;
         }
-//        TcpHelper.getInstance().sendAuthentication();           //鉴权
+        TcpHelper.getInstance().sendAuthentication();           //鉴权
     }
 
     @Override
@@ -456,11 +459,12 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     public void send0306(String photoId, byte[] photoData) {
 
         List<byte[]> list = BodyHelper.make0306Part(photoId, photoData);
-        if (list.size() > 1) {
+        if (list.size() > 0) {
+            List<Integer> idList = IdHelper.clockWaterCode(list.size());
             List<byte[]> res = new ArrayList<>();
             for (byte[] data : list) {
                 int index = list.indexOf(data) + 1;
-                res.add(BodyHelper.make0306(data, list.size(), index, true));
+                res.add(BodyHelper.make0306(data, list.size(), index, idList.get(index - 1), true));
             }
             for (byte[] data : res) {
                 sendData(data);
@@ -474,7 +478,6 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
 
     public void send0303(List<String> list) {
         final int pageSize = 10;
-//        list = null;
         if (list != null) {
             if (list.size() > pageSize) {
                 /*******************************这段代码可能有问题**********************/
