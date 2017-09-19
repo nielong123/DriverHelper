@@ -111,4 +111,13 @@ public final class Business {
             locationTimer = null;
         }
     }
+
+
+    public static void stopAllTask() {
+        TcpHelper.getInstance().stopHeart();
+        TcpHelper.getInstance().stopClearTimer();
+        stopPhotoTimer();
+        stopStudyInfoTimer();
+        stopUpDataLocationInfo();
+    }
 }

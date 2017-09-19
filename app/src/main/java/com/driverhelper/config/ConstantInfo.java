@@ -175,7 +175,7 @@ public class ConstantInfo {
 
     public static long locationTimerDelay = 10 * 1000;
     public final static long studyInfoTimerDelay = 60 * 1000;
-    public final static long clearTimerDelay = 1 * 60 * 1000;
+    public final static long clearTimerDelay = 10 * 60 * 1000L;
     public static long photoTImerDelay = 15 * 30 * 1000;//PIC_INTV_min
 
 }

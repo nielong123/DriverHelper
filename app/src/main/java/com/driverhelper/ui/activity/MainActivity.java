@@ -4,7 +4,6 @@ package com.driverhelper.ui.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
@@ -29,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.driverhelper.R;
-import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.ObdModel;
 import com.driverhelper.beans.QRbean;
@@ -39,7 +37,6 @@ import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
-import com.driverhelper.helper.IdHelper;
 import com.driverhelper.helper.WriteSettingHelper;
 import com.driverhelper.other.Action;
 import com.driverhelper.other.Business;
@@ -47,23 +44,16 @@ import com.driverhelper.other.SerialPortActivity;
 import com.driverhelper.other.obd.Obd_Nissan;
 import com.driverhelper.other.tcp.netty.TcpHelper;
 import com.driverhelper.utils.ByteUtil;
-import com.driverhelper.utils.FileUtils;
 import com.driverhelper.widget.LiveSurfaceView;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.jaydenxiao.common.baserx.RxBus;
-import com.jaydenxiao.common.commonutils.AssetsUtils;
-import com.jaydenxiao.common.commonutils.BitmapUtils;
-import com.jaydenxiao.common.commonutils.ImageUtil;
 import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
-import com.jaydenxiao.common.compressorutils.FileUtil;
 
-import java.io.File;
 import java.net.InetSocketAddress;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -71,18 +61,16 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.functions.Action1;
-import top.zibin.luban.Luban;
-import top.zibin.luban.OnCompressListener;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
 import static com.driverhelper.config.Config.TextInfoType.ChangeGPSINFO;
 import static com.driverhelper.config.Config.TextInfoType.UPDATATIME;
-import static com.driverhelper.config.ConstantInfo.ip;
 import static com.driverhelper.config.Config.isStudentLoginOK;
-import static com.driverhelper.config.ConstantInfo.port;
 import static com.driverhelper.config.ConstantInfo.embargoStr;
+import static com.driverhelper.config.ConstantInfo.ip;
 import static com.driverhelper.config.ConstantInfo.isEmbargo;
+import static com.driverhelper.config.ConstantInfo.port;
 import static com.driverhelper.config.ConstantInfo.qRbean;
 
 public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -301,6 +289,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void run() {
 //                ConstantInfo.ip = "120.77.47.115";      //洪总
 //                ConstantInfo.port = 6000;
+                ConstantInfo.ip = "192.168.1.101";      //洪总
+                ConstantInfo.port = 2346;
                 TcpHelper.getInstance().connect(new InetSocketAddress(ip, port));
             }
         }).start();

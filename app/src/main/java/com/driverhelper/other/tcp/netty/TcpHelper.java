@@ -34,6 +34,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
@@ -84,6 +85,8 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     private Channel channel;
     private InetSocketAddress serverAddress;
 
+    private boolean disconnectionByUser;
+
     public static TcpHelper getInstance() {
         if (tcpHelper == null) {
             synchronized (TcpHelper.class) {
@@ -110,6 +113,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
             Log.e(TAG, "operationComplete: connect failed!");
         }
     }
+
 
     @Override
     public void onConnectSuccess() {
@@ -156,12 +160,9 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             ByteBuf buf = Unpooled.copiedBuffer(new byte[]{(byte) 0x7E});
                             pipeline.addLast(new DelimiterBasedFrameDecoder(1024, buf));
-                            //过滤编码
                             pipeline.addLast("decoder", new ByteArrayDecoder());
-                            //过滤编码
                             pipeline.addLast("encoder", new ByteArrayEncoder());
                             pipeline.addLast("handler", new NettyClientHandler());
-
                         }
                     })
                     .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000);
@@ -172,6 +173,8 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     }
 
     public void disConnect() {
+        TcpHelper.getInstance().stopHeart();                //如果连接断开，只停止tcp本身的动作，其他部分照常
+        TcpHelper.getInstance().stopClearTimer();
         setConnectState(DISCONNECTION);
         if (channelFuture != null) {
             channelFuture.channel().closeFuture();
@@ -191,6 +194,13 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
      * @param disconnectionByUser
      */
     public void setAutoReConnect(boolean disconnectionByUser) {
+        this.disconnectionByUser = disconnectionByUser;
+    }
+
+    public void reConnect() {
+        if (!disconnectionByUser) {
+            connect();
+        }
     }
 
     /**
@@ -203,8 +213,19 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
                 @Override
                 public void run() {
                     try {
-                        channel.writeAndFlush(Unpooled.buffer().writeBytes(data)).sync();
-                    } catch (InterruptedException e) {
+                        ChannelFuture future = channel.writeAndFlush(Unpooled.buffer().writeBytes(data)).sync();
+                        future.addListener(new ChannelFutureListener() {
+                            @Override
+                            public void operationComplete(ChannelFuture channelFuture) throws Exception {
+                                if (channelFuture.isSuccess()) {
+                                    Log.e(TAG, "发送数据成功");
+                                } else {
+                                    Log.e(TAG, "发送数据失败");
+                                }
+                            }
+                        });
+                    } catch (Exception e) {
+                        Log.e(TAG, "/***********************************" + e.getMessage() + "********************************************/");
                         e.printStackTrace();
                     }
                 }
@@ -250,6 +271,10 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
         newFixedThreadPool.execute(heartRunnable);
     }
 
+    public void stopHeart() {
+        newFixedThreadPool.shutdownNow();
+    }
+
     public ConnectState getConnectState() {
         return connectState;
     }
@@ -265,6 +290,13 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     protected void startClearTimer() {
         clearTimer = new Timer(true);
         clearTimer.schedule(new ClearTimerTask(), 0, clearTimerDelay);
+    }
+
+    public void stopClearTimer() {
+        if (clearTimer != null) {
+            clearTimer.cancel();
+            clearTimer = null;
+        }
     }
 
     public void sendCommonResponse(int id, int state) {
