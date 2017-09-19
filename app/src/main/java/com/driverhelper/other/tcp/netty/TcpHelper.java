@@ -189,6 +189,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
             tcpHelper = null;
             bootstrap = null;
         }
+        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_DISCONNECT, "tcp链接已断开");
     }
 
     /****

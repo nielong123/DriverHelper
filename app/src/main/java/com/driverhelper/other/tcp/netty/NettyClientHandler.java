@@ -53,7 +53,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         Log.e(TAG, "channelInactive");
-        TcpHelper.getInstance().disConnect();
+//        TcpHelper.getInstance().disConnect();
         TcpHelper.getInstance().reConnect();
         RxBus.getInstance().post(Config.Config_RxBus.RX_NET_DISCONNECT, "");
         super.channelInactive(ctx);

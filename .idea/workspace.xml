@@ -43,14 +43,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/Business.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/Business.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" />
     </list>
     <ignored path="DriverHelper1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -104,22 +101,23 @@
       <file leaf-file-name="TcpHelper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="204" column="44" selection-start-line="204" selection-start-column="44" selection-end-line="204" selection-end-column="44" />
+            <state relative-caret-position="427">
+              <caret line="188" column="29" selection-start-line="188" selection-start-column="29" selection-end-line="188" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3504#3505#0" expanded="true" />
                 <element signature="e#3572#3573#0" expanded="true" />
-                <element signature="e#6945#6946#0" expanded="true" />
-                <element signature="e#6995#6996#0" expanded="true" />
-                <element signature="e#7391#7392#0" expanded="true" />
-                <element signature="e#7591#8625#0" expanded="true" />
-                <element signature="e#7852#8337#0" expanded="true" />
-                <element signature="e#8336#8337#0" expanded="true" />
-                <element signature="e#8624#8625#0" expanded="true" />
-                <element signature="e#9709#9710#0" expanded="true" />
-                <element signature="e#9757#9758#0" expanded="true" />
-                <marker date="1505815627733" expanded="false" signature="5352:5526" ph="(ChannelInitializer) (socketChannel) → {" />
+                <element signature="e#7030#7031#0" expanded="true" />
+                <element signature="e#7080#7081#0" expanded="true" />
+                <element signature="e#7214#7477#0" expanded="true" />
+                <element signature="e#7476#7477#0" expanded="true" />
+                <element signature="e#7676#8710#0" expanded="true" />
+                <element signature="e#7937#8422#0" expanded="true" />
+                <element signature="e#8421#8422#0" expanded="true" />
+                <element signature="e#8709#8710#0" expanded="true" />
+                <element signature="e#9794#9795#0" expanded="true" />
+                <element signature="e#9842#9843#0" expanded="true" />
+                <marker date="1505816836501" expanded="false" signature="5352:5526" ph="(ChannelInitializer) (socketChannel) → {" />
               </folding>
             </state>
           </provider>
@@ -158,8 +156,8 @@
       <file leaf-file-name="NettyClientHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="57" column="76" selection-start-line="57" selection-start-column="76" selection-end-line="57" selection-end-column="76" />
+            <state relative-caret-position="452">
+              <caret line="64" column="44" selection-start-line="64" selection-start-column="44" selection-end-line="64" selection-end-column="44" />
               <folding>
                 <element signature="e#909#910#0" expanded="true" />
                 <element signature="e#932#933#0" expanded="true" />
@@ -8206,11 +8204,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/utils/ByteUtil.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/widget/LiveSurfaceView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/ConstantInfo.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/Business.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/Config.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" />
       </list>
     </option>
   </component>
@@ -8881,13 +8879,6 @@
       <option name="presentableId" value="Default" />
       <updated>1498272599135</updated>
     </task>
-    <task id="LOCAL-00055" summary="修改了查询终端参数的代码">
-      <created>1503457354321</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1503457354323</updated>
-    </task>
     <task id="LOCAL-00056" summary="修改了查询终端参数的代码">
       <created>1503493211667</created>
       <option name="number" value="00056" />
@@ -9224,7 +9215,14 @@
       <option name="project" value="LOCAL" />
       <updated>1505810681073</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="修复了一个netty连接断开时会导致崩溃的bug">
+      <created>1505816574977</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1505816574977</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TodoView">
@@ -9238,7 +9236,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27455357" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -9246,14 +9244,15 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.71651787" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27232143" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31361607" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17549168" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22068231" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22068231" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -9267,7 +9266,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -9391,12 +9389,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java</url>
-          <line>239</line>
+          <line>240</line>
           <properties />
           <option name="timeStamp" value="1132" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java</url>
+          <line>55</line>
+          <properties />
+          <option name="timeStamp" value="1138" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="1137" />
+      <option name="time" value="1139" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -9742,17 +9746,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="57" column="76" selection-start-line="57" selection-start-column="76" selection-end-line="57" selection-end-column="76" />
-          <folding>
-            <element signature="e#909#910#0" expanded="true" />
-            <element signature="e#932#933#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/Config.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="227">
@@ -9776,24 +9769,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="452">
-          <caret line="204" column="44" selection-start-line="204" selection-start-column="44" selection-end-line="204" selection-end-column="44" />
+          <caret line="64" column="44" selection-start-line="64" selection-start-column="44" selection-end-line="64" selection-end-column="44" />
+          <folding>
+            <element signature="e#909#910#0" expanded="true" />
+            <element signature="e#932#933#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="188" column="29" selection-start-line="188" selection-start-column="29" selection-end-line="188" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3504#3505#0" expanded="true" />
             <element signature="e#3572#3573#0" expanded="true" />
-            <element signature="e#6945#6946#0" expanded="true" />
-            <element signature="e#6995#6996#0" expanded="true" />
-            <element signature="e#7391#7392#0" expanded="true" />
-            <element signature="e#7591#8625#0" expanded="true" />
-            <element signature="e#7852#8337#0" expanded="true" />
-            <element signature="e#8336#8337#0" expanded="true" />
-            <element signature="e#8624#8625#0" expanded="true" />
-            <element signature="e#9709#9710#0" expanded="true" />
-            <element signature="e#9757#9758#0" expanded="true" />
-            <marker date="1505815627733" expanded="false" signature="5352:5526" ph="(ChannelInitializer) (socketChannel) → {" />
+            <element signature="e#7030#7031#0" expanded="true" />
+            <element signature="e#7080#7081#0" expanded="true" />
+            <element signature="e#7214#7477#0" expanded="true" />
+            <element signature="e#7476#7477#0" expanded="true" />
+            <element signature="e#7676#8710#0" expanded="true" />
+            <element signature="e#7937#8422#0" expanded="true" />
+            <element signature="e#8421#8422#0" expanded="true" />
+            <element signature="e#8709#8710#0" expanded="true" />
+            <element signature="e#9794#9795#0" expanded="true" />
+            <element signature="e#9842#9843#0" expanded="true" />
+            <marker date="1505816836501" expanded="false" signature="5352:5526" ph="(ChannelInitializer) (socketChannel) → {" />
           </folding>
         </state>
       </provider>
