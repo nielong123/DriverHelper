@@ -2,9 +2,11 @@ package com.driverhelper.other.tcp.netty;
 
 import android.util.Log;
 
+import com.driverhelper.config.Config;
 import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.other.Business;
 import com.driverhelper.utils.ByteUtil;
+import com.jaydenxiao.common.baserx.RxBus;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
@@ -52,6 +54,8 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         Log.e(TAG, "channelInactive");
         TcpHelper.getInstance().disConnect();
+        TcpHelper.getInstance().reConnect();
+        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_DISCONNECT, "");
         super.channelInactive(ctx);
     }
 

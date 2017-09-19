@@ -25,6 +25,7 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -78,14 +79,14 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     private static byte[] heartData;
     private static long heartDelay = 10000L;
 
-    private ConnectState connectState = DISCONNECTION;
-    private Bootstrap bootstrap;
-    private EventLoopGroup group = null;
-    private ChannelFuture channelFuture = null;
-    private Channel channel;
-    private InetSocketAddress serverAddress;
+    private static ConnectState connectState = DISCONNECTION;
+    private static Bootstrap bootstrap;
+    private static EventLoopGroup group = null;
+    private static ChannelFuture channelFuture = null;
+    private static Channel channel;
+    private static InetSocketAddress serverAddress;
 
-    private boolean disconnectionByUser;
+    private boolean isAutoConnect;
 
     public static TcpHelper getInstance() {
         if (tcpHelper == null) {
@@ -134,7 +135,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     @Override
     public void onConnectFailed() {
         setConnectState(DISCONNECTION);
-        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_DISCONNECT, "");
+        RxBus.getInstance().post(Config.Config_RxBus.RX_NET_DISCONNECT, "tcp链接失败");
     }
 
     public void connect(final InetSocketAddress socketAddress) {
@@ -147,6 +148,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
         if (channel != null && channel.isActive()) {
             return;
         }
+        setAutoReConnect(true);
         setConnectState(CONNECTING);
         if (bootstrap == null) {
             group = new NioEventLoopGroup();
@@ -191,15 +193,25 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
 
     /****
      * 设置自动重连
-     * @param disconnectionByUser
+     * @param isAutoConnect
      */
-    public void setAutoReConnect(boolean disconnectionByUser) {
-        this.disconnectionByUser = disconnectionByUser;
+    public void setAutoReConnect(boolean isAutoConnect) {
+        this.isAutoConnect = isAutoConnect;
     }
 
     public void reConnect() {
-        if (!disconnectionByUser) {
-            connect();
+        if (isAutoConnect) {
+            final Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    connect();
+                    if (getConnectState() == CONNECTED) {
+                        timer.cancel();
+                    }
+                }
+            }, 10, 10 * 1000);
         }
     }
 

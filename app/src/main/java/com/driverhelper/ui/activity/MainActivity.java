@@ -508,8 +508,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     @Override
     protected void onDestroy() {
-        Business.stopPhotoTimer();
-        Business.stopStudyInfoTimer();
+        Business.stopAllTask();
         super.onDestroy();
     }
 
@@ -659,6 +658,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 RxBus.getInstance().post(RX_TTS_SPEAK, "是否断开连接");
                 new AlertDialog.Builder(MainActivity.this, R.style.custom_dialog).setTitle("服务器断开提示").setIcon(R.drawable.main_img06).setMessage("是否服务器断开").setCancelable(false).setPositiveButton("断开", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface paramAnonymous2DialogInterface, int paramAnonymous2Int) {
+                        TcpHelper.getInstance().setAutoReConnect(false);
                         TcpHelper.getInstance().disConnect();
                     }
                 }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
