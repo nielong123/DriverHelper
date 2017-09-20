@@ -72,6 +72,7 @@ import static com.driverhelper.config.ConstantInfo.ip;
 import static com.driverhelper.config.ConstantInfo.isEmbargo;
 import static com.driverhelper.config.ConstantInfo.port;
 import static com.driverhelper.config.ConstantInfo.qRbean;
+import static com.driverhelper.config.ConstantInfo.trainType;
 
 public class MainActivity extends SerialPortActivity implements NavigationView.OnNavigationItemSelectedListener,
         TextToSpeech.OnInitListener {
@@ -83,7 +84,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     @Bind(R.id.networksw)
     Switch networksw;
     @Bind(R.id.surfaceView)
-    LiveSurfaceView surfaceView;
+    public LiveSurfaceView surfaceView;
     @Bind(R.id.LLcamera)
     LinearLayout LLcamera;
     @Bind(R.id.JiaoLianButton)
@@ -249,12 +250,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
 
     void initToolBar() {
-        StringBuilder localStringBuilder1 = new StringBuilder().append("EXSUNTerminal 终端系统 ").append(VersionUtil.getVersion(this)).append("  ( 科目");
-        StringBuilder localStringBuilder2 = localStringBuilder1.append(WriteSettingHelper.getEXAM_SUBJECTS()).append("  ");
-        StringBuilder localStringBuilder3 = localStringBuilder2.append(WriteSettingHelper.getEXAM_TYPE()).append("  ");
-        StringBuilder localStringBuilder4 = localStringBuilder3.append(WriteSettingHelper.getVEHICLE_NUMBER()).append("  ");
-//        StringBuilder localStringBuilder5 = localStringBuilder4.append(MSG.ClientInfo.param0083).append(" ) : ");
-        toolbar.setTitle(new String(localStringBuilder4));
+        setTitleStr();
         setSupportActionBar(this.toolbar);
         toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
 
@@ -267,6 +263,16 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         localDrawerLayout.setDrawerListener(localActionBarDrawerToggle);
         localActionBarDrawerToggle.syncState();
         ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(this);
+    }
+
+    public void setTitleStr() {
+        StringBuilder str = new StringBuilder()
+                .append("EXSUNTerminal 终端系统 ")
+                .append(VersionUtil.getVersion(this))
+                .append("教学车型:" + ConstantInfo.perdriType)
+                .append("培训部分:" + ConstantInfo.trainType)
+                .append("车牌号:" + ConstantInfo.vehicleNum);
+        toolbar.setTitle(new String(str));
     }
 
 
@@ -289,8 +295,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void run() {
 //                ConstantInfo.ip = "120.77.47.115";      //洪总
 //                ConstantInfo.port = 6000;
-                ConstantInfo.ip = "192.168.1.101";      //洪总
-                ConstantInfo.port = 2346;
+//                ConstantInfo.ip = "192.168.1.101";      //洪总
+//                ConstantInfo.port = 2346;
                 TcpHelper.getInstance().connect(new InetSocketAddress(ip, port));
             }
         }).start();
@@ -724,7 +730,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             case REQUEST_SETTING:
                 MSG.getInstance().loadSettings();
                 WriteSettingHelper.loadRegistInfo();
-                Business.reActivaSettings(surfaceView);
+                Business.reActivaSettings(this);
                 break;
         }
     }

@@ -43,15 +43,16 @@ public final class Business {
     /*****
      * 是改变的设置生效
      */
-    static public void reActivaSettings(LiveSurfaceView surfaceView) {
-        TcpHelper.getInstance().setHeartDelay(ConstantInfo.heartdelay);     //心跳包间隔
+    static public void reActivaSettings(MainActivity activity) {
         upDataClassType();
+        TcpHelper.getInstance().setHeartDelay(ConstantInfo.heartdelay);     //心跳包间隔
 
         if (ConstantInfo.photoThread != null && UPLOAD_GBN == 1) {              //拍照间隔
             ConstantInfo.photoThread.interrupt();
             ConstantInfo.photoThread = null;
         }
-        startPhotoTimer(surfaceView);
+        startPhotoTimer(activity.surfaceView);
+        activity.setTitleStr();
     }
 
     /*****
@@ -131,7 +132,6 @@ public final class Business {
 //        classType  1 21 1 1 10000
     }
 
-
     public static void startPhotoTimer(LiveSurfaceView surfaceView) {
         switch (UPLOAD_GBN) {           //是否自动上传照片
             case 1:
@@ -193,7 +193,6 @@ public final class Business {
             locationTimer = null;
         }
     }
-
 
     public static void stopAllTask() {
         TcpHelper.getInstance().stopHeart();
