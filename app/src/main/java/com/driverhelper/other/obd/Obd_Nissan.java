@@ -1,5 +1,7 @@
 package com.driverhelper.other.obd;
 
+import android.util.Log;
+
 import com.driverhelper.beans.ObdModel;
 import com.driverhelper.utils.ByteUtil;
 
@@ -11,10 +13,25 @@ import java.util.List;
  * Created by Administrator on 2017/7/28.
  */
 
-public class Obd_Nissan extends ObdModel {
+public class Obd_Nissan {
+
+    static Obd_Nissan obd_nissan;
+
+    String TAG = this.getClass().getName();
+
+    public static Obd_Nissan getInstance() {
+        if (obd_nissan == null) {
+            synchronized (Obd_Nissan.class) {
+                if (obd_nissan == null) {
+                    obd_nissan = new Obd_Nissan();
+                }
+            }
+        }
+        return obd_nissan;
+    }
 
 
-    public static ObdModel handle(byte[] data) {
+    public ObdModel handle(byte[] data) {
 
         List<byte[]> dataList = new ArrayList<>();
         for (int i = 0; i < data.length; i++) {
@@ -34,7 +51,7 @@ public class Obd_Nissan extends ObdModel {
 //                System.out.println("i = " + i);
 //                System.out.println("data[i+2] = " + data[i + 2]);
 //                System.out.println("[data.length - i] = " + (data.length - i));
-                ByteUtil.printHexString(data, "OBD data = ");
+//                ByteUtil.printHexString(data, "OBD data = ");
                 data0[2] = (byte) length;
                 System.arraycopy(data, i + 3, data0, 3, data[i + 2] + 1); // 数据，效验
                 byte[] checkData = new byte[data0.length - 2];
@@ -46,16 +63,20 @@ public class Obd_Nissan extends ObdModel {
         }
         ObdModel model = new ObdModel();
 //        HashMap<String, String> map = new HashMap();
+        Log.e(TAG, "dataList.size() = " + dataList.size());
         for (byte[] dataOne : dataList) {
             switch (dataOne[1]) {
                 case (byte) 0x02:            //转速
-                    model.setEngineSpeed(ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256);
+                    model.setEngineSpeed("" + (ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256));
+                    Log.e(TAG, "EngineSpeed = " + ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256);
                     break;
                 case (byte) 0x03:            //车速
-                    model.setEngineSpeed(ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256);
+                    model.setSpeed("" + (ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256));
+                    Log.e(TAG, "Speed = " + ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256);
                     break;
                 case (byte) 0x06:            //本次行驶里程
-                    model.setMileage(ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256 + ByteUtil.byte2int(dataOne[5]) * 65536);
+                    model.setMileage("" + (ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256 + ByteUtil.byte2int(dataOne[5]) * 65536));
+                    Log.e(TAG, "Mileage = " + ByteUtil.byte2int(dataOne[3]) + ByteUtil.byte2int(dataOne[4]) * 256 + ByteUtil.byte2int(dataOne[5]) * 65536);
                     break;
                 case (byte) 0x7d:
                     if (dataOne[3] == 0) {

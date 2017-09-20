@@ -451,8 +451,8 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(time666));               //記錄產生時間
         resultBody = ByteUtil.add(resultBody, ByteUtil.str2Bcd(classType));                //培训课程
         resultBody = ByteUtil.add(resultBody, recordType);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.obdInfo.getSpeed()));            //最大速度
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.obdInfo.getMileage()));            //最大里程  10
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(Integer.valueOf(ConstantInfo.obdInfo.getSpeed() + 0)));            //最大速度
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(Integer.valueOf(ConstantInfo.obdInfo.getMileage() + 0)));            //最大里程  10
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),

@@ -525,17 +525,17 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void run() {
                 byte[] data = new byte[length];
                 System.arraycopy(buffer, 0, data, 0, length);
-//                ByteUtil.printHexString("obd接收到数据", data);
-                ObdModel model = Obd_Nissan.handle(data);
-                String carSpeed = model.getSpeed() + "";
+                ByteUtil.printHexString("obd接收到数据", data);
+                ObdModel model = Obd_Nissan.getInstance().handle(data);
+                String carSpeed = model.getSpeed();
                 if (!TextUtils.isEmpty(carSpeed)) {
                     textViewSpeed.setText(carSpeed + "km/h");
                 }
-                String speed = model.getEngineSpeed() + "";
+                String speed = model.getEngineSpeed();
                 if (!TextUtils.isEmpty(speed)) {
                     textViewRPM.setText(speed + "RPM");
                 }
-                String mileage = model.getMileage() + "";
+                String mileage = model.getMileage();
                 if (!TextUtils.isEmpty(mileage)) {
                     textViewDistance.setText(mileage + "km");
                 }
@@ -809,55 +809,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
          BitmapUtils.CompressByQuality(bitmap, 20);
 
          ***/
-
-//        Luban.with(this)
-//                .load(new File(getFilesDir().getAbsolutePath() + "/" + "1505720713.png"))
-//                .setTargetDir(getCacheDir().getAbsolutePath())
-//                .ignoreBy(10)
-//                .putGear(1)
-//                .setCompressListener(new OnCompressListener() {
-//                    @Override
-//                    public void onStart() {
-//                        Log.e(TAG, "onStart ");
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(File file) {
-//                        Log.e(TAG, "文件:" + FileUtil.fileIsExists(getCacheDir().getAbsolutePath()));
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e(TAG, "e = " + e.getMessage());
-//                    }
-//                }).launch();
-
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Luban.with(mContext)
-//                        .ignoreBy(100)
-//                        .load(FileUtils.bitmap2File(getCacheDir().getPath() + "/" + fileName, bitmapWithMark))
-//                        .setTargetDir(getFilesDir().getAbsolutePath())
-//                        .setCompressListener(new OnCompressListener() {
-//                            @Override
-//                            public void onStart() {
-//
-//                            }
-//
-//                            @Override
-//                            public void onSuccess(File file) {
-//                                byte[] data = FileUtils.imageFile2Bitmap(file);
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//                                Log.e(TAG, e.getMessage());
-//                            }
-//                        }).launch();
-//            }
-//        }).start();
     }
 
     @Override

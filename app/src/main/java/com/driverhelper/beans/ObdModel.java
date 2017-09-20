@@ -6,32 +6,32 @@ package com.driverhelper.beans;
 
 public class ObdModel {
 
-    int engineSpeed;
-    int speed;
-    int mileage;
+    String engineSpeed;
+    String speed;
+    String mileage;
     boolean acc;
 
-    public int getEngineSpeed() {
+    public String getEngineSpeed() {
         return engineSpeed;
     }
 
-    public void setEngineSpeed(int engineSpeed) {
+    public void setEngineSpeed(String engineSpeed) {
         this.engineSpeed = engineSpeed;
     }
 
-    public int getSpeed() {
+    public String getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(String speed) {
         this.speed = speed;
     }
 
-    public int getMileage() {
+    public String getMileage() {
         return mileage;
     }
 
-    public void setMileage(int mileage) {
+    public void setMileage(String mileage) {
         this.mileage = mileage;
     }
 
