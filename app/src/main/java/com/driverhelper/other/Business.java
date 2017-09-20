@@ -16,9 +16,11 @@ import com.jaydenxiao.common.baserx.RxBus;
 import java.util.Timer;
 
 import static com.driverhelper.config.ConstantInfo.UPLOAD_GBN;
+import static com.driverhelper.config.ConstantInfo.classType;
 import static com.driverhelper.config.ConstantInfo.locationTimer;
 import static com.driverhelper.config.ConstantInfo.locationTimerDelay;
 import static com.driverhelper.config.ConstantInfo.studyInfoTimerDelay;
+import static com.driverhelper.config.ConstantInfo.trainType;
 
 /**
  * Created by Administrator on 2017/9/13.
@@ -43,12 +45,90 @@ public final class Business {
      */
     static public void reActivaSettings(LiveSurfaceView surfaceView) {
         TcpHelper.getInstance().setHeartDelay(ConstantInfo.heartdelay);     //心跳包间隔
+        upDataClassType();
 
         if (ConstantInfo.photoThread != null && UPLOAD_GBN == 1) {              //拍照间隔
             ConstantInfo.photoThread.interrupt();
             ConstantInfo.photoThread = null;
         }
         startPhotoTimer(surfaceView);
+    }
+
+    /*****
+     * 更新培训课程
+     */
+    static private void upDataClassType() {
+        classType = "1";
+        switch (ConstantInfo.perdriType) {
+            case "":
+                classType += "00";
+                break;
+            case "A1":
+                classType += "01";
+                break;
+            case "A2":
+                classType += "02";
+                break;
+            case "A3":
+                classType += "03";
+                break;
+            case "B1":
+                classType += "11";
+                break;
+            case "B2":
+                classType += "12";
+                break;
+            case "C1":
+                classType += "21";
+                break;
+            case "C2":
+                classType += "22";
+                break;
+            case "C3":
+                classType += "23";
+                break;
+            case "C4":
+                classType += "24";
+                break;
+            case "C5":
+                classType += "25";
+                break;
+            case "D":
+                classType += "31";
+                break;
+            case "E":
+                classType += "32";
+                break;
+            case "F":
+                classType += "33";
+                break;
+            case "M":
+                classType += "41";
+                break;
+            case "N":
+                classType += "42";
+                break;
+            case "P":
+                classType += "43";
+                break;
+        }
+        switch (trainType) {
+            case "1":
+                classType += "1";
+                break;
+            case "2":
+                classType += "2";
+                break;
+            case "3":
+                classType += "3";
+                break;
+            case "4":
+                classType += "4";
+                break;
+        }
+        classType += "11";
+        classType += "0000";
+//        classType  1 21 1 1 10000
     }
 
 
@@ -101,7 +181,7 @@ public final class Business {
 
     public static void startUpDataLocationInfo() {
         RxBus.getInstance().post(Config.Config_RxBus.RX_TTS_SPEAK, "开始上传位置信息");
-        if(locationTimer != null){
+        if (locationTimer != null) {
             locationTimer = new Timer(true);
             locationTimer.schedule(new LocationInfoTimeTask(), 1000, locationTimerDelay);          //暂定十秒一次,要改成可以设置的
         }

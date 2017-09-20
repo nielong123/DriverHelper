@@ -164,7 +164,7 @@ public final class MSG {
     }
 
     public void loadTrainType() {
-        ConstantInfo.trainType = sharePreferences.getString(Config.WriteSetting.TRAIN_TYPE, "");
+        ConstantInfo.trainType = sharePreferences.getString(Config.WriteSetting.TRAIN_TYPE, "2");
     }
 
     public void setTrainType(String trainType) {
