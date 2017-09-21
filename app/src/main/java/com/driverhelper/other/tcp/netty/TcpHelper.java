@@ -509,7 +509,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
             List<byte[]> res = new ArrayList<>();
             for (byte[] data : list) {
                 int index = list.indexOf(data) + 1;
-                res.add(BodyHelper.make0306(data, list.size(), index, idList.get(index - 1), true));
+                res.add(BodyHelper.make0306(data, idList.get(index - 1), list.size(), index, true));
             }
             for (byte[] data : res) {
                 sendData(data);

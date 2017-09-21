@@ -1,5 +1,7 @@
 package com.driverhelper.other.timeTask;
 
+import android.text.TextUtils;
+
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.IdHelper;
 import com.driverhelper.other.tcp.netty.TcpHelper;
@@ -23,8 +25,18 @@ public class StudyInfoTimeTask extends TimerTask {
         String str66666 = str.substring(str.length() - 6, str.length());
         int studyCode = IdHelper.getStudyCode();
         byte updataType = (byte) 0x01;
-        int vehiclSspeed = ConstantInfo.ObdInfo.vehiclSspeed;
-        int distance = ConstantInfo.ObdInfo.distance;
+        int vehiclSspeed;
+        if (TextUtils.isEmpty(ConstantInfo.obdInfo.getSpeed())) {
+            vehiclSspeed = 0;
+        } else {
+            vehiclSspeed = Integer.valueOf(ConstantInfo.obdInfo.getSpeed());
+        }
+        int distance;
+        if (TextUtils.isEmpty(ConstantInfo.obdInfo.getMileage())) {
+            distance = 0;
+        } else {
+            distance = Integer.valueOf(ConstantInfo.obdInfo.getMileage());
+        }
         int lon = (int) ConstantInfo.gpsModel.lon;
         int lat = (int) ConstantInfo.gpsModel.lat;
         int speedGPS = (int) ConstantInfo.gpsModel.speedGPS;

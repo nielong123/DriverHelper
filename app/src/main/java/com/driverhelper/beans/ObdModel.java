@@ -6,9 +6,9 @@ package com.driverhelper.beans;
 
 public class ObdModel {
 
-    String engineSpeed;
-    String speed;
-    String mileage;
+    String engineSpeed ;
+    String speed ;
+    String mileage ;
     boolean acc;
 
     public String getEngineSpeed() {

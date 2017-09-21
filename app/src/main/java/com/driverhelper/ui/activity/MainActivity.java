@@ -525,7 +525,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void run() {
                 byte[] data = new byte[length];
                 System.arraycopy(buffer, 0, data, 0, length);
-                ByteUtil.printHexString("obd接收到数据", data);
+//                ByteUtil.printHexString("obd接收到数据", data);
                 ObdModel model = Obd_Nissan.getInstance().handle(data);
                 String carSpeed = model.getSpeed();
                 if (!TextUtils.isEmpty(carSpeed)) {

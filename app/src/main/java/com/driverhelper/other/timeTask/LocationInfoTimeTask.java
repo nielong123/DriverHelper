@@ -21,21 +21,20 @@ public class LocationInfoTimeTask extends TimerTask {
 
         int lon = (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6));
         int lat = (int) (ConstantInfo.gpsModel.lat * Math.pow(10, 6));
-        int speedVehicle = ConstantInfo.ObdInfo.vehiclSspeed;
+        int speedVehicle = Integer.valueOf(ConstantInfo.obdInfo.getSpeed());
         int speedGPS = (int) ConstantInfo.gpsModel.speedGPS;
         int direction = (int) ConstantInfo.gpsModel.direction;
         long timeGPS = ConstantInfo.gpsModel.timeGPS / 1000;                 //秒级
         String timeGPS_ = TimeUtil.formatData(dateFormatYMDHMS_, timeGPS);
-        long timeSYS = TimeUtil.getTime()/1000;
-
+        long timeSYS = TimeUtil.getTime() / 1000;
 
 
         TcpHelper.getInstance().sendMakeLocationInfo(lon, lat, speedVehicle, speedGPS, direction, timeGPS_);
 
         DbHelper.getInstance().addLocationInfo(
                 speedVehicle,
-                ConstantInfo.ObdInfo.distance,
-                ConstantInfo.ObdInfo.speed,
+                Integer.valueOf(ConstantInfo.obdInfo.getMileage()),
+                Integer.valueOf(ConstantInfo.obdInfo.getSpeed()),
                 timeSYS,
                 false,
                 speedGPS,
