@@ -53,6 +53,7 @@ import com.jaydenxiao.common.commonutils.TimeUtil;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.jaydenxiao.common.commonutils.VersionUtil;
 
+import java.lang.ref.WeakReference;
 import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Timer;
@@ -143,61 +144,13 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     private static final int REQUEST_SETTING = 1;
 
     Timer studyTimer;
+    MyHandler myHandler;
 
     private void sendMessage(int what) {
         Message message = new Message();
         message.what = what;
-        handler.sendMessage(message);
+        myHandler.sendMessage(message);
     }
-
-    private Handler handler = new Handler() {
-
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case UPDATATIME:
-                    if (textViewTime != null) {
-                        textViewTime.setText(TimeUtil.getFriendlyDuration2(ConstantInfo.studyTimeThis));
-                    }
-                    break;
-                case Config.TextInfoType.ChangeGPSINFO:
-                    direction.setText("方向:" + ConstantInfo.gpsModel.direction + "度");
-                    speed.setText("速度:" + ConstantInfo.gpsModel.speedGPS + "m/s");
-                    lat.setText("纬度:" + ConstantInfo.gpsModel.lat);
-                    lon.setText("经度:" + ConstantInfo.gpsModel.lon);
-                    break;
-                case Config.TextInfoType.ClearGPSINFO:
-                    direction.setText(" ");
-                    speed.setText("");
-                    lat.setText("");
-                    lon.setText("");
-                    break;
-                case Config.TextInfoType.SETJIAOLIAN:
-                    COACHNUMtext.setText(qRbean.getName());
-                    IDCARDtext.setText(qRbean.getNumber());
-                    break;
-                case Config.TextInfoType.SETXUEYUAN:
-                    XueYuanTEXT.setText(qRbean.getName());
-                    STUNUMtext.setText(qRbean.getNumber());
-                    textViewStat.setText("培训学时:" + ConstantInfo.StudentInfo.finishedTime + " / " + ConstantInfo.StudentInfo.totleTime + "分\n"
-                            + "培训里程:" + ConstantInfo.StudentInfo.finishedMileage + " / " + ConstantInfo.StudentInfo.totleMileage + " 1/10km");
-                    break;
-                case Config.TextInfoType.CLEARJIAOLIAN:
-                    COACHNUMtext.setText("");
-                    IDCARDtext.setText("");
-                    break;
-                case Config.TextInfoType.CLEARXUEYUAN:
-
-                    XueYuanTEXT.setText("");
-                    STUNUMtext.setText("");
-                    textViewTime.setText("00:00:00");
-                    textViewStat.setText("培训学时:" + 0 + " / " + 0 + "分\n"
-                            + "培训里程:" + 0 + " / " + 0 + " 1/10km");
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
-
 
     @Override
     public int getLayoutId() {
@@ -285,6 +238,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     public void initData() {
         context = this;
         this.ttsClient = new TextToSpeech(getApplicationContext(), this);
+        myHandler = new MyHandler(this);
         if (WriteSettingHelper.getISFIRST()) {
             this.ttsClient.speak("首次登陆，请设置终端参数", 1, null);
             WriteSettingHelper.setISFIRST(false);
@@ -827,6 +781,64 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 break;
         }
         return false;
+    }
+
+
+    private class MyHandler extends Handler {
+
+        WeakReference<MainActivity> mainActivityWeakReference;
+
+        public MyHandler(MainActivity mainActivity) {
+            this.mainActivityWeakReference = new WeakReference<MainActivity>(mainActivity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            MainActivity activity = mainActivityWeakReference == null ? null : mainActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) return;
+            switch (msg.what) {
+                case UPDATATIME:
+                    if (activity.textViewTime != null) {
+                        activity.textViewTime.setText(TimeUtil.getFriendlyDuration2(ConstantInfo.studyTimeThis));
+                    }
+                    break;
+                case Config.TextInfoType.ChangeGPSINFO:
+                    activity.direction.setText("方向:" + ConstantInfo.gpsModel.direction + "度");
+                    activity.speed.setText("速度:" + ConstantInfo.gpsModel.speedGPS + "m/s");
+                    activity.lat.setText("纬度:" + ConstantInfo.gpsModel.lat);
+                    activity.lon.setText("经度:" + ConstantInfo.gpsModel.lon);
+                    break;
+                case Config.TextInfoType.ClearGPSINFO:
+                    activity.direction.setText(" ");
+                    activity.speed.setText("");
+                    activity.lat.setText("");
+                    activity.lon.setText("");
+                    break;
+                case Config.TextInfoType.SETJIAOLIAN:
+                    activity.COACHNUMtext.setText(qRbean.getName());
+                    activity.IDCARDtext.setText(qRbean.getNumber());
+                    break;
+                case Config.TextInfoType.SETXUEYUAN:
+                    activity.XueYuanTEXT.setText(qRbean.getName());
+                    activity.STUNUMtext.setText(qRbean.getNumber());
+                    activity.textViewStat.setText("培训学时:" + ConstantInfo.StudentInfo.finishedTime + " / " + ConstantInfo.StudentInfo.totleTime + "分\n"
+                            + "培训里程:" + ConstantInfo.StudentInfo.finishedMileage + " / " + ConstantInfo.StudentInfo.totleMileage + " 1/10km");
+                    break;
+                case Config.TextInfoType.CLEARJIAOLIAN:
+                    activity.COACHNUMtext.setText("");
+                    activity.IDCARDtext.setText("");
+                    break;
+                case Config.TextInfoType.CLEARXUEYUAN:
+
+                    activity.XueYuanTEXT.setText("");
+                    activity.STUNUMtext.setText("");
+                    activity.textViewTime.setText("00:00:00");
+                    activity.textViewStat.setText("培训学时:" + 0 + " / " + 0 + "分\n"
+                            + "培训里程:" + 0 + " / " + 0 + " 1/10km");
+                    break;
+            }
+        }
     }
 
 }
