@@ -862,13 +862,13 @@ public final class MSG {
         sharePreferences.edit().putString(Config.WriteSetting.DISTANCE, "" + str).apply();
     }
 
-    public void getPARAM0082() {
-        ConstantInfo.param0082 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0082, "88"));
-    }
-
-    public void setPARAM0082(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0082, str).apply();
-    }
+//    public void getPARAM0082() {
+//        ConstantInfo.param0082 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0082, "88"));
+//    }
+//
+//    public void setPARAM0082(String str) {
+//        sharePreferences.edit().putString(Config.WriteSetting.param0082, str).apply();
+//    }
 
 //    public void getPARAM0083() {
 //        ConstantInfo.param0083 = sharePreferences.getString(Config.WriteSetting.param0083, "hello");

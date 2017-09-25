@@ -1089,7 +1089,7 @@ public class BodyHelper {
                     resultBody = ByteUtil.add(resultBody, ConstantInfo.province);
                     break;
                 case (byte) 0x82:
-                    MSG.getInstance().getPARAM0082();
+                    MSG.getInstance().loadCity();
                     resultBody = ByteUtil.add(resultBody, (byte) 0x02);
                     resultBody = ByteUtil.add(resultBody, ConstantInfo.city);
                     break;

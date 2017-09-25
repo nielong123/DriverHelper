@@ -38,26 +38,15 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fab4f4b-9cb1-418e-b8dc-2558d50e4c35" name="Default" comment="修复了招">
+    <list default="true" id="9fab4f4b-9cb1-418e-b8dc-2558d50e4c35" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/GpsModel.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/GpsModel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/ConstantInfo.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/ConstantInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/Business.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/Business.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/TcpManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/TcpManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/NettyClientHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/tcp/netty/TcpHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/LocationInfoTimeTask.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/other/timeTask/LocationInfoTimeTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/ui/activity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/widget/LiveSurfaceView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/driverhelper/widget/LiveSurfaceView.java" />
     </list>
     <ignored path="DriverHelper1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -111,8 +100,8 @@
       <file leaf-file-name="ConstantInfo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/ConstantInfo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+            <state relative-caret-position="179">
+              <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -158,8 +147,8 @@
       <file leaf-file-name="BodyHelper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="1100" column="33" selection-start-line="1100" selection-start-column="33" selection-end-line="1100" selection-end-column="33" />
+            <state relative-caret-position="195">
+              <caret line="1091" column="49" selection-start-line="1091" selection-start-column="49" selection-end-line="1091" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -178,8 +167,8 @@
       <file leaf-file-name="MSG.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="114" column="34" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="34" />
+            <state relative-caret-position="410">
+              <caret line="872" column="34" selection-start-line="872" selection-start-column="34" selection-end-line="872" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -8903,20 +8892,6 @@
       <option name="presentableId" value="Default" />
       <updated>1498272599135</updated>
     </task>
-    <task id="LOCAL-00062" summary="增加了指纹识别的代码">
-      <created>1504073806074</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1504073806078</updated>
-    </task>
-    <task id="LOCAL-00063" summary="增加了指纹识别的代码">
-      <created>1504081354494</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1504081354494</updated>
-    </task>
     <task id="LOCAL-00064" summary="增加了指纹识别的代码">
       <created>1504143881813</created>
       <option name="number" value="00064" />
@@ -9246,7 +9221,21 @@
       <option name="project" value="LOCAL" />
       <updated>1506141847604</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="修复了一些查询系统参数的bug">
+      <created>1506337600327</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1506337600328</updated>
+    </task>
+    <task id="LOCAL-00112" summary="修复了一些查询系统参数的bug">
+      <created>1506337956688</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1506337956688</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TodoView">
@@ -9263,7 +9252,7 @@
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27455357" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27455357" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -9334,7 +9323,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修改了查询终端参数的代码" />
     <MESSAGE value="增加了指纹识别的代码" />
     <MESSAGE value="添加了下载apk的方法" />
     <MESSAGE value="增加了重传未上传数据的方法" />
@@ -9359,7 +9347,8 @@
     <MESSAGE value="修改了obd的一些bug" />
     <MESSAGE value="修正了上传照片时流水号相同的bug" />
     <MESSAGE value="优化了一些有可能导致内存泄漏的地方" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化了一些有可能导致内存泄漏的地方" />
+    <MESSAGE value="修复了一些查询系统参数的bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复了一些查询系统参数的bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -9807,24 +9796,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/config/ConstantInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        <state relative-caret-position="179">
+          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/beans/MSG.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="114" column="34" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="34" />
+        <state relative-caret-position="410">
+          <caret line="872" column="34" selection-start-line="872" selection-start-column="34" selection-end-line="872" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/driverhelper/helper/BodyHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="1100" column="33" selection-start-line="1100" selection-start-column="33" selection-end-line="1100" selection-end-column="33" />
+        <state relative-caret-position="195">
+          <caret line="1091" column="49" selection-start-line="1091" selection-start-column="49" selection-end-line="1091" selection-end-column="49" />
           <folding />
         </state>
       </provider>
