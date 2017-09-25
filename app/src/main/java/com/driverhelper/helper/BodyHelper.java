@@ -733,14 +733,14 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x80));
         resultBody = ByteUtil.add(resultBody, (byte) 0x04);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.distance));
-        MSG.getInstance().getDISTANCE();
+        MSG.getInstance().loadProvince();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x81));
         resultBody = ByteUtil.add(resultBody, (byte) 0x02);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0081));
-        MSG.getInstance().getPARAM0082();
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.province);
+        MSG.getInstance().loadCity();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x82));
         resultBody = ByteUtil.add(resultBody, (byte) 0x02);
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0082));
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.city);
         MSG.getInstance().loadVehicle_number();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x83));
         resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.vehicleNum.getBytes().length);
@@ -1084,14 +1084,14 @@ public class BodyHelper {
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(ConstantInfo.distance));
                     break;
                 case (byte) 0x81:
-                    MSG.getInstance().getDISTANCE();
+                    MSG.getInstance().loadProvince();
                     resultBody = ByteUtil.add(resultBody, (byte) 0x02);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0081));
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.province);
                     break;
                 case (byte) 0x82:
                     MSG.getInstance().getPARAM0082();
                     resultBody = ByteUtil.add(resultBody, (byte) 0x02);
-                    resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0082));
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.city);
                     break;
                 case (byte) 0x83:
                     MSG.getInstance().loadVehicle_number();

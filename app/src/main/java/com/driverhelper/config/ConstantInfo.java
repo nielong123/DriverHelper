@@ -133,8 +133,8 @@ public class ConstantInfo {
     public static int param0074 = 128;
 
     public static int distance = 3;
-    public static int param0081;        //这几个变量没用，但暂时保留
-    public static int param0082;
+//    public static int param0081;        //这几个变量没用，但暂时保留
+//    public static int param0082;
 //    public static String param0083;       //车牌号
 //    public static int param0084;      // 84是车牌颜色
     public static int param0085 = 1000;
