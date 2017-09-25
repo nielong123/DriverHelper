@@ -645,14 +645,16 @@ public class ByteUtil {
 
         MessageBean messageBean = new MessageBean();
         byte[] data0 = new byte[2];         //消息id
-        System.arraycopy(data, 1, data0, 0, 2);
+        System.arraycopy(data, 1, data0, 0, data0.length);
         messageBean.headBean.messageId = ByteUtil.bcd2Str(data0);
         byte[] data1 = new byte[2];         //消息体属性
-        System.arraycopy(data, 3, data1, 0, 2);
+        System.arraycopy(data, 3, data1, 0, data1.length);
         messageBean.headBean.messageAttribute = ByteUtil.bcdByte2bcdString(data1);
         byte[] data2 = new byte[8];
+        System.arraycopy(data, 3, data2, 0, data2.length);
+        messageBean.headBean.phoneNumber = ByteUtil.bcdByte2bcdString(data2);
         byte[] data3 = new byte[2];
-        System.arraycopy(data, 16, data3, 0, data3.length);
+        System.arraycopy(data, 13, data3, 0, data3.length);
         messageBean.headBean.waterCode = ByteUtil.byte2int(data3);
         ByteUtil.printHexString("收到应答，流水号为   ", data3);
         messageBean.headBean.benAttribute = autoAddZeroByLength(hexStringToBinary(messageBean.headBean.messageAttribute), 10);      //由消息体得到二进制的消息体
