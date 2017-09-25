@@ -249,7 +249,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             public void run() {
 //                ConstantInfo.ip = "120.77.47.115";      //洪总
 //                ConstantInfo.port = 6000;
-//                ConstantInfo.ip = "192.168.1.101";      //洪总
+//                ConstantInfo.ip = "192.168.1.106";      //洪总
 //                ConstantInfo.port = 2346;
                 TcpHelper.getInstance().connect(new InetSocketAddress(ip, port));
             }
@@ -389,7 +389,6 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_SETTING_8106, new Action1<HandMsgHelper.Class8106>()
-
         {
             @Override
             public void call(HandMsgHelper.Class8106 class8106) {
@@ -601,7 +600,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         integrator.setPrompt(title);
         integrator.setCameraId(Config.carmerId_HANGJING);  // Use a specific camera of the device
         integrator.setBeepEnabled(false);
-        integrator.setTimeout(10 * 1000);
+        integrator.setTimeout(20 * 1000);
         integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan();
     }
@@ -610,6 +609,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            Log.e(TAG, "b = " + b);
             if (TcpHelper.getInstance().getConnectState() == TcpHelper.ConnectState.DISCONNECTION && b) {
                 TcpHelper.getInstance().connect(new InetSocketAddress(ip, port));
                 return;

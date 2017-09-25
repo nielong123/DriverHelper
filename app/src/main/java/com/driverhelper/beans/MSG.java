@@ -12,6 +12,7 @@ import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
 import com.driverhelper.helper.HandMsgHelper;
+import com.driverhelper.other.Business;
 import com.driverhelper.ui.activity.MainActivity;
 import com.driverhelper.ui.activity.SettingsActivity;
 import com.driverhelper.utils.ByteUtil;
@@ -869,21 +870,21 @@ public final class MSG {
         sharePreferences.edit().putString(Config.WriteSetting.param0082, str).apply();
     }
 
-    public void getPARAM0083() {
-        ConstantInfo.param0083 = sharePreferences.getString(Config.WriteSetting.param0083, "hello");
-    }
+//    public void getPARAM0083() {
+//        ConstantInfo.param0083 = sharePreferences.getString(Config.WriteSetting.param0083, "hello");
+//    }
+//
+//    public void setPARAM0083(String str) {
+//        sharePreferences.edit().putString(Config.WriteSetting.param0083, str).apply();
+//    }
 
-    public void setPARAM0083(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0083, str).apply();
-    }
-
-    public void getPARAM0084() {
-        ConstantInfo.param0084 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0084, "88"));
-    }
-
-    public void setPARAM0084(String str) {
-        sharePreferences.edit().putString(Config.WriteSetting.param0084, str).apply();
-    }
+//    public void getPARAM0084() {
+//        ConstantInfo.param0084 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0084, "88"));
+//    }
+//
+//    public void setPARAM0084(String str) {
+//        sharePreferences.edit().putString(Config.WriteSetting.param0084, str).apply();
+//    }
 
     public void getPARAM0085() {
         ConstantInfo.param0085 = Integer.valueOf(sharePreferences.getString(Config.WriteSetting.param0085, "88"));
@@ -1156,6 +1157,7 @@ public final class MSG {
         loadSetting7();
         loadSetting8();
         loadSetting9();
+        Business.upDataClassType();
     }
 
     public void setSettings(List<HandMsgHelper.Class8103.Setting> settings) {

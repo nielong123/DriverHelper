@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import com.driverhelper.R;
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.ConstantInfo;
+import com.driverhelper.other.tcp.TcpManager;
 import com.driverhelper.other.tcp.netty.TcpHelper;
 import com.driverhelper.utils.ByteUtil;
 import com.driverhelper.utils.FileUtils;
@@ -186,17 +187,18 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                     @Override
                     public void run() {
                         TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
+                        try {                           //取代了8305命令,当0305上传之后间隔200ms再上传照片
+                            Thread.sleep(200L);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         TcpHelper.getInstance().send0306(fileName.replace(".png", ""), data);
                         isSend = false;
                     }
                 }).start();
             }
             if (null != bitmapWithMark) {
-//                if (!TextUtils.isEmpty(fileName)) {
                 FileUtils.saveBitmap(getContext().getFilesDir().getPath() + "/" + fileName, bitmapWithMark);
-//                } else {
-//                    FileUtils.saveBitmap(getContext(), bitmapWithMark);
-//                }
             }
             camera.stopPreview();
             isPreview = false;

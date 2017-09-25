@@ -54,7 +54,6 @@ public class ConstantInfo {
     public static boolean isEmbargo;                     //禁运状态          true
     public static String embargoStr;            //      禁运提示消息内容
     public static boolean is0102_OK;                //是否鉴权成功
-    public static boolean isDisConnectByUser;           //用户手动断开连接
 
     public static int gpsdisConnectIndex = 0;           //gps断开连接的计数
     public static final int gpsDisConnectMex = 5;           //gps断开报警的最大次数
@@ -136,8 +135,8 @@ public class ConstantInfo {
     public static int distance = 3;
     public static int param0081;        //这几个变量没用，但暂时保留
     public static int param0082;
-    public static String param0083;
-    public static int param0084;
+//    public static String param0083;       //车牌号
+//    public static int param0084;      // 84是车牌颜色
     public static int param0085 = 1000;
 
 
@@ -156,11 +155,11 @@ public class ConstantInfo {
         public static int finishedMileage;            //已完成的里程
     }
 
-    public static class ObdInfo {
-        public static int vehiclSspeed = 10;     //车速
-        public static int speed = 20;        //发动机转速
-        public static int distance = 15;         //距离
-    }
+//    public static class ObdInfo {
+//        public static int vehiclSspeed = 10;     //车速
+//        public static int speed = 20;        //发动机转速
+//        public static int distance = 15;         //距离
+//    }
 
     public static ObdModel obdInfo = new ObdModel();
     public static GpsModel gpsModel = new GpsModel();

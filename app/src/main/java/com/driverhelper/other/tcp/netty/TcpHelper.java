@@ -86,7 +86,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
     private static Channel channel;
     private static InetSocketAddress serverAddress;
 
-    private boolean isAutoConnect;
+    private boolean isAutoConnect = true;      //是否自动重连
 
     public static TcpHelper getInstance() {
         if (tcpHelper == null) {
@@ -198,6 +198,10 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
      */
     public void setAutoReConnect(boolean isAutoConnect) {
         this.isAutoConnect = isAutoConnect;
+    }
+
+    public boolean getAutoReConnect() {
+        return this.isAutoConnect;
     }
 
     public void reConnect() {

@@ -3,27 +3,22 @@ package com.driverhelper.helper;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.driverhelper.app.MyApplication;
 import com.driverhelper.beans.MSG;
 import com.driverhelper.beans.MessageBean;
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.Config;
 import com.driverhelper.config.ConstantInfo;
-import com.driverhelper.other.tcp.TcpBody;
 import com.driverhelper.other.encrypt.Encrypt;
+import com.driverhelper.other.tcp.TcpBody;
 import com.driverhelper.other.tcp.TcpManager;
 import com.driverhelper.other.tcp.netty.TcpHelper;
-import com.driverhelper.ui.activity.MainActivity;
 import com.driverhelper.utils.ByteUtil;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.TimeUtil;
-import com.jaydenxiao.common.commonutils.ToastUitl;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.driverhelper.config.Config.Config_RxBus.RX_SETTING_8202_;
@@ -746,14 +741,14 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x82));
         resultBody = ByteUtil.add(resultBody, (byte) 0x02);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0082));
-        MSG.getInstance().getPARAM0083();
+        MSG.getInstance().loadVehicle_number();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x83));
-        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0083.getBytes().length);
-        resultBody = ByteUtil.add(resultBody, ConstantInfo.param0083.getBytes());
-        MSG.getInstance().getPARAM0084();
+        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.vehicleNum.getBytes().length);
+        resultBody = ByteUtil.add(resultBody, ConstantInfo.vehicleNum.getBytes());
+        MSG.getInstance().loadVehicleColor();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x84));
         resultBody = ByteUtil.add(resultBody, (byte) 0x01);
-        resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0084);
+        resultBody = ByteUtil.add(resultBody, (byte) (int) Integer.valueOf(ConstantInfo.vehicleColor));
         MSG.getInstance().getPARAM0085();
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(0x85));
         resultBody = ByteUtil.add(resultBody, (byte) 0x04);
@@ -775,7 +770,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, (byte) idList.size());          //包参数个数
         for (byte[] id : idList) {
             resultBody = ByteUtil.add(resultBody, id);
-            switch (ByteUtil.byte2int(id)) {
+            switch (id[3]) {
                 case (byte) 0x01:
                     MSG.getInstance().getHEARTDELAY();
                     resultBody = ByteUtil.add(resultBody, (byte) 0x04);
@@ -1099,14 +1094,14 @@ public class BodyHelper {
                     resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(ConstantInfo.param0082));
                     break;
                 case (byte) 0x83:
-                    MSG.getInstance().getPARAM0083();
-                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0083.getBytes().length);
-                    resultBody = ByteUtil.add(resultBody, ConstantInfo.param0083.getBytes());
+                    MSG.getInstance().loadVehicle_number();
+                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.vehicleNum.getBytes().length);
+                    resultBody = ByteUtil.add(resultBody, ConstantInfo.vehicleNum.getBytes());
                     break;
                 case (byte) 0x84:
-                    MSG.getInstance().getPARAM0084();
+                    MSG.getInstance().loadVehicleColor();
                     resultBody = ByteUtil.add(resultBody, (byte) 0x01);
-                    resultBody = ByteUtil.add(resultBody, (byte) ConstantInfo.param0084);
+                    resultBody = ByteUtil.add(resultBody, (byte) (int) Integer.valueOf(ConstantInfo.vehicleColor));
                     break;
                 case (byte) 0x85:
                     MSG.getInstance().getPARAM0085();
@@ -1211,7 +1206,7 @@ public class BodyHelper {
         resultBody = ByteUtil.add(resultBody, eventType);
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2WORD(totle));
         resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD(photoSize));
-        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) new Date().getTime() / 1000));           //课堂id
+        resultBody = ByteUtil.add(resultBody, ByteUtil.int2DWORD((int) ConstantInfo.classId));           //课堂id
         resultBody = ByteUtil.add(resultBody, BodyHelper.makeLocationInfoBody("00000000",
                 "40080000",
                 (int) (ConstantInfo.gpsModel.lon * Math.pow(10, 6)),
@@ -1261,7 +1256,7 @@ public class BodyHelper {
      */
     public static byte[] make0304(byte eventType) {
 
-        byte[] resultBody = new byte[]{eventType};            //
+        byte[] resultBody = new byte[]{eventType};
         resultBody = buildExMsg(id0304, 0, 1, 2, resultBody);
         resultBody = ByteUtil.add(driving, resultBody);
         byte[] resultHead = makeHead(transparentInfo, false, 0, 0, 0, resultBody.length);
@@ -1858,20 +1853,24 @@ public class BodyHelper {
                                 HandMsgHelper.Class8304 class8304 = HandMsgHelper.getClass8304(messageBean.throughExpand.data);
                                 RxBus.getInstance().post(RX_SETTING_8304, class8304);
                                 break;
-                            case "8305":
-                                HandMsgHelper.Class8305 class8305 = HandMsgHelper.getClass8305(messageBean.throughExpand.data);
+                            case "8305":        //照片上传初始化应答
+                                //8305 协议有问题
+//                                HandMsgHelper.Class8305 class8305 = HandMsgHelper.getClass8305(messageBean.throughExpand.data);
 //                                switch (class8305.code) {
 //                                    case (byte) 0x00:
-//                                        TcpHelper.getInstance().send0306(ConstantInfo.photoId, photoData);
+//                                        if (TcpManager.getInstance().getTcpState() == TcpManager.state.WAITESENDPHOTO) {
+//                                            if (!TextUtils.isEmpty(TcpManager.getInstance().getPhotoName())) {
+//                                                TcpHelper.getInstance().send0306(
+//                                                        TcpManager.getInstance().getPhotoName(),
+//                                                        TcpManager.getInstance().getPhotoData()
+//                                                );
+//                                            }
+//                                        }
 //                                        break;
-//                                    case (byte) 0x01:
-//                                        TcpHelper.getInstance().send0306(ConstantInfo.photoId, photoData);
-//                                        break;
-//                                    case (byte) 0x09:
-//                                        break;
-//                                    case (byte) 0xff:
+//                                    default:            //0x01  0x09   0xff
 //                                        break;
 //                                }
+//                                TcpManager.getInstance().setTcpState(TcpManager.state.NORMAL);
                                 break;
                             case "8501":           //设置计时终端应用参数应答
                                 HandMsgHelper.Class8501 class8501 = HandMsgHelper.getClass8501(messageBean.throughExpand.data);

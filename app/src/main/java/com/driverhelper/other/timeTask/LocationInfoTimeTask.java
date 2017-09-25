@@ -28,7 +28,6 @@ public class LocationInfoTimeTask extends TimerTask {
         String timeGPS_ = TimeUtil.formatData(dateFormatYMDHMS_, timeGPS);
         long timeSYS = TimeUtil.getTime() / 1000;
 
-
         TcpHelper.getInstance().sendMakeLocationInfo(lon, lat, speedVehicle, speedGPS, direction, timeGPS_);
 
         DbHelper.getInstance().addLocationInfo(
@@ -41,6 +40,7 @@ public class LocationInfoTimeTask extends TimerTask {
                 direction,
                 lat,
                 lon,
-                timeGPS);
+                timeGPS
+        );
     }
 }

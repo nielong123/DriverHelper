@@ -7,6 +7,7 @@ import com.driverhelper.helper.DbHelper;
 import com.jaydenxiao.common.baserx.RxBus;
 import com.jaydenxiao.common.commonutils.ToastUitl;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.driverhelper.config.Config.Config_RxBus.RX_TTS_SPEAK;
@@ -23,6 +24,7 @@ public class TcpManager {
     private static volatile TcpManager tcpManager;
 
     static ConcurrentHashMap<Integer, String> container = new ConcurrentHashMap<>();
+
 
     public static TcpManager getInstance() {
         if (tcpManager == null) {

@@ -58,7 +58,7 @@ public final class Business {
     /*****
      * 更新培训课程
      */
-    static private void upDataClassType() {
+    static public void upDataClassType() {
         classType = "1";
         switch (ConstantInfo.perdriType) {
             case "":

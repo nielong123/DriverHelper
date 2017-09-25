@@ -6,8 +6,8 @@ package com.driverhelper.beans;
 
 public class GpsModel {
 
-    public float speedGPS;
-    public float direction;
+    public float speedGPS;              //速度
+    public float direction;                 //距离
     public double lat, lon;
     public long timeGPS;
     public boolean isLocation;              //是否定位成功
