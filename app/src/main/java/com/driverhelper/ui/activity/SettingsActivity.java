@@ -339,7 +339,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0057"));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0058"));
             SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param0059"));
-            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param005a"));
+            SettingsActivity.bindPreferenceSummaryToStrValue(findPreference("param005A"));
         }
 
         @Override

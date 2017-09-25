@@ -112,7 +112,7 @@ public class ConstantInfo {
     public static int param0046 = 0;
     public static int param0047 = 0;
     public static String param0048 = "110";
-    public static String param0049;
+    public static String param0049 = "111";
 
     public static int param0050 = 1;
     public static int param0051 = 0;
@@ -133,14 +133,14 @@ public class ConstantInfo {
     public static int param0074 = 128;
 
     public static int distance = 3;
-//    public static int param0081;        //这几个变量没用，但暂时保留
+    //    public static int param0081;        //这几个变量没用，但暂时保留
 //    public static int param0082;
 //    public static String param0083;       //车牌号
 //    public static int param0084;      // 84是车牌颜色
     public static int param0085 = 1000;
 
 
-    public static class WaterMark{
+    public static class WaterMark {
         public static int textSize = 20;
         public static int textColor = Color.RED;
     }
