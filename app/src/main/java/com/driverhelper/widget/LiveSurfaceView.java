@@ -161,6 +161,7 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     public void doTakePicture() {
         fileName = null;
+        isSend = false;
         if (isPreview && (camera != null)) {
             camera.takePicture(this, null, this);
         }

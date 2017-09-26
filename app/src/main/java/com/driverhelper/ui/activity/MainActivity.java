@@ -424,9 +424,9 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                         surfaceView.doTakePictureAndSend(photoId, LiveSurfaceView.UpType.takePhtoto);
                         break;
                     case 2:
-                        photoId = TimeUtil.getTime() / 1000 + "";
+                        photoId = TimeUtil.getTime() / 1000 + ".png";
                         TcpHelper.getInstance().send0301(class8301.updataType);
-                        surfaceView.doTakePictureAndSend(photoId, LiveSurfaceView.UpType.takePhtoto);
+                        surfaceView.doTakePicture(photoId);
                         break;
                     case 3:
                         break;
