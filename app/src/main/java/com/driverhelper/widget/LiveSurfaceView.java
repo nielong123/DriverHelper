@@ -35,16 +35,33 @@ import top.zibin.luban.OnCompressListener;
 
 public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Camera.ErrorCallback, Camera.PreviewCallback, Camera.PictureCallback, Camera.ShutterCallback {
 
+
     private String TAG = this.toString();
     Camera camera;
     SurfaceHolder holder;
-    //    private final static int width = 640;
-//    private final static int height = 480;
     private final static int width = 400;
     private final static int height = 320;
     byte[] preBuffer = null;
     boolean isPreview;
     boolean isSend;
+    UpType upType = UpType.autoPhoto;           //一般情况下都是自动上传
+
+    public enum UpType {
+        takePhtoto(1),
+        findPhooto(2),
+        autoPhoto(129),
+        stopPhoto(255);
+
+        private final int value;
+
+        UpType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
 
     String fileName;
 
@@ -156,8 +173,9 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 
-    public void doTakePictureAndSend(String fileName) {
+    public void doTakePictureAndSend(String fileName, UpType upType) {
         this.fileName = fileName;
+        this.upType = upType;
         this.isSend = true;
         if (isPreview && (camera != null)) {
             camera.takePicture(this, null, this);
@@ -186,7 +204,7 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
+                        TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) LiveSurfaceView.this.upType.getValue(), (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
                         try {                           //取代了8305命令,当0305上传之后间隔200ms再上传照片
                             Thread.sleep(200L);
                         } catch (InterruptedException e) {

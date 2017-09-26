@@ -388,8 +388,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 WriteSettingHelper.setEMBARGOSTR(embargoStr);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8106, new Action1<HandMsgHelper.Class8106>()
-        {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8106, new Action1<HandMsgHelper.Class8106>() {
             @Override
             public void call(HandMsgHelper.Class8106 class8106) {
                 ttsClient.speak("收到终端查询请求", 1, null);
@@ -414,14 +413,24 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 WriteSettingHelper.set0501(class8501);
             }
         });
-        mRxManager.on(Config.Config_RxBus.RX_SETTING_8301, new Action1<HandMsgHelper.Class8301>()
-
-        {
+        mRxManager.on(Config.Config_RxBus.RX_SETTING_8301, new Action1<HandMsgHelper.Class8301>() {
             @Override
             public void call(HandMsgHelper.Class8301 class8301) {
-                String photoId = TimeUtil.getTime() / 1000 + "";
-                TcpHelper.getInstance().send0301(class8301.updataType);
-                surfaceView.doTakePictureAndSend(photoId);
+                String photoId;
+                switch (class8301.updataType) {
+                    case 1:                         //拍完自动上传
+                        photoId = TimeUtil.getTime() / 1000 + "";
+                        TcpHelper.getInstance().send0301(class8301.updataType);
+                        surfaceView.doTakePictureAndSend(photoId, LiveSurfaceView.UpType.takePhtoto);
+                        break;
+                    case 2:
+                        photoId = TimeUtil.getTime() / 1000 + "";
+                        TcpHelper.getInstance().send0301(class8301.updataType);
+                        surfaceView.doTakePictureAndSend(photoId, LiveSurfaceView.UpType.takePhtoto);
+                        break;
+                    case 3:
+                        break;
+                }
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_SETTING_8302, new Action1<HandMsgHelper.Class8302>()
@@ -748,7 +757,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     private void test() {
         Log.e("111", "/**************************************************/");
-        surfaceView.doTakePictureAndSend("12.png");
+        surfaceView.doTakePictureAndSend("12.png", LiveSurfaceView.UpType.autoPhoto);
 //        List<Integer> idList = IdHelper.clockWaterCode(100);
 //        Log.e(TAG, "idList = " + idList.size());
 //        for (Integer id : idList) {
