@@ -505,9 +505,8 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
      * @param photoId  照片id
      * @param photoData     总的照片数据
      */
-    public void send0306(String photoId, byte[] photoData) {
+    public void send0306(List<byte[]> list) {
 
-        List<byte[]> list = BodyHelper.make0306Part(photoId, photoData);
         if (list.size() > 0) {
             List<Integer> idList = IdHelper.clockWaterCode(list.size());
             List<byte[]> res = new ArrayList<>();

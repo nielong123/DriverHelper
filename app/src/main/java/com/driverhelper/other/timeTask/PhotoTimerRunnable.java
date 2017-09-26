@@ -34,7 +34,7 @@ public class PhotoTimerRunnable implements Runnable {
         String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
         String sms = str.substring(str.length() - 6, str.length());
         String photoPath = time + ".png";
-        surfaceView.doTakePictureAndSend(photoPath, LiveSurfaceView.UpType.autoPhoto);
+        surfaceView.doTakePictureAndSend(photoPath, ConstantInfo.StudentInfo.id, LiveSurfaceView.UpType.autoPhoto);
         DbHelper.getInstance().addphotoInfo(0, ConstantInfo.StudentInfo.id, ConstantInfo.coachId, (int) ConstantInfo.classId + "",
                 photoPath, sms, time, false);
         try {

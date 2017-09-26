@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import com.driverhelper.R;
 import com.driverhelper.app.MyApplication;
 import com.driverhelper.config.ConstantInfo;
+import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.other.tcp.TcpManager;
 import com.driverhelper.other.tcp.netty.TcpHelper;
 import com.driverhelper.utils.ByteUtil;
@@ -25,6 +26,7 @@ import com.jaydenxiao.common.compressorutils.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
@@ -63,7 +65,8 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 
-    String fileName;
+    String fileName;            //照片名
+    String id;          //学生或教练的id
 
     public LiveSurfaceView(Context context) {
         super(context);
@@ -167,15 +170,17 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 
-    public void doTakePicture(String fileName) {
-        this.fileName = fileName;
+    public void doTakePicture(String fileName,String id) {
+        this.id = id;
+        this.fileName = fileName.replace(".png", "");
         if (isPreview && (camera != null)) {
             camera.takePicture(this, null, this);
         }
     }
 
-    public void doTakePictureAndSend(String fileName, UpType upType) {
-        this.fileName = fileName;
+    public void doTakePictureAndSend(String fileName, String id, UpType upType) {
+        this.fileName = fileName.replace(".png", "");
+        this.id = id;
         this.upType = upType;
         this.isSend = true;
         if (isPreview && (camera != null)) {
@@ -205,13 +210,14 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        TcpHelper.getInstance().send0305(fileName.replace(".png", ""), ConstantInfo.coachId, (byte) LiveSurfaceView.this.upType.getValue(), (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
-                        try {                           //取代了8305命令,当0305上传之后间隔200ms再上传照片
-                            Thread.sleep(200L);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        TcpHelper.getInstance().send0306(fileName.replace(".png", ""), data);
+                        List<byte[]> dataList = BodyHelper.make0306Part(fileName, data);
+                        TcpHelper.getInstance().send0305(fileName, id, (byte) LiveSurfaceView.this.upType.getValue(), (byte) 0x01, (byte) 0x01, (byte) 0x01, dataList.size(), data.length);
+//                        try {                           //取代了8305命令,当0305上传之后间隔200ms再上传照片
+//                            Thread.sleep(200L);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+                        TcpHelper.getInstance().send0306(dataList);
                         isSend = false;
                     }
                 }).start();

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.driverhelper.beans.db.StudyInfo;
 import com.driverhelper.config.ConstantInfo;
+import com.driverhelper.helper.BodyHelper;
 import com.driverhelper.helper.DbHelper;
 import com.driverhelper.helper.HandMsgHelper;
 import com.driverhelper.other.tcp.netty.TcpHelper;
@@ -103,8 +104,9 @@ public class Action {
         if (FileUtil.fileIsExists(context.getFilesDir().getPath() + "/" + name + ".png")) {
             TcpHelper.getInstance().send0304((byte) 0x00);
             byte[] data = FileUtils.loadBitmap(context, name + ".png");
-            TcpHelper.getInstance().send0305(name, ConstantInfo.coachId, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, 1, data.length);
-            TcpHelper.getInstance().send0306(name, data);
+            List<byte[]> list = BodyHelper.make0306Part(name, data);
+            TcpHelper.getInstance().send0305(name, ConstantInfo.StudentInfo.id, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x01, list.size(), data.length);
+            TcpHelper.getInstance().send0306(list);
         } else {
             TcpHelper.getInstance().send0304((byte) 0x01);
         }

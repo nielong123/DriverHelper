@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -93,15 +94,15 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
     @Bind(R.id.JiaoLianTEXT)
     TextView JiaoLianTEXT;
     @Bind(R.id.COACHNUMtext)
-    EditText COACHNUMtext;
+    TextView COACHNUMtext;
     @Bind(R.id.IDCARDtext)
-    EditText IDCARDtext;
+    TextView IDCARDtext;
     @Bind(R.id.XueYuanButton)
     ImageButton XueYuanButton;
     @Bind(R.id.XueYuanTEXT)
     TextView XueYuanTEXT;
     @Bind(R.id.STUNUMtext)
-    EditText STUNUMtext;
+    TextView STUNUMtext;
     @Bind(R.id.NoSendText)
     TextView NoSendText;
     @Bind(R.id.LLmingdan)
@@ -309,6 +310,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 if (ConstantInfo.ADDMSG_YN == 1) {
                     ttsClient.speak(class8101.additionalInfo, 1, null);
                 }
+                surfaceView.doTakePictureAndSend(TimeUtil.getTime() / 1000 + "", ConstantInfo.coachId, LiveSurfaceView.UpType.autoPhoto);
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_COACH_LOGOUTOK, new Action1<String>()
@@ -320,6 +322,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                 sendMessage(Config.TextInfoType.CLEARJIAOLIAN);
                 Config.isCoachLoginOK = false;
                 WriteSettingHelper.setCOACHNUM("");
+                surfaceView.doTakePictureAndSend(TimeUtil.getTime() / 1000 + "", ConstantInfo.coachId, LiveSurfaceView.UpType.autoPhoto);
             }
         });
         mRxManager.on(Config.Config_RxBus.RX_STUDENT_LOGINOK, new Action1<HandMsgHelper.Class8201>() {
@@ -349,6 +352,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         {
             @Override
             public void call(String str) {
+                surfaceView.doTakePictureAndSend(TimeUtil.getTime() / 1000 + "", ConstantInfo.StudentInfo.id, LiveSurfaceView.UpType.autoPhoto);
                 stopStudy();
                 ttsClient.speak(str, 1, null);
                 sendMessage(Config.TextInfoType.CLEARXUEYUAN);
@@ -421,12 +425,26 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
                     case 1:                         //拍完自动上传
                         photoId = TimeUtil.getTime() / 1000 + "";
                         TcpHelper.getInstance().send0301(class8301.updataType);
-                        surfaceView.doTakePictureAndSend(photoId, LiveSurfaceView.UpType.takePhtoto);
+                        if (Config.isStudentLoginOK) {
+                            surfaceView.doTakePictureAndSend(photoId, ConstantInfo.StudentInfo.id, LiveSurfaceView.UpType.takePhtoto);
+                            break;
+                        }
+                        if (Config.isCoachLoginOK) {
+                            surfaceView.doTakePictureAndSend(photoId, ConstantInfo.coachId, LiveSurfaceView.UpType.takePhtoto);
+                            break;
+                        }
                         break;
                     case 2:
                         photoId = TimeUtil.getTime() / 1000 + ".png";
                         TcpHelper.getInstance().send0301(class8301.updataType);
-                        surfaceView.doTakePicture(photoId);
+                        if (Config.isStudentLoginOK) {
+                            surfaceView.doTakePicture(photoId, ConstantInfo.StudentInfo.id);
+                            break;
+                        }
+                        if (Config.isCoachLoginOK) {
+                            surfaceView.doTakePicture(photoId, ConstantInfo.coachId);
+                            break;
+                        }
                         break;
                     case 3:
                         break;
@@ -757,7 +775,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     private void test() {
         Log.e("111", "/**************************************************/");
-        surfaceView.doTakePictureAndSend("12.png", LiveSurfaceView.UpType.autoPhoto);
+        surfaceView.doTakePictureAndSend("12.png", ConstantInfo.StudentInfo.id, LiveSurfaceView.UpType.autoPhoto);
 //        List<Integer> idList = IdHelper.clockWaterCode(100);
 //        Log.e(TAG, "idList = " + idList.size());
 //        for (Integer id : idList) {
