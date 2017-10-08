@@ -301,6 +301,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         mRxManager.on(Config.Config_RxBus.RX_COACH_LOGINOK, new Action1<HandMsgHelper.Class8101>() {
             @Override
             public void call(HandMsgHelper.Class8101 class8101) {
+                ConstantInfo.photoNum = 0;
                 ttsClient.speak("教练员登录成功", 1, null);
                 sendMessage(Config.TextInfoType.SETJIAOLIAN);
                 Config.isCoachLoginOK = true;
@@ -328,6 +329,7 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
         mRxManager.on(Config.Config_RxBus.RX_STUDENT_LOGINOK, new Action1<HandMsgHelper.Class8201>() {
             @Override
             public void call(HandMsgHelper.Class8201 class8201) {
+                ConstantInfo.studyNum = 0;
                 ttsClient.speak("学员登录成功", 1, null);
                 Config.isStudentLoginOK = true;
                 ConstantInfo.StudentInfo.id = ByteUtil.getString(class8201.studentNum);
@@ -775,7 +777,8 @@ public class MainActivity extends SerialPortActivity implements NavigationView.O
 
     private void test() {
         Log.e("111", "/**************************************************/");
-        surfaceView.doTakePictureAndSend("12.png", ConstantInfo.StudentInfo.id, LiveSurfaceView.UpType.autoPhoto);
+        ToastUitl.show("上传照片  " + ConstantInfo.photoNum + "上传学时记录" + ConstantInfo.studyNum, Toast.LENGTH_LONG);
+//        surfaceView.doTakePictureAndSend("12.png", ConstantInfo.StudentInfo.id, LiveSurfaceView.UpType.autoPhoto);
 //        List<Integer> idList = IdHelper.clockWaterCode(100);
 //        Log.e(TAG, "idList = " + idList.size());
 //        for (Integer id : idList) {

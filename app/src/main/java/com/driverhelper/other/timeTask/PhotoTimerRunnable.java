@@ -16,7 +16,7 @@ import static com.jaydenxiao.common.commonutils.TimeUtil.dateFormatYMDHMS_;
 
 public class PhotoTimerRunnable implements Runnable {
 
-
+    public static boolean stoped = false;
     static LiveSurfaceView surfaceView;
 
     public PhotoTimerRunnable() {
@@ -30,17 +30,21 @@ public class PhotoTimerRunnable implements Runnable {
 
     @Override
     public void run() {
-        long time = TimeUtil.getTime() / 1000;
-        String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
-        String sms = str.substring(str.length() - 6, str.length());
-        String photoPath = time + ".png";
-        surfaceView.doTakePictureAndSend(photoPath, ConstantInfo.StudentInfo.id, LiveSurfaceView.UpType.autoPhoto);
-        DbHelper.getInstance().addphotoInfo(0, ConstantInfo.StudentInfo.id, ConstantInfo.coachId, (int) ConstantInfo.classId + "",
-                photoPath, sms, time, false);
-        try {
-            Thread.sleep(PIC_INTV_min);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (!stoped) {
+            long time = TimeUtil.getTime() / 1000;
+            String str = TimeUtil.formatData(dateFormatYMDHMS_, TimeUtil.getTime());
+            String sms = str.substring(str.length() - 6, str.length());
+            String photoPath = time + ".png";
+            surfaceView.doTakePictureAndSend(photoPath, ConstantInfo.StudentInfo.id, LiveSurfaceView.UpType.autoPhoto);
+            DbHelper.getInstance().addphotoInfo(0, ConstantInfo.StudentInfo.id, ConstantInfo.coachId, (int) ConstantInfo.classId + "",
+                    photoPath, sms, time, false);
+            try {
+                Thread.sleep(PIC_INTV_min * 1000 * 60);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            ConstantInfo.photoThreadNum++;
         }
+
     }
 }

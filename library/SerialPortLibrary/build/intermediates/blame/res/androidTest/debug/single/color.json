@@ -1,10 +1,22 @@
 [
     {
+        "merged": "E:\\workplace\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_primary_text_material_dark.xml"
+    },
+    {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_material_light.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_primary_text_material_light.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_search_url_text.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_search_url_text.xml"
+    },
+    {
+        "merged": "E:\\workplace\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_secondary_text_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "E:\\workplace\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_search_url_text.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_search_url_text.xml"
     },
     {
@@ -14,6 +26,18 @@
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_material_dark.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "E:\\workplace\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_secondary_text_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "E:\\workplace\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\switch_thumb_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "E:\\workplace\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\switch_thumb_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\switch_thumb_material_dark.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_secondary_text_material_light.xml",
@@ -32,7 +56,19 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_secondary_text_material_dark.xml"
     },
     {
+        "merged": "E:\\workplace\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_primary_text_material_light.xml"
+    },
+    {
         "merged": "C:\\Users\\Administrator\\Desktop\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\switch_thumb_material_dark.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "E:\\workplace\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_disable_only_material_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "E:\\workplace\\DriverHelper1\\library\\SerialPortLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_disable_only_material_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\48fdf367f2bbbea995b796a50540852254b99d34\\output\\res\\color\\abc_primary_text_disable_only_material_dark.xml"
     }
 ]

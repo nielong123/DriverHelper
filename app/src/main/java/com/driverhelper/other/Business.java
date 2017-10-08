@@ -133,6 +133,7 @@ public final class Business {
     }
 
     public static void startPhotoTimer(LiveSurfaceView surfaceView) {
+        ConstantInfo.photoThreadNum = 0;
         switch (UPLOAD_GBN) {           //是否自动上传照片
             case 1:
                 if (ConstantInfo.photoThread != null) {
@@ -158,6 +159,7 @@ public final class Business {
 
     public static void stopPhotoTimer() {
         if (ConstantInfo.photoThread != null) {
+            PhotoTimerRunnable.stoped = true;
             ConstantInfo.photoThread.interrupt();
             ConstantInfo.photoThread = null;
         }

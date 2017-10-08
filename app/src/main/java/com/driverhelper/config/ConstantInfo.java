@@ -55,6 +55,10 @@ public class ConstantInfo {
     public static String embargoStr;            //      禁运提示消息内容
     public static boolean is0102_OK;                //是否鉴权成功
 
+    public static int studyNum = 0;         //上传学时记录的次数
+    public static int photoNum = 0;         //上传照片的次数
+    public static int photoThreadNum = 0;       //照片线程的执行次数
+
     public static int gpsdisConnectIndex = 0;           //gps断开连接的计数
     public static final int gpsDisConnectMex = 5;           //gps断开报警的最大次数
 
@@ -173,6 +177,7 @@ public class ConstantInfo {
     public static Thread photoThread;
 
     public static long locationTimerDelay = 10 * 1000;
+    //    public final static long studyInfoTimerDelay = 60;
     public final static long studyInfoTimerDelay = 60 * 1000;
     public final static long clearTimerDelay = 10 * 60 * 1000L;
     public static long photoTImerDelay = 15 * 30 * 1000;//PIC_INTV_min

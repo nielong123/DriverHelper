@@ -449,6 +449,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
                 distance, vehiclSspeed, timeSYS, false,
                 speedGPS, direction, lat, lon, timeGPS);
         TcpManager.getInstance().put(waterCode, ByteUtil.bcdByte2bcdString(id0203));
+        ConstantInfo.studyNum++;
     }
 
     /*****
@@ -500,11 +501,6 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
         sendData(BodyHelper.make0305(photoId, id, updataType, carmerId, photoSizeXxX, eventType, totle, photoSize));
     }
 
-    /*****
-     *
-     * @param photoId  照片id
-     * @param photoData     总的照片数据
-     */
     public void send0306(List<byte[]> list) {
 
         if (list.size() > 0) {
@@ -517,6 +513,7 @@ public class TcpHelper implements ChannelFutureListener, OnServerConnectListener
             for (byte[] data : res) {
                 sendData(data);
             }
+            ConstantInfo.photoNum++;
         }
     }
 
