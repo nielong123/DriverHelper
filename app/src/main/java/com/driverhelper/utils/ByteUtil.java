@@ -602,8 +602,10 @@ public class ByteUtil {
             if (i < data.length - 1) {
                 if (data[i] == (byte) 0x7d && data[i + 1] == (byte) 0x02) {
                     dataList.add((byte) 0x7e);
+                    i++;
                 } else if (data[i] == (byte) 0x7d && data[i + 1] == (byte) 0x01) {
                     dataList.add((byte) 0x7d);
+                    i++;
                 } else {
                     dataList.add(data[i]);
                 }

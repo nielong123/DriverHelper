@@ -1,5 +1,6 @@
 package com.driverhelper.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,7 @@ import com.jaydenxiao.common.compressorutils.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import top.zibin.luban.Luban;
@@ -105,6 +107,7 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             preBuffer = new byte[size];
         }
         camera.addCallbackBuffer(preBuffer);
+
     }
 
     @Override
@@ -170,7 +173,7 @@ public class LiveSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 
-    public void doTakePicture(String fileName,String id) {
+    public void doTakePicture(String fileName, String id) {
         this.id = id;
         this.fileName = fileName.replace(".png", "");
         if (isPreview && (camera != null)) {

@@ -5,7 +5,7 @@ repositories {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.driverhelper1"
@@ -36,7 +36,7 @@ android {
 
     signingConfigs {
         releaseConfig {
-            storeFile file("E:\\key\\traffic.keystore")
+            storeFile file("D:\\key\\traffic.keystore")
             storePassword "exsun2015"
             keyAlias "traffic"
             keyPassword "exsun2015"
@@ -45,7 +45,7 @@ android {
 
         }
         debug {
-            storeFile file("E:\\key\\traffic.keystore")
+            storeFile file("D:\\key\\traffic.keystore")
             storePassword "exsun2015"
             keyAlias "traffic"
             keyPassword "exsun2015"

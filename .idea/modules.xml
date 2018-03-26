@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/DriverHelper1.iml" filepath="$PROJECT_DIR$/DriverHelper1.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/SerialPortLibrary/SerialPortLibrary.iml" filepath="$PROJECT_DIR$/library/SerialPortLibrary/SerialPortLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/common/common.iml" filepath="$PROJECT_DIR$/library/common/common.iml" />
+      <module fileurl="file://D:\workplace_android\DriverHelper\library\common\common.iml" filepath="D:\workplace_android\DriverHelper\library\common\common.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/irecyclerview/irecyclerview.iml" filepath="$PROJECT_DIR$/library/irecyclerview/irecyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/jcvideoplayer/jcvideoplayer.iml" filepath="$PROJECT_DIR$/library/jcvideoplayer/jcvideoplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
